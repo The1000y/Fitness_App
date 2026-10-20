@@ -1,7 +1,7 @@
 import 'package:fitness_app/config/errors/app_failure.dart';
 import 'package:fitness_app/l10n/app_localizations.dart';
 
-String mapAppFailureToMessage(AppFailure failure, AppLocalizations l10n) {
+String appFailureMessageMapper(AppFailure failure, AppLocalizations l10n) {
   return switch (failure) {
     InternetConnectionFailure() => l10n.failureInternetConnection,
     TimeoutFailure() => l10n.failureTimeout,

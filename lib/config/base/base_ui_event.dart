@@ -1,35 +1,40 @@
 
 
 import 'package:fitness_app/config/errors/app_failure.dart';
+import 'package:fitness_app/config/localization/success_message_enum_mapper.dart';
 
-sealed class BaseUiEvent {
+abstract class BaseUiEvent {
   const BaseUiEvent();
 }
 
-final class ShowSuccessMessage extends BaseUiEvent {
-  final String message;
+sealed class CommonUiEvent extends BaseUiEvent {
+  const CommonUiEvent();
+}
+
+final class ShowSuccessMessage extends CommonUiEvent {
+  final AppSuccessMessage message;
   const ShowSuccessMessage(this.message);
 }
 
-final class ShowFailureMessage extends BaseUiEvent {
+final class ShowFailureMessage extends CommonUiEvent {
   final AppFailure failure;
   const ShowFailureMessage(this.failure);
 }
 
-class NavigateTo extends BaseUiEvent {
+final class NavigateTo extends CommonUiEvent {
   final String routeName;
   final Object? arguments;
 
   const NavigateTo(this.routeName, {this.arguments});
 }
 
-class NavigateRepalceTo extends BaseUiEvent {
+final class NavigateReplaceTo extends CommonUiEvent {
   final String routeName;
   final Object? arguments;
-  const NavigateRepalceTo(this.routeName, {this.arguments});
+  const NavigateReplaceTo(this.routeName, {this.arguments});
 }
 
-class PopRoute extends BaseUiEvent {
+final class PopRoute extends CommonUiEvent {
   final Object? result;
   const PopRoute([this.result]);
 }

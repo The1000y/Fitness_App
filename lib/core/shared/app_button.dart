@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
-import '../theme/app_colors.dart';
+import '../theme/app_colors/app_colors.dart';
 
 enum ButtonVariant { filled, outlined }
 

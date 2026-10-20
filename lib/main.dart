@@ -1,5 +1,6 @@
 import 'package:fitness_app/config/routing/app_routes.dart';
 import 'package:fitness_app/config/routing/generate_routes.dart';
+import 'package:fitness_app/core/theme/app_themes/app_theme.dart';
 import 'package:fitness_app/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -19,6 +20,7 @@ class FitnessApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       child: MaterialApp(
+        theme: AppTheme.lightTheme,
         localizationsDelegates: [
           AppLocalizations.delegate, // Add this line
           ...GlobalMaterialLocalizations.delegates,

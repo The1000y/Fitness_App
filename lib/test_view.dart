@@ -9,7 +9,7 @@ import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 import 'package:gap/gap.dart';
 
 import 'core/constants/app_icons.dart';
-import 'core/theme/app_colors.dart';
+import 'core/theme/app_colors/app_colors.dart';
 import 'core/shared/app_text_form_field.dart';
 
 class TestView extends StatelessWidget {
