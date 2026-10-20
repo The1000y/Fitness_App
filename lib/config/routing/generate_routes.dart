@@ -1,4 +1,5 @@
 import 'package:fitness_app/config/routing/app_routes.dart';
+import 'package:fitness_app/test_view.dart';
 import 'package:flutter/material.dart';
 
 abstract final class GenerateRoutes {
@@ -114,7 +115,15 @@ class _StubScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(title)),
-      body: Center(child: Text(title)),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () => Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => TestView()),
+          ),
+          child: Text('Test'),
+        ),
+      ),
     );
   }
 }
