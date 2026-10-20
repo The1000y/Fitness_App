@@ -208,5 +208,31 @@
   "phoneRequired": "Phone number is required",
   "phoneInvalid": "Please enter a valid phone number",
   "fieldRequired": "This field is required",
-  "fieldMinLength": "This field is too short"
+  "fieldMinLength": "This field is too short",
+  "accountCreated": "Account created successfully",
+  "loggedIn": "Logged in successfully",
+  "passwordChanged": "Password changed successfully",
+
+  "profileUpdated": "Profile updated",
+  "profilePhotoUpdated": "Profile photo updated",
+
+  "workoutSaved": "Workout saved",
+  "workoutCompleted": "Workout completed, great job!",
+  "workoutPlanStarted": "Workout plan started",
+  "workoutDeleted": "Workout deleted",
+  "exerciseAddedToWorkout": "Exercise added to your workout",
+
+  "mealLogged": "Meal logged",
+  "waterLogged": "Water intake logged",
+
+  "weightLogged": "Weight logged",
+  "measurementsSaved": "Measurements saved",
+  "progressPhotoUploaded": "Progress photo uploaded",
+  "goalCreated": "Goal created",
+  "goalAchieved": "Goal achieved, congratulations!",
+  "newPersonalRecord": "New personal record!",
+
+  "reminderSet": "Reminder set",
+  "settingsSaved": "Settings saved" 
+  
 }

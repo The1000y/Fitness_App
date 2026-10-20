@@ -1021,6 +1021,126 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This field is too short'**
   String get fieldMinLength;
+
+  /// No description provided for @accountCreated.
+  ///
+  /// In en, this message translates to:
+  /// **'Account created successfully'**
+  String get accountCreated;
+
+  /// No description provided for @loggedIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Logged in successfully'**
+  String get loggedIn;
+
+  /// No description provided for @passwordChanged.
+  ///
+  /// In en, this message translates to:
+  /// **'Password changed successfully'**
+  String get passwordChanged;
+
+  /// No description provided for @profileUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile updated'**
+  String get profileUpdated;
+
+  /// No description provided for @profilePhotoUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile photo updated'**
+  String get profilePhotoUpdated;
+
+  /// No description provided for @workoutSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Workout saved'**
+  String get workoutSaved;
+
+  /// No description provided for @workoutCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Workout completed, great job!'**
+  String get workoutCompleted;
+
+  /// No description provided for @workoutPlanStarted.
+  ///
+  /// In en, this message translates to:
+  /// **'Workout plan started'**
+  String get workoutPlanStarted;
+
+  /// No description provided for @workoutDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Workout deleted'**
+  String get workoutDeleted;
+
+  /// No description provided for @exerciseAddedToWorkout.
+  ///
+  /// In en, this message translates to:
+  /// **'Exercise added to your workout'**
+  String get exerciseAddedToWorkout;
+
+  /// No description provided for @mealLogged.
+  ///
+  /// In en, this message translates to:
+  /// **'Meal logged'**
+  String get mealLogged;
+
+  /// No description provided for @waterLogged.
+  ///
+  /// In en, this message translates to:
+  /// **'Water intake logged'**
+  String get waterLogged;
+
+  /// No description provided for @weightLogged.
+  ///
+  /// In en, this message translates to:
+  /// **'Weight logged'**
+  String get weightLogged;
+
+  /// No description provided for @measurementsSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Measurements saved'**
+  String get measurementsSaved;
+
+  /// No description provided for @progressPhotoUploaded.
+  ///
+  /// In en, this message translates to:
+  /// **'Progress photo uploaded'**
+  String get progressPhotoUploaded;
+
+  /// No description provided for @goalCreated.
+  ///
+  /// In en, this message translates to:
+  /// **'Goal created'**
+  String get goalCreated;
+
+  /// No description provided for @goalAchieved.
+  ///
+  /// In en, this message translates to:
+  /// **'Goal achieved, congratulations!'**
+  String get goalAchieved;
+
+  /// No description provided for @newPersonalRecord.
+  ///
+  /// In en, this message translates to:
+  /// **'New personal record!'**
+  String get newPersonalRecord;
+
+  /// No description provided for @reminderSet.
+  ///
+  /// In en, this message translates to:
+  /// **'Reminder set'**
+  String get reminderSet;
+
+  /// No description provided for @settingsSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings saved'**
+  String get settingsSaved;
 }
 
 class _AppLocalizationsDelegate

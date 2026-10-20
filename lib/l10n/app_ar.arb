@@ -208,5 +208,30 @@
   "phoneRequired": "رقم الهاتف مطلوب",
   "phoneInvalid": "يرجى إدخال رقم هاتف صالح",
   "fieldRequired": "هذا الحقل مطلوب",
-  "fieldMinLength": "هذا الحقل قصير جداً"
+  "fieldMinLength": "هذا الحقل قصير جداً",
+  "accountCreated": "تم إنشاء الحساب بنجاح",
+  "loggedIn": "تم تسجيل الدخول بنجاح",
+  "passwordChanged": "تم تغيير كلمة المرور بنجاح",
+
+  "profileUpdated": "تم تحديث الملف الشخصي",
+  "profilePhotoUpdated": "تم تحديث صورة الملف الشخصي",
+
+  "workoutSaved": "تم حفظ التمرين",
+  "workoutCompleted": "تم إنهاء التمرين، أحسنت!",
+  "workoutPlanStarted": "تم بدء خطة التمرين",
+  "workoutDeleted": "تم حذف التمرين",
+  "exerciseAddedToWorkout": "تمت إضافة التمرين إلى جدولك",
+
+  "mealLogged": "تم تسجيل الوجبة",
+  "waterLogged": "تم تسجيل كمية المياه",
+
+  "weightLogged": "تم تسجيل الوزن",
+  "measurementsSaved": "تم حفظ القياسات",
+  "progressPhotoUploaded": "تم رفع صورة التقدم",
+  "goalCreated": "تم إنشاء الهدف",
+  "goalAchieved": "تم تحقيق الهدف، مبروك!",
+  "newPersonalRecord": "رقم شخصي جديد!",
+
+  "reminderSet": "تم ضبط التذكير",
+  "settingsSaved": "تم حفظ الإعدادات"
 }

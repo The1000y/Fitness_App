@@ -18,8 +18,8 @@ enum ValidationError {
   fieldMinLength,
 }
 
-class AuthValidators {
-  AuthValidators._(); // prevent instantiation
+class AppValidators {
+  AppValidators._(); // prevent instantiation
 
   static ValidationError? email(String? value) {
     if (value == null || value.trim().isEmpty) {

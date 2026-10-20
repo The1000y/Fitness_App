@@ -490,4 +490,64 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get fieldMinLength => 'هذا الحقل قصير جداً';
+
+  @override
+  String get accountCreated => 'تم إنشاء الحساب بنجاح';
+
+  @override
+  String get loggedIn => 'تم تسجيل الدخول بنجاح';
+
+  @override
+  String get passwordChanged => 'تم تغيير كلمة المرور بنجاح';
+
+  @override
+  String get profileUpdated => 'تم تحديث الملف الشخصي';
+
+  @override
+  String get profilePhotoUpdated => 'تم تحديث صورة الملف الشخصي';
+
+  @override
+  String get workoutSaved => 'تم حفظ التمرين';
+
+  @override
+  String get workoutCompleted => 'تم إنهاء التمرين، أحسنت!';
+
+  @override
+  String get workoutPlanStarted => 'تم بدء خطة التمرين';
+
+  @override
+  String get workoutDeleted => 'تم حذف التمرين';
+
+  @override
+  String get exerciseAddedToWorkout => 'تمت إضافة التمرين إلى جدولك';
+
+  @override
+  String get mealLogged => 'تم تسجيل الوجبة';
+
+  @override
+  String get waterLogged => 'تم تسجيل كمية المياه';
+
+  @override
+  String get weightLogged => 'تم تسجيل الوزن';
+
+  @override
+  String get measurementsSaved => 'تم حفظ القياسات';
+
+  @override
+  String get progressPhotoUploaded => 'تم رفع صورة التقدم';
+
+  @override
+  String get goalCreated => 'تم إنشاء الهدف';
+
+  @override
+  String get goalAchieved => 'تم تحقيق الهدف، مبروك!';
+
+  @override
+  String get newPersonalRecord => 'رقم شخصي جديد!';
+
+  @override
+  String get reminderSet => 'تم ضبط التذكير';
+
+  @override
+  String get settingsSaved => 'تم حفظ الإعدادات';
 }

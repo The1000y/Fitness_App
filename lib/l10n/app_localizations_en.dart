@@ -494,4 +494,64 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get fieldMinLength => 'This field is too short';
+
+  @override
+  String get accountCreated => 'Account created successfully';
+
+  @override
+  String get loggedIn => 'Logged in successfully';
+
+  @override
+  String get passwordChanged => 'Password changed successfully';
+
+  @override
+  String get profileUpdated => 'Profile updated';
+
+  @override
+  String get profilePhotoUpdated => 'Profile photo updated';
+
+  @override
+  String get workoutSaved => 'Workout saved';
+
+  @override
+  String get workoutCompleted => 'Workout completed, great job!';
+
+  @override
+  String get workoutPlanStarted => 'Workout plan started';
+
+  @override
+  String get workoutDeleted => 'Workout deleted';
+
+  @override
+  String get exerciseAddedToWorkout => 'Exercise added to your workout';
+
+  @override
+  String get mealLogged => 'Meal logged';
+
+  @override
+  String get waterLogged => 'Water intake logged';
+
+  @override
+  String get weightLogged => 'Weight logged';
+
+  @override
+  String get measurementsSaved => 'Measurements saved';
+
+  @override
+  String get progressPhotoUploaded => 'Progress photo uploaded';
+
+  @override
+  String get goalCreated => 'Goal created';
+
+  @override
+  String get goalAchieved => 'Goal achieved, congratulations!';
+
+  @override
+  String get newPersonalRecord => 'New personal record!';
+
+  @override
+  String get reminderSet => 'Reminder set';
+
+  @override
+  String get settingsSaved => 'Settings saved';
 }
