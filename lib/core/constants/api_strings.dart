@@ -14,52 +14,52 @@ abstract class ApiStrings {
   // ---------------------------------------------------------------------------
   // Auth
   // ---------------------------------------------------------------------------
-  static String get signup => '$baseUrl/auth/signup'; // POST
-  static String get signin => '$baseUrl/auth/signin'; // POST
-  static String get changePassword => '$baseUrl/auth/change-password'; // PATCH
-  static String get uploadPhoto => '$baseUrl/auth/upload-photo'; // PUT (Bearer, form-data: photo, max 4MB)
-  static String get profileData => '$baseUrl/auth/profile-data'; // GET (Bearer)
-  static String get logout => '$baseUrl/auth/logout'; // GET
-  static String get forgotPassword => '$baseUrl/auth/forgotPassword'; // POST
-  static String get verifyResetCode => '$baseUrl/auth/verifyResetCode'; // POST
-  static String get resetPassword => '$baseUrl/auth/resetPassword'; // PUT
-  static String get deleteMe => '$baseUrl/auth/deleteMe'; // DELETE
-  static String get editProfile => '$baseUrl/auth/editProfile'; // PUT (Bearer)
+  static String get signup => '/auth/signup'; // POST
+  static String get signin => '/auth/signin'; // POST
+  static String get changePassword => '/auth/change-password'; // PATCH
+  static String get uploadPhoto => '/auth/upload-photo'; // PUT (Bearer, form-data: photo, max 4MB)
+  static String get profileData => '/auth/profile-data'; // GET (Bearer)
+  static String get logout => '/auth/logout'; // GET
+  static String get forgotPassword => '/auth/forgotPassword'; // POST
+  static String get verifyResetCode => '/auth/verifyResetCode'; // POST
+  static String get resetPassword => '/auth/resetPassword'; // PUT
+  static String get deleteMe => '/auth/deleteMe'; // DELETE
+  static String get editProfile => '/auth/editProfile'; // PUT (Bearer)
 
   // ---------------------------------------------------------------------------
   // Levels
   // ---------------------------------------------------------------------------
-  static String get levels => '$baseUrl/levels'; // GET
+  static String get levels => '/levels'; // GET
 
   /// GET (Bearer) – query: primeMoverMuscleId
   static String get difficultyLevelsByPrimeMover =>
-      '$baseUrl/levels/difficulty-levels/by-prime-mover';
+      '/levels/difficulty-levels/by-prime-mover';
 
   // ---------------------------------------------------------------------------
   // Muscles
   // ---------------------------------------------------------------------------
-  static String get muscles => '$baseUrl/muscles'; // GET (all muscle groups)
-  static String get randomMuscles => '$baseUrl/muscles/random'; // GET (20 random prime movers)
+  static String get muscles => '/muscles'; // GET (all muscle groups)
+  static String get randomMuscles => '/muscles/random'; // GET (20 random prime movers)
 
   /// GET – all muscles by muscle group id
   static String musclesByGroupId(String muscleGroupId) =>
-      '$baseUrl/musclesGroup/$muscleGroupId';
+      '/musclesGroup/$muscleGroupId';
 
   /// GET – query: muscleGroupId
   static String get primeMoversByMuscleGroup =>
-      '$baseUrl/musclesGroup/by-muscle-group';
+      '/musclesGroup/by-muscle-group';
 
   // ---------------------------------------------------------------------------
   // Exercises
   // ---------------------------------------------------------------------------
-  static String get exercises => '$baseUrl/exercises'; // GET
+  static String get exercises => '/exercises'; // GET
 
   /// GET – query: primeMoverMuscleId, difficultyLevelId
   static String get exercisesByMuscleDifficulty =>
-      '$baseUrl/exercises/by-muscle-difficulty';
+      '/exercises/by-muscle-difficulty';
 
   /// GET – query: targetMuscleGroupId, difficultyLevelId, limit
-  static String get randomExercises => '$baseUrl/exercises/random';
+  static String get randomExercises => '/exercises/random';
 
   // ---------------------------------------------------------------------------
   // Meals (TheMealDB)

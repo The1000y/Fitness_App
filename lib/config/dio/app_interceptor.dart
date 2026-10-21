@@ -1,16 +1,29 @@
 import 'package:dio/dio.dart';
+import 'package:fitness_app/core/constants/api_strings.dart';
+import 'package:fitness_app/core/constants/storage_keys.dart';
+import 'package:fitness_app/features/app/presentation/cubit/auth/app_auth_cubit.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:injectable/injectable.dart';
 
 @lazySingleton
 class AppInterceptors extends QueuedInterceptor {
-  AppInterceptors(this._storage);
+  AppInterceptors(this._storage , this._authCubit);
 
   final FlutterSecureStorage _storage;
-  static const String _signInPath = '/auth/signin';
-  static const String _signUpPath = '/auth/signup';
+  final AppAuthCubit _authCubit ;
+  static final String _signInPath = ApiStrings.signin;
+  static final String _signUpPath = ApiStrings.signup;
+  static final String _forgotPasswordPath = ApiStrings.forgotPassword;
+  static final String _verifyResetCodePath = ApiStrings.verifyResetCode;
+  static final String _resetPasswordPath = ApiStrings.resetPassword;
 
-  static const List<String> _publicPaths = [_signInPath, _signUpPath];
+  static final List<String> _publicPaths = [
+    _signInPath,
+    _signUpPath,
+    _forgotPasswordPath,
+    _verifyResetCodePath,
+    _resetPasswordPath,
+  ];
 
   @override
   Future<void> onRequest(
@@ -25,13 +38,12 @@ class AppInterceptors extends QueuedInterceptor {
     }
     handler.next(options);
   }
-
+  
   @override
-  void onResponse(Response response, ResponseInterceptorHandler handler) async {
+  Future<void> onResponse(Response response, ResponseInterceptorHandler handler) async {
     if (response.requestOptions.path.contains(_signInPath)) {
       await setToken(response.data["token"]);
     }
-
     handler.next(response);
   }
 
@@ -43,13 +55,16 @@ class AppInterceptors extends QueuedInterceptor {
     // التوكين خلص أو مش صالح -> امسحه
     if (err.response?.statusCode == 401 && !_isPublic(err.requestOptions)) {
       await clearToken();
+      _authCubit.sessionExpired();
     }
     handler.next(err);
   }
 
-  bool _isPublic(RequestOptions o) => _publicPaths.any((p) => o.path.contains(p));
+  bool _isPublic(RequestOptions o) =>
+      _publicPaths.any((p) => o.path.contains(p));
 
-  Future<void> setToken(String token) => _storage.write(key: StorageKeys.kUserToken, value: token);
+  Future<void> setToken(String token) =>
+      _storage.write(key: StorageKeys.kUserToken, value: token);
 
   Future<void> clearToken() => _storage.delete(key: StorageKeys.kUserToken);
 
@@ -59,8 +74,4 @@ class AppInterceptors extends QueuedInterceptor {
   }
 }
 
-abstract final class StorageKeys {
-  static const String kUserToken = 'access_token';
-  static const String kUserData = 'user_data';
-  static const String kRefreshToken = 'refresh_token';
-}
+
