@@ -16,6 +16,8 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i558;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
+import '../../features/app/presentation/cubit/auth/app_auth_cubit.dart'
+    as _i760;
 import '../dio/app_interceptor.dart' as _i264;
 import '../dio/dio_module.dart' as _i977;
 import '../utils/secure_storage_module.dart' as _i327;
@@ -35,8 +37,12 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i558.FlutterSecureStorage>(
       () => secureStorageModule.secureStorage,
     );
+    gh.lazySingleton<_i760.AppAuthCubit>(() => _i760.AppAuthCubit());
     gh.lazySingleton<_i264.AppInterceptors>(
-      () => _i264.AppInterceptors(gh<_i558.FlutterSecureStorage>()),
+      () => _i264.AppInterceptors(
+        gh<_i558.FlutterSecureStorage>(),
+        gh<_i760.AppAuthCubit>(),
+      ),
     );
     gh.lazySingleton<_i361.Dio>(
       () => dioModule.dioMethod(gh<_i264.AppInterceptors>()),
