@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 
 import '../theme/app_colors/app_colors.dart';
-import 'app_blur_effect.dart';
+import 'custom_blur_effect.dart';
 
-class AppBlurCard extends StatelessWidget {
-  const AppBlurCard({
+class CustomBlurCard extends StatelessWidget {
+  const CustomBlurCard({
     super.key,
     required this.child,
     this.borderRadius,
@@ -29,7 +29,7 @@ class AppBlurCard extends StatelessWidget {
 
     return ClipRRect(
       borderRadius: effectiveBorderRadius,
-      child: AppBlurEffect(
+      child: CustomBlurEffect(
         child: Container(
           width: double.infinity,
           padding: effectivePadding,

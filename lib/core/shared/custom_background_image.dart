@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../theme/app_colors/app_colors.dart';
 
-class AppBackgroundImage extends StatelessWidget {
-  const AppBackgroundImage({
+class CustomBackgroundImage extends StatelessWidget {
+  const CustomBackgroundImage({
     super.key,
     required this.backgroundImage,
     required this.child,
