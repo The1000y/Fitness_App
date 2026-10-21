@@ -1,13 +1,12 @@
 import 'package:fitness_app/config/routing/app_routes.dart';
 import 'package:fitness_app/test_view.dart';
-import 'package:fitness_app/splash.dart';
 import 'package:flutter/material.dart';
 
 abstract final class GenerateRoutes {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case AppRoutes.splash:
-        return _pageRoute(const SplashView(), settings);
+        return _pageRoute(const TestView(), settings);
 
       case AppRoutes.onboarding:
         return _pageRoute(const _StubScreen('Onboarding'), settings);
