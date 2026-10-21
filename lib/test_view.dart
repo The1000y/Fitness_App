@@ -22,7 +22,7 @@ class TestView extends StatelessWidget {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: CustomAppBar(
-         titleWidget: Image.asset(AppImages.robotChat),
+          titleWidget: Image.asset(AppImages.robotChat),
           actions: [
             IconButton(
               onPressed: () {},
@@ -114,7 +114,6 @@ class TestView extends StatelessWidget {
                   title: 'Good',
                   borderRadius: 12,
                 ),
-                
               ],
             ),
           ),

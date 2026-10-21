@@ -17,7 +17,8 @@ abstract class ApiStrings {
   static String get signup => '/auth/signup'; // POST
   static String get signin => '/auth/signin'; // POST
   static String get changePassword => '/auth/change-password'; // PATCH
-  static String get uploadPhoto => '/auth/upload-photo'; // PUT (Bearer, form-data: photo, max 4MB)
+  static String get uploadPhoto =>
+      '/auth/upload-photo'; // PUT (Bearer, form-data: photo, max 4MB)
   static String get profileData => '/auth/profile-data'; // GET (Bearer)
   static String get logout => '/auth/logout'; // GET
   static String get forgotPassword => '/auth/forgotPassword'; // POST
@@ -39,15 +40,15 @@ abstract class ApiStrings {
   // Muscles
   // ---------------------------------------------------------------------------
   static String get muscles => '/muscles'; // GET (all muscle groups)
-  static String get randomMuscles => '/muscles/random'; // GET (20 random prime movers)
+  static String get randomMuscles =>
+      '/muscles/random'; // GET (20 random prime movers)
 
   /// GET – all muscles by muscle group id
   static String musclesByGroupId(String muscleGroupId) =>
       '/musclesGroup/$muscleGroupId';
 
   /// GET – query: muscleGroupId
-  static String get primeMoversByMuscleGroup =>
-      '/musclesGroup/by-muscle-group';
+  static String get primeMoversByMuscleGroup => '/musclesGroup/by-muscle-group';
 
   // ---------------------------------------------------------------------------
   // Exercises

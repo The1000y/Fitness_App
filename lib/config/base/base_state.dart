@@ -1,7 +1,5 @@
-
 import 'package:equatable/equatable.dart';
 import 'package:fitness_app/config/errors/app_failure.dart';
-
 
 class BaseState<T> extends Equatable {
   final AppFailure? errorMessage;
@@ -12,25 +10,23 @@ class BaseState<T> extends Equatable {
 
   const BaseState({this.isLoading = false, this.errorMessage, this.data});
 
-  BaseState<T> Function ({bool? isLoading  , T data , AppFailure errorMessage})  get copyWith =>_copyWith;
+  BaseState<T> Function({bool? isLoading, T data, AppFailure errorMessage})
+  get copyWith => _copyWith;
 
   BaseState<T> _copyWith({
-    Object? errorMessage =_clearValue ,
+    Object? errorMessage = _clearValue,
     bool? isLoading,
     Object? data = _clearValue,
   }) {
     return BaseState<T>(
       isLoading: isLoading ?? this.isLoading,
-      errorMessage: errorMessage== _clearValue ? this.errorMessage : errorMessage as AppFailure?,
-      data : data == _clearValue ? this.data : data as T?,
+      errorMessage: errorMessage == _clearValue
+          ? this.errorMessage
+          : errorMessage as AppFailure?,
+      data: data == _clearValue ? this.data : data as T?,
     );
   }
 
   @override
-  List<Object?> get props => [
-        isLoading,
-        errorMessage,
-        data,
-      ];
+  List<Object?> get props => [isLoading, errorMessage, data];
 }
-

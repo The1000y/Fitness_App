@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:fitness_app/config/errors/app_failure.dart';
 
-
 AppFailure mapDioExceptionToAppFailure(DioException error) {
   switch (error.type) {
     case DioExceptionType.badCertificate:
@@ -30,9 +29,9 @@ AppFailure _mapServerFailure(DioException error) {
     case 400:
       return BadRequestFailure(serverMessage: serverMessage);
     case 401:
-      return  UnauthorizedFailure(serverMessage: serverMessage);
+      return UnauthorizedFailure(serverMessage: serverMessage);
     case 403:
-      return  ForbiddenFailure( serverMessage: serverMessage);
+      return ForbiddenFailure(serverMessage: serverMessage);
     case 404:
       return const NotFoundFailure();
     case 405:

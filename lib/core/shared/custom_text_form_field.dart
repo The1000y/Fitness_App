@@ -46,30 +46,28 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         validator: widget.validator,
         onChanged: widget.onChanged,
         textInputAction: widget.textInputAction,
-        style: theme.textTheme.bodyMedium?.copyWith(
-          color: AppColors.textPrimary,
-          fontSize: 15.sp,
-        ) ??
-            TextStyle(
+        style:
+            theme.textTheme.bodyMedium?.copyWith(
               color: AppColors.textPrimary,
               fontSize: 15.sp,
-            ),
+            ) ??
+            TextStyle(color: AppColors.textPrimary, fontSize: 15.sp),
         cursorColor: theme.colorScheme.primary,
         decoration: InputDecoration(
           hintText: widget.hintText,
           prefixIcon: widget.prefixIcon != null
               ? Padding(
-            padding: EdgeInsets.only(left: 16.w, right: 12.w),
-            child: SvgPicture.asset(
-              widget.prefixIcon!,
-              width: 18.w,
-              height: 18.h,
-              colorFilter: const ColorFilter.mode(
-                AppColors.textSecondary,
-                BlendMode.srcIn,
-              ),
-            ),
-          )
+                  padding: EdgeInsets.only(left: 16.w, right: 12.w),
+                  child: SvgPicture.asset(
+                    widget.prefixIcon!,
+                    width: 18.w,
+                    height: 18.h,
+                    colorFilter: const ColorFilter.mode(
+                      AppColors.textSecondary,
+                      BlendMode.srcIn,
+                    ),
+                  ),
+                )
               : null,
           prefixIconConstraints: BoxConstraints(
             minWidth: 46.w,
@@ -77,21 +75,21 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           ),
           suffixIcon: widget.isPassword
               ? IconButton(
-            onPressed: () {
-              setState(() {
-                _obscureText = !_obscureText;
-              });
-            },
-            padding: EdgeInsets.zero,
-            constraints: const BoxConstraints(),
-            icon: Icon(
-              _obscureText
-                  ? Icons.visibility_outlined
-                  : Icons.visibility_off_outlined,
-              color: AppColors.textSecondary,
-              size: 20.r,
-            ),
-          )
+                  onPressed: () {
+                    setState(() {
+                      _obscureText = !_obscureText;
+                    });
+                  },
+                  padding: EdgeInsets.zero,
+                  constraints: const BoxConstraints(),
+                  icon: Icon(
+                    _obscureText
+                        ? Icons.visibility_outlined
+                        : Icons.visibility_off_outlined,
+                    color: AppColors.textSecondary,
+                    size: 20.r,
+                  ),
+                )
               : null,
         ),
       ),

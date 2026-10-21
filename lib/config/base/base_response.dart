@@ -1,4 +1,3 @@
-
 import 'package:fitness_app/config/errors/app_failure.dart';
 
 sealed class BaseResponse<T> {

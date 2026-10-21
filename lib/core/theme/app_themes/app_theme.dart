@@ -21,26 +21,17 @@ abstract final class AppTheme {
 
     final focusedBorder = OutlineInputBorder(
       borderRadius: inputRadius,
-      borderSide: BorderSide(
-        color: AppColors.primary,
-        width: 1.2.w,
-      ),
+      borderSide: BorderSide(color: AppColors.primary, width: 1.2.w),
     );
 
     final errorBorder = OutlineInputBorder(
       borderRadius: inputRadius,
-      borderSide: BorderSide(
-        color: AppColors.accent,
-        width: 1.w,
-      ),
+      borderSide: BorderSide(color: AppColors.accent, width: 1.w),
     );
 
     final focusedErrorBorder = OutlineInputBorder(
       borderRadius: inputRadius,
-      borderSide: BorderSide(
-        color: AppColors.accent,
-        width: 1.2.w,
-      ),
+      borderSide: BorderSide(color: AppColors.accent, width: 1.2.w),
     );
 
     return ThemeData(
@@ -62,10 +53,7 @@ abstract final class AppTheme {
         focusedBorder: focusedBorder,
         errorBorder: errorBorder,
         focusedErrorBorder: focusedErrorBorder,
-        hintStyle: TextStyle(
-          color: AppColors.textSecondary,
-          fontSize: 15.sp,
-        ),
+        hintStyle: TextStyle(color: AppColors.textSecondary, fontSize: 15.sp),
       ),
 
       // ===== Elevated Button (Filled) =====
@@ -77,10 +65,7 @@ abstract final class AppTheme {
           elevation: 0,
           padding: EdgeInsets.symmetric(horizontal: 24.w),
           shape: RoundedRectangleBorder(borderRadius: buttonRadius),
-          textStyle: TextStyle(
-            fontSize: 16.sp,
-            fontWeight: FontWeight.w600,
-          ),
+          textStyle: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),
         ),
       ),
 
@@ -94,10 +79,7 @@ abstract final class AppTheme {
           ),
           padding: EdgeInsets.symmetric(horizontal: 24.w),
           shape: RoundedRectangleBorder(borderRadius: buttonRadius),
-          textStyle: TextStyle(
-            fontSize: 16.sp,
-            fontWeight: FontWeight.w600,
-          ),
+          textStyle: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),
         ),
       ),
 

@@ -1,5 +1,3 @@
-
-
 import 'package:fitness_app/config/errors/app_failure.dart';
 import 'package:fitness_app/config/localization/success_message_enum_mapper.dart';
 

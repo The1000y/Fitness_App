@@ -6,38 +6,32 @@ abstract final class AppColors {
   static const Color black = Color(0xFF000000);
 
   // ───── Primary (Orange) ─────
-  static const MaterialColor primary = MaterialColor(
-    0xFFFF4100,
-    <int, Color>{
-      50: Color(0xFFFFECE5),
-      100: Color(0xFFFFD9CC),
-      200: Color(0xFFFFB399),
-      300: Color(0xFFFF7A4C),
-      400: Color(0xFFFF5419),
-      500: Color(0xFFFF4100),
-      600: Color(0xFFE52700),
-      700: Color(0xFFB20000),
-      800: Color(0xFF7F0000),
-      900: Color(0xFF330000),
-    },
-  );
+  static const MaterialColor primary = MaterialColor(0xFFFF4100, <int, Color>{
+    50: Color(0xFFFFECE5),
+    100: Color(0xFFFFD9CC),
+    200: Color(0xFFFFB399),
+    300: Color(0xFFFF7A4C),
+    400: Color(0xFFFF5419),
+    500: Color(0xFFFF4100),
+    600: Color(0xFFE52700),
+    700: Color(0xFFB20000),
+    800: Color(0xFF7F0000),
+    900: Color(0xFF330000),
+  });
 
   // ───── Neutral (Grey) ─────
-  static const MaterialColor neutral = MaterialColor(
-    0xFF242424,
-    <int, Color>{
-      50: Color(0xFFE9E9E9),
-      100: Color(0xFFD3D3D3),
-      200: Color(0xFFBDBDBD),
-      300: Color(0xFFA7A7A7),
-      400: Color(0xFF919191),
-      500: Color(0xFF242424),
-      600: Color(0xFF202020),
-      700: Color(0xFF191919),
-      800: Color(0xFF111111),
-      900: Color(0xFF0A0A0A),
-    },
-  );
+  static const MaterialColor neutral = MaterialColor(0xFF242424, <int, Color>{
+    50: Color(0xFFE9E9E9),
+    100: Color(0xFFD3D3D3),
+    200: Color(0xFFBDBDBD),
+    300: Color(0xFFA7A7A7),
+    400: Color(0xFF919191),
+    500: Color(0xFF242424),
+    600: Color(0xFF202020),
+    700: Color(0xFF191919),
+    800: Color(0xFF111111),
+    900: Color(0xFF0A0A0A),
+  });
 
   // ───── Semantic Colors ─────
   static const Color background = neutral;

@@ -7,10 +7,10 @@ import 'package:injectable/injectable.dart';
 
 @lazySingleton
 class AppInterceptors extends QueuedInterceptor {
-  AppInterceptors(this._storage , this._authCubit);
+  AppInterceptors(this._storage, this._authCubit);
 
   final FlutterSecureStorage _storage;
-  final AppAuthCubit _authCubit ;
+  final AppAuthCubit _authCubit;
   static final String _signInPath = ApiStrings.signin;
   static final String _signUpPath = ApiStrings.signup;
   static final String _forgotPasswordPath = ApiStrings.forgotPassword;
@@ -38,9 +38,12 @@ class AppInterceptors extends QueuedInterceptor {
     }
     handler.next(options);
   }
-  
+
   @override
-  Future<void> onResponse(Response response, ResponseInterceptorHandler handler) async {
+  Future<void> onResponse(
+    Response response,
+    ResponseInterceptorHandler handler,
+  ) async {
     if (response.requestOptions.path.contains(_signInPath)) {
       await setToken(response.data["token"]);
     }
@@ -73,5 +76,3 @@ class AppInterceptors extends QueuedInterceptor {
     return token != null && token.isNotEmpty;
   }
 }
-
-

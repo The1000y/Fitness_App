@@ -1,4 +1,3 @@
-
 import 'package:fitness_app/config/utils/auth_validators.dart';
 import 'package:fitness_app/l10n/app_localizations.dart';
 

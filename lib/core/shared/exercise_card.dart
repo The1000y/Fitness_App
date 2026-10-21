@@ -36,10 +36,7 @@ class ExerciseCard extends StatelessWidget {
         height: size.h,
         decoration: BoxDecoration(
           borderRadius: radius,
-          image: DecorationImage(
-            image: AssetImage(image),
-            fit: BoxFit.cover,
-          ),
+          image: DecorationImage(image: AssetImage(image), fit: BoxFit.cover),
         ),
         child: Align(
           alignment: Alignment.bottomCenter,

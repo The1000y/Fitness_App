@@ -78,14 +78,12 @@ class _BaseUiEventListenerState<
           SnackBar(
             content: Text(
               successMessageMapper(event.message, local) ?? '',
-              style: theme.textTheme.bodyMedium?.copyWith(
+              style:
+                  theme.textTheme.bodyMedium?.copyWith(
                     color: AppColors.white,
                     fontSize: 14.sp,
                   ) ??
-                  TextStyle(
-                    color: AppColors.white,
-                    fontSize: 14.sp,
-                  ),
+                  TextStyle(color: AppColors.white, fontSize: 14.sp),
             ),
             backgroundColor: Colors.green.shade700,
           ),
@@ -95,24 +93,24 @@ class _BaseUiEventListenerState<
           SnackBar(
             content: Text(
               appFailureMessageMapper(event.failure, local),
-              style: theme.textTheme.bodyMedium?.copyWith(
+              style:
+                  theme.textTheme.bodyMedium?.copyWith(
                     color: AppColors.white,
                     fontSize: 14.sp,
                   ) ??
-                  TextStyle(
-                    color: AppColors.white,
-                    fontSize: 14.sp,
-                  ),
+                  TextStyle(color: AppColors.white, fontSize: 14.sp),
             ),
             backgroundColor: theme.colorScheme.error,
           ),
         );
       case NavigateTo():
-        Navigator.of(context)
-            .pushNamed(event.routeName, arguments: event.arguments);
+        Navigator.of(
+          context,
+        ).pushNamed(event.routeName, arguments: event.arguments);
       case NavigateReplaceTo():
-        Navigator.of(context)
-            .pushReplacementNamed(event.routeName, arguments: event.arguments);
+        Navigator.of(
+          context,
+        ).pushReplacementNamed(event.routeName, arguments: event.arguments);
       case PopRoute():
         Navigator.of(context).pop(event.result);
     }

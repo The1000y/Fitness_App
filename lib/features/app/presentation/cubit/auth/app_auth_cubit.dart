@@ -4,10 +4,10 @@ import 'package:fitness_app/features/app/presentation/cubit/auth/app_auth_ui_eve
 import 'package:injectable/injectable.dart';
 
 @lazySingleton
-class AppAuthCubit extends BaseCubit<AppAuthState , AppAuthUiEvent> {
-    AppAuthCubit() : super(const AppAuthState());
+class AppAuthCubit extends BaseCubit<AppAuthState, AppAuthUiEvent> {
+  AppAuthCubit() : super(const AppAuthState());
 
-    void sessionExpired() {
+  void sessionExpired() {
     emitEvent(const SessionExpiredUiEvent());
   }
 }

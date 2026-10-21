@@ -36,37 +36,36 @@ class CustomButton extends StatelessWidget {
 
     final child = isLoading
         ? SizedBox(
-      width: 22.r,
-      height: 22.r,
-      child: CircularProgressIndicator(
-        strokeWidth: 2.5,
-        color: isFilled ? AppColors.textPrimary : theme.colorScheme.primary,
-      ),
-    )
+            width: 22.r,
+            height: 22.r,
+            child: CircularProgressIndicator(
+              strokeWidth: 2.5,
+              color: isFilled
+                  ? AppColors.textPrimary
+                  : theme.colorScheme.primary,
+            ),
+          )
         : Row(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        if (icon != null) ...[
-          icon!,
-          SizedBox(width: 8.w),
-        ],
-        Text(label),
-      ],
-    );
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              if (icon != null) ...[icon!, SizedBox(width: 8.w)],
+              Text(label),
+            ],
+          );
 
     return SizedBox(
       width: width ?? double.infinity,
       height: height ?? 52.h,
       child: isFilled
           ? ElevatedButton(
-        onPressed: _canPress ? onPressed : null,
-        child: child,
-      )
+              onPressed: _canPress ? onPressed : null,
+              child: child,
+            )
           : OutlinedButton(
-        onPressed: _canPress ? onPressed : null,
-        child: child,
-      ),
+              onPressed: _canPress ? onPressed : null,
+              child: child,
+            ),
     );
   }
 }

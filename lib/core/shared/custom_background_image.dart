@@ -22,17 +22,10 @@ class CustomBackgroundImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Positioned.fill(
-          child: Image.asset(
-            backgroundImage,
-            fit: fit,
-          ),
-        ),
+        Positioned.fill(child: Image.asset(backgroundImage, fit: fit)),
         if (showOverlay)
           Positioned.fill(
-            child: ColoredBox(
-              color: overlayColor ?? AppColors.overlay,
-            ),
+            child: ColoredBox(color: overlayColor ?? AppColors.overlay),
           ),
         child,
       ],
