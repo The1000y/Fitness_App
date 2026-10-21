@@ -1,33 +1,46 @@
-import 'package:fitness_app/core/shared/app_blur_effect.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
+
+import '../theme/app_colors/app_colors.dart';
+import 'app_blur_effect.dart';
 
 class AppBlurCard extends StatelessWidget {
   const AppBlurCard({
     super.key,
     required this.child,
-    this.borderRadius = const BorderRadius.all(Radius.circular(30)),
-    this.padding = const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
+    this.borderRadius,
+    this.padding,
     this.showWhiteBorders = false,
+    this.backgroundColor,
   });
 
   final Widget child;
   final bool showWhiteBorders;
-  final EdgeInsetsGeometry padding;
-  final BorderRadius borderRadius;
+  final EdgeInsetsGeometry? padding;
+  final BorderRadius? borderRadius;
+  final Color? backgroundColor;
 
   @override
   Widget build(BuildContext context) {
+    final effectiveBorderRadius =
+        borderRadius ?? BorderRadius.circular(30.r);
+    final effectivePadding =
+        padding ?? EdgeInsets.symmetric(horizontal: 20.w, vertical: 24.h);
+
     return ClipRRect(
-      borderRadius: borderRadius,
+      borderRadius: effectiveBorderRadius,
       child: AppBlurEffect(
         child: Container(
           width: double.infinity,
-          padding: padding,
+          padding: effectivePadding,
           decoration: BoxDecoration(
-            color: const Color(0x1A242424),
-            borderRadius: borderRadius,
-            border: showWhiteBorders == true
-                ? Border.all(color: Colors.white.withValues(alpha: .15), width: 1,)
+            color: backgroundColor ?? AppColors.surfaceGlass,
+            borderRadius: effectiveBorderRadius,
+            border: showWhiteBorders
+                ? Border.all(
+                    color: AppColors.white.withValues(alpha: 0.15),
+                    width: 1.w,
+                  )
                 : null,
           ),
           child: child,

@@ -4,9 +4,11 @@ import 'package:fitness_app/config/localization/success_message_enum_mapper.dart
 import 'package:fitness_app/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 
 import '../../../config/base/base_cubit.dart';
 import '../../../config/base/base_ui_event.dart';
+import '../theme/app_colors/app_colors.dart';
 
 class BaseUiEventListener<C extends BaseCubit<S, E>, S, E extends BaseUiEvent>
     extends StatefulWidget {
@@ -68,20 +70,41 @@ class _BaseUiEventListenerState<
 
   void _handleCommonEvent(BuildContext context, CommonUiEvent event) {
     final local = AppLocalizations.of(context)!;
+    final theme = Theme.of(context);
 
     switch (event) {
       case ShowSuccessMessage():
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(successMessageMapper(event.message, local) ?? ''),
-            backgroundColor: Colors.green,
+            content: Text(
+              successMessageMapper(event.message, local) ?? '',
+              style: theme.textTheme.bodyMedium?.copyWith(
+                    color: AppColors.white,
+                    fontSize: 14.sp,
+                  ) ??
+                  TextStyle(
+                    color: AppColors.white,
+                    fontSize: 14.sp,
+                  ),
+            ),
+            backgroundColor: Colors.green.shade700,
           ),
         );
       case ShowFailureMessage():
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(appFailureMessageMapper(event.failure, local)),
-            backgroundColor: Colors.red,
+            content: Text(
+              appFailureMessageMapper(event.failure, local),
+              style: theme.textTheme.bodyMedium?.copyWith(
+                    color: AppColors.white,
+                    fontSize: 14.sp,
+                  ) ??
+                  TextStyle(
+                    color: AppColors.white,
+                    fontSize: 14.sp,
+                  ),
+            ),
+            backgroundColor: theme.colorScheme.error,
           ),
         );
       case NavigateTo():

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
+import '../theme/app_colors/app_colors.dart';
 
 class AppTextFormField extends StatefulWidget {
   const AppTextFormField({
@@ -32,8 +35,43 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final borderRadius = BorderRadius.circular(20.r);
+
+    final defaultBorder = OutlineInputBorder(
+      borderRadius: borderRadius,
+      borderSide: BorderSide(
+        color: AppColors.border.withValues(alpha: 0.4),
+        width: 1.w,
+      ),
+    );
+
+    final focusedBorder = OutlineInputBorder(
+      borderRadius: borderRadius,
+      borderSide: BorderSide(
+        color: theme.colorScheme.primary,
+        width: 1.2.w,
+      ),
+    );
+
+    final errorBorder = OutlineInputBorder(
+      borderRadius: borderRadius,
+      borderSide: BorderSide(
+        color: theme.colorScheme.secondary,
+        width: 1.w,
+      ),
+    );
+
+    final focusedErrorBorder = OutlineInputBorder(
+      borderRadius: borderRadius,
+      borderSide: BorderSide(
+        color: theme.colorScheme.secondary,
+        width: 1.2.w,
+      ),
+    );
+
     return SizedBox(
-      height: 48,
+      height: widget.validator != null ? null : 48.h,
       child: TextFormField(
         controller: widget.controller,
         obscureText: widget.isPassword ? _obscureText : false,
@@ -41,93 +79,70 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
         validator: widget.validator,
         onChanged: widget.onChanged,
         textInputAction: widget.textInputAction,
-        style: const TextStyle(
-          color: Colors.white,
-          fontSize: 15,
-        ),
-        cursorColor: Colors.white,
+        style: theme.textTheme.bodyMedium?.copyWith(
+              color: AppColors.textPrimary,
+              fontSize: 15.sp,
+            ) ??
+            TextStyle(
+              color: AppColors.textPrimary,
+              fontSize: 15.sp,
+            ),
+        cursorColor: theme.colorScheme.primary,
         decoration: InputDecoration(
           isDense: true,
           hintText: widget.hintText,
-          hintStyle: TextStyle(
-            color: Colors.white.withValues(alpha: 0.6),
-            fontSize: 15,
-          ),
+          hintStyle: theme.inputDecorationTheme.hintStyle?.copyWith(
+                fontSize: 15.sp,
+              ) ??
+              TextStyle(
+                color: AppColors.textSecondary,
+                fontSize: 15.sp,
+              ),
           prefixIcon: widget.prefixIcon != null
               ? Padding(
-            padding: const EdgeInsets.only(left: 16, right: 12),
-            child: SvgPicture.asset(
-              widget.prefixIcon!,
-              width: 18,
-              height: 18,
-              colorFilter: ColorFilter.mode(
-                Colors.white.withValues(alpha: 0.7),
-                BlendMode.srcIn,
-              ),
-            ),
-          )
+                  padding: EdgeInsets.only(left: 16.w, right: 12.w),
+                  child: SvgPicture.asset(
+                    widget.prefixIcon!,
+                    width: 18.w,
+                    height: 18.h,
+                    colorFilter: const ColorFilter.mode(
+                      AppColors.textSecondary,
+                      BlendMode.srcIn,
+                    ),
+                  ),
+                )
               : null,
-          prefixIconConstraints: const BoxConstraints(
-            minWidth: 46,
-            minHeight: 18,
+          prefixIconConstraints: BoxConstraints(
+            minWidth: 46.w,
+            minHeight: 18.h,
           ),
           suffixIcon: widget.isPassword
               ? IconButton(
-            onPressed: () {
-              setState(() {
-                _obscureText = !_obscureText;
-              });
-            },
-            padding: EdgeInsets.zero,
-            constraints: const BoxConstraints(),
-            icon: Icon(
-              _obscureText
-                  ? Icons.visibility_outlined
-                  : Icons.visibility_off_outlined,
-              color: Colors.white.withValues(alpha: 0.7),
-              size: 20,
-            ),
-          )
+                  onPressed: () {
+                    setState(() {
+                      _obscureText = !_obscureText;
+                    });
+                  },
+                  padding: EdgeInsets.zero,
+                  constraints: const BoxConstraints(),
+                  icon: Icon(
+                    _obscureText
+                        ? Icons.visibility_outlined
+                        : Icons.visibility_off_outlined,
+                    color: AppColors.textSecondary,
+                    size: 20.r,
+                  ),
+                )
               : null,
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: 16,
-            vertical: 12,
+          contentPadding: EdgeInsets.symmetric(
+            horizontal: 16.w,
+            vertical: 12.h,
           ),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20),
-            borderSide: BorderSide(
-              color: Colors.white.withValues(alpha: 0.4),
-              width: 1,
-            ),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20),
-            borderSide: BorderSide(
-              color: Colors.white.withValues(alpha: 0.4),
-              width: 1,
-            ),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20),
-            borderSide: const BorderSide(
-              color: Colors.white,
-              width: 1.2,
-            ),
-          ),
-          errorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20),
-            borderSide: const BorderSide(
-              color: Colors.redAccent,
-              width: 1,
-            ),
-          ),
-          focusedErrorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20),
-            borderSide: const BorderSide(
-              color: Colors.redAccent,
-              width: 1.2,
-            ),
-          ),
+          border: defaultBorder,
+          enabledBorder: defaultBorder,
+          focusedBorder: focusedBorder,
+          errorBorder: errorBorder,
+          focusedErrorBorder: focusedErrorBorder,
         ),
       ),
     );
