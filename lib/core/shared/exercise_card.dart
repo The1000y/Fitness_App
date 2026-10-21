@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 
 import '../theme/app_colors/app_colors.dart';
-import 'app_blur_card.dart';
+import 'custom_blur_card.dart';
 
 class ExerciseCard extends StatelessWidget {
   const ExerciseCard({
@@ -25,7 +25,7 @@ class ExerciseCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final effectiveRadius = BorderRadius.circular(borderRadius.r);
+    final radius = BorderRadius.circular(borderRadius.r);
     final effectivePadding =
         padding ?? EdgeInsets.symmetric(vertical: 8.h, horizontal: 6.w);
 
@@ -35,7 +35,7 @@ class ExerciseCard extends StatelessWidget {
         width: size.w,
         height: size.h,
         decoration: BoxDecoration(
-          borderRadius: effectiveRadius,
+          borderRadius: radius,
           image: DecorationImage(
             image: AssetImage(image),
             fit: BoxFit.cover,
@@ -43,9 +43,9 @@ class ExerciseCard extends StatelessWidget {
         ),
         child: Align(
           alignment: Alignment.bottomCenter,
-          child: AppBlurCard(
+          child: CustomBlurCard(
             padding: effectivePadding,
-            borderRadius: effectiveRadius,
+            borderRadius: radius,
             child: Container(
               width: double.infinity,
               color: AppColors.surfaceGlass,
@@ -55,15 +55,10 @@ class ExerciseCard extends StatelessWidget {
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: theme.textTheme.labelSmall?.copyWith(
-                      color: AppColors.textPrimary,
-                      fontSize: 13.sp,
-                      fontWeight: FontWeight.w600,
-                    ) ??
-                    TextStyle(
-                      color: AppColors.textPrimary,
-                      fontSize: 13.sp,
-                      fontWeight: FontWeight.w600,
-                    ),
+                  color: AppColors.textPrimary,
+                  fontSize: 13.sp,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
           ),

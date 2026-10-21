@@ -2,8 +2,8 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-class AppBlurEffect extends StatelessWidget {
-  const AppBlurEffect({super.key, required this.child, this.sigma = 12});
+class CustomBlurEffect extends StatelessWidget {
+  const CustomBlurEffect({super.key, required this.child, this.sigma = 12});
 
   final Widget child;
   final double sigma;

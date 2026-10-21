@@ -1,8 +1,8 @@
 import 'package:fitness_app/core/constants/app_images.dart';
-import 'package:fitness_app/core/shared/app_back_bar_bar.dart';
-import 'package:fitness_app/core/shared/app_background_image.dart';
-import 'package:fitness_app/core/shared/app_blur_card.dart';
-import 'package:fitness_app/core/shared/app_button.dart';
+import 'package:fitness_app/core/shared/custom_app_bar.dart';
+import 'package:fitness_app/core/shared/custom_background_image.dart';
+import 'package:fitness_app/core/shared/custom_blur_card.dart';
+import 'package:fitness_app/core/shared/custom_button.dart';
 import 'package:fitness_app/core/shared/exercise_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
@@ -10,18 +10,18 @@ import 'package:gap/gap.dart';
 
 import 'core/constants/app_icons.dart';
 import 'core/theme/app_colors/app_colors.dart';
-import 'core/shared/app_text_form_field.dart';
+import 'core/shared/custom_text_form_field.dart';
 
 class TestView extends StatelessWidget {
   const TestView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return AppBackgroundImage(
+    return CustomBackgroundImage(
       backgroundImage: AppImages.layoutBackground,
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        appBar: AppBackAppBar(
+        appBar: CustomAppBar(
          titleWidget: Image.asset(AppImages.robotChat),
           actions: [
             IconButton(
@@ -39,11 +39,11 @@ class TestView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
 
               children: [
-                AppButton(label: 'Login', onPressed: () {}),
+                CustomButton(label: 'Login', onPressed: () {}),
 
                 const Gap(16),
 
-                AppButton(
+                CustomButton(
                   label: 'Back',
                   variant: ButtonVariant.outlined,
                   width: 100.w,
@@ -52,7 +52,7 @@ class TestView extends StatelessWidget {
 
                 const Gap(16),
 
-                AppBlurCard(
+                CustomBlurCard(
                   showWhiteBorders: true,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -64,7 +64,7 @@ class TestView extends StatelessWidget {
 
                       const Gap(8),
 
-                      AppTextFormField(
+                      CustomTextFormField(
                         hintText: 'Email',
                         prefixIcon: AppIcons.mail,
                         keyboardType: TextInputType.emailAddress,
@@ -73,7 +73,7 @@ class TestView extends StatelessWidget {
 
                       const SizedBox(height: 16),
 
-                      AppTextFormField(
+                      CustomTextFormField(
                         hintText: 'Password',
                         prefixIcon: AppIcons.lock,
                         isPassword: true,
@@ -82,7 +82,7 @@ class TestView extends StatelessWidget {
 
                       const Gap(16),
 
-                      AppButton(
+                      CustomButton(
                         label: 'Login',
                         variant: ButtonVariant.outlined,
                         onPressed: () {},
