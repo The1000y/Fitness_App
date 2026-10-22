@@ -1,0 +1,3 @@
+class AppAuthState {
+  const AppAuthState();
+}

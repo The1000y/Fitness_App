@@ -1,0 +1,237 @@
+{
+  "@@locale": "ar",
+  "skip": "تخطي",
+  "next": "التالي",
+  "back": "رجوع",
+  "done": "تم",
+  "doIt": "ابدأ الآن",
+  "confirm": "تأكيد",
+  "yes": "نعم",
+  "no": "لا",
+  "seeAll": "عرض الكل",
+  "or": "أو",
+  "stepOfTotal": "{current}/{total}",
+  "@stepOfTotal": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "personalizedPlanHint": "هذا يساعدنا في إنشاء خطتك الخاصة",
+  "onboardingTitle1": "ثمن التميز هو الانضباط",
+  "onboardingTitle2": "اللياقة لم تكن ممتعة بهذا الشكل من قبل",
+  "onboardingTitle3": "لا مزيد من الأعذار. ابدأ الآن",
+  "loginWelcomeBack": "أهلاً بك، سعداء بعودتك",
+  "login": "تسجيل الدخول",
+  "email": "البريد الإلكتروني",
+  "password": "كلمة المرور",
+  "oldPassword": "كلمة المرور القديمة",
+  "newPassword": "كلمة المرور الجديدة",
+  "confirmPassword": "تأكيد كلمة المرور",
+  "forgotPassword": "نسيت كلمة المرور؟",
+  "dontHaveAccount": "ليس لديك حساب بعد؟",
+  "register": "إنشاء حساب",
+  "registerTitle": "أهلاً بك، أنشئ حسابك",
+  "firstName": "الاسم الأول",
+  "lastName": "اسم العائلة",
+  "alreadyHaveAccount": "لديك حساب بالفعل؟",
+  "forgotPasswordTitle": "نسيت كلمة المرور",
+  "enterYourEmail": "أدخل بريدك الإلكتروني",
+  "sendOtp": "إرسال رمز التحقق",
+  "otpCode": "رمز التحقق",
+  "enterYourOtp": "أدخل رمز التحقق",
+  "checkYourEmail": "تحقق من بريدك الإلكتروني",
+  "didntReceiveCode": "لم يصلك رمز التحقق؟",
+  "resendCode": "إعادة إرسال الرمز؟",
+  "createNewPassword": "إنشاء كلمة مرور جديدة",
+  "passwordLengthHint": "تأكد أنها 8 أحرف أو أكثر",
+  "genderTitle": "حدثنا عن نفسك!",
+  "genderSubtitle": "نحتاج إلى معرفة جنسك",
+  "male": "ذكر",
+  "female": "أنثى",
+  "ageTitle": "كم عمرك؟",
+  "yearUnit": "سنة",
+  "weightTitle": "ما هو وزنك؟",
+  "kgUnit": "كجم",
+  "heightTitle": "ما هو طولك؟",
+  "cmUnit": "سم",
+  "goalTitle": "ما هو هدفك؟",
+  "goalGainWeight": "زيادة الوزن",
+  "goalLoseWeight": "خسارة الوزن",
+  "goalGetFitter": "تحسين اللياقة",
+  "goalGainFlexibility": "زيادة المرونة",
+  "goalLearnBasics": "تعلم الأساسيات",
+  "activityTitle": "ما هو مستوى نشاطك البدني المعتاد؟",
+  "activityRookie": "مبتدئ جداً",
+  "activityTrueBeast": "محترف بالفعل",
+  "levelBeginner": "مبتدئ",
+  "levelIntermediate": "متوسط",
+  "levelAdvanced": "متقدم",
+  "homeGreeting": "مرحباً {name}،",
+  "@homeGreeting": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "homeSubtitle": "هيا نبدأ يومك",
+  "explore": "استكشف",
+  "category": "الفئة",
+  "categoryGym": "الجيم",
+  "categoryFitness": "اللياقة",
+  "categoryYoga": "اليوغا",
+  "categoryAerobics": "الأيروبكس",
+  "categoryTrainer": "المدرب",
+  "recommendationToday": "توصية اليوم",
+  "jogging": "الجري الخفيف",
+  "pushUp": "تمرين الضغط",
+  "squat": "تمرين القرفصاء",
+  "upcomingWorkouts": "التمارين القادمة",
+  "fullBody": "الجسم كامل",
+  "chest": "الصدر",
+  "arm": "الذراع",
+  "arms": "الذراعان",
+  "shoulder": "الكتف",
+  "bodyBack": "الظهر",
+  "legs": "الأرجل",
+  "stomach": "البطن",
+  "recommendationForYou": "توصيات لك",
+  "breakfast": "الفطور",
+  "lunch": "الغداء",
+  "dinner": "العشاء",
+  "popularTraining": "التدريبات الشائعة",
+  "strengthenChest": "تمارين تقوّي صدرك",
+  "strengthenBack": "تمارين تقوّي ظهرك",
+  "strengthenBody": "تمارين تقوّي جسمك",
+  "tasksCount": "{count} مهمة",
+  "@tasksCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "workouts": "التمارين",
+  "minutesShort": "{minutes} دقيقة",
+  "@minutesShort": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "caloriesShort": "{calories} سعرة",
+  "@caloriesShort": {
+    "placeholders": {
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "setsAndReps": "{sets} مجموعات × {reps} تكرار",
+  "@setsAndReps": {
+    "placeholders": {
+      "sets": {
+        "type": "int"
+      },
+      "reps": {
+        "type": "int"
+      }
+    }
+  },
+  "foodRecommendation": "توصيات الطعام",
+  "energy": "الطاقة",
+  "protein": "البروتين",
+  "carbs": "الكربوهيدرات",
+  "fat": "الدهون",
+  "ingredients": "المكونات",
+  "recommendation": "التوصيات",
+  "smartCoach": "المدرب الذكي",
+  "chatGreeting": "مرحباً {name}، أنا مدربك الذكي",
+  "@chatGreeting": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "chatHelpPrompt": "كيف يمكنني مساعدتك اليوم؟",
+  "getStarted": "ابدأ",
+  "previousConversations": "المحادثات السابقة",
+  "profile": "الملف الشخصي",
+  "editProfile": "تعديل الملف الشخصي",
+  "changePassword": "تغيير كلمة المرور",
+  "selectLanguage": "اختيار اللغة",
+  "currentLanguageName": "العربية",
+  "security": "الأمان",
+  "privacyPolicy": "سياسة الخصوصية",
+  "help": "المساعدة",
+  "logout": "تسجيل الخروج",
+  "yourWeightTapToEdit": "وزنك (اضغط للتعديل)",
+  "yourGoalTapToEdit": "هدفك (اضغط للتعديل)",
+  "yourActivityTapToEdit": "مستوى نشاطك (اضغط للتعديل)",
+  "closeAppConfirm": "هل أنت متأكد أنك تريد إغلاق التطبيق؟",
+  "accepted": "تم قبول الطلب بنجاح",
+  "orderStatusUpdatedSuccessfully": "تم تحديث حالة الطلب بنجاح",
+  "failureInternetConnection": "لا يوجد اتصال بالإنترنت. تحقق من الشبكة وحاول مرة أخرى.",
+  "failureTimeout": "انتهت مهلة الطلب. حاول مرة أخرى.",
+  "failureCancel": "تم إلغاء الطلب.",
+  "failureBadCertificate": "فشل الاتصال الآمن. شهادة الخادم غير صالحة.",
+  "failureBadRequest": "طلب غير صالح. تحقق من بياناتك وحاول مرة أخرى.",
+  "failureUnauthorized": "انتهت جلستك. يرجى تسجيل الدخول مرة أخرى.",
+  "failureForbidden": "ليس لديك صلاحية للقيام بهذا الإجراء.",
+  "failureNotFound": "العنصر المطلوب غير موجود.",
+  "failureMethodNotAllowed": "هذا الإجراء غير مسموح به.",
+  "failureConflict": "يوجد تعارض مع الحالة الحالية. حدّث الصفحة وحاول مرة أخرى.",
+  "failureUnprocessableEntity": "تعذر معالجة بياناتك. راجعها وحاول مرة أخرى.",
+  "failureTooManyRequests": "طلبات كثيرة جداً. انتظر قليلاً ثم حاول مرة أخرى.",
+  "failureServerError": "حدث خطأ في الخادم. حاول لاحقاً.",
+  "failureUnknown": "حدث خطأ ما. حاول مرة أخرى.",
+  "emailRequired": "البريد الإلكتروني مطلوب",
+  "emailInvalid": "يرجى إدخال بريد إلكتروني صالح",
+  "passwordRequired": "كلمة المرور مطلوبة",
+  "passwordMinLength": "يجب ألا تقل كلمة المرور عن 8 أحرف",
+  "passwordStrongRules": "يجب أن تحتوي كلمة المرور على حرف كبير وحرف صغير ورقم ورمز خاص",
+  "confirmPasswordRequired": "يرجى تأكيد كلمة المرور",
+  "confirmPasswordMismatch": "كلمتا المرور غير متطابقتين",
+  "usernameRequired": "اسم المستخدم مطلوب",
+  "usernameMinLength": "اسم المستخدم قصير جداً",
+  "firstNameRequired": "الاسم الأول مطلوب",
+  "firstNameOnlyLetters": "يجب أن يحتوي الاسم الأول على أحرف فقط",
+  "lastNameRequired": "اسم العائلة مطلوب",
+  "lastNameOnlyLetters": "يجب أن يحتوي اسم العائلة على أحرف فقط",
+  "phoneRequired": "رقم الهاتف مطلوب",
+  "phoneInvalid": "يرجى إدخال رقم هاتف صالح",
+  "fieldRequired": "هذا الحقل مطلوب",
+  "fieldMinLength": "هذا الحقل قصير جداً",
+  "accountCreated": "تم إنشاء الحساب بنجاح",
+  "loggedIn": "تم تسجيل الدخول بنجاح",
+  "passwordChanged": "تم تغيير كلمة المرور بنجاح",
+
+  "profileUpdated": "تم تحديث الملف الشخصي",
+  "profilePhotoUpdated": "تم تحديث صورة الملف الشخصي",
+
+  "workoutSaved": "تم حفظ التمرين",
+  "workoutCompleted": "تم إنهاء التمرين، أحسنت!",
+  "workoutPlanStarted": "تم بدء خطة التمرين",
+  "workoutDeleted": "تم حذف التمرين",
+  "exerciseAddedToWorkout": "تمت إضافة التمرين إلى جدولك",
+
+  "mealLogged": "تم تسجيل الوجبة",
+  "waterLogged": "تم تسجيل كمية المياه",
+
+  "weightLogged": "تم تسجيل الوزن",
+  "measurementsSaved": "تم حفظ القياسات",
+  "progressPhotoUploaded": "تم رفع صورة التقدم",
+  "goalCreated": "تم إنشاء الهدف",
+  "goalAchieved": "تم تحقيق الهدف، مبروك!",
+  "newPersonalRecord": "رقم شخصي جديد!",
+
+  "reminderSet": "تم ضبط التذكير",
+  "settingsSaved": "تم حفظ الإعدادات"
+}
