@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:fitness_app/core/constants/app_images.dart';
 import 'package:fitness_app/core/constants/app_strings.dart';
 import 'package:fitness_app/core/constants/app_test_keys.dart';
@@ -13,6 +11,7 @@ import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 import 'package:gap/gap.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
+import '../../../../../config/routing/app_routes.dart';
 import '../../../../../core/theme/app_colors/app_colors.dart';
 
 class OnboardingView extends StatefulWidget {
@@ -205,7 +204,11 @@ class _OnboardingViewState extends State<OnboardingView> {
                                 variant: ButtonVariant.filled,
                                 onPressed: () {
                                   if (currentPage == _pages.length - 1) {
-                                    log('Go to Login Page');
+                                    Navigator.pushNamedAndRemoveUntil(
+                                      context,
+                                      AppRoutes.login,
+                                      (route) => false,
+                                    );
                                   } else {
                                     _goToPage(currentPage + 1);
                                   }

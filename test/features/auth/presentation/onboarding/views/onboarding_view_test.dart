@@ -1,3 +1,4 @@
+import 'package:fitness_app/config/routing/app_routes.dart';
 import 'package:fitness_app/core/constants/app_images.dart';
 import 'package:fitness_app/core/constants/app_strings.dart';
 import 'package:fitness_app/core/constants/app_test_keys.dart';
@@ -23,7 +24,13 @@ void main() {
         designSize: const Size(375, 812),
         minTextAdapt: true,
         splitScreenMode: true,
-        child: const MaterialApp(home: OnboardingView()),
+        child: MaterialApp(
+          home: const OnboardingView(),
+          routes: {
+            AppRoutes.login: (context) =>
+                const Scaffold(body: Text('Login Screen')),
+          },
+        ),
       ),
     );
     await tester.pumpAndSettle();
@@ -170,6 +177,9 @@ void main() {
           find.byKey(const Key(AppTestKeys.onboardingNextButton)),
         );
         await tester.pumpAndSettle();
+
+        expect(find.text('Login Screen'), findsOneWidget);
+        expect(find.byType(OnboardingView), findsNothing);
       },
     );
 
