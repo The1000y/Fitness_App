@@ -1,12 +1,12 @@
 import 'package:fitness_app/config/routing/app_routes.dart';
-import 'package:fitness_app/test_view.dart';
+import 'package:fitness_app/features/auth/presentation/forget_password/view/forget_password.dart';
 import 'package:flutter/material.dart';
 
 abstract final class GenerateRoutes {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case AppRoutes.splash:
-        return _pageRoute(const TestView(), settings);
+        return _pageRoute(const _StubScreen('Splash Screen'), settings);
 
       case AppRoutes.onboarding:
         return _pageRoute(const _StubScreen('Onboarding'), settings);
@@ -19,7 +19,7 @@ abstract final class GenerateRoutes {
         return _pageRoute(const _StubScreen('Register'), settings);
 
       case AppRoutes.forgotPassword:
-        return _pageRoute(const _StubScreen('Forgot Password'), settings);
+        return _pageRoute(const ForgetPassword(), settings);
 
       case AppRoutes.otpVerification:
         return _pageRoute(const _StubScreen('OTP Verification'), settings);
@@ -119,7 +119,9 @@ class _StubScreen extends StatelessWidget {
         child: ElevatedButton(
           onPressed: () => Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => TestView()),
+            MaterialPageRoute(
+              builder: (context) => const _StubScreen('Next'),
+            ),
           ),
           child: Text('Test'),
         ),
