@@ -233,5 +233,12 @@
   "newPersonalRecord": "New personal record!",
 
   "reminderSet": "Reminder set",
-  "settingsSaved": "Settings saved"
+  "settingsSaved": "Settings saved",
+  "otpRequired": "Verification code is required",
+  "otpIncomplete": "Please enter the complete verification code",
+  "otpInvalid": "Invalid verification code. Please try again.",
+  "otpExpired": "Verification code has expired. Please request a new one.",
+  "otpSentSuccessfully": "Verification code sent successfully",
+  "otpResentSuccessfully": "Verification code resent successfully",
+  "otpVerifiedSuccessfully": "Code verified successfully"
 }

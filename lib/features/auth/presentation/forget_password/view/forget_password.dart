@@ -61,12 +61,13 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                   Gap(96.h),
                   Text(
                     l10n.enterYourEmail,
-                    style: theme.textTheme.headlineSmall,
+                     style: theme.textTheme.headlineLarge,
+                  
                   ),
-                  Gap(8.h),
+                  Gap(2.h),
                   Text(
                     l10n.forgotPassword,
-                    style: theme.textTheme.headlineLarge,
+                      style: theme.textTheme.headlineSmall,
                   ),
                   Gap(24.h),
                   CustomBlurCard(

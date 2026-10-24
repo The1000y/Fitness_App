@@ -1,5 +1,7 @@
 import 'package:fitness_app/config/routing/app_routes.dart';
 import 'package:fitness_app/features/auth/presentation/forget_password/view/forget_password.dart';
+import 'package:fitness_app/features/auth/presentation/forget_password/view/reset_password.dart';
+import 'package:fitness_app/features/auth/presentation/forget_password/view/verify_otp.dart';
 import 'package:flutter/material.dart';
 
 abstract final class GenerateRoutes {
@@ -22,10 +24,10 @@ abstract final class GenerateRoutes {
         return _pageRoute(const ForgetPassword(), settings);
 
       case AppRoutes.otpVerification:
-        return _pageRoute(const _StubScreen('OTP Verification'), settings);
+        return _pageRoute(const VerifyOtp(), settings);
 
       case AppRoutes.createPassword:
-        return _pageRoute(const _StubScreen('Create Password'), settings);
+        return _pageRoute(const ResetPassword(), settings);
 
       case AppRoutes.changePassword:
         return _pageRoute(const _StubScreen('Change Password'), settings);

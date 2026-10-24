@@ -554,4 +554,26 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingsSaved => 'Settings saved';
+
+  @override
+  String get otpRequired => 'Verification code is required';
+
+  @override
+  String get otpIncomplete => 'Please enter the complete verification code';
+
+  @override
+  String get otpInvalid => 'Invalid verification code. Please try again.';
+
+  @override
+  String get otpExpired =>
+      'Verification code has expired. Please request a new one.';
+
+  @override
+  String get otpSentSuccessfully => 'Verification code sent successfully';
+
+  @override
+  String get otpResentSuccessfully => 'Verification code resent successfully';
+
+  @override
+  String get otpVerifiedSuccessfully => 'Code verified successfully';
 }
