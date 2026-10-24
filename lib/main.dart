@@ -62,7 +62,7 @@ class FitnessApp extends StatelessWidget {
         supportedLocales: AppLocalizations.supportedLocales,
         debugShowCheckedModeBanner: false,
         title: 'Fitness App',
-        initialRoute: AppRoutes.splash,
+        initialRoute: AppRoutes.onboarding,
         onGenerateRoute: GenerateRoutes.generateRoute,
       ),
     );

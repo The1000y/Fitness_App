@@ -29,6 +29,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: Colors.transparent,
       elevation: 0,
       centerTitle: true,
+      automaticallyImplyLeading: showBackButton,
+
       leading: showBackButton
           ? IconButton(
               onPressed: onBackTap ?? () => Navigator.maybePop(context),
@@ -66,7 +68,14 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                       ),
                 )
               : null),
-      actions: actions,
+      actions: actions != null
+          ? [
+              RPadding(
+                padding: REdgeInsets.only(right: 16),
+                child: Row(mainAxisSize: MainAxisSize.min, children: actions!),
+              ),
+            ]
+          : null,
     );
   }
 

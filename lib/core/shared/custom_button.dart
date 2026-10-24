@@ -50,7 +50,7 @@ class CustomButton extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               if (icon != null) ...[icon!, SizedBox(width: 8.w)],
-              Text(label),
+              Flexible(fit: FlexFit.loose, child: Text(label)),
             ],
           );
 
