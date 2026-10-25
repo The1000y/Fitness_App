@@ -29,6 +29,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: Colors.transparent,
       elevation: 0,
       centerTitle: true,
+      automaticallyImplyLeading: showBackButton,
       leading: showBackButton
           ? IconButton(
               onPressed: onBackTap ?? () => Navigator.maybePop(context),
@@ -66,6 +67,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                       ),
                 )
               : null),
+      actionsPadding: REdgeInsets.only(right: 16),
       actions: actions,
     );
   }

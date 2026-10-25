@@ -188,6 +188,12 @@ abstract class AppLocalizations {
   /// **'No more excuses. Do it now'**
   String get onboardingTitle3;
 
+  /// No description provided for @onboardingDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Lorem ipsum dolor sit amet consectetur. Eu urna ut gravida quis id pretium purus. Mauris massa'**
+  String get onboardingDescription;
+
   /// No description provided for @loginWelcomeBack.
   ///
   /// In en, this message translates to:

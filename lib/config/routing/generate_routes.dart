@@ -1,4 +1,5 @@
 import 'package:fitness_app/config/routing/app_routes.dart';
+import 'package:fitness_app/features/auth/presentation/onboarding/views/onboarding_view.dart';
 import 'package:fitness_app/test_view.dart';
 import 'package:flutter/material.dart';
 
@@ -9,7 +10,7 @@ abstract final class GenerateRoutes {
         return _pageRoute(const TestView(), settings);
 
       case AppRoutes.onboarding:
-        return _pageRoute(const _StubScreen('Onboarding'), settings);
+        return _pageRoute(const OnboardingView(), settings);
 
       // Auth
       case AppRoutes.login:
