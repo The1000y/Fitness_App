@@ -1,15 +1,16 @@
 import 'package:fitness_app/core/constants/app_images.dart';
-import 'package:fitness_app/core/constants/app_strings.dart';
 import 'package:fitness_app/core/constants/app_test_keys.dart';
 import 'package:fitness_app/core/shared/custom_background_image.dart';
 import 'package:fitness_app/core/shared/custom_blur_card.dart';
 import 'package:fitness_app/core/shared/custom_button.dart';
 import 'package:fitness_app/features/auth/domain/entities/onboarding/onboarding_entity.dart';
+import 'package:fitness_app/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 import 'package:gap/gap.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:uuid/uuid.dart';
 
 import '../../../../../config/routing/app_routes.dart';
 import '../../../../../core/theme/app_colors/app_colors.dart';
@@ -24,23 +25,6 @@ class OnboardingView extends StatefulWidget {
 class _OnboardingViewState extends State<OnboardingView> {
   late PageController _pageController;
   int currentPage = 0;
-  final List<OnboardingEntity> _pages = [
-    OnboardingEntity(
-      image: AppImages.avatar(31),
-      title: AppStrings.onboarding1Title,
-      description: AppStrings.onboardingDescription,
-    ),
-    OnboardingEntity(
-      image: AppImages.avatar(30),
-      title: AppStrings.onboarding2Title,
-      description: AppStrings.onboardingDescription,
-    ),
-    OnboardingEntity(
-      image: AppImages.avatar(29),
-      title: AppStrings.onboarding3Title,
-      description: AppStrings.onboardingDescription,
-    ),
-  ];
 
   @override
   void initState() {
@@ -61,6 +45,29 @@ class _OnboardingViewState extends State<OnboardingView> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final l10n = AppLocalizations.of(context)!;
+    const uuid = Uuid();
+
+    final onboardingPages = [
+      OnboardingEntity(
+        id: uuid.v4(),
+        image: AppImages.avatar(31),
+        title: l10n.onboardingTitle1,
+        description: l10n.onboardingDescription,
+      ),
+      OnboardingEntity(
+        id: uuid.v4(),
+        image: AppImages.avatar(30),
+        title: l10n.onboardingTitle2,
+        description: l10n.onboardingDescription,
+      ),
+      OnboardingEntity(
+        id: uuid.v4(),
+        image: AppImages.avatar(29),
+        title: l10n.onboardingTitle3,
+        description: l10n.onboardingDescription,
+      ),
+    ];
 
     return CustomBackgroundImage(
       backgroundImage: AppImages.onboardingBackground,
@@ -76,17 +83,17 @@ class _OnboardingViewState extends State<OnboardingView> {
                 physics: const BouncingScrollPhysics(),
                 controller: _pageController,
                 key: Key(AppTestKeys.onboardingPageView),
-                itemCount: _pages.length,
+                itemCount: onboardingPages.length,
                 onPageChanged: (pageNumber) {
                   setState(() => currentPage = pageNumber);
                 },
                 itemBuilder: (context, index) {
                   return Image.asset(
-                        _pages[index].image,
-                        key: ValueKey(_pages[index].image),
+                        onboardingPages[index].image,
+                        key: ValueKey(onboardingPages[index].image),
                         fit: BoxFit.contain,
                       )
-                      .animate(key: ValueKey(index))
+                      .animate(key: ValueKey(onboardingPages[index].id))
                       .fadeIn(duration: 500.ms, curve: Curves.easeOut)
                       .scale(
                         begin: const Offset(0.88, 0.88),
@@ -107,12 +114,12 @@ class _OnboardingViewState extends State<OnboardingView> {
             Positioned(
               top: 40,
               right: 16,
-              child: (currentPage != _pages.length - 1)
+              child: (currentPage != onboardingPages.length - 1)
                   ? TextButton(
                       key: Key(AppTestKeys.onboardingSkipButton),
-                      onPressed: () => _goToPage(_pages.length - 1),
+                      onPressed: () => _goToPage(onboardingPages.length - 1),
                       child: Text(
-                        AppStrings.skip,
+                        l10n.skip,
                         style: textTheme.titleSmall?.copyWith(
                           color: AppColors.textSecondary,
                         ),
@@ -134,7 +141,7 @@ class _OnboardingViewState extends State<OnboardingView> {
                 child: Column(
                   children: [
                     Text(
-                          _pages[currentPage].title,
+                          onboardingPages[currentPage].title,
                           key: ValueKey(currentPage),
                           textAlign: TextAlign.center,
                           style: textTheme.headlineLarge,
@@ -151,7 +158,7 @@ class _OnboardingViewState extends State<OnboardingView> {
                     const SizedBox(height: 12),
 
                     Text(
-                          _pages[currentPage].description,
+                          onboardingPages[currentPage].description,
                           key: ValueKey("desc_$currentPage"),
                           textAlign: TextAlign.center,
                           style: textTheme.titleMedium?.copyWith(
@@ -176,7 +183,7 @@ class _OnboardingViewState extends State<OnboardingView> {
                     const Gap(24),
 
                     AnimatedSmoothIndicator(
-                      count: 3,
+                      count: onboardingPages.length,
                       effect: ExpandingDotsEffect(
                         dotColor: AppColors.white,
                         activeDotColor: AppColors.primary,
@@ -190,7 +197,7 @@ class _OnboardingViewState extends State<OnboardingView> {
 
                     currentPage == 0
                         ? CustomButton(
-                            label: AppStrings.next,
+                            label: l10n.next,
                             key: Key(AppTestKeys.onboardingNextButton),
                             variant: ButtonVariant.filled,
                             onPressed: () => _goToPage(1),
@@ -199,11 +206,12 @@ class _OnboardingViewState extends State<OnboardingView> {
                             children: [
                               CustomButton(
                                 key: Key(AppTestKeys.onboardingNextButton),
-                                label: AppStrings.next,
+                                label: l10n.next,
                                 width: 100.w,
                                 variant: ButtonVariant.filled,
                                 onPressed: () {
-                                  if (currentPage == _pages.length - 1) {
+                                  if (currentPage ==
+                                      onboardingPages.length - 1) {
                                     Navigator.pushNamedAndRemoveUntil(
                                       context,
                                       AppRoutes.login,
@@ -218,7 +226,7 @@ class _OnboardingViewState extends State<OnboardingView> {
                               const Spacer(),
 
                               CustomButton(
-                                label: AppStrings.back,
+                                label: l10n.back,
                                 key: Key(AppTestKeys.onboardingBackButton),
                                 variant: ButtonVariant.outlined,
                                 width: 100.w,

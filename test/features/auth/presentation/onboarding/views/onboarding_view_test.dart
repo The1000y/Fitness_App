@@ -1,16 +1,20 @@
 import 'package:fitness_app/config/routing/app_routes.dart';
 import 'package:fitness_app/core/constants/app_images.dart';
-import 'package:fitness_app/core/constants/app_strings.dart';
 import 'package:fitness_app/core/constants/app_test_keys.dart';
 import 'package:fitness_app/core/shared/custom_background_image.dart';
 import 'package:fitness_app/core/shared/custom_blur_card.dart';
 import 'package:fitness_app/features/auth/presentation/onboarding/views/onboarding_view.dart';
+import 'package:fitness_app/l10n/app_localizations.dart';
+import 'package:fitness_app/l10n/app_localizations_en.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 void main() {
+  final l10n = AppLocalizationsEn();
+
   Future<void> pumpOnboardingView(WidgetTester tester) async {
     tester.view.physicalSize = const Size(375, 812);
     tester.view.devicePixelRatio = 1.0;
@@ -25,6 +29,11 @@ void main() {
         minTextAdapt: true,
         splitScreenMode: true,
         child: MaterialApp(
+          localizationsDelegates: [
+            AppLocalizations.delegate,
+            ...GlobalMaterialLocalizations.delegates,
+          ],
+          supportedLocales: AppLocalizations.supportedLocales,
           home: const OnboardingView(),
           routes: {
             AppRoutes.login: (context) =>
@@ -44,7 +53,7 @@ void main() {
     required bool expectBackButton,
   }) {
     expect(find.text(expectedTitle), findsOneWidget);
-    expect(find.text(AppStrings.onboardingDescription), findsOneWidget);
+    expect(find.text(l10n.onboardingDescription), findsOneWidget);
 
     expect(
       find.byWidgetPredicate(
@@ -124,7 +133,7 @@ void main() {
 
         expectOnboardingPage(
           pageIndex: 0,
-          expectedTitle: AppStrings.onboarding1Title,
+          expectedTitle: l10n.onboardingTitle1,
           expectedImage: AppImages.avatar(31),
           expectSkipButton: true,
           expectBackButton: false,
@@ -141,7 +150,7 @@ void main() {
 
         expectOnboardingPage(
           pageIndex: 0,
-          expectedTitle: AppStrings.onboarding1Title,
+          expectedTitle: l10n.onboardingTitle1,
           expectedImage: AppImages.avatar(31),
           expectSkipButton: true,
           expectBackButton: false,
@@ -154,7 +163,7 @@ void main() {
 
         expectOnboardingPage(
           pageIndex: 1,
-          expectedTitle: AppStrings.onboarding2Title,
+          expectedTitle: l10n.onboardingTitle2,
           expectedImage: AppImages.avatar(30),
           expectSkipButton: true,
           expectBackButton: true,
@@ -167,7 +176,7 @@ void main() {
 
         expectOnboardingPage(
           pageIndex: 2,
-          expectedTitle: AppStrings.onboarding3Title,
+          expectedTitle: l10n.onboardingTitle3,
           expectedImage: AppImages.avatar(29),
           expectSkipButton: false,
           expectBackButton: true,
@@ -193,7 +202,7 @@ void main() {
 
       expectOnboardingPage(
         pageIndex: 1,
-        expectedTitle: AppStrings.onboarding2Title,
+        expectedTitle: l10n.onboardingTitle2,
         expectedImage: AppImages.avatar(30),
         expectSkipButton: true,
         expectBackButton: true,
@@ -204,7 +213,7 @@ void main() {
 
       expectOnboardingPage(
         pageIndex: 0,
-        expectedTitle: AppStrings.onboarding1Title,
+        expectedTitle: l10n.onboardingTitle1,
         expectedImage: AppImages.avatar(31),
         expectSkipButton: true,
         expectBackButton: false,
@@ -216,7 +225,7 @@ void main() {
       (WidgetTester tester) async {
         await pumpOnboardingView(tester);
 
-        expect(find.text(AppStrings.onboarding1Title), findsOneWidget);
+        expect(find.text(l10n.onboardingTitle1), findsOneWidget);
 
         await tester.tap(
           find.byKey(const Key(AppTestKeys.onboardingSkipButton)),
@@ -225,7 +234,7 @@ void main() {
 
         expectOnboardingPage(
           pageIndex: 2,
-          expectedTitle: AppStrings.onboarding3Title,
+          expectedTitle: l10n.onboardingTitle3,
           expectedImage: AppImages.avatar(29),
           expectSkipButton: false,
           expectBackButton: true,
@@ -247,7 +256,7 @@ void main() {
 
       expectOnboardingPage(
         pageIndex: 1,
-        expectedTitle: AppStrings.onboarding2Title,
+        expectedTitle: l10n.onboardingTitle2,
         expectedImage: AppImages.avatar(30),
         expectSkipButton: true,
         expectBackButton: true,
@@ -262,7 +271,7 @@ void main() {
 
       expectOnboardingPage(
         pageIndex: 0,
-        expectedTitle: AppStrings.onboarding1Title,
+        expectedTitle: l10n.onboardingTitle1,
         expectedImage: AppImages.avatar(31),
         expectSkipButton: true,
         expectBackButton: false,
