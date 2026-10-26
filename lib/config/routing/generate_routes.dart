@@ -1,4 +1,5 @@
 import 'package:fitness_app/config/routing/app_routes.dart';
+import 'package:fitness_app/features/auth/presentation/register/view/register_view.dart';
 import 'package:fitness_app/test_view.dart';
 import 'package:flutter/material.dart';
 
@@ -15,8 +16,8 @@ abstract final class GenerateRoutes {
       case AppRoutes.login:
         return _pageRoute(const _StubScreen('Login'), settings);
 
-      case AppRoutes.register:
-        return _pageRoute(const _StubScreen('Register'), settings);
+     case AppRoutes.register:
+  return _pageRoute(const  RegisterView (), settings);
 
       case AppRoutes.forgotPassword:
         return _pageRoute(const _StubScreen('Forgot Password'), settings);

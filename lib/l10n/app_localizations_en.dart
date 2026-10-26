@@ -87,7 +87,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get register => 'Register';
 
   @override
-  String get registerTitle => 'Hey there, create an account';
+  String get registerTitle1 => 'Hey there';
+  String get registerTitle2 => 'create an account';
 
   @override
   String get firstName => 'First name';

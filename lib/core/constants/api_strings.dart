@@ -14,7 +14,7 @@ abstract class ApiStrings {
   // ---------------------------------------------------------------------------
   // Auth
   // ---------------------------------------------------------------------------
-  static String get signup => '/auth/signup'; // POST
+  static const String  signup = '/auth/signup'; // POST
   static String get signin => '/auth/signin'; // POST
   static String get changePassword => '/auth/change-password'; // PATCH
   static String get uploadPhoto =>

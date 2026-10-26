@@ -252,7 +252,8 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'Hey there, create an account'**
-  String get registerTitle;
+  String get registerTitle1;
+  String get registerTitle2;
 
   /// No description provided for @firstName.
   ///
