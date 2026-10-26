@@ -36,3 +36,8 @@ final class PopRoute extends CommonUiEvent {
   final Object? result;
   const PopRoute([this.result]);
 }
+final class NavigateAndRemoveUntil extends BaseUiEvent {
+  final String routeName;
+  final Object? arguments;
+  const NavigateAndRemoveUntil(this.routeName, {this.arguments});
+}

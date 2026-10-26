@@ -1,8 +1,11 @@
+import 'package:fitness_app/config/di/di.dart';
 import 'package:fitness_app/config/routing/app_routes.dart';
+import 'package:fitness_app/features/auth/presentation/forget_password/manager/forget_password_cubit.dart';
 import 'package:fitness_app/features/auth/presentation/forget_password/view/forget_password.dart';
 import 'package:fitness_app/features/auth/presentation/forget_password/view/reset_password.dart';
 import 'package:fitness_app/features/auth/presentation/forget_password/view/verify_otp.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 abstract final class GenerateRoutes {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -21,13 +24,36 @@ abstract final class GenerateRoutes {
         return _pageRoute(const _StubScreen('Register'), settings);
 
       case AppRoutes.forgotPassword:
-        return _pageRoute(const ForgetPassword(), settings);
+        return _pageRoute(
+          BlocProvider<ForgetPasswordCubit>(
+            create: (context) => getIt<ForgetPasswordCubit>(),
+            child: const ForgetPassword(),
+          ),
+          settings,
+        );
 
       case AppRoutes.otpVerification:
-        return _pageRoute(const VerifyOtp(), settings);
+        final cubit = (settings.arguments is ForgetPasswordCubit)
+            ? (settings.arguments as ForgetPasswordCubit)
+            : getIt<ForgetPasswordCubit>();
+        return _pageRoute(
+          Builder(
+            builder: (context) {
+              return BlocProvider.value(value: cubit, child: const VerifyOtp());
+              // return const VerifyOtp();
+            },
+          ),
+          settings,
+        );
 
       case AppRoutes.createPassword:
-        return _pageRoute(const ResetPassword(), settings);
+        final cubit = (settings.arguments is ForgetPasswordCubit)
+            ? (settings.arguments as ForgetPasswordCubit)
+            : getIt<ForgetPasswordCubit>();
+        return _pageRoute(
+          BlocProvider.value(value: cubit, child: const ResetPassword()),
+          settings,
+        );
 
       case AppRoutes.changePassword:
         return _pageRoute(const _StubScreen('Change Password'), settings);
@@ -121,9 +147,7 @@ class _StubScreen extends StatelessWidget {
         child: ElevatedButton(
           onPressed: () => Navigator.push(
             context,
-            MaterialPageRoute(
-              builder: (context) => const _StubScreen('Next'),
-            ),
+            MaterialPageRoute(builder: (context) => const _StubScreen('Next')),
           ),
           child: Text('Test'),
         ),

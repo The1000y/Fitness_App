@@ -32,6 +32,8 @@ enum AppSuccessMessage {
   // Settings
   reminderSet,
   settingsSaved,
+  otpSentSuccessfully,
+  otpVerifiedSuccessfully,
 }
 
 String? successMessageMapper(
@@ -83,5 +85,9 @@ String? successMessageMapper(
 
     case AppSuccessMessage.settingsSaved:
       return l10n.settingsSaved;
+    case AppSuccessMessage.otpSentSuccessfully:
+      return l10n.otpSentSuccessfully;
+    case AppSuccessMessage.otpVerifiedSuccessfully:
+      return l10n.otpVerifiedSuccessfully;
   }
 }

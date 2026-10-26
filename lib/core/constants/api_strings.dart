@@ -21,9 +21,9 @@ abstract class ApiStrings {
       '/auth/upload-photo'; // PUT (Bearer, form-data: photo, max 4MB)
   static String get profileData => '/auth/profile-data'; // GET (Bearer)
   static String get logout => '/auth/logout'; // GET
-  static String get forgotPassword => '/auth/forgotPassword'; // POST
-  static String get verifyResetCode => '/auth/verifyResetCode'; // POST
-  static String get resetPassword => '/auth/resetPassword'; // PUT
+  static const String forgotPassword = '/auth/forgotPassword'; // POST
+  static const String verifyResetCode = '/auth/verifyResetCode'; // POST
+  static const String resetPassword =  '/auth/resetPassword'; // PUT
   static String get deleteMe => '/auth/deleteMe'; // DELETE
   static String get editProfile => '/auth/editProfile'; // PUT (Bearer)
 

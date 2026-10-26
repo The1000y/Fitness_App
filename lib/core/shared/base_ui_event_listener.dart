@@ -51,10 +51,22 @@ class _BaseUiEventListenerState<
     }
   }
 
+  // void _subscribe() {
+  //   final targetCubit = widget.cubit ?? context.read<C>();
+  //   _subscription = targetCubit.uiEventStream.listen((event) {
+  //     if (mounted) {
+  //       _handleEvent(context, event);
+  //     }
+  //   });
+  // }
   void _subscribe() {
     final targetCubit = widget.cubit ?? context.read<C>();
     _subscription = targetCubit.uiEventStream.listen((event) {
-      if (mounted) {
+      if (!mounted) return;
+
+      // يتأكد إن الشاشة دي هي اللي مفتوحة قدام المستخدم دلوقتي مش في الخلفية
+      final isCurrentRoute = ModalRoute.of(context)?.isCurrent ?? true;
+      if (isCurrentRoute) {
         _handleEvent(context, event);
       }
     });
