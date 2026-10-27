@@ -40,9 +40,7 @@ void main() {
 
   /// Helper to get the localized strings from the test context.
   AppLocalizations getL10n(WidgetTester tester) {
-    return AppLocalizations.of(
-      tester.element(find.byType(MainLayoutView)),
-    )!;
+    return AppLocalizations.of(tester.element(find.byType(MainLayoutView)))!;
   }
 
   group('MainLayoutView Rendering and Initial State', () {
@@ -59,10 +57,19 @@ void main() {
         );
 
         // Verify all 4 tabs are present
-        expect(find.byKey(const Key(AppTestKeys.mainTabExplore)), findsOneWidget);
+        expect(
+          find.byKey(const Key(AppTestKeys.mainTabExplore)),
+          findsOneWidget,
+        );
         expect(find.byKey(const Key(AppTestKeys.mainTabCoach)), findsOneWidget);
-        expect(find.byKey(const Key(AppTestKeys.mainTabWorkouts)), findsOneWidget);
-        expect(find.byKey(const Key(AppTestKeys.mainTabProfile)), findsOneWidget);
+        expect(
+          find.byKey(const Key(AppTestKeys.mainTabWorkouts)),
+          findsOneWidget,
+        );
+        expect(
+          find.byKey(const Key(AppTestKeys.mainTabProfile)),
+          findsOneWidget,
+        );
 
         // Verify initial IndexedStack state shows HomeView
         final indexedStackFinder = find.byType(IndexedStack);
@@ -92,7 +99,9 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify active tab index updated to 1
-      final indexedStack = tester.widget<IndexedStack>(find.byType(IndexedStack));
+      final indexedStack = tester.widget<IndexedStack>(
+        find.byType(IndexedStack),
+      );
       expect(indexedStack.index, 1);
       expect(find.byType(ChatView), findsOneWidget);
 
@@ -112,7 +121,9 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify active tab index updated to 2
-      final indexedStack = tester.widget<IndexedStack>(find.byType(IndexedStack));
+      final indexedStack = tester.widget<IndexedStack>(
+        find.byType(IndexedStack),
+      );
       expect(indexedStack.index, 2);
       expect(find.byType(WorkoutsView), findsOneWidget);
 
@@ -132,7 +143,9 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify active tab index updated to 3
-      final indexedStack = tester.widget<IndexedStack>(find.byType(IndexedStack));
+      final indexedStack = tester.widget<IndexedStack>(
+        find.byType(IndexedStack),
+      );
       expect(indexedStack.index, 3);
       expect(find.byType(ProfileView), findsOneWidget);
 
@@ -152,25 +165,16 @@ void main() {
         await tester.tap(find.byKey(const Key(AppTestKeys.mainTabWorkouts)));
         await tester.pumpAndSettle();
 
-        expect(
-          tester.widget<IndexedStack>(find.byType(IndexedStack)).index,
-          2,
-        );
+        expect(tester.widget<IndexedStack>(find.byType(IndexedStack)).index, 2);
 
         // 2. Simulate system back button
         await tester.binding.handlePopRoute();
         await tester.pumpAndSettle();
 
         // 3. Verify user returned to Home tab (index 0) and dialog is not shown
-        expect(
-          tester.widget<IndexedStack>(find.byType(IndexedStack)).index,
-          0,
-        );
+        expect(tester.widget<IndexedStack>(find.byType(IndexedStack)).index, 0);
         expect(find.byType(HomeView), findsOneWidget);
-        expect(
-          find.byKey(const Key(AppTestKeys.closeAppDialog)),
-          findsNothing,
-        );
+        expect(find.byKey(const Key(AppTestKeys.closeAppDialog)), findsNothing);
       },
     );
 
@@ -181,10 +185,7 @@ void main() {
         final l10n = getL10n(tester);
 
         // Ensure we are at Home tab (index 0)
-        expect(
-          tester.widget<IndexedStack>(find.byType(IndexedStack)).index,
-          0,
-        );
+        expect(tester.widget<IndexedStack>(find.byType(IndexedStack)).index, 0);
 
         // Simulate system back button
         await tester.binding.handlePopRoute();
@@ -228,14 +229,8 @@ void main() {
         await tester.pumpAndSettle();
 
         // Verify dialog is dismissed and user remains on Home tab
-        expect(
-          find.byKey(const Key(AppTestKeys.closeAppDialog)),
-          findsNothing,
-        );
-        expect(
-          tester.widget<IndexedStack>(find.byType(IndexedStack)).index,
-          0,
-        );
+        expect(find.byKey(const Key(AppTestKeys.closeAppDialog)), findsNothing);
+        expect(tester.widget<IndexedStack>(find.byType(IndexedStack)).index, 0);
       },
     );
 
@@ -260,10 +255,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Verify dialog is closed without exception
-        expect(
-          find.byKey(const Key(AppTestKeys.closeAppDialog)),
-          findsNothing,
-        );
+        expect(find.byKey(const Key(AppTestKeys.closeAppDialog)), findsNothing);
       },
     );
   });

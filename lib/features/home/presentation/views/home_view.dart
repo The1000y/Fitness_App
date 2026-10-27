@@ -9,9 +9,7 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomBackgroundImage(
       backgroundImage: AppImages.layoutBackground,
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-      ),
+      child: Scaffold(backgroundColor: Colors.transparent),
     );
   }
 }

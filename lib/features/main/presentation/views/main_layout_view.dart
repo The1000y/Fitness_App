@@ -109,10 +109,7 @@ class _MainLayoutViewState extends State<MainLayoutView> {
       },
       child: Scaffold(
         extendBody: true,
-        body: IndexedStack(
-          index: _currentTap,
-          children: taps,
-        ),
+        body: IndexedStack(index: _currentTap, children: taps),
         bottomNavigationBar: CustomFloatingNavigationBar(
           key: const Key(AppTestKeys.mainLayoutBottomNav),
           currentIndex: _currentTap,
