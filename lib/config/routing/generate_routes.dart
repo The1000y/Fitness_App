@@ -1,5 +1,10 @@
 import 'package:fitness_app/config/routing/app_routes.dart';
 import 'package:fitness_app/features/auth/presentation/onboarding/views/onboarding_view.dart';
+import 'package:fitness_app/features/chat/presentation/views/chat_view.dart';
+import 'package:fitness_app/features/home/presentation/views/home_view.dart';
+import 'package:fitness_app/features/main/presentation/views/main_layout_view.dart';
+import 'package:fitness_app/features/profile/presentation/views/profile_view.dart';
+import 'package:fitness_app/features/workouts/presentation/views/workouts_view.dart';
 import 'package:fitness_app/test_view.dart';
 import 'package:flutter/material.dart';
 
@@ -52,14 +57,12 @@ abstract final class GenerateRoutes {
 
       // Main
       case AppRoutes.main:
-        return _pageRoute(const _StubScreen('Main'), settings);
-
-      case AppRoutes.home:
-        return _pageRoute(const _StubScreen('Home'), settings);
-
-      // Workouts
-      case AppRoutes.workouts:
-        return _pageRoute(const _StubScreen('Workouts'), settings);
+        return _pageRoute(
+          MainLayoutView(
+            tabs: [HomeView(), ChatView(), WorkoutsView(), ProfileView()],
+          ),
+          settings,
+        );
 
       case AppRoutes.exerciseDetails:
         return _pageRoute(const _StubScreen('Exercise Details'), settings);
@@ -71,16 +74,8 @@ abstract final class GenerateRoutes {
       case AppRoutes.foodDetails:
         return _pageRoute(const _StubScreen('Food Details'), settings);
 
-      // Chat
-      case AppRoutes.chat:
-        return _pageRoute(const _StubScreen('Chat'), settings);
-
       case AppRoutes.chatHistory:
         return _pageRoute(const _StubScreen('Chat History'), settings);
-
-      // Profile
-      case AppRoutes.profile:
-        return _pageRoute(const _StubScreen('Profile'), settings);
 
       case AppRoutes.editProfile:
         return _pageRoute(const _StubScreen('Edit Profile'), settings);
