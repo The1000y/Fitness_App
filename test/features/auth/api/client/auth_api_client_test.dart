@@ -31,6 +31,7 @@ void main() {
 
       expect(adapter.lastRequestOptions?.path, contains('/auth/signin'));
       expect(adapter.lastRequestOptions?.method, 'POST');
+      expect(adapter.lastRequestOptions?.data, {'email': TestData.validEmail, 'password': TestData.validPassword});
       expect(response.token, TestData.fakeToken);
       expect(response.user?.email, TestData.validEmail);
     });
@@ -38,22 +39,20 @@ void main() {
     test('login throws DioException on 401 error response', () async {
       adapter.statusCode = 401;
       adapter.responseBody = {'message': 'Unauthorized'};
-      adapter.exceptionToThrow = DioException(
-        requestOptions: RequestOptions(path: '/auth/signin'),
-        response: Response(
-          requestOptions: RequestOptions(path: '/auth/signin'),
-          statusCode: 401,
-          data: {'message': 'Unauthorized'},
-        ),
-        type: DioExceptionType.badResponse,
-      );
 
       final request = LoginRequest(
         email: TestData.validEmail,
         password: TestData.validPassword,
       );
 
-      expect(() => client.login(request), throwsA(isA<DioException>()));
+      await expectLater(
+        client.login(request),
+        throwsA(
+          isA<DioException>()
+              .having((e) => e.response?.statusCode, 'statusCode', 401)
+              .having((e) => e.type, 'type', DioExceptionType.badResponse),
+        ),
+      );
     });
   });
 }

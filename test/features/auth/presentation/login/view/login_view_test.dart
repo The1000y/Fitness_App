@@ -26,14 +26,11 @@ void main() {
 
   setUp(() {
     fakeAuthRepo = FakeAuthRepo();
-    if (getIt.isRegistered<LoginCubit>()) {
-      getIt.reset();
-    }
     getIt.registerFactory<LoginCubit>(() => LoginCubit(LoginUseCase(fakeAuthRepo)));
   });
 
-  tearDown(() {
-    getIt.reset();
+  tearDown(() async {
+    await getIt.reset();
   });
 
   group('LoginView Widget Tests', () {
@@ -102,7 +99,7 @@ void main() {
       expect(fakeAuthRepo.lastPassword, TestData.validPassword);
     });
 
-    testWidgets('loading state prevents duplicate tap', (tester) async {
+    testWidgets('loading state prevents duplicate tap and handles failure correctly', (tester) async {
       final completer = Completer<BaseResponse<LoginEntity>>();
       fakeAuthRepo.completer = completer;
 
@@ -119,15 +116,18 @@ void main() {
       await tester.pump();
 
       expect(fakeAuthRepo.callCount, 1);
+      expect(tester.widget<CustomButton>(find.byType(CustomButton)).isLoading, true);
 
-      // Tap again while loading
+      // Tap again while loading (ignored)
       await tester.tap(loginButton);
       await tester.pump();
+      expect(fakeAuthRepo.callCount, 1);
 
-      expect(fakeAuthRepo.callCount, 1); // ignored
-
-      completer.complete(Success(TestData.loginEntity));
+      completer.complete(const Error(InternetConnectionFailure()));
       await tester.pumpAndSettle();
+
+      expect(tester.widget<CustomButton>(find.byType(CustomButton)).isLoading, false);
+      expect(fakeAuthRepo.callCount, 1);
     });
 
     testWidgets('success navigates to AppRoutes.home', (tester) async {
@@ -143,7 +143,7 @@ void main() {
       expect(find.text('Home'), findsOneWidget);
     });
 
-    testWidgets('failure shows SnackBar with mapped failure message', (tester) async {
+    testWidgets('failure shows SnackBar with InternetConnectionFailure message', (tester) async {
       fakeAuthRepo.nextResult = const Error(InternetConnectionFailure());
       await tester.pumpApp(const LoginView());
 
@@ -154,6 +154,35 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.byType(SnackBar), findsOneWidget);
+      expect(find.descendant(of: find.byType(SnackBar), matching: find.text(l10n.failureInternetConnection)), findsOneWidget);
+    });
+
+    testWidgets('failure shows SnackBar with UnauthorizedFailure message', (tester) async {
+      fakeAuthRepo.nextResult = const Error(UnauthorizedFailure());
+      await tester.pumpApp(const LoginView());
+
+      await tester.enterText(find.byType(CustomTextFormField).at(0), TestData.validEmail);
+      await tester.enterText(find.byType(CustomTextFormField).at(1), TestData.validPassword);
+
+      await tester.tap(find.widgetWithText(CustomButton, AppStrings.login));
+      await tester.pumpAndSettle();
+
+      expect(find.byType(SnackBar), findsOneWidget);
+      expect(find.descendant(of: find.byType(SnackBar), matching: find.text(l10n.failureUnauthorized)), findsOneWidget);
+    });
+
+    testWidgets('failure shows SnackBar with custom server message on BadRequestFailure', (tester) async {
+      fakeAuthRepo.nextResult = const Error(BadRequestFailure(serverMessage: 'Custom server message'));
+      await tester.pumpApp(const LoginView());
+
+      await tester.enterText(find.byType(CustomTextFormField).at(0), TestData.validEmail);
+      await tester.enterText(find.byType(CustomTextFormField).at(1), TestData.validPassword);
+
+      await tester.tap(find.widgetWithText(CustomButton, AppStrings.login));
+      await tester.pumpAndSettle();
+
+      expect(find.byType(SnackBar), findsOneWidget);
+      expect(find.descendant(of: find.byType(SnackBar), matching: find.text('Custom server message')), findsOneWidget);
     });
 
     testWidgets('tapping forgot password and register navigates correctly', (tester) async {
@@ -175,19 +204,26 @@ void main() {
     testWidgets('password visibility toggle obscures password field only', (tester) async {
       await tester.pumpApp(const LoginView());
 
-      final editableTextFinder = find.byType(EditableText).at(1);
+      final emailEditableText = tester.widget<EditableText>(find.byType(EditableText).at(0));
+      expect(emailEditableText.obscureText, false);
 
-      EditableText editableText = tester.widget(editableTextFinder);
-      expect(editableText.obscureText, true);
+      final passwordEditableText = tester.widget<EditableText>(find.byType(EditableText).at(1));
+      expect(passwordEditableText.obscureText, true);
 
-      // Tap eye icon suffix button
-      final eyeIcon = find.byType(IconButton);
-      if (eyeIcon.evaluate().isNotEmpty) {
-        await tester.tap(eyeIcon.first);
-        await tester.pump();
-        editableText = tester.widget(find.byType(EditableText).at(1));
-        expect(editableText.obscureText, false);
-      }
+      // Tap eye icon to reveal password
+      await tester.tap(find.byIcon(Icons.visibility_off_outlined));
+      await tester.pump();
+
+      var updatedPasswordText = tester.widget<EditableText>(find.byType(EditableText).at(1));
+      expect(updatedPasswordText.obscureText, false);
+      expect(tester.widget<EditableText>(find.byType(EditableText).at(0)).obscureText, false);
+
+      // Tap again to hide password
+      await tester.tap(find.byIcon(Icons.visibility_outlined));
+      await tester.pump();
+
+      updatedPasswordText = tester.widget<EditableText>(find.byType(EditableText).at(1));
+      expect(updatedPasswordText.obscureText, true);
     });
 
     testWidgets('layout robustness across sizes and keyboard inset', (tester) async {
@@ -202,17 +238,43 @@ void main() {
 
       // With keyboard inset
       await tester.pumpApp(const LoginView());
-      tester.view.viewInsets = FakeViewPadding(bottom: 300, top: 0, left: 0, right: 0);
+
+      // viewInsets are in PHYSICAL pixels, so scale the 300 logical px.
+      const keyboardHeight = 300.0;
+      tester.view.viewInsets = FakeViewPadding(
+        bottom: keyboardHeight * tester.view.devicePixelRatio,
+      );
       await tester.pump();
-      await tester.drag(find.byType(SingleChildScrollView), const Offset(0, -200));
+
+      final loginButton = find.widgetWithText(CustomButton, AppStrings.login);
+      await tester.ensureVisible(loginButton);
       await tester.pump();
-      expect(find.widgetWithText(CustomButton, AppStrings.login), findsOneWidget);
-      tester.view.viewInsets = FakeViewPadding.zero;
+
+      final logicalScreenHeight =
+          tester.view.physicalSize.height / tester.view.devicePixelRatio;
+      expect(
+        tester.getRect(loginButton).bottom,
+        lessThanOrEqualTo(logicalScreenHeight - keyboardHeight),
+      );
     });
 
-    testWidgets('RTL layout renders without exception', (tester) async {
+    testWidgets('RTL and LTR layout alignments and directions', (tester) async {
+      // LTR test
+      await tester.pumpApp(const LoginView(), locale: const Locale('en'));
+      var directionality = tester.widget<Directionality>(find.ancestor(of: find.text(AppStrings.forgotPassword), matching: find.byType(Directionality)).first);
+      expect(directionality.textDirection, TextDirection.ltr);
+
+      final ltrForgotBox = tester.getRect(find.text(AppStrings.forgotPassword));
+      final logicalWidth = tester.view.physicalSize.width / tester.view.devicePixelRatio;
+      expect(ltrForgotBox.center.dx >= logicalWidth / 2, true);
+
+      // RTL test
       await tester.pumpApp(const LoginView(), locale: const Locale('ar'));
-      expect(find.byType(LoginView), findsOneWidget);
+      directionality = tester.widget<Directionality>(find.ancestor(of: find.text(AppStrings.forgotPassword), matching: find.byType(Directionality)).first);
+      expect(directionality.textDirection, TextDirection.rtl);
+
+      final rtlForgotBox = tester.getRect(find.text(AppStrings.forgotPassword));
+      expect(rtlForgotBox.center.dx < logicalWidth / 2, true);
     });
   });
 }

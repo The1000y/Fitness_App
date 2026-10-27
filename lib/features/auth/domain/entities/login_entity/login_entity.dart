@@ -6,7 +6,11 @@ class LoginEntity extends Equatable {
   final UserEntity user;
   final String token;
 
-  LoginEntity({required this.message, required this.user, required this.token});
+  const LoginEntity({
+    required this.message,
+    required this.user,
+    required this.token,
+  });
 
   @override
   List<Object?> get props => [message, user, token];

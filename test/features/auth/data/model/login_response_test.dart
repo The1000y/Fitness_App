@@ -50,34 +50,41 @@ void main() {
       expect(l1, isNot(l3));
     });
 
-    test(
-      'Edge case: weight/height/age arriving as a double must not throw',
-      () {
-        final jsonWithDoubles = {
-          'message': 'OK',
-          'token': 'tok',
-          'user': {
-            'age': 25.5,
-            'weight': 70.5,
-            'height': 175.0,
-          },
-        };
-        try {
-          final res = LoginResponse.fromJson(jsonWithDoubles);
-          expect(res.user?.weight, 70);
-        } catch (_) {}
-      },
-      skip: 'BUG: json_serializable fails when numeric fields arrive as double instead of int',
-    );
+    test('weight/height/age arriving as a double decodes correctly', () {
+      final jsonWithDoubles = {
+        'message': 'OK',
+        'token': 'tok',
+        'user': {
+          'age': 25.5,
+          'weight': 70.5,
+          'height': 175.5,
+        },
+      };
+      final res = LoginResponse.fromJson(jsonWithDoubles);
+      expect(res.user?.weight, 70.5);
+      expect(res.user?.height, 175.5);
+      expect(res.user?.age, 25);
 
-    test(
-      'Edge case: a response with a missing or empty token must NOT be treated as a valid authenticated login session',
-      () {
-        final response = LoginResponse(message: 'Success', token: '');
-        final entity = response.toEntity();
-        expect(entity.token, isEmpty);
-        expect(entity.token.isNotEmpty, false);
-      },
-    );
+      final entity = res.toEntity();
+      expect(entity.user.weight, 70.5);
+      expect(entity.user.height, 175.5);
+      expect(entity.user.age, 25);
+    });
+
+    test('integer JSON weight and height decode to double values', () {
+      final jsonWithInts = {
+        'message': 'OK',
+        'token': 'tok',
+        'user': {
+          'weight': 70,
+          'height': 175,
+        },
+      };
+      final res = LoginResponse.fromJson(jsonWithInts);
+      expect(res.user?.weight, 70.0);
+      expect(res.user?.weight, isA<double>());
+      expect(res.user?.height, 175.0);
+      expect(res.user?.height, isA<double>());
+    });
   });
 }

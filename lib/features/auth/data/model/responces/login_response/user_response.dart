@@ -4,7 +4,6 @@ import 'package:json_annotation/json_annotation.dart';
 part 'user_response.g.dart';
 
 @JsonSerializable()
-
 class UserResponse {
   @JsonKey(name: '_id')
   final String? id;
@@ -13,8 +12,8 @@ class UserResponse {
   final String? email;
   final String? gender;
   final int? age;
-  final int? weight;
-  final int? height;
+  final double? weight;
+  final double? height;
   final String? activityLevel;
   final String? goal;
   final String? photo;

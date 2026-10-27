@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:fitness_app/config/base/base_response.dart';
 import 'package:fitness_app/config/errors/app_failure.dart';
+import 'package:fitness_app/features/auth/data/model/responces/login_response/login_response.dart';
 import 'package:fitness_app/features/auth/data/repo_impl/auth_repo_impl.dart';
 import '../../../../helpers/fakes.dart';
 import '../../../../helpers/test_data.dart';
@@ -101,5 +102,20 @@ void main() {
         debugPrint = originalDebugPrint;
       }
     });
+
+    test(
+      'returns Error when the server answers 200 without a token',
+      () async {
+        fakeRemote.nextResponse = LoginResponse(message: 'ok', token: '');
+
+        final result = await repo.login(
+          email: TestData.validEmail,
+          password: TestData.validPassword,
+        );
+
+        expect(result, isA<Error<dynamic>>());
+      },
+      skip: 'BUG: login with an empty or missing token is returned as Success',
+    );
   });
 }
