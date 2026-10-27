@@ -1,4 +1,3 @@
-
 import 'package:fitness_app/config/base/base_ui_event.dart';
 import 'package:fitness_app/config/di/di.dart';
 import 'package:fitness_app/core/constants/app_images.dart';
@@ -9,6 +8,12 @@ import 'package:fitness_app/features/auth/presentation/register/manager/register
 import 'package:fitness_app/features/auth/presentation/register/manager/register_state.dart';
 import 'package:fitness_app/features/auth/presentation/register/manager/register_ui_event.dart';
 import 'package:fitness_app/features/auth/presentation/register/view/register_form_page.dart';
+import 'package:fitness_app/features/auth/presentation/register/view/widgets/activity_step.dart';
+import 'package:fitness_app/features/auth/presentation/register/view/widgets/age_step.dart';
+import 'package:fitness_app/features/auth/presentation/register/view/widgets/gender_step.dart';
+import 'package:fitness_app/features/auth/presentation/register/view/widgets/goal_step.dart';
+import 'package:fitness_app/features/auth/presentation/register/view/widgets/height_step.dart';
+import 'package:fitness_app/features/auth/presentation/register/view/widgets/weight_step.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -83,15 +88,13 @@ class _RegisterFlowState extends State<_RegisterFlow> {
                 controller: _pageController,
                 physics: const NeverScrollableScrollPhysics(),
                 children: [
-                  const RegisterFormPage(),
-                  /*switch page */
-                  for (var i = 1; i <= 6; i++)
-                    Center(
-                      child: Text(
-                        'Step $i',
-                        style: const TextStyle(color: Colors.white),
-                      ),
-                    ),
+                  RegisterFormPage(),
+                  GenderStep(),
+                  AgeStep(),
+                  WeightStep(),
+                  HeightStep(),
+                  GoalStep(),
+                  ActivityStep(),
                 ],
               ),
             ),

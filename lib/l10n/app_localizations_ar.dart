@@ -87,7 +87,8 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get registerTitle1 => 'أهلاً بك';
-  
+
+  @override
   String get registerTitle2 => 'أنشئ حسابك';
 
   @override

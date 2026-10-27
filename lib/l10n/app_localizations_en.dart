@@ -88,6 +88,8 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get registerTitle1 => 'Hey there';
+
+  @override
   String get registerTitle2 => 'create an account';
 
   @override

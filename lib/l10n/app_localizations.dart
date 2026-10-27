@@ -248,11 +248,16 @@ abstract class AppLocalizations {
   /// **'Register'**
   String get register;
 
-  /// No description provided for @registerTitle.
+  /// No description provided for @registerTitle1.
   ///
   /// In en, this message translates to:
-  /// **'Hey there, create an account'**
+  /// **'Hey there'**
   String get registerTitle1;
+
+  /// No description provided for @registerTitle2.
+  ///
+  /// In en, this message translates to:
+  /// **'create an account'**
   String get registerTitle2;
 
   /// No description provided for @firstName.
