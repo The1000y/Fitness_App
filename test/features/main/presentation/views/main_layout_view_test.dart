@@ -1,3 +1,5 @@
+import 'package:fitness_app/config/routing/app_routes.dart';
+import 'package:fitness_app/config/routing/generate_routes.dart';
 import 'package:fitness_app/core/constants/app_test_keys.dart';
 import 'package:fitness_app/features/chat/presentation/views/chat_view.dart';
 import 'package:fitness_app/features/home/presentation/views/home_view.dart';
@@ -5,17 +7,21 @@ import 'package:fitness_app/features/main/presentation/views/main_layout_view.da
 import 'package:fitness_app/features/profile/presentation/views/profile_view.dart';
 import 'package:fitness_app/features/workouts/presentation/views/workouts_view.dart';
 import 'package:fitness_app/l10n/app_localizations.dart';
+import 'package:fitness_app/l10n/app_localizations_en.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
+  final l10n = AppLocalizationsEn();
+
   /// Helper to build and pump [MainLayoutView] within the app's real runtime environment.
   Future<void> pumpMainLayoutView(
     WidgetTester tester, {
     List<Widget>? tabs,
     TargetPlatform platform = TargetPlatform.android,
+    bool useGenerateRoutes = true,
   }) async {
     tester.view.physicalSize = const Size(375, 812);
     tester.view.devicePixelRatio = 1.0;
@@ -24,8 +30,7 @@ void main() {
       tester.view.resetDevicePixelRatio();
     });
 
-    final actualTabs =
-        tabs ?? const [HomeView(), ChatView(), WorkoutsView(), ProfileView()];
+    final shouldUseRoutes = useGenerateRoutes && tabs == null;
 
     await tester.pumpWidget(
       ScreenUtilPlusInit(
@@ -39,16 +44,26 @@ void main() {
             ...GlobalMaterialLocalizations.delegates,
           ],
           supportedLocales: AppLocalizations.supportedLocales,
-          home: MainLayoutView(tabs: actualTabs),
+          initialRoute: shouldUseRoutes ? AppRoutes.main : null,
+          onGenerateRoute: shouldUseRoutes
+              ? GenerateRoutes.generateRoute
+              : null,
+          home: shouldUseRoutes
+              ? null
+              : MainLayoutView(
+                  tabs:
+                      tabs ??
+                      const [
+                        HomeView(),
+                        ChatView(),
+                        WorkoutsView(),
+                        ProfileView(),
+                      ],
+                ),
         ),
       ),
     );
     await tester.pumpAndSettle();
-  }
-
-  /// Helper to get the localized strings from the test context.
-  AppLocalizations getL10n(WidgetTester tester) {
-    return AppLocalizations.of(tester.element(find.byType(MainLayoutView)))!;
   }
 
   group('MainLayoutView Rendering and Initial State', () {
@@ -56,7 +71,6 @@ void main() {
       'renders floating bottom navigation bar and displays Home tab as initial screen',
       (WidgetTester tester) async {
         await pumpMainLayoutView(tester);
-        final l10n = getL10n(tester);
 
         // Verify bottom navigation bar exists
         expect(
@@ -100,7 +114,6 @@ void main() {
       WidgetTester tester,
     ) async {
       await pumpMainLayoutView(tester);
-      final l10n = getL10n(tester);
 
       // Tap on Smart Coach tab (index 1)
       await tester.tap(find.byKey(const Key(AppTestKeys.mainTabCoach)));
@@ -122,7 +135,6 @@ void main() {
       WidgetTester tester,
     ) async {
       await pumpMainLayoutView(tester);
-      final l10n = getL10n(tester);
 
       // Tap on Workouts tab (index 2)
       await tester.tap(find.byKey(const Key(AppTestKeys.mainTabWorkouts)));
@@ -144,7 +156,6 @@ void main() {
       WidgetTester tester,
     ) async {
       await pumpMainLayoutView(tester);
-      final l10n = getL10n(tester);
 
       // Tap on Profile tab (index 3)
       await tester.tap(find.byKey(const Key(AppTestKeys.mainTabProfile)));
@@ -190,7 +201,6 @@ void main() {
       'shows close app confirmation dialog when system back is pressed on Home tab',
       (WidgetTester tester) async {
         await pumpMainLayoutView(tester);
-        final l10n = getL10n(tester);
 
         // Ensure we are at Home tab (index 0)
         expect(tester.widget<IndexedStack>(find.byType(IndexedStack)).index, 0);
@@ -280,5 +290,32 @@ void main() {
         expect(find.byKey(const Key(AppTestKeys.closeAppDialog)), findsNothing);
       },
     );
+  });
+
+  group('MainLayoutView Custom Tabs Composition', () {
+    testWidgets('renders custom injected tab widgets seamlessly', (
+      WidgetTester tester,
+    ) async {
+      await pumpMainLayoutView(
+        tester,
+        tabs: const [
+          Text('Custom Home'),
+          Text('Custom Chat'),
+          Text('Custom Workouts'),
+          Text('Custom Profile'),
+        ],
+      );
+
+      // Verify custom home widget is displayed
+      expect(find.text('Custom Home'), findsOneWidget);
+      expect(find.byType(HomeView), findsNothing);
+
+      // Navigate to second tab
+      await tester.tap(find.byKey(const Key(AppTestKeys.mainTabCoach)));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Custom Chat'), findsOneWidget);
+      expect(find.byType(ChatView), findsNothing);
+    });
   });
 }

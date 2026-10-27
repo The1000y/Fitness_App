@@ -9,22 +9,6 @@ import 'package:fitness_app/test_view.dart';
 import 'package:flutter/material.dart';
 
 abstract final class GenerateRoutes {
-  static Widget _getHomeTap([dynamic arg]) {
-    return const HomeView();
-  }
-
-  static Widget _getChatTap([dynamic arg]) {
-    return const ChatView();
-  }
-
-  static Widget _getWorkoutsTap([dynamic arg]) {
-    return const WorkoutsView();
-  }
-
-  static Widget _getProfileTap([dynamic arg]) {
-    return const ProfileView();
-  }
-
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case AppRoutes.splash:
@@ -75,22 +59,10 @@ abstract final class GenerateRoutes {
       case AppRoutes.main:
         return _pageRoute(
           MainLayoutView(
-            tabs: [
-              _getHomeTap(settings.arguments),
-              _getChatTap(settings.arguments),
-              _getWorkoutsTap(settings.arguments),
-              _getProfileTap(settings.arguments),
-            ],
+            tabs: [HomeView(), ChatView(), WorkoutsView(), ProfileView()],
           ),
           settings,
         );
-
-      case AppRoutes.home:
-        return _pageRoute(_getHomeTap(settings.arguments), settings);
-
-      // Workouts
-      case AppRoutes.workouts:
-        return _pageRoute(_getWorkoutsTap(settings.arguments), settings);
 
       case AppRoutes.exerciseDetails:
         return _pageRoute(const _StubScreen('Exercise Details'), settings);
@@ -102,16 +74,8 @@ abstract final class GenerateRoutes {
       case AppRoutes.foodDetails:
         return _pageRoute(const _StubScreen('Food Details'), settings);
 
-      // Chat
-      case AppRoutes.chat:
-        return _pageRoute(_getChatTap(settings.arguments), settings);
-
       case AppRoutes.chatHistory:
         return _pageRoute(const _StubScreen('Chat History'), settings);
-
-      // Profile
-      case AppRoutes.profile:
-        return _pageRoute(_getProfileTap(settings.arguments), settings);
 
       case AppRoutes.editProfile:
         return _pageRoute(const _StubScreen('Edit Profile'), settings);
