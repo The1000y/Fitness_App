@@ -1,4 +1,3 @@
-import 'package:fitness_app/config/routing/generate_routes.dart';
 import 'package:fitness_app/core/constants/app_test_keys.dart';
 import 'package:fitness_app/core/shared/custom_button.dart';
 import 'package:fitness_app/core/theme/app_colors/app_colors.dart';
@@ -11,7 +10,8 @@ import 'package:gap/gap.dart';
 import '../../../../l10n/app_localizations.dart';
 
 class MainLayoutView extends StatefulWidget {
-  const MainLayoutView({super.key});
+  final List<Widget> tabs;
+  const MainLayoutView({super.key, required this.tabs});
 
   @override
   State<MainLayoutView> createState() => _MainLayoutViewState();
@@ -20,22 +20,17 @@ class MainLayoutView extends StatefulWidget {
 class _MainLayoutViewState extends State<MainLayoutView> {
   int _currentTap = 0;
 
-  late final taps = [
-    GenerateRoutes.getHomeTap(),
-    GenerateRoutes.getChatTap(),
-    GenerateRoutes.getWorkoutsTap(),
-    GenerateRoutes.getProfileTap(),
-  ];
-
   Future<void> _handleBackPress() async {
     if (_currentTap != 0) {
       setState(() => _currentTap = 0);
     } else {
+      if (!context.mounted) return;
       await _showCloseAppDialog(context);
     }
   }
 
   Future<void> _showCloseAppDialog(BuildContext context) async {
+    if (Theme.of(context).platform != TargetPlatform.android) return;
     final l10n = AppLocalizations.of(context)!;
 
     final shouldClose = await showDialog<bool>(
@@ -109,7 +104,7 @@ class _MainLayoutViewState extends State<MainLayoutView> {
       },
       child: Scaffold(
         extendBody: true,
-        body: IndexedStack(index: _currentTap, children: taps),
+        body: IndexedStack(index: _currentTap, children: widget.tabs),
         bottomNavigationBar: CustomFloatingNavigationBar(
           key: const Key(AppTestKeys.mainLayoutBottomNav),
           currentIndex: _currentTap,

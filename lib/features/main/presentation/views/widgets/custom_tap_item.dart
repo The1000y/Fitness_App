@@ -35,8 +35,7 @@ class _CustomTapItemState extends State<CustomTapItem> {
     final color = isSelected ? AppColors.primary : AppColors.textSecondary;
     final textTheme = Theme.of(context).textTheme;
 
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
+    return InkWell(
       onTapDown: (_) => setState(() => _isPressed = true),
       onTapUp: (_) => setState(() => _isPressed = false),
       onTapCancel: () => setState(() => _isPressed = false),

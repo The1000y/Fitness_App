@@ -38,8 +38,6 @@ void main() {
           routes: {
             AppRoutes.login: (context) =>
                 const Scaffold(body: Text('Next Screen')),
-            AppRoutes.main: (context) =>
-                const Scaffold(body: Text('Next Screen')),
           },
         ),
       ),

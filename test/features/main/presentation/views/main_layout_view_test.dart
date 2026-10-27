@@ -12,7 +12,11 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   /// Helper to build and pump [MainLayoutView] within the app's real runtime environment.
-  Future<void> pumpMainLayoutView(WidgetTester tester) async {
+  Future<void> pumpMainLayoutView(
+    WidgetTester tester, {
+    List<Widget>? tabs,
+    TargetPlatform platform = TargetPlatform.android,
+  }) async {
     tester.view.physicalSize = const Size(375, 812);
     tester.view.devicePixelRatio = 1.0;
     addTearDown(() {
@@ -20,18 +24,22 @@ void main() {
       tester.view.resetDevicePixelRatio();
     });
 
+    final actualTabs =
+        tabs ?? const [HomeView(), ChatView(), WorkoutsView(), ProfileView()];
+
     await tester.pumpWidget(
       ScreenUtilPlusInit(
         designSize: const Size(375, 812),
         minTextAdapt: true,
         splitScreenMode: true,
-        child: const MaterialApp(
-          localizationsDelegates: [
+        child: MaterialApp(
+          theme: ThemeData(platform: platform),
+          localizationsDelegates: const [
             AppLocalizations.delegate,
             ...GlobalMaterialLocalizations.delegates,
           ],
           supportedLocales: AppLocalizations.supportedLocales,
-          home: MainLayoutView(),
+          home: MainLayoutView(tabs: actualTabs),
         ),
       ),
     );
@@ -255,6 +263,20 @@ void main() {
         await tester.pumpAndSettle();
 
         // Verify dialog is closed without exception
+        expect(find.byKey(const Key(AppTestKeys.closeAppDialog)), findsNothing);
+      },
+    );
+
+    testWidgets(
+      'does not show close app dialog on non-Android platform (e.g. iOS) when system back is pressed',
+      (WidgetTester tester) async {
+        await pumpMainLayoutView(tester, platform: TargetPlatform.iOS);
+
+        // Simulate system back button on Home tab
+        await tester.binding.handlePopRoute();
+        await tester.pumpAndSettle();
+
+        // Verify confirmation dialog is NOT shown
         expect(find.byKey(const Key(AppTestKeys.closeAppDialog)), findsNothing);
       },
     );
