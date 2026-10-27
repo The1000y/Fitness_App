@@ -214,7 +214,7 @@ class _OnboardingViewState extends State<OnboardingView> {
                                       onboardingPages.length - 1) {
                                     Navigator.pushNamedAndRemoveUntil(
                                       context,
-                                      AppRoutes.login,
+                                      AppRoutes.main,
                                       (route) => false,
                                     );
                                   } else {

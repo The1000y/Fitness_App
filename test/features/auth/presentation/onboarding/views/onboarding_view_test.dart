@@ -37,7 +37,9 @@ void main() {
           home: const OnboardingView(),
           routes: {
             AppRoutes.login: (context) =>
-                const Scaffold(body: Text('Login Screen')),
+                const Scaffold(body: Text('Next Screen')),
+            AppRoutes.main: (context) =>
+                const Scaffold(body: Text('Next Screen')),
           },
         ),
       ),
@@ -187,7 +189,7 @@ void main() {
         );
         await tester.pumpAndSettle();
 
-        expect(find.text('Login Screen'), findsOneWidget);
+        expect(find.text('Next Screen'), findsOneWidget);
         expect(find.byType(OnboardingView), findsNothing);
       },
     );

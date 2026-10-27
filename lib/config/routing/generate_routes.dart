@@ -1,9 +1,30 @@
 import 'package:fitness_app/config/routing/app_routes.dart';
 import 'package:fitness_app/features/auth/presentation/onboarding/views/onboarding_view.dart';
+import 'package:fitness_app/features/chat/presentation/views/chat_view.dart';
+import 'package:fitness_app/features/home/presentation/views/home_view.dart';
+import 'package:fitness_app/features/main/presentation/views/main_layout_view.dart';
+import 'package:fitness_app/features/profile/presentation/views/profile_view.dart';
+import 'package:fitness_app/features/workouts/presentation/views/workouts_view.dart';
 import 'package:fitness_app/test_view.dart';
 import 'package:flutter/material.dart';
 
 abstract final class GenerateRoutes {
+  static Widget getHomeTap([dynamic arg]) {
+    return const HomeView();
+  }
+
+  static Widget getChatTap([dynamic arg]) {
+    return const ChatView();
+  }
+
+  static Widget getWorkoutsTap([dynamic arg]) {
+    return const WorkoutsView();
+  }
+
+  static Widget getProfileTap([dynamic arg]) {
+    return const ProfileView();
+  }
+
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case AppRoutes.splash:
@@ -52,14 +73,14 @@ abstract final class GenerateRoutes {
 
       // Main
       case AppRoutes.main:
-        return _pageRoute(const _StubScreen('Main'), settings);
+        return _pageRoute(const MainLayoutView(), settings);
 
       case AppRoutes.home:
-        return _pageRoute(const _StubScreen('Home'), settings);
+        return _pageRoute(getHomeTap(settings.arguments), settings);
 
       // Workouts
       case AppRoutes.workouts:
-        return _pageRoute(const _StubScreen('Workouts'), settings);
+        return _pageRoute(getWorkoutsTap(settings.arguments), settings);
 
       case AppRoutes.exerciseDetails:
         return _pageRoute(const _StubScreen('Exercise Details'), settings);
@@ -73,14 +94,14 @@ abstract final class GenerateRoutes {
 
       // Chat
       case AppRoutes.chat:
-        return _pageRoute(const _StubScreen('Chat'), settings);
+        return _pageRoute(getChatTap(settings.arguments), settings);
 
       case AppRoutes.chatHistory:
         return _pageRoute(const _StubScreen('Chat History'), settings);
 
       // Profile
       case AppRoutes.profile:
-        return _pageRoute(const _StubScreen('Profile'), settings);
+        return _pageRoute(getProfileTap(settings.arguments), settings);
 
       case AppRoutes.editProfile:
         return _pageRoute(const _StubScreen('Edit Profile'), settings);
