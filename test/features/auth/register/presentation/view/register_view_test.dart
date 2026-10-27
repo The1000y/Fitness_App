@@ -55,38 +55,56 @@ void main() {
     final registerButton = find.widgetWithText(ElevatedButton, 'Register');
     await tester.ensureVisible(registerButton);
     await tester.tap(registerButton);
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
+  }
+
+  Future<void> tapNext(WidgetTester tester) async {
+    final next = find.widgetWithText(ElevatedButton, 'Next').hitTestable();
+    await tester.ensureVisible(next);
+    await tester.tap(next);
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
   }
 
   testWidgets('completes the registration flow and navigates to login', (
     tester,
   ) async {
+    print('stage initial');
     await pumpRegisterView(tester);
-    await tester.pumpAndSettle();
-
+    await tester.pump(const Duration(milliseconds: 500));
+    print('stage submit');
     await submitCredentials(tester);
+    print('stage after submit');
     expect(find.text('TELL US ABOUT YOURSELF!'), findsOneWidget);
+    print('stage gender visible');
 
     await tester.tap(find.text('Male'));
     await tester.pump();
-    await tapNextStep(tester);
+    await tapNext(tester);
+    print('stage age');
     expect(find.text('HOW OLD ARE YOU?'), findsOneWidget);
 
-    await tapNextStep(tester);
+    await tapNext(tester);
+    print('stage weight');
     expect(find.text('WHAT IS YOUR WEIGHT?'), findsOneWidget);
 
-    await tapNextStep(tester);
+    await tapNext(tester);
+    print('stage height');
     expect(find.text('WHAT IS YOUR HEIGHT?'), findsOneWidget);
 
-    await tapNextStep(tester);
+    await tapNext(tester);
+    print('stage goal');
     expect(find.text('WHAT IS YOUR GOAL?'), findsOneWidget);
 
     await tester.tap(find.text('Lose weight'));
     await tester.pump();
-    await tapNextStep(tester);
+    await tapNext(tester);
+    print('stage activity');
     expect(find.text('YOUR REGULAR PHYSICAL ACTIVITY LEVEL?'), findsOneWidget);
 
-    await tapNextStep(tester);
+    await tapNext(tester);
+    print('stage final');
 
     expect(find.text('Login page'), findsOneWidget);
     expect(find.text('Account created successfully'), findsOneWidget);
@@ -112,13 +130,14 @@ void main() {
     tester,
   ) async {
     await pumpRegisterView(tester);
-    await tester.pumpAndSettle();
+    await tester.pump(const Duration(milliseconds: 500));
 
     await submitCredentials(tester);
     expect(find.text('TELL US ABOUT YOURSELF!'), findsOneWidget);
 
     await tester.tap(findBackButton());
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
 
     expect(find.text('Hey there'), findsOneWidget);
     expect(find.text('TELL US ABOUT YOURSELF!'), findsNothing);
