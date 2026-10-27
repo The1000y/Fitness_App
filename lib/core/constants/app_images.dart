@@ -4,6 +4,7 @@ abstract final class AppImages {
   static const String _basePath = 'assets/images';
 
   static const String logo = '$_basePath/svgs/logo.svg';
+  static const String launchLogoX2 = '$_basePath/logo/launch_logo_x2.png';
   static const String robotChat = '$_basePath/robot_chat.png';
   static const String robotSkippingWithARope =
       '$_basePath/robot_skipping_with_a_rope.png';

@@ -100,6 +100,7 @@ flutter:
    - assets/images/backgrounds/
    - assets/images/svgs/
    - assets/images/test/
+   - assets/images/logo/
    - assets/icons/
   #   - images/a_dot_ham.jpeg
 

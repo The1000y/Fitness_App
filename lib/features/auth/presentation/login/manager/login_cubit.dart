@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:injectable/injectable.dart';
 
 import '../../../../../config/base/base_cubit.dart';
@@ -8,8 +10,6 @@ import '../../../domain/use_cases/login_use_case.dart';
 import 'login_event.dart';
 import 'login_state.dart';
 
-
-
 @injectable
 class LoginCubit extends BaseCubit<LoginState, CommonUiEvent> {
   final LoginUseCase _loginUseCase;
@@ -19,9 +19,7 @@ class LoginCubit extends BaseCubit<LoginState, CommonUiEvent> {
   void onEvent(LoginEvent event) {
     switch (event) {
       case LoginSubmitted():
-        _login(event);
-      case PasswordVisibilityToggled():
-        emit(state.update(obscurePassword: !state.obscurePassword));
+        unawaited(_login(event));
     }
   }
 
@@ -34,6 +32,8 @@ class LoginCubit extends BaseCubit<LoginState, CommonUiEvent> {
       email: event.email,
       password: event.password,
     );
+
+    if (isClosed) return;
 
     emit(state.update(isLoading: false));
 
