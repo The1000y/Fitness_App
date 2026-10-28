@@ -7,7 +7,7 @@ import 'package:fitness_app/config/base/base_response.dart';
 import 'package:fitness_app/features/auth/api/client/auth_api_client.dart';
 import 'package:fitness_app/features/auth/data/data_source/remote/auth_remote_data_source.dart';
 import 'package:fitness_app/features/auth/data/model/requests/login_request/login_request.dart';
-import 'package:fitness_app/features/auth/data/model/responces/login_response/login_response.dart';
+import 'package:fitness_app/features/auth/data/model/responses/login_response/login_response.dart';
 import 'package:fitness_app/features/auth/domain/entities/login_entity/login_entity.dart';
 import 'package:fitness_app/features/auth/domain/entities/login_entity/user_entity.dart';
 import 'package:fitness_app/features/auth/domain/repo/auth_repo.dart';

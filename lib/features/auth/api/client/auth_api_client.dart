@@ -4,7 +4,7 @@ import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
 
 import '../../data/model/requests/login_request/login_request.dart';
-import '../../data/model/responces/login_response/login_response.dart';
+import '../../data/model/responses/login_response/login_response.dart';
 
 part 'auth_api_client.g.dart';
 

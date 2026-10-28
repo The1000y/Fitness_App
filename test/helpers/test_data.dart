@@ -1,4 +1,4 @@
-import 'package:fitness_app/features/auth/data/model/responces/login_response/login_response.dart';
+import 'package:fitness_app/features/auth/data/model/responses/login_response/login_response.dart';
 import 'package:fitness_app/features/auth/domain/entities/login_entity/login_entity.dart';
 import 'package:fitness_app/features/auth/domain/entities/login_entity/user_entity.dart';
 

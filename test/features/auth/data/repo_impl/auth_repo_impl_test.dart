@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:fitness_app/config/base/base_response.dart';
 import 'package:fitness_app/config/errors/app_failure.dart';
-import 'package:fitness_app/features/auth/data/model/responces/login_response/login_response.dart';
+import 'package:fitness_app/features/auth/data/model/responses/login_response/login_response.dart';
 import 'package:fitness_app/features/auth/data/repo_impl/auth_repo_impl.dart';
 import '../../../../helpers/fakes.dart';
 import '../../../../helpers/test_data.dart';
