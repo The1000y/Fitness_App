@@ -97,6 +97,7 @@ flutter:
    - assets/images/svgs/
    - assets/images/logo/
    - assets/images/test/
+   - assets/images/logo/
    - assets/icons/
   #   - images/a_dot_ham.jpeg
 
