@@ -8,7 +8,6 @@ import 'package:fitness_app/features/auth/presentation/forget_password/manager/f
 import 'package:fitness_app/features/auth/presentation/forget_password/manager/forget_password_state.dart';
 import 'package:fitness_app/features/auth/presentation/forget_password/view/reset_password.dart';
 import 'package:fitness_app/l10n/app_localizations.dart';
-import 'package:fitness_app/l10n/app_localizations_en.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -21,6 +20,7 @@ class MockForgetPasswordCubit extends Mock implements ForgetPasswordCubit {}
 Widget buildTestScreen({
   required ForgetPasswordCubit cubit,
   Map<String, WidgetBuilder>? routes,
+  Locale? locale
 }) {
   return ScreenUtilPlusInit(
     designSize: const Size(375, 812),
@@ -33,6 +33,7 @@ Widget buildTestScreen({
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
+      locale: locale,
       supportedLocales: AppLocalizations.supportedLocales,
       home: BlocProvider<ForgetPasswordCubit>.value(
         value: cubit,
@@ -46,7 +47,7 @@ void main() {
   late MockForgetPasswordCubit mockCubit;
   late StreamController<BaseUiEvent> uiEventController;
   late StreamController<ForgetPasswordState> stateController;
-  final l10n = AppLocalizationsEn();
+
 
   setUpAll(() {
     registerFallbackValue(const ResetPasswordEvent('Password123!'));
@@ -68,10 +69,16 @@ void main() {
     stateController.close();
   });
 
+  AppLocalizations getL10n(WidgetTester tester) {
+    final element = tester.element(find.byType(ResetPassword));
+    return AppLocalizations.of(element)!;
+  }
+
   group('ResetPassword Screen', () {
     testWidgets('renders initial UI elements properly', (tester) async {
       await tester.pumpWidget(buildTestScreen(cubit: mockCubit));
       await tester.pumpAndSettle();
+      final l10n  = getL10n(tester);
 
       expect(find.text(l10n.createNewPassword), findsOneWidget);
       expect(find.text(l10n.passwordLengthHint), findsOneWidget);
@@ -83,7 +90,7 @@ void main() {
     testWidgets('shows validation error when passwords are empty', (tester) async {
       await tester.pumpWidget(buildTestScreen(cubit: mockCubit));
       await tester.pumpAndSettle();
-
+    final l10n  = getL10n(tester);
       await tester.tap(find.text(l10n.confirm));
       await tester.pumpAndSettle();
 
@@ -99,6 +106,7 @@ void main() {
       final textFields = find.byType(TextFormField);
       await tester.enterText(textFields.at(0), 'Password123!');
       await tester.enterText(textFields.at(1), 'Different123!');
+          final l10n  = getL10n(tester);
       await tester.tap(find.text(l10n.confirm));
       await tester.pumpAndSettle();
 
@@ -113,6 +121,7 @@ void main() {
       final textFields = find.byType(TextFormField);
       await tester.enterText(textFields.at(0), 'Password123!');
       await tester.enterText(textFields.at(1), 'Password123!');
+          final l10n  = getL10n(tester);
       await tester.tap(find.text(l10n.confirm));
       await tester.pumpAndSettle();
 

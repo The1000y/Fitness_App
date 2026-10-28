@@ -53,7 +53,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
           backgroundColor: Colors.transparent,
           body: SafeArea(
             child: Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding:  EdgeInsets.all(16.r),
               child: Form(
                 key: formKey,
                 child: Column(

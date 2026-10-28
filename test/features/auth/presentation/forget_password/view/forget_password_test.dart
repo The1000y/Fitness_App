@@ -7,7 +7,7 @@ import 'package:fitness_app/features/auth/presentation/forget_password/manager/f
 import 'package:fitness_app/features/auth/presentation/forget_password/manager/forget_password_state.dart';
 import 'package:fitness_app/features/auth/presentation/forget_password/view/forget_password.dart';
 import 'package:fitness_app/l10n/app_localizations.dart';
-import 'package:fitness_app/l10n/app_localizations_en.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -17,9 +17,7 @@ import 'package:mocktail/mocktail.dart';
 
 class MockForgetPasswordCubit extends Mock implements ForgetPasswordCubit {}
 
-Widget buildTestScreen({
-  required ForgetPasswordCubit cubit,
-}) {
+Widget buildTestScreen({required ForgetPasswordCubit cubit, Locale? locale}) {
   return ScreenUtilPlusInit(
     designSize: const Size(375, 812),
     minTextAdapt: true,
@@ -30,6 +28,7 @@ Widget buildTestScreen({
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
+      locale: locale,
       supportedLocales: AppLocalizations.supportedLocales,
       home: BlocProvider<ForgetPasswordCubit>.value(
         value: cubit,
@@ -43,7 +42,6 @@ void main() {
   late MockForgetPasswordCubit mockCubit;
   late StreamController<BaseUiEvent> uiEventController;
   late StreamController<ForgetPasswordState> stateController;
-  final l10n = AppLocalizationsEn();
 
   setUpAll(() {
     registerFallbackValue(const SendCodeEvent('fallback@example.com'));
@@ -54,7 +52,7 @@ void main() {
     uiEventController = StreamController<BaseUiEvent>.broadcast();
     stateController = StreamController<ForgetPasswordState>.broadcast();
 
-    when(() => mockCubit.uiEventStream).thenAnswer((_) => uiEventController.stream);
+    when(() => mockCubit.uiEventStream,).thenAnswer((_) => uiEventController.stream);
     when(() => mockCubit.stream).thenAnswer((_) => stateController.stream);
     when(() => mockCubit.state).thenReturn(const ForgetPasswordState());
     when(() => mockCubit.doEvent(any())).thenAnswer((_) async {});
@@ -64,11 +62,17 @@ void main() {
     uiEventController.close();
     stateController.close();
   });
+  // دالة مساعدة لجلب كائن الترجمة من الشاشة المعروضة حالياً
+  AppLocalizations getL10n(WidgetTester tester) {
+    final element = tester.element(find.byType(ForgetPassword));
+    return AppLocalizations.of(element)!;
+  }
 
   group('ForgetPassword Screen', () {
     testWidgets('renders initial UI elements properly', (tester) async {
       await tester.pumpWidget(buildTestScreen(cubit: mockCubit));
       await tester.pumpAndSettle();
+      final l10n = getL10n(tester);
 
       expect(find.text(l10n.forgotPassword), findsOneWidget);
       expect(find.text(l10n.enterYourEmail), findsOneWidget);
@@ -77,20 +81,27 @@ void main() {
       expect(find.byType(TextFormField), findsOneWidget);
     });
 
-    testWidgets('shows validation error when tapping Send OTP with empty email', (tester) async {
+    testWidgets(
+      'shows validation error when tapping Send OTP with empty email',
+      (tester) async {
+        await tester.pumpWidget(buildTestScreen(cubit: mockCubit));
+        await tester.pumpAndSettle();
+        final l10n = getL10n(tester);
+
+        await tester.tap(find.text(l10n.sendOtp));
+        await tester.pumpAndSettle();
+
+        expect(find.text(l10n.emailRequired), findsOneWidget);
+        verifyNever(() => mockCubit.doEvent(any()));
+      },
+    );
+
+    testWidgets('shows validation error when email format is invalid', (
+      tester,
+    ) async {
       await tester.pumpWidget(buildTestScreen(cubit: mockCubit));
       await tester.pumpAndSettle();
-
-      await tester.tap(find.text(l10n.sendOtp));
-      await tester.pumpAndSettle();
-
-      expect(find.text(l10n.emailRequired), findsOneWidget);
-      verifyNever(() => mockCubit.doEvent(any()));
-    });
-
-    testWidgets('shows validation error when email format is invalid', (tester) async {
-      await tester.pumpWidget(buildTestScreen(cubit: mockCubit));
-      await tester.pumpAndSettle();
+      final l10n = getL10n(tester);
 
       await tester.enterText(find.byType(TextFormField), 'invalid_email');
       await tester.tap(find.text(l10n.sendOtp));
@@ -100,9 +111,12 @@ void main() {
       verifyNever(() => mockCubit.doEvent(any()));
     });
 
-    testWidgets('triggers SendCodeEvent when valid email is submitted', (tester) async {
+    testWidgets('triggers SendCodeEvent when valid email is submitted', (
+      tester,
+    ) async {
       await tester.pumpWidget(buildTestScreen(cubit: mockCubit));
       await tester.pumpAndSettle();
+      final l10n = getL10n(tester);
 
       await tester.enterText(find.byType(TextFormField), 'user@example.com');
       await tester.tap(find.text(l10n.sendOtp));
@@ -110,22 +124,31 @@ void main() {
 
       verify(
         () => mockCubit.doEvent(
-          any(that: isA<SendCodeEvent>().having((e) => e.email, 'email', 'user@example.com')),
+          any(
+            that: isA<SendCodeEvent>().having(
+              (e) => e.email,
+              'email',
+              'user@example.com',
+            ),
+          ),
         ),
       ).called(1);
     });
 
-    testWidgets('displays loading indicator on button when forgetPasswordState is loading', (tester) async {
-      when(() => mockCubit.state).thenReturn(
-        const ForgetPasswordState(
-          forgetPasswordState: BaseState<void>(isLoading: true),
-        ),
-      );
+    testWidgets(
+      'displays loading indicator on button when forgetPasswordState is loading',
+      (tester) async {
+        when(() => mockCubit.state).thenReturn(
+          const ForgetPasswordState(
+            forgetPasswordState: BaseState<void>(isLoading: true),
+          ),
+        );
 
-      await tester.pumpWidget(buildTestScreen(cubit: mockCubit));
-      await tester.pump();
+        await tester.pumpWidget(buildTestScreen(cubit: mockCubit));
+        await tester.pump();
 
-      expect(find.byType(CircularProgressIndicator), findsOneWidget);
-    });
+        expect(find.byType(CircularProgressIndicator), findsOneWidget);
+      },
+    );
   });
 }
