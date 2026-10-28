@@ -23,8 +23,10 @@ abstract final class AppRoutes {
 
   // Main shell (bottom nav: Home / Chat / Workouts / Profile).
   static const String main = '/main';
+  static const String home = '/home';
 
   // Workouts.
+  static const String workouts = '/workouts';
   static const String exerciseDetails = '/exercise-details';
 
   // Food.
@@ -32,9 +34,11 @@ abstract final class AppRoutes {
   static const String foodDetails = '/food-details';
 
   // Smart coach chat.
+  static const String chat = '/chat';
   static const String chatHistory = '/chat-history';
 
   // Profile.
+  static const String profile = '/profile';
   static const String editProfile = '/edit-profile';
   static const String editWeight = '/edit-weight';
   static const String editGoal = '/edit-goal';
