@@ -292,6 +292,12 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get homeTab => 'Home';
+
+  @override
+  String get activityTab => 'Activity';
+
+  @override
   String get workouts => 'Workouts';
 
   @override

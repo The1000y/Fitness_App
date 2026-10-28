@@ -116,6 +116,8 @@
       }
     }
   },
+  "homeTab": "الرئيسية",
+  "activityTab": "النشاط",
   "workouts": "التمارين",
   "minutesShort": "{minutes} دقيقة",
   "@minutesShort": {
