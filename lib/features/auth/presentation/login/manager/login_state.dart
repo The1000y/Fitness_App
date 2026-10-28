@@ -1,15 +1,23 @@
+import 'package:equatable/equatable.dart';
 import 'package:fitness_app/config/base/base_state.dart';
 
 import '../../../domain/entities/login_entity/login_entity.dart';
 
-class LoginState extends BaseState<LoginEntity> {
-  const LoginState({super.isLoading, super.errorMessage, super.data});
+class LoginState extends Equatable {
+  final BaseState<LoginEntity> loginState;
 
-  LoginState update({bool? isLoading}) {
+  const LoginState({
+    this.loginState = const BaseState<LoginEntity>(),
+  });
+
+  LoginState copyWith({
+    BaseState<LoginEntity>? loginState,
+  }) {
     return LoginState(
-      isLoading: isLoading ?? this.isLoading,
-      errorMessage: errorMessage,
-      data: data,
+      loginState: loginState ?? this.loginState,
     );
   }
+
+  @override
+  List<Object?> get props => [loginState];
 }

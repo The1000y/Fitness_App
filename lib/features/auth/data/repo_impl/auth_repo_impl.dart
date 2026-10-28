@@ -8,7 +8,7 @@ import '../../domain/repo/auth_repo.dart';
 import '../data_source/remote/auth_remote_data_source.dart';
 import '../model/requests/login_request/login_request.dart';
 
-@LazySingleton(as: AuthRepo)
+@Injectable(as: AuthRepo)
 class AuthRepoImpl implements AuthRepo {
   final RemoteDataSource _remote;
 

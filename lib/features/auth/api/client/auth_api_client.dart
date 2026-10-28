@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:fitness_app/core/constants/api_strings.dart';
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
 
@@ -13,6 +14,6 @@ abstract class AuthApiClient {
   @factoryMethod
   factory AuthApiClient(Dio dio) = _AuthApiClient;
 
-  @POST('https://fitness.elevateegy.com/api/v1/auth/signin')
+  @POST(ApiStrings.signin)
   Future<LoginResponse> login(@Body() LoginRequest request);
 }

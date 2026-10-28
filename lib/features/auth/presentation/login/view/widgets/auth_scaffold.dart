@@ -22,55 +22,51 @@ class AuthScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    final screenHeight = MediaQuery.sizeOf(context).height;
+    //final screenHeight = MediaQuery.sizeOf(context).height;
     final hasHeader = title != null || subtitle != null;
 
     return CustomBackgroundImage(
       backgroundImage: AppImages.authBackground,
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        body: Stack(
-          children: [
-            Positioned(
-              top: 48.h,
-              left: 0,
-              right: 0,
-              child: Center(
-                child: Image.asset(AppImages.launchLogoX2, height: 44.h),
-              ),
+
+        body: SafeArea(
+          child: SingleChildScrollView(
+            padding: EdgeInsets.fromLTRB(
+              4.w,
+              0.h,
+              4.w,
+              MediaQuery.paddingOf(context).bottom + 24.h,
             ),
-            Positioned.fill(
-              child: SingleChildScrollView(
-                padding: EdgeInsets.fromLTRB(
-                  4.w,
-                  screenHeight * topOffsetFactor,
-                  4.w,
-                  MediaQuery.paddingOf(context).bottom + 24.h,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Center(
+                  child: Image.asset(
+                    AppImages.launchLogoX2,
+                    height: 48.h,
+                  ),
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    if (hasHeader) ...[
-                      Padding(
-                        padding: EdgeInsetsDirectional.only(start: 20.w),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            if (subtitle != null)
-                              Text(subtitle!, style: textTheme.bodyLarge),
-                            if (title != null)
-                              Text(title!, style: textTheme.headlineLarge),
-                          ],
-                        ),
-                      ),
-                      Gap(16.h),
-                    ],
-                    child,
-                  ],
-                ),
-              ),
+                SizedBox(height: 85.h),
+                if (hasHeader) ...[
+                  Padding(
+                    padding: EdgeInsetsDirectional.only(start: 20.w),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        if (subtitle != null)
+                          Text(subtitle!, style: textTheme.bodyLarge),
+                        if (title != null)
+                          Text(title!, style: textTheme.headlineLarge),
+                      ],
+                    ),
+                  ),
+                  Gap(16.h),
+                ],
+                child,
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );

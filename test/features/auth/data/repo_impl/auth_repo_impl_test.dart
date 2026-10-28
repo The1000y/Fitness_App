@@ -115,7 +115,6 @@ void main() {
 
         expect(result, isA<Error<dynamic>>());
       },
-      skip: 'BUG: login with an empty or missing token is returned as Success',
     );
   });
 }

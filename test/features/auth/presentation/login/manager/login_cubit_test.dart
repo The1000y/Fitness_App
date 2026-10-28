@@ -32,7 +32,7 @@ void main() {
       expect(cubit.state, const LoginState());
     });
 
-    test('successful login emits isLoading true/false, NavigateReplaceTo(AppRoutes.home), and no ShowFailureMessage', () async {
+    test('successful login emits isLoading true/false, stores the data, emits NavigateReplaceTo(AppRoutes.home), and no ShowFailureMessage', () async {
       fakeRepo.nextResult = Success(TestData.loginEntity);
 
       final uiEvents = <BaseUiEvent>[];
@@ -53,12 +53,14 @@ void main() {
       await pumpEventQueue();
 
       expect(fakeRepo.lastEmail, TestData.validEmail);
-      expect(states.map((s) => s.isLoading).toList(), [true, false]);
+      expect(states.map((s) => s.loginState.isLoading).toList(), [true, false]);
+      expect(states.last.loginState.data, TestData.loginEntity);
+      expect(states.last.loginState.errorMessage, isNull);
       expect(uiEvents, [const NavigateReplaceTo(AppRoutes.home)]);
       expect(uiEvents.whereType<ShowFailureMessage>(), isEmpty);
     });
 
-    test('failed login emits state sequence [true, false], exactly one ShowFailureMessage carrying same failure, and no NavigateReplaceTo', () async {
+    test('failed login emits state sequence [true, false], stores the failure, emits exactly one ShowFailureMessage carrying same failure, and no NavigateReplaceTo', () async {
       const failure = UnauthorizedFailure(serverMessage: 'Wrong password');
       fakeRepo.nextResult = const Error(failure);
 
@@ -79,7 +81,9 @@ void main() {
 
       await pumpEventQueue();
 
-      expect(states.map((s) => s.isLoading).toList(), [true, false]);
+      expect(states.map((s) => s.loginState.isLoading).toList(), [true, false]);
+      expect(states.last.loginState.errorMessage, failure);
+      expect(states.last.loginState.data, isNull);
       expect(uiEvents.length, 1);
       final event = uiEvents.first as ShowFailureMessage;
       expect(event.failure, failure);
@@ -134,11 +138,12 @@ void main() {
       );
       await pumpEventQueue();
       expect(fakeRepo.callCount, 2);
+      expect(cubit.state.loginState.data, TestData.loginEntity);
     });
 
     test(
       'closing cubit while request is pending, then completing it, throws nothing and emits nothing',
-      () async {
+          () async {
         final completer = Completer<BaseResponse<LoginEntity>>();
         fakeRepo.completer = completer;
 
@@ -163,10 +168,9 @@ void main() {
         completer.complete(Success(TestData.loginEntity));
         await pumpEventQueue();
 
-        expect(states.map((s) => s.isLoading).toList(), [true]);
+        expect(states.map((s) => s.loginState.isLoading).toList(), [true]);
         expect(uiEvents, isEmpty);
       },
-      skip: 'BUG: LoginCubit emits after close',
     );
   });
 }

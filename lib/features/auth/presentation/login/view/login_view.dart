@@ -118,7 +118,7 @@ class _LoginViewState extends State<LoginView> {
                   Gap(24.h),
 
                   BlocSelector<LoginCubit, LoginState, bool>(
-                    selector: (state) => state.isLoading,
+                    selector: (state) => state.loginState.isLoading,
                     builder: (context, isLoading) {
                       return CustomButton(
                         label: AppStrings.login,
