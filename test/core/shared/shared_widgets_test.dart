@@ -1,0 +1,94 @@
+import 'package:fitness_app/core/shared/category_filter_widget.dart';
+import 'package:fitness_app/core/shared/custom_image_card.dart';
+import 'package:fitness_app/core/theme/app_colors/app_colors.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
+import 'package:flutter_test/flutter_test.dart';
+
+Widget _buildTestApp(Widget child) {
+  return ScreenUtilPlusInit(
+    designSize: const Size(375, 812),
+    minTextAdapt: true,
+    splitScreenMode: true,
+    child: MaterialApp(home: Scaffold(body: child)),
+  );
+}
+
+void main() {
+  group('ExerciseCardWidget', () {
+    testWidgets('renders its title and responds to taps', (tester) async {
+      var tapped = false;
+
+      await tester.pumpWidget(
+        _buildTestApp(
+          ExerciseCardWidget(
+            imagePath: 'assets/images/robot_chat.png',
+            title: 'Strength',
+            onTap: () => tapped = true,
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      expect(find.text('Strength'), findsOneWidget);
+
+      final card = tester.widget<Container>(
+        find.descendant(
+          of: find.byType(ExerciseCardWidget),
+          matching: find.byType(Container),
+        ),
+      );
+      final cardSize = tester.getSize(
+        find.descendant(
+          of: find.byType(ExerciseCardWidget),
+          matching: find.byType(Container),
+        ),
+      );
+      expect(cardSize.width, 170.w);
+      expect(cardSize.height, 220.h);
+      final decoration = card.decoration! as BoxDecoration;
+      expect(decoration.borderRadius, BorderRadius.circular(16.r));
+      expect(decoration.image!.colorFilter, isNotNull);
+
+      await tester.tap(find.text('Strength'));
+      expect(tapped, isTrue);
+    });
+  });
+
+  group('CategoryFilterWidget', () {
+    testWidgets('styles selected category and reports selection', (
+      tester,
+    ) async {
+      String? selected;
+
+      await tester.pumpWidget(
+        _buildTestApp(
+          CategoryFilterWidget(
+            categories: const ['All', 'Yoga'],
+            selectedCategory: 'All',
+            onCategorySelected: (category) => selected = category,
+          ),
+        ),
+      );
+
+      expect(find.text('All'), findsOneWidget);
+      expect(find.text('Yoga'), findsOneWidget);
+
+      final chips = tester.widgetList<AnimatedContainer>(
+        find.byType(AnimatedContainer),
+      );
+      expect(
+        (chips.first.decoration! as BoxDecoration).color,
+        AppColors.primary,
+      );
+      expect(
+        (chips.last.decoration! as BoxDecoration).color,
+        AppColors.surfaceMuted,
+      );
+      expect(tester.getSize(find.byType(SizedBox).first).height, 48.h);
+
+      await tester.tap(find.text('Yoga'));
+      expect(selected, 'Yoga');
+    });
+  });
+}
