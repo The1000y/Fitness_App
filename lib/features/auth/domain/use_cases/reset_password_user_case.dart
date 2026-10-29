@@ -5,9 +5,9 @@ import 'package:injectable/injectable.dart';
 
 @injectable
 class ResetPasswordUserCase {
-  AuthRepo authRepo;
+ final AuthRepo authRepo;
 
-  ResetPasswordUserCase(this.authRepo);
+ const ResetPasswordUserCase(this.authRepo);
 
   Future<BaseResponse<void>> call(ResetPasswordParam param) async {
     return await authRepo.resetPassword(param);

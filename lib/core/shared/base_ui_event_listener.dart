@@ -16,12 +16,14 @@ class BaseUiEventListener<C extends BaseCubit<S, E>, S, E extends BaseUiEvent>
     super.key,
     this.cubit,
     this.onCustomEvent,
+    this.navigatorKey,
     required this.child,
   });
 
   final C? cubit;
   final void Function(BuildContext context, E event)? onCustomEvent;
   final Widget child;
+  final GlobalKey<NavigatorState>? navigatorKey;
 
   @override
   State<BaseUiEventListener<C, S, E>> createState() =>
@@ -35,6 +37,10 @@ class _BaseUiEventListenerState<
 >
     extends State<BaseUiEventListener<C, S, E>> {
   StreamSubscription<E>? _subscription;
+
+  
+  NavigatorState get _navigator =>
+    widget.navigatorKey?.currentState ?? Navigator.of(context);
 
   @override
   void initState() {
@@ -51,22 +57,10 @@ class _BaseUiEventListenerState<
     }
   }
 
-  // void _subscribe() {
-  //   final targetCubit = widget.cubit ?? context.read<C>();
-  //   _subscription = targetCubit.uiEventStream.listen((event) {
-  //     if (mounted) {
-  //       _handleEvent(context, event);
-  //     }
-  //   });
-  // }
   void _subscribe() {
     final targetCubit = widget.cubit ?? context.read<C>();
     _subscription = targetCubit.uiEventStream.listen((event) {
-      if (!mounted) return;
-
-      // يتأكد إن الشاشة دي هي اللي مفتوحة قدام المستخدم دلوقتي مش في الخلفية
-      final isCurrentRoute = ModalRoute.of(context)?.isCurrent ?? true;
-      if (isCurrentRoute) {
+      if (mounted) {
         _handleEvent(context, event);
       }
     });
@@ -112,19 +106,21 @@ class _BaseUiEventListenerState<
                   ) ??
                   TextStyle(color: AppColors.white, fontSize: 14.sp),
             ),
-            backgroundColor: theme.colorScheme.error,
+            backgroundColor: AppColors.glow,
           ),
         );
       case NavigateTo():
-        Navigator.of(
-          context,
-        ).pushNamed(event.routeName, arguments: event.arguments);
+       _navigator.pushNamed(event.routeName, arguments: event.arguments);
       case NavigateReplaceTo():
-        Navigator.of(
-          context,
-        ).pushReplacementNamed(event.routeName, arguments: event.arguments);
+       _navigator.pushReplacementNamed(event.routeName, arguments: event.arguments);
       case PopRoute():
-        Navigator.of(context).pop(event.result);
+        _navigator.pop(event.result);
+      case NavigateAndRemoveUntil():
+        Navigator.of(context, rootNavigator: true).pushNamedAndRemoveUntil(
+          event.routeName,
+          (route) => false,
+          arguments: event.arguments,
+        );
     }
   }
 

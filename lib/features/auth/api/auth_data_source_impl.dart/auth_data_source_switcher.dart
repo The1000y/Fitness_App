@@ -1,5 +1,5 @@
 import 'package:fitness_app/config/base/base_response.dart';
-import 'package:fitness_app/features/auth/api/auth_data_source_impl.dart/local/auth_local_data_source_impl.dart';
+import 'package:fitness_app/features/auth/api/auth_data_source_impl.dart/remote/auth_fake_remote_data_source_impl.dart';
 import 'package:fitness_app/features/auth/api/auth_data_source_impl.dart/remote/auth_remote_data_source_impl.dart';
 import 'package:fitness_app/features/auth/data/data_source/remote/auth_remote_data_source.dart';
 import 'package:fitness_app/features/auth/data/model/requests/forget_password_request/forget_password_request.dart';
@@ -10,7 +10,7 @@ import 'package:injectable/injectable.dart';
 @Injectable(as: AuthRemoteDataSource)
 class AuthDataSourceSwitcher implements AuthRemoteDataSource {
  final  AuthRemoteDataSourceImpl authRemoteDataSourceImpl;
- final AuthLocalDataSourceImpl authLocalDataSourceImpl;
+ final AuthFakeRemoteDataSourceImpl authLocalDataSourceImpl;
   AuthDataSourceSwitcher({
     required this.authRemoteDataSourceImpl,
     required this.authLocalDataSourceImpl,

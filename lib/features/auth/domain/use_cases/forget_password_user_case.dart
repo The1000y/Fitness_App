@@ -5,8 +5,8 @@ import 'package:injectable/injectable.dart';
 
 @injectable
 class ForgetPasswordUserCase {
-  AuthRepo authRepo;
-  ForgetPasswordUserCase({required this.authRepo});
+ final AuthRepo authRepo;
+ const ForgetPasswordUserCase({required this.authRepo});
 
   Future<BaseResponse<void>> call(ForgetPasswordParam param) async {
     return await authRepo.forgetPassword(param);

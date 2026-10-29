@@ -20,8 +20,8 @@ import '../../features/app/presentation/cubit/auth/app_auth_cubit.dart'
     as _i760;
 import '../../features/auth/api/auth_data_source_impl.dart/auth_data_source_switcher.dart'
     as _i981;
-import '../../features/auth/api/auth_data_source_impl.dart/local/auth_local_data_source_impl.dart'
-    as _i4;
+import '../../features/auth/api/auth_data_source_impl.dart/remote/auth_fake_remote_data_source_impl.dart'
+    as _i508;
 import '../../features/auth/api/auth_data_source_impl.dart/remote/auth_remote_data_source_impl.dart'
     as _i192;
 import '../../features/auth/api/client/auth_api_client.dart' as _i213;
@@ -52,8 +52,8 @@ extension GetItInjectableX on _i174.GetIt {
     final appModule = _$AppModule();
     final secureStorageModule = _$SecureStorageModule();
     final dioModule = _$DioModule();
-    gh.factory<_i4.AuthLocalDataSourceImpl>(
-      () => _i4.AuthLocalDataSourceImpl(),
+    gh.factory<_i508.AuthFakeRemoteDataSourceImpl>(
+      () => _i508.AuthFakeRemoteDataSourceImpl(),
     );
     gh.lazySingleton<_i281.AssetBundle>(() => appModule.assetBundle);
     gh.lazySingleton<_i558.FlutterSecureStorage>(
@@ -69,7 +69,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i361.Dio>(
       () => dioModule.dioMethod(gh<_i264.AppInterceptors>()),
     );
-    gh.singleton<_i213.AuthApiClient>(
+    gh.lazySingleton<_i213.AuthApiClient>(
       () => _i213.AuthApiClient(gh<_i361.Dio>()),
     );
     gh.factory<_i192.AuthRemoteDataSourceImpl>(
@@ -80,7 +80,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i548.AuthRemoteDataSource>(
       () => _i981.AuthDataSourceSwitcher(
         authRemoteDataSourceImpl: gh<_i192.AuthRemoteDataSourceImpl>(),
-        authLocalDataSourceImpl: gh<_i4.AuthLocalDataSourceImpl>(),
+        authLocalDataSourceImpl: gh<_i508.AuthFakeRemoteDataSourceImpl>(),
       ),
     );
     gh.lazySingleton<_i170.AuthRepo>(

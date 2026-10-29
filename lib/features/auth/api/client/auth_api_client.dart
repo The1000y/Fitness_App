@@ -8,7 +8,7 @@ import 'package:retrofit/retrofit.dart';
 
 part 'auth_api_client.g.dart';
 
-@singleton
+@lazySingleton
 @RestApi()
 abstract class AuthApiClient {
   @factoryMethod
@@ -16,8 +16,8 @@ abstract class AuthApiClient {
 
   @POST(ApiStrings.forgotPassword)
   Future<void> forgetPassword(@Body() ForgetPasswordRequest requestEmail);
-  @POST(ApiStrings.forgotPassword)
+  @POST(ApiStrings.resetPassword)
   Future<void> resetPassword(@Body() ResetPasswordRequest params);
-  @POST(ApiStrings.forgotPassword)
+  @POST(ApiStrings.verifyResetCode)
   Future<void> verifyOtp(@Body() VerifyOtpRequest params);
 }

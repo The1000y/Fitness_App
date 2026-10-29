@@ -1,6 +1,6 @@
 import 'package:fitness_app/config/base/base_response.dart';
 import 'package:fitness_app/features/auth/api/auth_data_source_impl.dart/auth_data_source_switcher.dart';
-import 'package:fitness_app/features/auth/api/auth_data_source_impl.dart/local/auth_local_data_source_impl.dart';
+import 'package:fitness_app/features/auth/api/auth_data_source_impl.dart/remote/auth_fake_remote_data_source_impl.dart';
 import 'package:fitness_app/features/auth/api/auth_data_source_impl.dart/remote/auth_remote_data_source_impl.dart';
 import 'package:fitness_app/features/auth/data/model/requests/forget_password_request/forget_password_request.dart';
 import 'package:fitness_app/features/auth/data/model/requests/reset_password_request/reset_password_request.dart';
@@ -12,7 +12,7 @@ class MockAuthRemoteDataSourceImpl extends Mock
     implements AuthRemoteDataSourceImpl {}
 
 class MockAuthLocalDataSourceImpl extends Mock
-    implements AuthLocalDataSourceImpl {}
+    implements AuthFakeRemoteDataSourceImpl {}
 
 void main() {
   late MockAuthRemoteDataSourceImpl mockRemote;

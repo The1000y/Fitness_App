@@ -17,3 +17,6 @@ final class ResetPasswordEvent extends ForgetPasswordEvent {
   final String newPassword;
   const ResetPasswordEvent(this.newPassword);
 }
+final class ResendCodeEvent extends ForgetPasswordEvent {
+  const ResendCodeEvent();
+}

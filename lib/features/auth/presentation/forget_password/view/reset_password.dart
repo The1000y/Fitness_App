@@ -1,10 +1,7 @@
-import 'package:fitness_app/config/base/base_ui_event.dart';
 import 'package:fitness_app/config/localization/validation_error_message_mapper.dart';
-import 'package:fitness_app/config/routing/app_routes.dart';
 import 'package:fitness_app/config/utils/auth_validators.dart';
 import 'package:fitness_app/core/constants/app_icons.dart';
 import 'package:fitness_app/core/constants/app_images.dart';
-import 'package:fitness_app/core/shared/base_ui_event_listener.dart';
 import 'package:fitness_app/core/shared/custom_background_image.dart';
 import 'package:fitness_app/core/shared/custom_blur_card.dart';
 import 'package:fitness_app/core/shared/custom_button.dart';
@@ -37,120 +34,106 @@ class _ResetPasswordState extends State<ResetPassword> {
     var theme = Theme.of(context);
     var l10n = AppLocalizations.of(context)!;
     var cubit = context.read<ForgetPasswordCubit>();
-    return BaseUiEventListener<
-      ForgetPasswordCubit,
-      ForgetPasswordState,
-      BaseUiEvent
-    >(
-      onCustomEvent: (context, event) {
-        if (event is NavigateAndRemoveUntil) {
-          Navigator.of(
-            context,
-          ).pushNamedAndRemoveUntil(AppRoutes.login, (route) => false);
-        }
-      },
-      child: CustomBackgroundImage(
-        backgroundImage: AppImages.authBackground,
-        fit: BoxFit.cover,
-        child: Scaffold(
-          backgroundColor: Colors.transparent,
-          body: SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: SingleChildScrollView(
-                child: Form(
-                  key: formKey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Center(
-                        child: Image.asset(
-                          AppImages.logo,
-                          fit: BoxFit.contain,
-                          width: 70.w,
-                          height: 48.w,
-                        ),
+    return CustomBackgroundImage(
+      backgroundImage: AppImages.authBackground,
+      fit: BoxFit.cover,
+      child: Scaffold(
+        body: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: SingleChildScrollView(
+              child: Form(
+                key: formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Center(
+                      child: Image.asset(
+                        AppImages.logo,
+                        fit: BoxFit.contain,
+                        width: 70.w,
+                        height: 48.w,
                       ),
-                      Gap(96.h),
-                      Text(
-                        l10n.passwordLengthHint,
-
-                        style: theme.textTheme.headlineSmall,
-                      ),
-                      Gap(2.h),
-                      Text(
-                        l10n.createNewPassword,
-                        style: theme.textTheme.headlineLarge,
-                      ),
-                      Gap(24.h),
-                      CustomBlurCard(
-                        child: Column(
-                          children: [
-                            CustomTextFormField(
-                              validator: (value) {
-                                var error = AppValidators.password(value);
-                                return mapValidationErrorToMessage(error, l10n);
-                              },
-                              textInputAction: TextInputAction.done,
-                              controller: passwordController,
-                              hintText: l10n.password,
-                              isPassword: isObscured,
-                              prefixIcon: AppIcons.lock,
-                              prefixIconConstraints: BoxConstraints(
-                                minWidth: 48.w,
-                                minHeight: 24.h,
-                              ),
+                    ),
+                    Gap(96.h),
+                    Text(
+                      l10n.passwordLengthHint,
+    
+                      style: theme.textTheme.headlineSmall,
+                    ),
+                    Gap(2.h),
+                    Text(
+                      l10n.createNewPassword,
+                      style: theme.textTheme.headlineLarge,
+                    ),
+                    Gap(24.h),
+                    CustomBlurCard(
+                      child: Column(
+                        children: [
+                          CustomTextFormField(
+                            validator: (value) {
+                              var error = AppValidators.password(value);
+                              return mapValidationErrorToMessage(error, l10n);
+                            },
+                            textInputAction: TextInputAction.done,
+                            controller: passwordController,
+                            hintText: l10n.password,
+                            isPassword: isObscured,
+                            prefixIcon: AppIcons.lock,
+                            prefixIconConstraints: BoxConstraints(
+                              minWidth: 48.w,
+                              minHeight: 24.h,
                             ),
-                            Gap(24),
-                            CustomTextFormField(
-                              validator: (value) {
-                                var error = AppValidators.confirmPassword(
-                                  value,
-                                  passwordController.text,
-                                );
-                                return mapValidationErrorToMessage(error, l10n);
-                              },
-                              textInputAction: TextInputAction.next,
-                              controller: confirmPasswordController,
-                              hintText: l10n.password,
-                              isPassword: isObscured,
-                              prefixIcon: AppIcons.lock,
-                              prefixIconConstraints: BoxConstraints(
-                                minWidth: 48.w,
-                                minHeight: 24.h,
-                              ),
+                          ),
+                          Gap(24),
+                          CustomTextFormField(
+                            validator: (value) {
+                              var error = AppValidators.confirmPassword(
+                                value,
+                                passwordController.text,
+                              );
+                              return mapValidationErrorToMessage(error, l10n);
+                            },
+                            textInputAction: TextInputAction.next,
+                            controller: confirmPasswordController,
+                            hintText: l10n.password,
+                            isPassword: isObscured,
+                            prefixIcon: AppIcons.lock,
+                            prefixIconConstraints: BoxConstraints(
+                              minWidth: 48.w,
+                              minHeight: 24.h,
                             ),
-                            Gap(24.h),
-                            BlocSelector<
-                              ForgetPasswordCubit,
-                              ForgetPasswordState,
-                              bool
-                            >(
-                              selector: (state) {
-                                return state.resetPasswordState.isLoading;
-                              },
-                              builder: (context, state) {
-                                return CustomButton(
-                                  isLoading: state, // ربط اللودينج بالمتغير
-                                  label: l10n.confirm,
-                                  height: 38.h,
-                                  onPressed: () async {
-                                    if (formKey.currentState!.validate()) {
-                                      await cubit.doEvent(
-                                        ResetPasswordEvent(
-                                          passwordController.text,
-                                        ),
-                                      );
-                                    }
-                                  },
-                                );
-                              },
-                            ),
-                          ],
-                        ),
+                          ),
+                          Gap(24.h),
+                          BlocSelector<
+                            ForgetPasswordCubit,
+                            ForgetPasswordState,
+                            bool
+                          >(
+                            selector: (state) {
+                              return state.resetPasswordState.isLoading;
+                            },
+                            builder: (context, state) {
+                              return CustomButton(
+                                isLoading: state, // ربط اللودينج بالمتغير
+                                label: l10n.confirm,
+                                height: 38.h,
+                                onPressed: () async {
+                                  if (formKey.currentState!.validate()) {
+                                    await cubit.doEvent(
+                                      ResetPasswordEvent(
+                                        passwordController.text,
+                                      ),
+                                    );
+                                  }
+                                },
+                              );
+                            },
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),

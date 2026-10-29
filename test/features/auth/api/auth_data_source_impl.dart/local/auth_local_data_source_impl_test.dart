@@ -1,16 +1,16 @@
 import 'package:fitness_app/config/base/base_response.dart';
 import 'package:fitness_app/config/errors/app_failure.dart';
-import 'package:fitness_app/features/auth/api/auth_data_source_impl.dart/local/auth_local_data_source_impl.dart';
+import 'package:fitness_app/features/auth/api/auth_data_source_impl.dart/remote/auth_fake_remote_data_source_impl.dart';
 import 'package:fitness_app/features/auth/data/model/requests/forget_password_request/forget_password_request.dart';
 import 'package:fitness_app/features/auth/data/model/requests/reset_password_request/reset_password_request.dart';
 import 'package:fitness_app/features/auth/data/model/requests/verify_otp_request/verify_otp_request.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  late AuthLocalDataSourceImpl localDataSource;
+  late AuthFakeRemoteDataSourceImpl localDataSource;
 
   setUp(() {
-    localDataSource = AuthLocalDataSourceImpl();
+    localDataSource = AuthFakeRemoteDataSourceImpl();
   });
 
   group('AuthLocalDataSourceImpl', () {

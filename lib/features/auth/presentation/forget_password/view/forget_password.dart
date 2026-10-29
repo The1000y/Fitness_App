@@ -1,9 +1,7 @@
-import 'package:fitness_app/config/base/base_ui_event.dart';
 import 'package:fitness_app/config/localization/validation_error_message_mapper.dart';
 import 'package:fitness_app/config/utils/auth_validators.dart';
 import 'package:fitness_app/core/constants/app_icons.dart';
 import 'package:fitness_app/core/constants/app_images.dart';
-import 'package:fitness_app/core/shared/base_ui_event_listener.dart';
 import 'package:fitness_app/core/shared/custom_background_image.dart';
 import 'package:fitness_app/core/shared/custom_blur_card.dart';
 import 'package:fitness_app/core/shared/custom_button.dart';
@@ -40,95 +38,87 @@ class _ForgetPasswordState extends State<ForgetPassword> {
     var l10n = AppLocalizations.of(context)!;
     var cubit = context.read<ForgetPasswordCubit>();
 
-    return BaseUiEventListener<
-      ForgetPasswordCubit,
-      ForgetPasswordState,
-      BaseUiEvent
-    >(
-     
-      child: CustomBackgroundImage(
-        backgroundImage: AppImages.authBackground,
-        fit: BoxFit.cover,
-        child: Scaffold(
-          backgroundColor: Colors.transparent,
-          body: SafeArea(
-            child: Padding(
-              padding:  EdgeInsets.all(16.r),
-              child: Form(
-                key: formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Center(
-                      child: Image.asset(
-                        AppImages.logo,
-                        fit: BoxFit.contain,
-                        width: 70.w,
-                        height: 48.w,
-                      ),
+    return CustomBackgroundImage(
+      backgroundImage: AppImages.authBackground,
+      fit: BoxFit.cover,
+      child: Scaffold(
+        body: SafeArea(
+          child: Padding(
+            padding:  EdgeInsets.all(16.r),
+            child: Form(
+              key: formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Center(
+                    child: Image.asset(
+                      AppImages.logo,
+                      fit: BoxFit.contain,
+                      width: 70.w,
+                      height: 48.w,
                     ),
-                    Gap(96.h),
-                    Text(
-                      l10n.enterYourEmail,
-                      style: theme.textTheme.headlineSmall,
-                    ),
-                    Gap(2.h),
-                    Text(
-                      l10n.forgotPassword,
-                      style: theme.textTheme.headlineLarge,
-                    ),
-                    Gap(24.h),
-                    CustomBlurCard(
-                      child: Column(
-                        children: [
-                          CustomTextFormField(
-                            prefixIcon: AppIcons.mail,
-                            prefixIconConstraints: BoxConstraints(
-                              minWidth: 48.w,
-                              minHeight: 24.h,
-                            ),
-                            controller: emailController,
-                            validator: (value) {
-                              var error = AppValidators.email(value);
-                              if (error != null) {
-                                return mapValidationErrorToMessage(error, l10n);
-                              }
-                              return null;
-                            },
-                            keyboardType: TextInputType.emailAddress,
-                            textInputAction: TextInputAction.done,
-                            hintText: l10n.email,
+                  ),
+                  Gap(96.h),
+                  Text(
+                    l10n.enterYourEmail,
+                    style: theme.textTheme.headlineSmall,
+                  ),
+                  Gap(2.h),
+                  Text(
+                    l10n.forgotPassword,
+                    style: theme.textTheme.headlineLarge,
+                  ),
+                  Gap(24.h),
+                  CustomBlurCard(
+                    child: Column(
+                      children: [
+                        CustomTextFormField(
+                          prefixIcon: AppIcons.mail,
+                          prefixIconConstraints: BoxConstraints(
+                            minWidth: 48.w,
+                            minHeight: 24.h,
                           ),
-                          Gap(24.h),
-                          BlocSelector<
-                            ForgetPasswordCubit,
-                            ForgetPasswordState,
-                            bool
-                          >(
-                            selector: (state) {
-                              return state.forgetPasswordState.isLoading;
-                            },
-                            builder: (context, isLoading) {
-                              return CustomButton(
-                                isLoading: isLoading, // ربط اللودينج بالمتغير
-                                label: l10n.sendOtp,
-                                height: 38.h,
-                                onPressed: () async {
-                                        if (formKey.currentState!.validate()) {
-                                          await cubit.doEvent(
-                                            SendCodeEvent(emailController.text),
-                                          );
-                                         
-                                        }
-                                      },
-                              );
-                            },
-                          ),
-                        ],
-                      ),
+                          controller: emailController,
+                          validator: (value) {
+                            var error = AppValidators.email(value);
+                            if (error != null) {
+                              return mapValidationErrorToMessage(error, l10n);
+                            }
+                            return null;
+                          },
+                          keyboardType: TextInputType.emailAddress,
+                          textInputAction: TextInputAction.done,
+                          hintText: l10n.email,
+                        ),
+                        Gap(24.h),
+                        BlocSelector<
+                          ForgetPasswordCubit,
+                          ForgetPasswordState,
+                          bool
+                        >(
+                          selector: (state) {
+                            return state.forgetPasswordState.isLoading;
+                          },
+                          builder: (context, isLoading) {
+                            return CustomButton(
+                              isLoading: isLoading, // ربط اللودينج بالمتغير
+                              label: l10n.sendOtp,
+                              height: 38.h,
+                              onPressed: () async {
+                                      if (formKey.currentState!.validate()) {
+                                        await cubit.doEvent(
+                                          SendCodeEvent(emailController.text),
+                                        );
+                                       
+                                      }
+                                    },
+                            );
+                          },
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),

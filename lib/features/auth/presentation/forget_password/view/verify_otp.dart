@@ -1,8 +1,6 @@
-import 'package:fitness_app/config/base/base_ui_event.dart';
 import 'package:fitness_app/config/localization/validation_error_message_mapper.dart';
 import 'package:fitness_app/config/utils/auth_validators.dart';
 import 'package:fitness_app/core/constants/app_images.dart';
-import 'package:fitness_app/core/shared/base_ui_event_listener.dart';
 import 'package:fitness_app/core/shared/custom_background_image.dart';
 import 'package:fitness_app/core/shared/custom_blur_card.dart';
 import 'package:fitness_app/core/shared/custom_button.dart';
@@ -13,6 +11,7 @@ import 'package:fitness_app/features/auth/presentation/forget_password/manager/f
 import 'package:fitness_app/features/auth/presentation/forget_password/view/widgets/helper.dart';
 import 'package:fitness_app/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 import 'package:gap/gap.dart';
@@ -26,8 +25,14 @@ class VerifyOtp extends StatefulWidget {
 }
 
 class _VerifyOtpState extends State<VerifyOtp> {
-  TextEditingController otpController = TextEditingController();
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  late TextEditingController otpController;
+  late GlobalKey<FormState> formKey;
+  @override
+  void initState() {
+    otpController = TextEditingController();
+    formKey = GlobalKey<FormState>();
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -35,136 +40,177 @@ class _VerifyOtpState extends State<VerifyOtp> {
     super.dispose();
   }
 
+  String _formatDuration(int totalSeconds) {
+    final minutes = (totalSeconds ~/ 60).toString().padLeft(2, '0');
+    final seconds = (totalSeconds % 60).toString().padLeft(2, '0');
+    return '$minutes:$seconds';
+  }
+
   @override
   Widget build(BuildContext context) {
-    var theme = Theme.of(context);
-    var l10n = AppLocalizations.of(context)!;
-    var cubit = context.read<ForgetPasswordCubit>();
+    final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
+    final cubit = context.read<ForgetPasswordCubit>();
 
-    return BaseUiEventListener<
-      ForgetPasswordCubit,
-      ForgetPasswordState,
-      BaseUiEvent
-    >(
-      child: CustomBackgroundImage(
-        backgroundImage: AppImages.authBackground,
-        fit: BoxFit.cover,
-        child: Scaffold(
-          backgroundColor: Colors.transparent,
-          body: SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: SingleChildScrollView(
-                child: Form(
-                  key: formKey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Center(
-                        child: Image.asset(
-                          AppImages.logo,
-                          fit: BoxFit.contain,
-                          width: 70.w,
-                          height: 48.w,
-                        ),
+    return CustomBackgroundImage(
+      backgroundImage: AppImages.authBackground,
+      fit: BoxFit.cover,
+      child: Scaffold(
+        body: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: SingleChildScrollView(
+              child: Form(
+                key: formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Center(
+                      child: Image.asset(
+                        AppImages.logo,
+                        fit: BoxFit.contain,
+                        width: 70.w,
+                        height: 48.w,
                       ),
-                      Gap(96.h),
-                      Text(l10n.otpCode, style: theme.textTheme.headlineLarge),
-                      Gap(2.h),
-                      Text(
-                        l10n.enterYourOtp,
-                        style: theme.textTheme.headlineSmall,
-                      ),
-                      Gap(24.h),
-                      CustomBlurCard(
-                        child: Column(
-                          children: [
-                            Pinput(
-                              controller: otpController,
-                              errorTextStyle: theme.textTheme.bodySmall
-                                  ?.copyWith(color: AppColors.accent),
-                              onTapOutside: (event) {
-                                FocusManager.instance.primaryFocus?.unfocus();
-                              },
-                              keyboardType: TextInputType.number,
-                              length: 4,
-                              animationCurve: Curves.bounceInOut,
-                              animationDuration: const Duration(
-                                milliseconds: 300,
-                              ),
-                              showCursor: true,
-                              cursor: Align(
-                                alignment: Alignment.center,
-                                child: Container(
-                                  margin: EdgeInsets.all(14),
-                                  width: 1,
-                                  height: 50,
-                                  color: AppColors.primary,
-                                ),
-                              ),
-                              defaultPinTheme: Helper.defultPinTheme,
-                              focusedPinTheme: Helper.focusPinTheme,
-                              submittedPinTheme: Helper.submittedPinTheme,
-                              validator: (value) {
-                                final error = AppValidators.otpRequired(value);
-                                if (error != null) {
-                                  return mapValidationErrorToMessage(
-                                    error,
-                                    l10n,
-                                  );
-                                }
-                                return null;
-                              },
-                              pinputAutovalidateMode:
-                                  PinputAutovalidateMode.onSubmit,
-                            ),
-                            Gap(24.h),
-                            BlocSelector<
-                              ForgetPasswordCubit,
-                              ForgetPasswordState,
-                              bool
-                            >(
-                              selector: (state) {
-                                return state.verifyOtpState.isLoading;
-                              },
-                              builder: (context, isLoading) {
-                                return CustomButton(
-                                  isLoading: isLoading, // ربط اللودينج بالمتغير
-                                  label: l10n.confirm,
-                                  height: 38.h,
-                                  onPressed: () async {
-                                    if (formKey.currentState!.validate()) {
-                                      await cubit.doEvent(
-                                        VerifyOtpEvent(otpController.text),
-                                      );
-                                    }
-                                  },
-                                );
-                              },
-                            ),
-                            Gap(8),
-                            Text(
-                              l10n.didntReceiveCode,
-                              style: theme.textTheme.bodyMedium,
-                            ),
-                            Gap(4),
-                            InkWell(
-                              onTap: () {},
-                              child: Text(
-                                l10n.resendCode,
-                                style: theme.textTheme.bodyLarge!.copyWith(
-                                  fontWeight: FontWeight.w900,
-                                  color: AppColors.primary,
-                                  decoration: TextDecoration.underline,
-                                  decorationColor: AppColors.primary,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                    Gap(96.h),
+                    Text(l10n.otpCode, style: theme.textTheme.headlineLarge),
+                    Gap(2.h),
+                    Text(
+                      l10n.enterYourOtp,
+                      style: theme.textTheme.headlineSmall,
+                    ),
+                    Gap(24.h),
+                    CustomBlurCard(
+                      child:
+                          BlocBuilder<ForgetPasswordCubit, ForgetPasswordState>(
+                            builder: (context, state) {
+                              return Column(
+                                children: [
+                                  Pinput(
+                                        controller: otpController,
+                                        errorTextStyle: theme
+                                            .textTheme
+                                            .bodySmall
+                                            ?.copyWith(color: AppColors.accent),
+                                        onTapOutside: (event) {
+                                          FocusManager.instance.primaryFocus
+                                              ?.unfocus();
+                                        },
+                                        keyboardType: TextInputType.number,
+                                        length: 4,
+                                        animationCurve: Curves.bounceInOut,
+                                        animationDuration: const Duration(
+                                          milliseconds: 300,
+                                        ),
+                                        showCursor: true,
+                                        cursor: Align(
+                                          alignment: Alignment.center,
+                                          child: Container(
+                                            margin: const EdgeInsets.all(14),
+                                            width: 1,
+                                            height: 50,
+                                            color: AppColors.primary,
+                                          ),
+                                        ),
+                                        defaultPinTheme: Helper.defultPinTheme,
+                                        focusedPinTheme: Helper.defultPinTheme,
+                                        submittedPinTheme:Helper.submittedPinTheme,
+                                        errorPinTheme: Helper.submittedPinTheme,
+                                        forceErrorState: state.isTimerExpired,
+                                        validator: (value) {
+                                          final error =
+                                              AppValidators.otpRequired(value);
+                                          if (error != null) {
+                                            return mapValidationErrorToMessage(
+                                              error,
+                                              l10n,
+                                            );
+                                          }
+                                          return null;
+                                        },
+                                        pinputAutovalidateMode:
+                                            PinputAutovalidateMode.onSubmit,
+                                      )
+                                      .animate(
+                                        target: state.isTimerExpired ? 1 : 0,
+                                      )
+                                      .shake(
+                                        duration: 400.ms,
+                                        offset: const Offset(0.001, 2),
+                                         curve: Curves.linear,
+                                        //  hz: 0.2,
+                                      ),
+
+                                  Gap(24.h),
+                                  CustomButton(
+                                    isLoading: state.verifyOtpState.isLoading,
+                                    label: l10n.confirm,
+                                    height: 38.h,
+                                    onPressed: () async {
+                                      if (formKey.currentState!.validate()) {
+                                        await cubit.doEvent(
+                                          VerifyOtpEvent(otpController.text),
+                                        );
+                                        otpController.clear();
+                                      }
+                                    },
+                                  ),
+
+                                  Gap(16.h),
+
+                                  Text(
+                                    l10n.didntReceiveCode,
+                                    style: theme.textTheme.bodyMedium,
+                                  ),
+                                  Gap(6.h),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      InkWell(
+                                        onTap: state.canResend
+                                            ? () {
+                                                cubit.doEvent(
+                                                  ResendCodeEvent(),
+                                                );
+                                            
+                                              }
+                                            : null,
+                                        child: Text(
+                                          l10n.resendCode,
+                                          style: theme.textTheme.bodyLarge!
+                                              .copyWith(
+                                                fontWeight: FontWeight.w900,
+                                                color: state.canResend
+                                                    ? AppColors.primary
+                                                    : Colors.grey,
+                                                decoration: state.canResend
+                                                    ? TextDecoration.underline
+                                                    : TextDecoration.none,
+                                                decorationColor:
+                                                    AppColors.primary,
+                                              ),
+                                        ),
+                                      ),
+                                      if (!state.canResend) ...[
+                                        Gap(8.w),
+                                        Text(
+                                          _formatDuration(state.timerCount),
+                                          style: theme.textTheme.bodyMedium
+                                              ?.copyWith(
+                                                color: AppColors.primary,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                        ),
+                                      ],
+                                    ],
+                                  ),
+                                ],
+                              );
+                            },
+                          ),
+                    ),
+                  ],
                 ),
               ),
             ),

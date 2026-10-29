@@ -51,7 +51,7 @@ class _AuthApiClient implements AuthApiClient {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '/auth/forgotPassword',
+            '/auth/resetPassword',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -71,7 +71,7 @@ class _AuthApiClient implements AuthApiClient {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '/auth/forgotPassword',
+            '/auth/verifyResetCode',
             queryParameters: queryParameters,
             data: _data,
           )

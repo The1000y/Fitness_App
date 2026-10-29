@@ -14,7 +14,9 @@ class CustomTextFormField extends StatefulWidget {
     this.validator,
     this.onChanged,
     this.textInputAction,
-    super.key, required BoxConstraints prefixIconConstraints,
+    this.prefixIconConstraints,
+    
+    super.key,  
   });
 
   final TextEditingController? controller;
@@ -25,6 +27,7 @@ class CustomTextFormField extends StatefulWidget {
   final String? Function(String?)? validator;
   final void Function(String)? onChanged;
   final TextInputAction? textInputAction;
+  final BoxConstraints? prefixIconConstraints;
 
   @override
   State<CustomTextFormField> createState() => _CustomTextFormFieldState();
