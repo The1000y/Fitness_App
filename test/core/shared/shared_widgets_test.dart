@@ -1,5 +1,5 @@
 import 'package:fitness_app/core/shared/category_filter_widget.dart';
-import 'package:fitness_app/core/shared/custom_image_card.dart';
+import 'package:fitness_app/core/shared/image_title_card.dart';
 import 'package:fitness_app/core/theme/app_colors/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
@@ -15,13 +15,13 @@ Widget _buildTestApp(Widget child) {
 }
 
 void main() {
-  group('ExerciseCardWidget', () {
+  group('ImageTitleCard', () {
     testWidgets('renders its title and responds to taps', (tester) async {
       var tapped = false;
 
       await tester.pumpWidget(
         _buildTestApp(
-          ExerciseCardWidget(
+          ImageTitleCard(
             imagePath: 'assets/images/robot_chat.png',
             title: 'Strength',
             onTap: () => tapped = true,
@@ -34,13 +34,13 @@ void main() {
 
       final card = tester.widget<Container>(
         find.descendant(
-          of: find.byType(ExerciseCardWidget),
+          of: find.byType(ImageTitleCard),
           matching: find.byType(Container),
         ),
       );
       final cardSize = tester.getSize(
         find.descendant(
-          of: find.byType(ExerciseCardWidget),
+          of: find.byType(ImageTitleCard),
           matching: find.byType(Container),
         ),
       );
@@ -55,7 +55,7 @@ void main() {
     });
   });
 
-  group('CategoryFilterWidget', () {
+  group('CategoryTabBar', () {
     testWidgets('styles selected category and reports selection', (
       tester,
     ) async {
@@ -63,7 +63,7 @@ void main() {
 
       await tester.pumpWidget(
         _buildTestApp(
-          CategoryFilterWidget(
+          CategoryTabBar(
             categories: const ['All', 'Yoga'],
             selectedCategory: 'All',
             onCategorySelected: (category) => selected = category,

@@ -3,12 +3,12 @@ import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 
 import '../theme/app_colors/app_colors.dart';
 
-class ExerciseCardWidget extends StatelessWidget {
+class ImageTitleCard extends StatelessWidget {
   final String imagePath;
   final String title;
   final VoidCallback onTap;
 
-  const ExerciseCardWidget({
+  const ImageTitleCard({
     super.key,
     required this.imagePath,
     required this.title,
