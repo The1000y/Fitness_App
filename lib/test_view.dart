@@ -3,6 +3,7 @@ import 'package:fitness_app/core/shared/custom_app_bar.dart';
 import 'package:fitness_app/core/shared/custom_background_image.dart';
 import 'package:fitness_app/core/shared/custom_blur_card.dart';
 import 'package:fitness_app/core/shared/custom_button.dart';
+import 'package:fitness_app/core/shared/custom_video_player.dart';
 import 'package:fitness_app/core/shared/exercise_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
@@ -40,9 +41,8 @@ class TestView extends StatelessWidget {
 
               children: [
                 CustomButton(label: 'Login', onPressed: () {}),
-
                 const Gap(16),
-
+                CustomVideoPlayer(urlVideo: 'https://www.youtube.com/watch?v=xvPR2Tfw5k0',thumbnailUrl: 'https://www.themealdb.com/images/media/meals/1548772327.jpg',),
                 CustomButton(
                   label: 'Back',
                   variant: ButtonVariant.outlined,
