@@ -9,4 +9,6 @@ part 'exercise_api_client.g.dart';
 abstract class ExerciseApiClient {
   @factoryMethod
   factory ExerciseApiClient(Dio dio) = _ExerciseApiClient;
+  
+  
 }
