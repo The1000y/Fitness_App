@@ -662,6 +662,18 @@ abstract class AppLocalizations {
   /// **'{count} tasks'**
   String tasksCount(int count);
 
+  /// No description provided for @homeTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get homeTab;
+
+  /// No description provided for @activityTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Activity'**
+  String get activityTab;
+
   /// No description provided for @workouts.
   ///
   /// In en, this message translates to:

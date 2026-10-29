@@ -298,6 +298,12 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
+  String get homeTab => 'الرئيسية';
+
+  @override
+  String get activityTab => 'النشاط';
+
+  @override
   String get workouts => 'التمارين';
 
   @override

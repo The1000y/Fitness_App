@@ -118,6 +118,8 @@
       }
     }
   },
+  "homeTab": "Home",
+  "activityTab": "Activity",
   "workouts": "Workouts",
   "minutesShort": "{minutes} MIN",
   "@minutesShort": {
