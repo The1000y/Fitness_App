@@ -39,9 +39,10 @@ abstract class ApiStrings {
   // ---------------------------------------------------------------------------
   // Muscles
   // ---------------------------------------------------------------------------
-  static String get muscles => '/muscles'; // GET (all muscle groups)
   static String get randomMuscles =>
       '/muscles/random'; // GET (20 random prime movers)
+  static const String musclesByGroup = '/musclesGroup/by-muscle-group';
+  static const String muscles = '/muscles';
   
   /// GET – all muscles by muscle group id
   static String musclesByGroupId(String muscleGroupId) =>
