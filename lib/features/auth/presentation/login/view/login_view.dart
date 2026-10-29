@@ -4,7 +4,6 @@ import 'package:fitness_app/config/localization/validation_error_message_mapper.
 import 'package:fitness_app/config/routing/app_routes.dart';
 import 'package:fitness_app/config/utils/auth_validators.dart';
 import 'package:fitness_app/core/constants/app_icons.dart';
-import 'package:fitness_app/core/constants/app_strings.dart';
 import 'package:fitness_app/core/shared/base_ui_event_listener.dart';
 import 'package:fitness_app/core/shared/custom_button.dart';
 import 'package:fitness_app/core/shared/custom_text_form_field.dart';
@@ -62,10 +61,10 @@ class _LoginViewState extends State<LoginView> {
       create: (_) => getIt<LoginCubit>(),
       child: BaseUiEventListener<LoginCubit, LoginState, CommonUiEvent>(
         child: AuthScaffold(
-          subtitle: AppStrings.loginTitleOne,
-          title: AppStrings.loginTitleTwo,
+          subtitle: l10n.loginTitleOne,
+          title: l10n.loginTitleTwo,
           child: AuthCard(
-            title: AppStrings.login,
+            title: l10n.login,
             child: Form(
               key: _formKey,
               child: Column(
@@ -73,7 +72,7 @@ class _LoginViewState extends State<LoginView> {
                 children: [
                   CustomTextFormField(
                     controller: _emailController,
-                    hintText: AppStrings.email,
+                    hintText: l10n.email,
                     prefixIcon: AppIcons.mail,
                     keyboardType: TextInputType.emailAddress,
                     textInputAction: TextInputAction.next,
@@ -87,7 +86,7 @@ class _LoginViewState extends State<LoginView> {
 
                   CustomTextFormField(
                     controller: _passwordController,
-                    hintText: AppStrings.password,
+                    hintText: l10n.password,
                     prefixIcon: AppIcons.lock,
                     isPassword: true,
                     textInputAction: TextInputAction.done,
@@ -100,7 +99,7 @@ class _LoginViewState extends State<LoginView> {
                   Align(
                     alignment: AlignmentDirectional.centerEnd,
                     child: AuthLinkText(
-                      label: AppStrings.forgotPassword,
+                      label: l10n.forgotPassword,
                       onPressed: () => Navigator.pushNamed(
                         context,
                         AppRoutes.forgotPassword,
@@ -121,7 +120,7 @@ class _LoginViewState extends State<LoginView> {
                     selector: (state) => state.loginState.isLoading,
                     builder: (context, isLoading) {
                       return CustomButton(
-                        label: AppStrings.login,
+                        label: l10n.login,
                         variant: ButtonVariant.filled,
                         isLoading: isLoading,
                         onPressed: () => _submit(context),
@@ -132,8 +131,8 @@ class _LoginViewState extends State<LoginView> {
                   Gap(8.h),
 
                   AuthFooterLink(
-                    text: AppStrings.dontHaveAccount,
-                    linkLabel: AppStrings.register,
+                    text: l10n.dontHaveAccount,
+                    linkLabel: l10n.register,
                     onPressed: () => Navigator.pushReplacementNamed(
                       context,
                       AppRoutes.register,
