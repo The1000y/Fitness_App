@@ -5,44 +5,42 @@ part 'register_request.g.dart';
 @JsonSerializable()
 class RegisterRequestDto {
   @JsonKey(name: "firstName")
-  String? firstName;
+  final String firstName;
   @JsonKey(name: "lastName")
-  String? lastName;
+  final String lastName;
   @JsonKey(name: "email")
-  String? email;
+  final String email;
   @JsonKey(name: "password")
-  String? password;
+  final String password;
   @JsonKey(name: "rePassword")
-  String? rePassword;
+  final String rePassword;
   @JsonKey(name: "gender")
-  String? gender;
+  final String gender;
   @JsonKey(name: "height")
-  int? height;
+  final int height;
   @JsonKey(name: "weight")
-  int? weight;
+  final int weight;
   @JsonKey(name: "age")
-  int? age;
+  final int age;
   @JsonKey(name: "goal")
-  String? goal;
+  final String goal;
   @JsonKey(name: "activityLevel")
-  String? activityLevel;
+  final String activityLevel;
 
   RegisterRequestDto({
-    this.firstName,
-    this.lastName,
-    this.email,
-    this.password,
-    this.rePassword,
-    this.gender,
-    this.height,
-    this.weight,
-    this.age,
-    this.goal,
-    this.activityLevel,
+    required this.firstName,
+    required this.lastName,
+    required this.email,
+    required this.password,
+    required this.rePassword,
+    required this.gender,
+    required this.height,
+    required this.weight,
+    required this.age,
+    required this.goal,
+    required this.activityLevel,
   });
 
-  
-  
   factory RegisterRequestDto.fromJson(Map<String, dynamic> json) =>
       _$RegisterRequestDtoFromJson(json);
 

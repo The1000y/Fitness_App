@@ -1,11 +1,11 @@
 import 'package:fitness_app/features/auth/data/model/requests/register_request/register_request_mapper.dart';
-import 'package:fitness_app/features/auth/domain/entities/register_entity/register_request_entity.dart';
+import 'package:fitness_app/features/auth/domain/entities/params/register_params_entity.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  group('RegisterRequestEntityMapper.toDto', () {
+  group('RegisterParamsMapper.toDto', () {
     test('maps every field to the request DTO', () {
-      final entity = RegisterRequestEntity(
+      final params = RegisterParams(
         firstName: 'Ahmed',
         lastName: 'Ali',
         email: 'ahmed@example.com',
@@ -19,7 +19,7 @@ void main() {
         activityLevel: 'level3',
       );
 
-      final dto = entity.toDto();
+      final dto = params.toDto();
 
       expect(dto.firstName, 'Ahmed');
       expect(dto.lastName, 'Ali');
@@ -34,24 +34,8 @@ void main() {
       expect(dto.activityLevel, 'level3');
     });
 
-    test('uses empty defaults for missing text and numbers', () {
-      final dto = RegisterRequestEntity().toDto();
-
-      expect(dto.firstName, isEmpty);
-      expect(dto.lastName, isEmpty);
-      expect(dto.email, isEmpty);
-      expect(dto.password, isEmpty);
-      expect(dto.rePassword, isEmpty);
-      expect(dto.gender, isEmpty);
-      expect(dto.height, 0);
-      expect(dto.weight, 0);
-      expect(dto.age, 0);
-      expect(dto.goal, isEmpty);
-      expect(dto.activityLevel, isEmpty);
-    });
-
     test('serializes the mapped fields to JSON', () {
-      final dto = RegisterRequestEntity(
+      final dto = RegisterParams(
         firstName: 'Ahmed',
         lastName: 'Ali',
         email: 'ahmed@example.com',

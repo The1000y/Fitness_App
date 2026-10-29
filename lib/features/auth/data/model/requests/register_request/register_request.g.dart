@@ -8,17 +8,17 @@ part of 'register_request.dart';
 
 RegisterRequestDto _$RegisterRequestDtoFromJson(Map<String, dynamic> json) =>
     RegisterRequestDto(
-      firstName: json['firstName'] as String?,
-      lastName: json['lastName'] as String?,
-      email: json['email'] as String?,
-      password: json['password'] as String?,
-      rePassword: json['rePassword'] as String?,
-      gender: json['gender'] as String?,
-      height: (json['height'] as num?)?.toInt(),
-      weight: (json['weight'] as num?)?.toInt(),
-      age: (json['age'] as num?)?.toInt(),
-      goal: json['goal'] as String?,
-      activityLevel: json['activityLevel'] as String?,
+      firstName: json['firstName'] as String,
+      lastName: json['lastName'] as String,
+      email: json['email'] as String,
+      password: json['password'] as String,
+      rePassword: json['rePassword'] as String,
+      gender: json['gender'] as String,
+      height: (json['height'] as num).toInt(),
+      weight: (json['weight'] as num).toInt(),
+      age: (json['age'] as num).toInt(),
+      goal: json['goal'] as String,
+      activityLevel: json['activityLevel'] as String,
     );
 
 Map<String, dynamic> _$RegisterRequestDtoToJson(RegisterRequestDto instance) =>

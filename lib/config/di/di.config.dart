@@ -60,10 +60,10 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i213.AuthApiClient>(
       () => _i213.AuthApiClient(gh<_i361.Dio>()),
     );
-    gh.singleton<_i548.AuthRemoteDataSource>(
+    gh.factory<_i548.AuthRemoteDataSource>(
       () => _i192.AuthRemoteDataSourceImpl(api: gh<_i213.AuthApiClient>()),
     );
-    gh.singleton<_i170.AuthRepo>(
+    gh.factory<_i170.AuthRepo>(
       () => _i279.AuthRepoImpl(dataSource: gh<_i548.AuthRemoteDataSource>()),
     );
     gh.factory<_i1010.RegisterUseCase>(

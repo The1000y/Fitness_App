@@ -35,8 +35,6 @@ class _RegisterFormPageState extends State<RegisterFormPage> {
   @override
   void initState() {
     super.initState();
-    // The cubit state is the source of truth, so the user's data survives
-    // going back to this page from the steps.
     final form = context.read<RegisterCubit>().state.form;
     _firstName = TextEditingController(text: form.firstName);
     _lastName = TextEditingController(text: form.lastName);
@@ -73,13 +71,8 @@ class _RegisterFormPageState extends State<RegisterFormPage> {
 
     return Column(
       children: [
-        // Logo stays fixed at the top.
         Gap(16.h),
         SvgPicture.asset(AppImages.logo, height: 56.h),
-        // If the SVG still doesn't render (unsupported <filter>), export the
-        // logo as PNG and use: Image.asset(AppImages.logoPng, height: 56.h),
-
-        // Title + card are centered in the remaining space.
         Expanded(
           child: Center(
             child: SingleChildScrollView(

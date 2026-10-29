@@ -1,7 +1,7 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:fitness_app/config/base/base_response.dart';
 import 'package:fitness_app/config/errors/app_failure.dart';
-import 'package:fitness_app/features/auth/domain/entities/register_entity/register_request_entity.dart';
+import 'package:fitness_app/features/auth/domain/entities/params/register_params_entity.dart';
 import 'package:fitness_app/features/auth/domain/entities/register_entity/register_response_entity.dart';
 import 'package:fitness_app/features/auth/presentation/register/manager/register_cubit.dart';
 import 'package:fitness_app/features/auth/presentation/register/manager/register_event.dart';
@@ -17,7 +17,7 @@ void main() {
   late MockRegisterUseCase useCase;
 
   setUpAll(() {
-    registerFallbackValue(RegisterRequestEntity());
+    registerFallbackValue(buildRegisterParams());
   });
 
   setUp(() {
@@ -212,7 +212,7 @@ void main() {
       verify: (_) {
         final request =
             verify(() => useCase(captureAny())).captured.single
-                as RegisterRequestEntity;
+                as RegisterParams;
 
         expect(request.firstName, 'Ahmed');
         expect(request.lastName, 'Ali');

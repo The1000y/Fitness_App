@@ -1,7 +1,7 @@
 import 'package:fitness_app/config/base/base_response.dart';
 import 'package:fitness_app/config/di/di.dart';
 import 'package:fitness_app/config/routing/app_routes.dart';
-import 'package:fitness_app/features/auth/domain/entities/register_entity/register_request_entity.dart';
+import 'package:fitness_app/features/auth/domain/entities/params/register_params_entity.dart';
 import 'package:fitness_app/features/auth/domain/entities/register_entity/register_response_entity.dart';
 import 'package:fitness_app/features/auth/presentation/register/manager/register_cubit.dart';
 import 'package:fitness_app/features/auth/presentation/register/manager/register_state.dart';
@@ -17,7 +17,7 @@ void main() {
   late MockRegisterUseCase useCase;
 
   setUpAll(() {
-    registerFallbackValue(RegisterRequestEntity());
+    registerFallbackValue(buildRegisterParams());
   });
 
   setUp(() async {
@@ -31,7 +31,9 @@ void main() {
   });
 
   tearDown(() async {
-    await cubit.close();
+    if (!cubit.isClosed) {
+      await cubit.close();
+    }
     await getIt.reset();
   });
 
@@ -70,41 +72,31 @@ void main() {
   testWidgets('completes the registration flow and navigates to login', (
     tester,
   ) async {
-    print('stage initial');
     await pumpRegisterView(tester);
     await tester.pump(const Duration(milliseconds: 500));
-    print('stage submit');
     await submitCredentials(tester);
-    print('stage after submit');
     expect(find.text('TELL US ABOUT YOURSELF!'), findsOneWidget);
-    print('stage gender visible');
 
     await tester.tap(find.text('Male'));
     await tester.pump();
     await tapNext(tester);
-    print('stage age');
     expect(find.text('HOW OLD ARE YOU?'), findsOneWidget);
 
     await tapNext(tester);
-    print('stage weight');
     expect(find.text('WHAT IS YOUR WEIGHT?'), findsOneWidget);
 
     await tapNext(tester);
-    print('stage height');
     expect(find.text('WHAT IS YOUR HEIGHT?'), findsOneWidget);
 
     await tapNext(tester);
-    print('stage goal');
     expect(find.text('WHAT IS YOUR GOAL?'), findsOneWidget);
 
     await tester.tap(find.text('Lose weight'));
     await tester.pump();
     await tapNext(tester);
-    print('stage activity');
     expect(find.text('YOUR REGULAR PHYSICAL ACTIVITY LEVEL?'), findsOneWidget);
 
     await tapNext(tester);
-    print('stage final');
 
     expect(find.text('Login page'), findsOneWidget);
     expect(find.text('Account created successfully'), findsOneWidget);
@@ -113,8 +105,7 @@ void main() {
     expect(cubit.state.form.gender, isNotNull);
 
     final request =
-        verify(() => useCase(captureAny())).captured.single
-            as RegisterRequestEntity;
+        verify(() => useCase(captureAny())).captured.single as RegisterParams;
 
     expect(request.firstName, 'Ahmed');
     expect(request.lastName, 'Ali');

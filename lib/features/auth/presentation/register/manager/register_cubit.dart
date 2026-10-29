@@ -3,7 +3,7 @@ import 'package:fitness_app/config/base/base_response.dart';
 import 'package:fitness_app/config/base/base_ui_event.dart';
 import 'package:fitness_app/config/localization/success_message_enum_mapper.dart';
 import 'package:fitness_app/config/routing/app_routes.dart';
-import 'package:fitness_app/features/auth/domain/entities/register_entity/register_request_entity.dart';
+import 'package:fitness_app/features/auth/domain/entities/params/register_params_entity.dart';
 import 'package:fitness_app/features/auth/domain/use_cases/register_use_case.dart';
 import 'package:fitness_app/features/auth/presentation/register/manager/register_event.dart';
 import 'package:fitness_app/features/auth/presentation/register/manager/register_option.dart';
@@ -100,18 +100,18 @@ class RegisterCubit extends BaseCubit<RegisterState, BaseUiEvent> {
     }
   }
 
-  RegisterRequestEntity _buildRequest(RegisterFormData f) {
-    return RegisterRequestEntity(
+  RegisterParams _buildRequest(RegisterFormData f) {
+    return RegisterParams(
       firstName: f.firstName.trim(),
       lastName: f.lastName.trim(),
       email: f.email.trim(),
       password: f.password,
-      rePassword: f.password, 
-      gender: f.gender?.apiValue,
+      rePassword: f.password,
+      gender: f.gender?.apiValue ?? '',
       age: f.age,
       weight: f.weight,
       height: f.height,
-      goal: f.goal?.apiValue,
+      goal: f.goal?.apiValue ?? '',
       activityLevel: f.activityLevel.apiValue,
     );
   }
