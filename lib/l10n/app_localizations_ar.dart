@@ -90,7 +90,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get register => 'إنشاء حساب';
 
   @override
-  String get registerTitle => 'أهلاً بك، أنشئ حسابك';
+  String get registerTitle1 => 'أهلاً بك';
+
+  @override
+  String get registerTitle2 => 'أنشئ حسابك';
 
   @override
   String get firstName => 'الاسم الأول';

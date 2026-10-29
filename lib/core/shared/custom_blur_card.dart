@@ -12,8 +12,9 @@ class CustomBlurCard extends StatelessWidget {
     this.padding,
     this.showWhiteBorders = false,
     this.backgroundColor,
+    this.sigma = 12,
   });
-
+  final double sigma;
   final Widget child;
   final bool showWhiteBorders;
   final EdgeInsetsGeometry? padding;
@@ -28,7 +29,9 @@ class CustomBlurCard extends StatelessWidget {
 
     return ClipRRect(
       borderRadius: effectiveBorderRadius,
+
       child: CustomBlurEffect(
+        sigma: sigma,
         child: Container(
           width: double.infinity,
           padding: effectivePadding,

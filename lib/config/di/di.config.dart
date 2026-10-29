@@ -18,6 +18,16 @@ import 'package:injectable/injectable.dart' as _i526;
 
 import '../../features/app/presentation/cubit/auth/app_auth_cubit.dart'
     as _i760;
+import '../../features/auth/api/auth_data_source_impl.dart/remote/auth_remote_data_source_impl.dart'
+    as _i192;
+import '../../features/auth/api/client/auth_api_client.dart' as _i213;
+import '../../features/auth/data/data_source/remote/auth_remote_data_source.dart'
+    as _i548;
+import '../../features/auth/data/repo_impl/auth_repo_impl.dart' as _i279;
+import '../../features/auth/domain/repo/auth_repo.dart' as _i170;
+import '../../features/auth/domain/use_cases/register_use_case.dart' as _i1010;
+import '../../features/auth/presentation/register/manager/register_cubit.dart'
+    as _i784;
 import '../dio/app_interceptor.dart' as _i264;
 import '../dio/dio_module.dart' as _i977;
 import '../utils/secure_storage_module.dart' as _i327;
@@ -46,6 +56,21 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i361.Dio>(
       () => dioModule.dioMethod(gh<_i264.AppInterceptors>()),
+    );
+    gh.singleton<_i213.AuthApiClient>(
+      () => _i213.AuthApiClient(gh<_i361.Dio>()),
+    );
+    gh.factory<_i548.AuthRemoteDataSource>(
+      () => _i192.AuthRemoteDataSourceImpl(api: gh<_i213.AuthApiClient>()),
+    );
+    gh.factory<_i170.AuthRepo>(
+      () => _i279.AuthRepoImpl(dataSource: gh<_i548.AuthRemoteDataSource>()),
+    );
+    gh.factory<_i1010.RegisterUseCase>(
+      () => _i1010.RegisterUseCase(repo: gh<_i170.AuthRepo>()),
+    );
+    gh.factory<_i784.RegisterCubit>(
+      () => _i784.RegisterCubit(ucase: gh<_i1010.RegisterUseCase>()),
     );
     return this;
   }
