@@ -19,20 +19,21 @@ class UserResponse {
   final String? photo;
   final String? createdAt;
   UserResponse({
-      this.id,
-      this.firstName,
-      this.lastName,
-      this.email,
-      this.gender,
-      this.age,
-      this.weight,
-      this.height,
-      this.activityLevel,
-      this.goal,
-      this.photo,
-      this.createdAt,
-});
- factory UserResponse.fromJson(Map<String, dynamic> json) => _$UserResponseFromJson(json);
+    this.id,
+    this.firstName,
+    this.lastName,
+    this.email,
+    this.gender,
+    this.age,
+    this.weight,
+    this.height,
+    this.activityLevel,
+    this.goal,
+    this.photo,
+    this.createdAt,
+  });
+  factory UserResponse.fromJson(Map<String, dynamic> json) =>
+      _$UserResponseFromJson(json);
   Map<String, dynamic> toJson() => _$UserResponseToJson(this);
   UserEntity toEntity() {
     return UserEntity(
@@ -49,7 +50,5 @@ class UserResponse {
       photo: photo,
       createdAt: createdAt,
     );
-
-
   }
 }

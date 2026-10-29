@@ -27,8 +27,9 @@ class AuthRepoImpl implements AuthRepo {
     });
 
     return switch (result) {
-      Success(:final data) when data.token.isEmpty =>
-      const Error<LoginEntity>(ServerFailure()),
+      Success(:final data) when data.token.isEmpty => const Error<LoginEntity>(
+        ServerFailure(),
+      ),
       _ => result,
     };
   }

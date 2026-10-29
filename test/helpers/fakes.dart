@@ -193,8 +193,8 @@ class FakeHttpClientAdapter implements HttpClientAdapter {
         options.responseType == ResponseType.bytes
             ? responseBody.toString()
             : responseBody is String
-                ? responseBody
-                : jsonEncode(responseBody),
+            ? responseBody
+            : jsonEncode(responseBody),
       ),
     );
     return ResponseBox.fromBytes(

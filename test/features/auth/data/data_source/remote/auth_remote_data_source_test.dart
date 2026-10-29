@@ -14,18 +14,21 @@ void main() {
   });
 
   group('RemoteDataSourceImpl', () {
-    test('delegates login call to AuthApiClient with the correct request', () async {
-      final request = LoginRequest(
-        email: TestData.validEmail,
-        password: TestData.validPassword,
-      );
-      fakeApiClient.nextResponse = TestData.loginResponse;
+    test(
+      'delegates login call to AuthApiClient with the correct request',
+      () async {
+        final request = LoginRequest(
+          email: TestData.validEmail,
+          password: TestData.validPassword,
+        );
+        fakeApiClient.nextResponse = TestData.loginResponse;
 
-      final response = await dataSource.login(request);
+        final response = await dataSource.login(request);
 
-      expect(fakeApiClient.callCount, 1);
-      expect(fakeApiClient.lastRequest, request);
-      expect(response.token, TestData.fakeToken);
-    });
+        expect(fakeApiClient.callCount, 1);
+        expect(fakeApiClient.lastRequest, request);
+        expect(response.token, TestData.fakeToken);
+      },
+    );
   });
 }

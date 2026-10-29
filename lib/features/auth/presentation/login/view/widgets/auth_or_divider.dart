@@ -17,9 +17,9 @@ class AuthOrDivider extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 16.w),
             child: Text(
               AppStrings.or,
-              style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                color: AppColors.textSecondary,
-              ),
+              style: Theme.of(
+                context,
+              ).textTheme.titleSmall?.copyWith(color: AppColors.textSecondary),
             ),
           ),
           const Expanded(child: Divider(color: AppColors.borderSubtle)),

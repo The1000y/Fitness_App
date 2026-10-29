@@ -45,9 +45,7 @@ void main() {
         loginState: BaseState<LoginEntity>(data: entity),
       );
       const failed = LoginState(
-        loginState: BaseState<LoginEntity>(
-          errorMessage: UnauthorizedFailure(),
-        ),
+        loginState: BaseState<LoginEntity>(errorMessage: UnauthorizedFailure()),
       );
 
       expect(success.loginState.data, entity);

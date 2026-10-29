@@ -18,11 +18,7 @@ class LoginResponse {
   final UserResponse? user;
   final String? token;
 
-  LoginResponse({
-    this.message,
-    this.user,
-    this.token,
-  });
+  LoginResponse({this.message, this.user, this.token});
 
   factory LoginResponse.fromJson(Map<String, dynamic> json) =>
       _$LoginResponseFromJson(json);

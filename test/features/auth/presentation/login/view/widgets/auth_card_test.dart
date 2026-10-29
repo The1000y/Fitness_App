@@ -7,10 +7,7 @@ void main() {
   group('AuthCard', () {
     testWidgets('renders title when given and renders child', (tester) async {
       await tester.pumpApp(
-        const AuthCard(
-          title: 'CardTitle',
-          child: Text('CardChild'),
-        ),
+        const AuthCard(title: 'CardTitle', child: Text('CardChild')),
       );
 
       expect(find.text('CardTitle'), findsOneWidget);
@@ -18,11 +15,7 @@ void main() {
     });
 
     testWidgets('omits title when null', (tester) async {
-      await tester.pumpApp(
-        const AuthCard(
-          child: Text('CardChild'),
-        ),
-      );
+      await tester.pumpApp(const AuthCard(child: Text('CardChild')));
 
       expect(find.text('CardChild'), findsOneWidget);
     });

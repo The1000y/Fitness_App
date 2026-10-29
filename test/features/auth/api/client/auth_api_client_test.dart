@@ -18,23 +18,29 @@ void main() {
   });
 
   group('AuthApiClient', () {
-    test('login sends request to signin path with credentials and parses response', () async {
-      adapter.statusCode = 200;
-      adapter.responseBody = TestData.loginResponseJson;
+    test(
+      'login sends request to signin path with credentials and parses response',
+      () async {
+        adapter.statusCode = 200;
+        adapter.responseBody = TestData.loginResponseJson;
 
-      final request = LoginRequest(
-        email: TestData.validEmail,
-        password: TestData.validPassword,
-      );
+        final request = LoginRequest(
+          email: TestData.validEmail,
+          password: TestData.validPassword,
+        );
 
-      final response = await client.login(request);
+        final response = await client.login(request);
 
-      expect(adapter.lastRequestOptions?.path, contains('/auth/signin'));
-      expect(adapter.lastRequestOptions?.method, 'POST');
-      expect(adapter.lastRequestOptions?.data, {'email': TestData.validEmail, 'password': TestData.validPassword});
-      expect(response.token, TestData.fakeToken);
-      expect(response.user?.email, TestData.validEmail);
-    });
+        expect(adapter.lastRequestOptions?.path, contains('/auth/signin'));
+        expect(adapter.lastRequestOptions?.method, 'POST');
+        expect(adapter.lastRequestOptions?.data, {
+          'email': TestData.validEmail,
+          'password': TestData.validPassword,
+        });
+        expect(response.token, TestData.fakeToken);
+        expect(response.user?.email, TestData.validEmail);
+      },
+    );
 
     test('login throws DioException on 401 error response', () async {
       adapter.statusCode = 401;
