@@ -28,7 +28,9 @@ abstract final class AppStrings {
   static const String doIt = 'Do It';
 
   // ───────────────────────── Login & Register ─────────────────────────
-  static const String loginTitle = 'Hey There\nWelcome Back';
+  static const String loginTitleOne = 'Hey There';
+  static const String loginTitleTwo = 'Welcome Back';
+
   static const String login = 'Login';
   static const String forgotPassword = 'Forgot Password?';
   static const String dontHaveAccount = "Don't have an account yet? ";

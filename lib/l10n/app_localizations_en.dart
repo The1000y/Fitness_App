@@ -57,7 +57,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get onboardingTitle3 => 'No more excuses. Do it now';
 
   @override
-  String get loginWelcomeBack => 'Hey there, welcome back';
+  String get onboardingDescription =>
+      'Lorem ipsum dolor sit amet consectetur. Eu urna ut gravida quis id pretium purus. Mauris massa';
+
+  @override
+  String get loginTitleOne => 'Hey There';
+
+  @override
+  String get loginTitleTwo => 'Welcome Back';
 
   @override
   String get login => 'Login';
@@ -290,6 +297,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String tasksCount(int count) {
     return '$count tasks';
   }
+
+  @override
+  String get homeTab => 'Home';
+
+  @override
+  String get activityTab => 'Activity';
 
   @override
   String get workouts => 'Workouts';

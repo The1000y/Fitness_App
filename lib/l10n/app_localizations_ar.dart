@@ -56,7 +56,14 @@ class AppLocalizationsAr extends AppLocalizations {
   String get onboardingTitle3 => 'لا مزيد من الأعذار. ابدأ الآن';
 
   @override
-  String get loginWelcomeBack => 'أهلاً بك، سعداء بعودتك';
+  String get onboardingDescription =>
+      'Lorem ipsum dolor sit amet consectetur. Eu urna ut gravida quis id pretium purus. Mauris massa';
+
+  @override
+  String get loginTitleOne => 'أهلاً بك';
+
+  @override
+  String get loginTitleTwo => 'مرحباً عودتك';
 
   @override
   String get login => 'تسجيل الدخول';
@@ -289,6 +296,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String tasksCount(int count) {
     return '$count مهمة';
   }
+
+  @override
+  String get homeTab => 'الرئيسية';
+
+  @override
+  String get activityTab => 'النشاط';
 
   @override
   String get workouts => 'التمارين';

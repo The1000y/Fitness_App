@@ -188,11 +188,23 @@ abstract class AppLocalizations {
   /// **'No more excuses. Do it now'**
   String get onboardingTitle3;
 
-  /// No description provided for @loginWelcomeBack.
+  /// No description provided for @onboardingDescription.
   ///
   /// In en, this message translates to:
-  /// **'Hey there, welcome back'**
-  String get loginWelcomeBack;
+  /// **'Lorem ipsum dolor sit amet consectetur. Eu urna ut gravida quis id pretium purus. Mauris massa'**
+  String get onboardingDescription;
+
+  /// No description provided for @loginTitleOne.
+  ///
+  /// In en, this message translates to:
+  /// **'Hey There'**
+  String get loginTitleOne;
+
+  /// No description provided for @loginTitleTwo.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome Back'**
+  String get loginTitleTwo;
 
   /// No description provided for @login.
   ///
@@ -649,6 +661,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{count} tasks'**
   String tasksCount(int count);
+
+  /// No description provided for @homeTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get homeTab;
+
+  /// No description provided for @activityTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Activity'**
+  String get activityTab;
 
   /// No description provided for @workouts.
   ///

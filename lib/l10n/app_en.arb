@@ -25,7 +25,9 @@
   "onboardingTitle1": "The price of excellence is discipline",
   "onboardingTitle2": "Fitness has never been so much fun",
   "onboardingTitle3": "No more excuses. Do it now",
-  "loginWelcomeBack": "Hey there, welcome back",
+  "onboardingDescription": "Lorem ipsum dolor sit amet consectetur. Eu urna ut gravida quis id pretium purus. Mauris massa",
+  "loginTitleOne": "Hey There",
+  "loginTitleTwo": "Welcome Back",
   "login": "Login",
   "email": "Email",
   "password": "Password",
@@ -116,6 +118,8 @@
       }
     }
   },
+  "homeTab": "Home",
+  "activityTab": "Activity",
   "workouts": "Workouts",
   "minutesShort": "{minutes} MIN",
   "@minutesShort": {

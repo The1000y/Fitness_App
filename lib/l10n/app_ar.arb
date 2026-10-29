@@ -25,7 +25,9 @@
   "onboardingTitle1": "ثمن التميز هو الانضباط",
   "onboardingTitle2": "اللياقة لم تكن ممتعة بهذا الشكل من قبل",
   "onboardingTitle3": "لا مزيد من الأعذار. ابدأ الآن",
-  "loginWelcomeBack": "أهلاً بك، سعداء بعودتك",
+  "onboardingDescription": "Lorem ipsum dolor sit amet consectetur. Eu urna ut gravida quis id pretium purus. Mauris massa",
+  "loginTitleOne": "أهلاً بك",
+  "loginTitleTwo": "مرحباً عودتك" ,
   "login": "تسجيل الدخول",
   "email": "البريد الإلكتروني",
   "password": "كلمة المرور",
@@ -116,6 +118,8 @@
       }
     }
   },
+  "homeTab": "الرئيسية",
+  "activityTab": "النشاط",
   "workouts": "التمارين",
   "minutesShort": "{minutes} دقيقة",
   "@minutesShort": {

@@ -40,6 +40,9 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
     return SizedBox(
       height: widget.validator != null ? null : 48.h,
       child: TextFormField(
+        onTapUpOutside: (event) {
+          FocusManager.instance.primaryFocus?.unfocus();
+        },
         controller: widget.controller,
         obscureText: widget.isPassword ? _obscureText : false,
         keyboardType: widget.keyboardType,
@@ -84,8 +87,8 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                   constraints: const BoxConstraints(),
                   icon: Icon(
                     _obscureText
-                        ? Icons.visibility_outlined
-                        : Icons.visibility_off_outlined,
+                        ? Icons.visibility_off_outlined
+                        : Icons.visibility_outlined,
                     color: AppColors.textSecondary,
                     size: 20.r,
                   ),
