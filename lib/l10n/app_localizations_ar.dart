@@ -60,7 +60,10 @@ class AppLocalizationsAr extends AppLocalizations {
       'Lorem ipsum dolor sit amet consectetur. Eu urna ut gravida quis id pretium purus. Mauris massa';
 
   @override
-  String get loginWelcomeBack => 'أهلاً بك، سعداء بعودتك';
+  String get loginTitleOne => 'أهلاً بك';
+
+  @override
+  String get loginTitleTwo => 'مرحباً عودتك';
 
   @override
   String get login => 'تسجيل الدخول';

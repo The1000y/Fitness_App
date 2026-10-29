@@ -61,7 +61,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Lorem ipsum dolor sit amet consectetur. Eu urna ut gravida quis id pretium purus. Mauris massa';
 
   @override
-  String get loginWelcomeBack => 'Hey there, welcome back';
+  String get loginTitleOne => 'Hey There';
+
+  @override
+  String get loginTitleTwo => 'Welcome Back';
 
   @override
   String get login => 'Login';

@@ -194,11 +194,17 @@ abstract class AppLocalizations {
   /// **'Lorem ipsum dolor sit amet consectetur. Eu urna ut gravida quis id pretium purus. Mauris massa'**
   String get onboardingDescription;
 
-  /// No description provided for @loginWelcomeBack.
+  /// No description provided for @loginTitleOne.
   ///
   /// In en, this message translates to:
-  /// **'Hey there, welcome back'**
-  String get loginWelcomeBack;
+  /// **'Hey There'**
+  String get loginTitleOne;
+
+  /// No description provided for @loginTitleTwo.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome Back'**
+  String get loginTitleTwo;
 
   /// No description provided for @login.
   ///
