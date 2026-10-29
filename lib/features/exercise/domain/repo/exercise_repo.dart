@@ -1,1 +1,1 @@
-class ExerciseRepo {}
+abstract class ExerciseRepo {}
