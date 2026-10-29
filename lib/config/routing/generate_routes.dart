@@ -10,7 +10,7 @@ abstract final class GenerateRoutes {
         return _pageRoute(const TestView(), settings);
 
       case AppRoutes.onboarding:
-        return _pageRoute(const _StubScreen('Onboarding'), settings);
+        return _pageRoute(const OnboardingView(), settings);
 
       // Auth
       case AppRoutes.login:
@@ -52,14 +52,12 @@ abstract final class GenerateRoutes {
 
       // Main
       case AppRoutes.main:
-        return _pageRoute(const _StubScreen('Main'), settings);
-
-      case AppRoutes.home:
-        return _pageRoute(const _StubScreen('Home'), settings);
-
-      // Workouts
-      case AppRoutes.workouts:
-        return _pageRoute(const _StubScreen('Workouts'), settings);
+        return _pageRoute(
+          MainLayoutView(
+            tabs: [HomeView(), ChatView(), WorkoutsView(), ProfileView()],
+          ),
+          settings,
+        );
 
       case AppRoutes.exerciseDetails:
         return _pageRoute(const _StubScreen('Exercise Details'), settings);
@@ -71,16 +69,8 @@ abstract final class GenerateRoutes {
       case AppRoutes.foodDetails:
         return _pageRoute(const _StubScreen('Food Details'), settings);
 
-      // Chat
-      case AppRoutes.chat:
-        return _pageRoute(const _StubScreen('Chat'), settings);
-
       case AppRoutes.chatHistory:
         return _pageRoute(const _StubScreen('Chat History'), settings);
-
-      // Profile
-      case AppRoutes.profile:
-        return _pageRoute(const _StubScreen('Profile'), settings);
 
       case AppRoutes.editProfile:
         return _pageRoute(const _StubScreen('Edit Profile'), settings);

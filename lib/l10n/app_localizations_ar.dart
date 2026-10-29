@@ -56,6 +56,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get onboardingTitle3 => 'لا مزيد من الأعذار. ابدأ الآن';
 
   @override
+  String get onboardingDescription =>
+      'Lorem ipsum dolor sit amet consectetur. Eu urna ut gravida quis id pretium purus. Mauris massa';
+
+  @override
   String get loginWelcomeBack => 'أهلاً بك، سعداء بعودتك';
 
   @override

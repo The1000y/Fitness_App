@@ -57,6 +57,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get onboardingTitle3 => 'No more excuses. Do it now';
 
   @override
+  String get onboardingDescription =>
+      'Lorem ipsum dolor sit amet consectetur. Eu urna ut gravida quis id pretium purus. Mauris massa';
+
+  @override
   String get loginWelcomeBack => 'Hey there, welcome back';
 
   @override
