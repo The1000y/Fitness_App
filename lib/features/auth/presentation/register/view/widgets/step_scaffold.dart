@@ -13,9 +13,7 @@ import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 
-/// The shared frame of the 6 steps:
-/// back button + logo, progress (n/6), title, subtitle,
-/// a glass card holding [child] and the Next button.
+
 class StepScaffold extends StatelessWidget {
   const StepScaffold({
     super.key,
