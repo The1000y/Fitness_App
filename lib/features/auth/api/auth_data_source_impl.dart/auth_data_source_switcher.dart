@@ -10,10 +10,10 @@ import 'package:injectable/injectable.dart';
 @Injectable(as: AuthRemoteDataSource)
 class AuthDataSourceSwitcher implements AuthRemoteDataSource {
  final  AuthRemoteDataSourceImpl authRemoteDataSourceImpl;
- final AuthFakeRemoteDataSourceImpl authLocalDataSourceImpl;
+ final AuthFakeRemoteDataSourceImpl authFackDataSourceImpl;
   AuthDataSourceSwitcher({
     required this.authRemoteDataSourceImpl,
-    required this.authLocalDataSourceImpl,
+    required this.authFackDataSourceImpl,
   });
 
   static const bool useDummyData = true;
@@ -22,7 +22,7 @@ class AuthDataSourceSwitcher implements AuthRemoteDataSource {
     ForgetPasswordRequest forgetPasswordRequest,
   ) {
     if (useDummyData) {
-      return authLocalDataSourceImpl.forgetPassword(forgetPasswordRequest);
+      return authFackDataSourceImpl.forgetPassword(forgetPasswordRequest);
     } else {
       return authRemoteDataSourceImpl.forgetPassword(forgetPasswordRequest);
     }
@@ -33,7 +33,7 @@ class AuthDataSourceSwitcher implements AuthRemoteDataSource {
     ResetPasswordRequest resetPasswordRequest,
   ) {
     if (useDummyData) {
-      return authLocalDataSourceImpl.resetPassword(resetPasswordRequest);
+      return authFackDataSourceImpl.resetPassword(resetPasswordRequest);
     } else {
       return authRemoteDataSourceImpl.resetPassword(resetPasswordRequest);
     }
@@ -42,7 +42,7 @@ class AuthDataSourceSwitcher implements AuthRemoteDataSource {
   @override
   Future<BaseResponse<void>> verifyOtp(VerifyOtpRequest verifyOtpRequest) {
     if (useDummyData) {
-      return authLocalDataSourceImpl.verifyOtp(verifyOtpRequest);
+      return authFackDataSourceImpl.verifyOtp(verifyOtpRequest);
     } else {
       return authRemoteDataSourceImpl.verifyOtp(verifyOtpRequest);
     }

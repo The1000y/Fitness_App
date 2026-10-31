@@ -80,7 +80,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i548.AuthRemoteDataSource>(
       () => _i981.AuthDataSourceSwitcher(
         authRemoteDataSourceImpl: gh<_i192.AuthRemoteDataSourceImpl>(),
-        authLocalDataSourceImpl: gh<_i508.AuthFakeRemoteDataSourceImpl>(),
+        authFackDataSourceImpl: gh<_i508.AuthFakeRemoteDataSourceImpl>(),
       ),
     );
     gh.lazySingleton<_i170.AuthRepo>(

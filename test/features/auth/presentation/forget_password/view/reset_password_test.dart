@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:fitness_app/config/base/base_state.dart';
 import 'package:fitness_app/config/base/base_ui_event.dart';
 import 'package:fitness_app/config/routing/app_routes.dart';
+import 'package:fitness_app/core/shared/base_ui_event_listener.dart';
 import 'package:fitness_app/core/shared/custom_button.dart';
 import 'package:fitness_app/features/auth/presentation/forget_password/manager/forget_password_cubit.dart';
 import 'package:fitness_app/features/auth/presentation/forget_password/manager/forget_password_event.dart';
@@ -20,7 +21,7 @@ class MockForgetPasswordCubit extends Mock implements ForgetPasswordCubit {}
 Widget buildTestScreen({
   required ForgetPasswordCubit cubit,
   Map<String, WidgetBuilder>? routes,
-  Locale? locale
+  Locale? locale,
 }) {
   return ScreenUtilPlusInit(
     designSize: const Size(375, 812),
@@ -37,7 +38,9 @@ Widget buildTestScreen({
       supportedLocales: AppLocalizations.supportedLocales,
       home: BlocProvider<ForgetPasswordCubit>.value(
         value: cubit,
-        child: const ResetPassword(),
+        child: BaseUiEventListener<ForgetPasswordCubit, ForgetPasswordState, BaseUiEvent>(
+          child: const ResetPassword(),
+        ),
       ),
     ),
   );
@@ -47,7 +50,6 @@ void main() {
   late MockForgetPasswordCubit mockCubit;
   late StreamController<BaseUiEvent> uiEventController;
   late StreamController<ForgetPasswordState> stateController;
-
 
   setUpAll(() {
     registerFallbackValue(const ResetPasswordEvent('Password123!'));
@@ -78,7 +80,7 @@ void main() {
     testWidgets('renders initial UI elements properly', (tester) async {
       await tester.pumpWidget(buildTestScreen(cubit: mockCubit));
       await tester.pumpAndSettle();
-      final l10n  = getL10n(tester);
+      final l10n = getL10n(tester);
 
       expect(find.text(l10n.createNewPassword), findsOneWidget);
       expect(find.text(l10n.passwordLengthHint), findsOneWidget);
@@ -90,7 +92,7 @@ void main() {
     testWidgets('shows validation error when passwords are empty', (tester) async {
       await tester.pumpWidget(buildTestScreen(cubit: mockCubit));
       await tester.pumpAndSettle();
-    final l10n  = getL10n(tester);
+      final l10n = getL10n(tester);
       await tester.tap(find.text(l10n.confirm));
       await tester.pumpAndSettle();
 
@@ -106,7 +108,7 @@ void main() {
       final textFields = find.byType(TextFormField);
       await tester.enterText(textFields.at(0), 'Password123!');
       await tester.enterText(textFields.at(1), 'Different123!');
-          final l10n  = getL10n(tester);
+      final l10n = getL10n(tester);
       await tester.tap(find.text(l10n.confirm));
       await tester.pumpAndSettle();
 
@@ -121,7 +123,7 @@ void main() {
       final textFields = find.byType(TextFormField);
       await tester.enterText(textFields.at(0), 'Password123!');
       await tester.enterText(textFields.at(1), 'Password123!');
-          final l10n  = getL10n(tester);
+      final l10n = getL10n(tester);
       await tester.tap(find.text(l10n.confirm));
       await tester.pumpAndSettle();
 

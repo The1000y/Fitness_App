@@ -21,7 +21,7 @@ void main() {
       final theme = AppTheme.lightTheme;
       expect(theme.brightness, equals(Brightness.dark));
       expect(theme.colorScheme.primary, equals(AppColors.primary));
-      expect(theme.scaffoldBackgroundColor, equals(AppColors.background));
+      expect(theme.scaffoldBackgroundColor, equals(Colors.transparent));
       expect(theme.textTheme.headlineLarge?.fontFamily, equals('BalooThambi2'));
       expect(theme.inputDecorationTheme, isNotNull);
       expect(theme.elevatedButtonTheme.style, isNotNull);

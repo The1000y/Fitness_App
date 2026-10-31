@@ -82,133 +82,163 @@ class _VerifyOtpState extends State<VerifyOtp> {
                     ),
                     Gap(24.h),
                     CustomBlurCard(
-                      child:
-                          BlocBuilder<ForgetPasswordCubit, ForgetPasswordState>(
+                      child: Column(
+                        children: [
+                          BlocSelector<
+                            ForgetPasswordCubit,
+                            ForgetPasswordState,
+                            bool
+                          >(
+                            selector: (state) {
+                              return state.isTimerExpired;
+                            },
                             builder: (context, state) {
-                              return Column(
-                                children: [
-                                  Pinput(
-                                        controller: otpController,
-                                        errorTextStyle: theme
-                                            .textTheme
-                                            .bodySmall
-                                            ?.copyWith(color: AppColors.accent),
-                                        onTapOutside: (event) {
-                                          FocusManager.instance.primaryFocus
-                                              ?.unfocus();
-                                        },
-                                        keyboardType: TextInputType.number,
-                                        length: 4,
-                                        animationCurve: Curves.bounceInOut,
-                                        animationDuration: const Duration(
-                                          milliseconds: 300,
-                                        ),
-                                        showCursor: true,
-                                        cursor: Align(
-                                          alignment: Alignment.center,
-                                          child: Container(
-                                            margin: const EdgeInsets.all(14),
-                                            width: 1,
-                                            height: 50,
-                                            color: AppColors.primary,
-                                          ),
-                                        ),
-                                        defaultPinTheme: Helper.defultPinTheme,
-                                        focusedPinTheme: Helper.defultPinTheme,
-                                        submittedPinTheme:Helper.submittedPinTheme,
-                                        errorPinTheme: Helper.submittedPinTheme,
-                                        forceErrorState: state.isTimerExpired,
-                                        validator: (value) {
-                                          final error =
-                                              AppValidators.otpRequired(value);
-                                          if (error != null) {
-                                            return mapValidationErrorToMessage(
-                                              error,
-                                              l10n,
-                                            );
-                                          }
-                                          return null;
-                                        },
-                                        pinputAutovalidateMode:
-                                            PinputAutovalidateMode.onSubmit,
-                                      )
-                                      .animate(
-                                        target: state.isTimerExpired ? 1 : 0,
-                                      )
-                                      .shake(
-                                        duration: 400.ms,
-                                        offset: const Offset(0.001, 2),
-                                         curve: Curves.linear,
-                                        //  hz: 0.2,
-                                      ),
-
-                                  Gap(24.h),
-                                  CustomButton(
-                                    isLoading: state.verifyOtpState.isLoading,
-                                    label: l10n.confirm,
-                                    height: 38.h,
-                                    onPressed: () async {
-                                      if (formKey.currentState!.validate()) {
-                                        await cubit.doEvent(
-                                          VerifyOtpEvent(otpController.text),
-                                        );
-                                        otpController.clear();
-                                      }
+                              return Pinput(
+                                    controller: otpController,
+                                    errorTextStyle: theme.textTheme.bodySmall
+                                        ?.copyWith(color: AppColors.accent),
+                                    onTapOutside: (event) {
+                                      FocusManager.instance.primaryFocus
+                                          ?.unfocus();
                                     },
-                                  ),
-
-                                  Gap(16.h),
-
-                                  Text(
-                                    l10n.didntReceiveCode,
-                                    style: theme.textTheme.bodyMedium,
-                                  ),
-                                  Gap(6.h),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      InkWell(
-                                        onTap: state.canResend
-                                            ? () {
-                                                cubit.doEvent(
-                                                  ResendCodeEvent(),
-                                                );
-                                            
-                                              }
-                                            : null,
-                                        child: Text(
-                                          l10n.resendCode,
-                                          style: theme.textTheme.bodyLarge!
-                                              .copyWith(
-                                                fontWeight: FontWeight.w900,
-                                                color: state.canResend
-                                                    ? AppColors.primary
-                                                    : Colors.grey,
-                                                decoration: state.canResend
-                                                    ? TextDecoration.underline
-                                                    : TextDecoration.none,
-                                                decorationColor:
-                                                    AppColors.primary,
-                                              ),
-                                        ),
+                                    keyboardType: TextInputType.number,
+                                    length: 4,
+                                    animationCurve: Curves.bounceInOut,
+                                    animationDuration: const Duration(
+                                      milliseconds: 300,
+                                    ),
+                                    showCursor: true,
+                                    cursor: Align(
+                                      alignment: Alignment.center,
+                                      child: Container(
+                                        margin: const EdgeInsets.all(14),
+                                        width: 1,
+                                        height: 50,
+                                        color: AppColors.primary,
                                       ),
-                                      if (!state.canResend) ...[
-                                        Gap(8.w),
-                                        Text(
-                                          _formatDuration(state.timerCount),
+                                    ),
+                                    defaultPinTheme: Helper.defultPinTheme,
+                                    focusedPinTheme: Helper.defultPinTheme,
+                                    submittedPinTheme: Helper.submittedPinTheme,
+                                    errorPinTheme: Helper.submittedPinTheme,
+                                    forceErrorState: state,
+                                    validator: (value) {
+                                      final error = AppValidators.otpRequired(
+                                        value,
+                                      );
+                                      if (error != null) {
+                                        return mapValidationErrorToMessage(
+                                          error,
+                                          l10n,
+                                        );
+                                      }
+                                      return null;
+                                    },
+                                    pinputAutovalidateMode:
+                                        PinputAutovalidateMode.onSubmit,
+                                  )
+                                  .animate(target: state ? 1 : 0)
+                                  .shake(
+                                    duration: 400.ms,
+                                    offset: const Offset(0.001, 2),
+                                    curve: Curves.linear,
+                                    //  hz: 0.2,
+                                  );
+                            },
+                          ),
+
+                          Gap(24.h),
+                          BlocSelector<
+                            ForgetPasswordCubit,
+                            ForgetPasswordState,
+                            bool
+                          >(
+                            selector: (state) {
+                              return state.verifyOtpState.isLoading;
+                            },
+                            builder: (context, state) {
+                              return CustomButton(
+                                isLoading: state,
+                                label: l10n.confirm,
+                                height: 38.h,
+                                onPressed: () async {
+                                  if (formKey.currentState!.validate()) {
+                                    await cubit.doEvent(
+                                      VerifyOtpEvent(otpController.text),
+                                    );
+                                    otpController.clear();
+                                  }
+                                },
+                              );
+                            },
+                          ),
+
+                          Gap(16.h),
+
+                          Text(
+                            l10n.didntReceiveCode,
+                            style: theme.textTheme.bodyMedium,
+                          ),
+                          Gap(6.h),
+                          BlocSelector<
+                            ForgetPasswordCubit,
+                            ForgetPasswordState,
+                            bool
+                          >(
+                            selector: (state) {
+                              return state.canResend;
+                            },
+                            builder: (context, state) {
+                              return Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  InkWell(
+                                    onTap: state
+                                        ? () {
+                                            cubit.doEvent(ResendCodeEvent());
+                                          }
+                                        : null,
+                                    child: Text(
+                                      l10n.resendCode,
+                                      style: theme.textTheme.bodyLarge!
+                                          .copyWith(
+                                            fontWeight: FontWeight.w900,
+                                            color: state
+                                                ? AppColors.primary
+                                                : Colors.grey,
+                                            decoration: state
+                                                ? TextDecoration.underline
+                                                : TextDecoration.none,
+                                            decorationColor: AppColors.primary,
+                                          ),
+                                    ),
+                                  ),
+                                  if (!state) ...[
+                                    Gap(8.w),
+                                    BlocSelector<
+                                      ForgetPasswordCubit,
+                                      ForgetPasswordState,
+                                      int
+                                    >(
+                                      selector: (state) => state.timerCount,
+                                      builder: (context, timerCount) {
+                                        return Text(
+                                          _formatDuration(timerCount),
                                           style: theme.textTheme.bodyMedium
                                               ?.copyWith(
                                                 color: AppColors.primary,
                                                 fontWeight: FontWeight.bold,
                                               ),
-                                        ),
-                                      ],
-                                    ],
-                                  ),
+                                        );
+                                      },
+                                    ),
+                                  ],
                                 ],
                               );
                             },
                           ),
+                        ],
+                      ),
                     ),
                   ],
                 ),

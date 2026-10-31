@@ -154,6 +154,7 @@ void main() {
         await tester.pump();
 
         expect(find.byType(CircularProgressIndicator), findsOneWidget);
+        await tester.pump(const Duration(milliseconds: 400));
       },
     );
   });

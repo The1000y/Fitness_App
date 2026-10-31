@@ -38,9 +38,8 @@ class _BaseUiEventListenerState<
     extends State<BaseUiEventListener<C, S, E>> {
   StreamSubscription<E>? _subscription;
 
-  
   NavigatorState get _navigator =>
-    widget.navigatorKey?.currentState ?? Navigator.of(context);
+      widget.navigatorKey?.currentState ?? Navigator.of(context);
 
   @override
   void initState() {
@@ -110,17 +109,25 @@ class _BaseUiEventListenerState<
           ),
         );
       case NavigateTo():
-       _navigator.pushNamed(event.routeName, arguments: event.arguments);
+        _navigator.pushNamed(event.routeName, arguments: event.arguments);
       case NavigateReplaceTo():
-       _navigator.pushReplacementNamed(event.routeName, arguments: event.arguments);
+        _navigator.pushReplacementNamed(
+          event.routeName,
+          arguments: event.arguments,
+        );
       case PopRoute():
         _navigator.pop(event.result);
       case NavigateAndRemoveUntil():
-        Navigator.of(context, rootNavigator: true).pushNamedAndRemoveUntil(
+        _navigator.pushNamedAndRemoveUntil(
           event.routeName,
           (route) => false,
           arguments: event.arguments,
         );
+      // Navigator.of(context, rootNavigator: true).pushNamedAndRemoveUntil(
+      //   event.routeName,
+      //   (route) => false,
+      //   arguments: event.arguments,
+      // );
     }
   }
 

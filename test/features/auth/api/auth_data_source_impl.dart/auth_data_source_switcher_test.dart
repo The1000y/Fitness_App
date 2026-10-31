@@ -30,7 +30,7 @@ void main() {
     mockLocal = MockAuthLocalDataSourceImpl();
     switcher = AuthDataSourceSwitcher(
       authRemoteDataSourceImpl: mockRemote,
-      authLocalDataSourceImpl: mockLocal,
+      authFackDataSourceImpl: mockLocal,
     );
   });
 
