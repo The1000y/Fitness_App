@@ -1165,6 +1165,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Settings saved'**
   String get settingsSaved;
+
+  /// No description provided for @failedToLoadVideo.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load the video. Please check your internet connection and try again.'**
+  String get failedToLoadVideo;
+
+  /// No description provided for @videoPlayerError.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong while playing the video. Please try again.'**
+  String get videoPlayerError;
+
+  /// No description provided for @invalidVideo.
+  ///
+  /// In en, this message translates to:
+  /// **'The video link is invalid or unavailable.'**
+  String get invalidVideo;
+
+  /// No description provided for @embeddingDisabled.
+  ///
+  /// In en, this message translates to:
+  /// **'This video can\'t be played here because the owner has disabled embedding.'**
+  String get embeddingDisabled;
+
+  /// No description provided for @videoNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'This video isn\'t available. It may have been removed or set to private.'**
+  String get videoNotFound;
+
+  /// No description provided for @notFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to find the requested resource.'**
+  String get notFound;
+
+  /// No description provided for @retry.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get retry;
+
+  /// No description provided for @unableToPlayVideo.
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to play video'**
+  String get unableToPlayVideo;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'cancel the video'**
+  String get cancel;
 }
 
 class _AppLocalizationsDelegate

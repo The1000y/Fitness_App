@@ -1,121 +1,83 @@
+import 'package:fitness_app/core/constants/app_icons.dart';
 import 'package:fitness_app/core/constants/app_images.dart';
-import 'package:fitness_app/core/shared/custom_app_bar.dart';
 import 'package:fitness_app/core/shared/custom_background_image.dart';
-import 'package:fitness_app/core/shared/custom_blur_card.dart';
-import 'package:fitness_app/core/shared/custom_button.dart';
-import 'package:fitness_app/core/shared/exercise_card.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
-import 'package:gap/gap.dart';
 
-import 'core/constants/app_icons.dart';
-import 'core/theme/app_colors/app_colors.dart';
-import 'core/shared/custom_text_form_field.dart';
+import 'package:fitness_app/core/shared/custom_video_player.dart';
+import 'package:fitness_app/core/shared/helper/custom_button_click.dart';
+import 'package:fitness_app/features/meals/presentation/widgets/meal_info_overlay.dart';
+
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 class TestView extends StatelessWidget {
   const TestView({super.key});
 
+  final bool onBackTap = false;
   @override
   Widget build(BuildContext context) {
+    // var theme = Theme.of(context);
     return CustomBackgroundImage(
       backgroundImage: AppImages.layoutBackground,
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        appBar: CustomAppBar(
-          titleWidget: Image.asset(AppImages.robotChat),
-          actions: [
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.menu, color: AppColors.primary),
-            ),
-          ],
-        ),
-
+        // appBar: CustomAppBar(),
         body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-
-              children: [
-                CustomButton(label: 'Login', onPressed: () {}),
-
-                const Gap(16),
-
-                CustomButton(
-                  label: 'Back',
-                  variant: ButtonVariant.outlined,
-                  width: 100.w,
-                  onPressed: () {},
-                ),
-
-                const Gap(16),
-
-                CustomBlurCard(
-                  showWhiteBorders: true,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Login',
-                        style: TextStyle(color: Colors.white, fontSize: 24),
-                      ),
-
-                      const Gap(8),
-
-                      CustomTextFormField(
-                        hintText: 'Email',
-                        prefixIcon: AppIcons.mail,
-                        keyboardType: TextInputType.emailAddress,
-                        textInputAction: TextInputAction.next,
-                      ),
-
-                      const SizedBox(height: 16),
-
-                      CustomTextFormField(
-                        hintText: 'Password',
-                        prefixIcon: AppIcons.lock,
-                        isPassword: true,
-                        textInputAction: TextInputAction.done,
-                      ),
-
-                      const Gap(16),
-
-                      CustomButton(
-                        label: 'Login',
-                        variant: ButtonVariant.outlined,
-                        onPressed: () {},
-                      ),
-                    ],
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Stack(
+                children: [
+                  CustomVideoPlayer(
+                    videoUrl: 'https://www.youtube.com/watch?v=xvPR2Tfw5k0',
+                    overlayContent: MealInfoOverlay(
+                      energyAmount: '200',
+                      protenAmount: '10',
+                      carbAmount: '30',
+                      fatAmount: '200',
+                      mealName: 'mealName',
+                      mealDescription: 'mealDescription',
+                    ),
+                    thumbnailImage:
+                        'https://www.themealdb.com/images/media/meals/1548772327.jpg',
                   ),
-                ),
-
-                const Gap(16),
-
-                ExerciseCard(
-                  image: AppImages.test(1),
-                  title: 'Good',
-                  borderRadius: 12,
-                ),
-
-                const Gap(16),
-
-                ExerciseCard(
-                  image: AppImages.test(1),
-                  title: 'Good',
-                  borderRadius: 12,
-                ),
-
-                const Gap(16),
-
-                ExerciseCard(
-                  image: AppImages.test(1),
-                  title: 'Good',
-                  borderRadius: 12,
-                ),
-              ],
-            ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 47),
+                    child: Align(
+                      alignment: const Alignment(-0.9, 0),
+                      child: CustomButtonClick(
+                        hightBackground: 24,
+                        widthBackground: 24,
+                        onPressed: () {
+                          Navigator.maybePop(context);
+                        },
+                        iconWidget: SvgPicture.asset(
+                          fit: BoxFit.scaleDown,
+                          AppIcons.arrowBack,
+                        ),
+                      ),
+                    ),
+                  ),
+                  // IconButton(
+                  //     onPressed: onBackTap ? () => Navigator.maybePop(context): null,
+                  //     style: IconButton.styleFrom(
+                  //       backgroundColor: theme.colorScheme.primary,
+                  //       shape: const CircleBorder(),
+                  //       padding: EdgeInsets.zero,
+                  //     ),
+                  //     icon: SvgPicture.asset(
+                  //       AppIcons.arrowBack,
+                  //       height: 14.r,
+                  //       width: 14.r,
+                  //       colorFilter: const ColorFilter.mode(
+                  //         AppColors.textPrimary,
+                  //         BlendMode.srcIn,
+                  //       ),
+                  //     ),
+                  //   ),
+                ],
+              ),
+            ],
           ),
         ),
       ),
