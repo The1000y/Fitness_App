@@ -1,6 +1,7 @@
 import 'package:fitness_app/config/routing/app_routes.dart';
 import 'package:fitness_app/features/auth/presentation/onboarding/views/onboarding_view.dart';
 import 'package:fitness_app/features/chat/presentation/views/chat_view.dart';
+import 'package:fitness_app/features/exercise/presentation/workout_categories/view/workout_categories_view.dart';
 import 'package:fitness_app/features/home/presentation/views/home_view.dart';
 import 'package:fitness_app/features/main/presentation/views/main_layout_view.dart';
 import 'package:fitness_app/features/profile/presentation/views/profile_view.dart';
@@ -56,11 +57,14 @@ abstract final class GenerateRoutes {
       case AppRoutes.setupActivity:
         return _pageRoute(const _StubScreen('Setup Activity'), settings);
 
+      case AppRoutes.workoutCategories:
+        return _pageRoute(const WorkoutCategoriesView(), settings);
+
       // Main
       case AppRoutes.main:
         return _pageRoute(
           MainLayoutView(
-            tabs: [HomeView(), ChatView(), WorkoutsView(), ProfileView()],
+            tabs: [HomeView(), ChatView(), WorkoutCategoriesView(), ProfileView()],
           ),
           settings,
         );
