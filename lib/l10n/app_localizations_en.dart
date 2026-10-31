@@ -567,4 +567,35 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingsSaved => 'Settings saved';
+
+  @override
+  String get failedToLoadVideo =>
+      'Couldn\'t load the video. Please check your internet connection and try again.';
+
+  @override
+  String get videoPlayerError =>
+      'Something went wrong while playing the video. Please try again.';
+
+  @override
+  String get invalidVideo => 'The video link is invalid or unavailable.';
+
+  @override
+  String get embeddingDisabled =>
+      'This video can\'t be played here because the owner has disabled embedding.';
+
+  @override
+  String get videoNotFound =>
+      'This video isn\'t available. It may have been removed or set to private.';
+
+  @override
+  String get notFound => 'Unable to find the requested resource.';
+
+  @override
+  String get retry => 'Retry';
+
+  @override
+  String get unableToPlayVideo => 'Unable to play video';
+
+  @override
+  String get cancel => 'cancel the video';
 }
