@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 
 abstract class AppTextTheme {
-  static TextTheme textTheme =  TextTheme(
+  static TextTheme textTheme = TextTheme(
     headlineLarge: TextStyle(
       fontSize: 24.sp,
       fontWeight: FontWeight.w800,

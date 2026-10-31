@@ -37,14 +37,14 @@ abstract final class AppTheme {
     );
 
     return ThemeData(
-      fontFamily:AppStrings.appFont ,
+      fontFamily: AppStrings.appFont,
       extensions: [
         YoutubePlayerTheme(
           progressBarActiveColor: AppColors.primary,
           progressBarBufferedColor: AppColors.primary.withValues(alpha: 0.4),
           progressBarBackgroundColor: AppColors.white.withValues(alpha: 0.25),
           controlsColor: AppColors.white,
-          titleStyle:AppTextTheme.textTheme.labelMedium,
+          titleStyle: AppTextTheme.textTheme.labelMedium,
           timerStyle: AppTextTheme.textTheme.labelSmall,
         ),
       ],

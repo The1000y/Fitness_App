@@ -1,4 +1,3 @@
-
 import 'package:fitness_app/core/shared/helper/image_thumbnail_overlay.dart';
 import 'package:fitness_app/core/shared/helper/video_error_view.dart';
 import 'package:fitness_app/core/theme/app_colors/app_colors.dart';
@@ -62,31 +61,31 @@ class VideoPlayerContent extends StatelessWidget {
               ],
             ),
           ),
-      
-            ColoredBox(
-              color: AppColors.black,
-              child: SizedBox(
-                height: 35.h,
-                width: double.infinity,
-                child: Align(
-                  alignment: AlignmentDirectional.center,
-                  child: TextButton.icon(
-                    onPressed: onClosed,
-                    icon: Icon(
-                      Icons.close_rounded,
-                      size: 18.r,
+
+          ColoredBox(
+            color: AppColors.black,
+            child: SizedBox(
+              height: 35.h,
+              width: double.infinity,
+              child: Align(
+                alignment: AlignmentDirectional.center,
+                child: TextButton.icon(
+                  onPressed: onClosed,
+                  icon: Icon(
+                    Icons.close_rounded,
+                    size: 18.r,
+                    color: AppColors.primary,
+                  ),
+                  label: Text(
+                    AppLocalizations.of(context)!.cancel,
+                    style: theme.textTheme.bodyMedium!.copyWith(
                       color: AppColors.primary,
-                    ),
-                    label: Text(
-                      AppLocalizations.of(context)!.cancel,
-                      style: theme.textTheme.bodyMedium!.copyWith(
-                        color: AppColors.primary,
-                      ),
                     ),
                   ),
                 ),
               ),
             ),
+          ),
         ],
       );
     }
