@@ -28,6 +28,14 @@ import '../../features/auth/domain/repo/auth_repo.dart' as _i170;
 import '../../features/auth/domain/use_cases/login_use_case.dart' as _i1038;
 import '../../features/auth/presentation/login/manager/login_cubit.dart'
     as _i889;
+import '../../features/exercise/api/client/exercise_api_client.dart' as _i248;
+import '../../features/exercise/api/remote/exercise_remote_data_source_impl.dart'
+    as _i669;
+import '../../features/exercise/data/data_source/remote/exercise_remote_data_source.dart'
+    as _i27;
+import '../../features/exercise/data/repo_impl/exercise_repo_impl.dart'
+    as _i824;
+import '../../features/exercise/domain/repo/exercise_repo.dart' as _i628;
 import '../dio/app_interceptor.dart' as _i264;
 import '../dio/dio_module.dart' as _i977;
 import '../utils/secure_storage_module.dart' as _i327;
@@ -48,6 +56,10 @@ extension GetItInjectableX on _i174.GetIt {
       () => secureStorageModule.secureStorage,
     );
     gh.lazySingleton<_i760.AppAuthCubit>(() => _i760.AppAuthCubit());
+    gh.factory<_i27.ExerciseRemoteDataSource>(
+      () => _i669.ExerciseRemoteDataSourceImpl(),
+    );
+    gh.factory<_i628.ExerciseRepo>(() => _i824.ExerciseRepoImpl());
     gh.lazySingleton<_i264.AppInterceptors>(
       () => _i264.AppInterceptors(
         gh<_i558.FlutterSecureStorage>(),
@@ -59,6 +71,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.singleton<_i213.AuthApiClient>(
       () => _i213.AuthApiClient(gh<_i361.Dio>()),
+    );
+    gh.singleton<_i248.ExerciseApiClient>(
+      () => _i248.ExerciseApiClient(gh<_i361.Dio>()),
     );
     gh.factory<_i548.RemoteDataSource>(
       () => _i192.RemoteDataSourceImpl(gh<_i213.AuthApiClient>()),
