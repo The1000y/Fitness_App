@@ -21,7 +21,7 @@ class ImageTitleCard extends StatelessWidget {
       onTap: onTap,
       child: Container(
         width: 170.w,
-        height: 220.h,
+        height: 170.h,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16.r),
           image: DecorationImage(
@@ -34,7 +34,7 @@ class ImageTitleCard extends StatelessWidget {
           ),
         ),
         child: Padding(
-          padding: EdgeInsets.all(12.r),
+          padding: EdgeInsets.all(1.r),
           child: Align(
             alignment: Alignment.bottomCenter,
             child: Text(

@@ -1,3 +1,4 @@
+
 /// All API endpoints used by the app.
 ///
 /// .env should contain:
@@ -6,10 +7,12 @@ abstract class ApiStrings {
   // ---------------------------------------------------------------------------
   // Base URLs
   // ---------------------------------------------------------------------------
-  static final String baseUrl = 'https://fitness.elevateegy.com/api/v1';
+  static const String baseUrl =
+      'https://fitness.elevateegy.com/api/v1';
 
   /// TheMealDB (separate third-party API)
-  static const String mealBaseUrl = 'https://www.themealdb.com/api/json/v1/1';
+  static const String mealBaseUrl =
+      'https://www.themealdb.com/api/json/v1/1';
 
   // ---------------------------------------------------------------------------
   // Auth
@@ -17,15 +20,14 @@ abstract class ApiStrings {
   static String get signup => '/auth/signup'; // POST
   static const String signin = '/auth/signin'; // POST
   static String get changePassword => '/auth/change-password'; // PATCH
-  static String get uploadPhoto =>
-      '/auth/upload-photo'; // PUT (Bearer, form-data: photo, max 4MB)
-  static String get profileData => '/auth/profile-data'; // GET (Bearer)
+  static String get uploadPhoto => '/auth/upload-photo'; // PUT
+  static String get profileData => '/auth/profile-data'; // GET
   static String get logout => '/auth/logout'; // GET
   static String get forgotPassword => '/auth/forgotPassword'; // POST
   static String get verifyResetCode => '/auth/verifyResetCode'; // POST
   static String get resetPassword => '/auth/resetPassword'; // PUT
   static String get deleteMe => '/auth/deleteMe'; // DELETE
-  static String get editProfile => '/auth/editProfile'; // PUT (Bearer)
+  static String get editProfile => '/auth/editProfile'; // PUT
 
   // ---------------------------------------------------------------------------
   // Levels
@@ -41,15 +43,21 @@ abstract class ApiStrings {
   // ---------------------------------------------------------------------------
   static String get randomMuscles =>
       '/muscles/random'; // GET (20 random prime movers)
-  static const String musclesByGroup = '/musclesGroup/by-muscle-group';
+
+  /// GET – all muscles
   static const String muscles = '/muscles';
-  
-  /// GET – all muscles by muscle group id
+
+  /// GET – query: muscleGroupId
+  static const String musclesByGroup =
+      '/musclesGroup/by-muscle-group';
+
+  /// GET – all muscles by muscle group id (path parameter)
   static String musclesByGroupId(String muscleGroupId) =>
       '/musclesGroup/$muscleGroupId';
 
   /// GET – query: muscleGroupId
-  static String get primeMoversByMuscleGroup => '/musclesGroup/by-muscle-group';
+  static String get primeMoversByMuscleGroup =>
+      '/musclesGroup/by-muscle-group';
 
   // ---------------------------------------------------------------------------
   // Exercises
@@ -66,13 +74,16 @@ abstract class ApiStrings {
   // ---------------------------------------------------------------------------
   // Meals (TheMealDB)
   // ---------------------------------------------------------------------------
-  static const String mealCategories = '$mealBaseUrl/categories.php'; // GET
+  static const String mealCategories =
+      '$mealBaseUrl/categories.php'; // GET
 
   /// GET – query: c (category name, e.g. Seafood)
-  static const String mealsByCategory = '$mealBaseUrl/filter.php';
+  static const String mealsByCategory =
+      '$mealBaseUrl/filter.php';
 
   /// GET – query: i (meal id, e.g. 52959)
-  static const String mealDetails = '$mealBaseUrl/lookup.php';
+  static const String mealDetails =
+      '$mealBaseUrl/lookup.php';
 
   // ---------------------------------------------------------------------------
   // Query parameter keys
