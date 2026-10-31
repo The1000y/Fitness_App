@@ -1,9 +1,6 @@
 import 'dart:async';
 import 'package:fitness_app/config/localization/map_youtube_error.dart';
-// import 'package:fitness_app/core/shared/helper/custom_button_click.dart';
-import 'package:fitness_app/core/shared/helper/image_thumbnail_overlay.dart';
-import 'package:fitness_app/core/shared/helper/video_error_view.dart';
-import 'package:fitness_app/core/theme/app_colors/app_colors.dart';
+import 'package:fitness_app/features/meals/presentation/widgets/video_player_content.dart';
 import 'package:fitness_app/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
@@ -14,13 +11,13 @@ class CustomVideoPlayer extends StatefulWidget {
     super.key,
     required this.thumbnailImage,
     required this.videoUrl,
-    this.mealInfoOverlay,
+    this.overlayContent,
     this.aspectRatio = 4 / 3,
   });
 
   final String thumbnailImage;
   final String videoUrl;
-  final Widget? mealInfoOverlay;
+  final Widget? overlayContent;
   final double? aspectRatio;
 
   @override
@@ -28,20 +25,18 @@ class CustomVideoPlayer extends StatefulWidget {
 }
 
 class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
-  bool _isPlay = false;
   bool _isLoading = true;
-  String? _errorMessage;
+  YoutubeError? _error;
   YoutubePlayerController? _controller;
   StreamSubscription<YoutubePlayerValue>? _subscription;
 
   void _onPlayPressed() {
     if (_controller != null) return;
-    final l10n = AppLocalizations.of(context)!;
     final trimmedUrl = widget.videoUrl.trim();
     final videoId = YoutubePlayerController.convertUrlToId(trimmedUrl);
 
     if (videoId == null) {
-      setState(() => _errorMessage = l10n.invalidVideo);
+      setState(() => _error = YoutubeError.invalidParam);
       return;
     }
 
@@ -57,17 +52,15 @@ class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
 
     setState(() {
       _controller = controller;
-      _isPlay = true;
       _isLoading = true;
-      _errorMessage = null;
+      _error = null;
     });
   }
 
   void _onPlayerValueChanged(YoutubePlayerValue value) {
     if (!mounted) return;
     if (value.hasError) {
-      final l10n = AppLocalizations.of(context)!;
-      setState(() => _errorMessage = mapYoutubeError(value.error, l10n));
+      setState(() => _error = value.error);
       return;
     }
     final isReady =
@@ -85,10 +78,14 @@ class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
     _controller?.close();
     setState(() {
       _controller = null;
-      _isPlay = false;
       _isLoading = true;
-      _errorMessage = null;
+      _error = null;
     });
+  }
+
+  void _onRetry() {
+    _onClosed();
+    _onPlayPressed();
   }
 
   @override
@@ -100,80 +97,24 @@ class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final errorMessage = _error == null ? null : mapYoutubeError(_error!, l10n);
     return AspectRatio(
       aspectRatio: widget.aspectRatio ?? 16 / 9,
       child: ClipRRect(
         clipBehavior: Clip.antiAlias,
         borderRadius: BorderRadius.vertical(bottom: Radius.circular(20.r)),
-        child: _buildContent(),
+        child: VideoPlayerContent(
+          controller: _controller,
+          errorMessage: errorMessage,
+          isLoading: _isLoading,
+          thumbnailImage: widget.thumbnailImage,
+          overlayContent: widget.overlayContent,
+          onPlayPressed: _onPlayPressed,
+          onClosed: _onClosed,
+          onRetry: _controller == null ? null : _onRetry,
+        ),
       ),
-    );
-  }
-
-  Widget _buildContent() {
-    var theme = Theme.of(context);
-    if (_errorMessage != null) {
-      return VideoErrorView(
-        errorMessage: _errorMessage!,
-        onClose: _onClosed,
-        onRetry: _controller == null
-            ? null
-            : () {
-                _onClosed();
-                _onPlayPressed();
-              },
-      );
-    }
-    if (_isPlay) {
-      return Column(
-        children: [
-          Expanded(
-            child: Stack(
-              fit: StackFit.passthrough,
-              children: [
-                YoutubePlayer(controller: _controller!),
-                if (_isLoading)
-                  const ColoredBox(
-                    color: Colors.black,
-                    child: Center(
-                      child: CircularProgressIndicator(
-                        color: AppColors.primary,
-                      ),
-                    ),
-                  ),
-              ],
-            ),
-          ),
-         !_isLoading? ColoredBox(
-            color: AppColors.black,
-            child: SizedBox(
-              height: 35.h,
-              width: double.infinity,
-              child: Align(
-                alignment: AlignmentDirectional.center,
-                child: TextButton.icon(
-                  onPressed: _onClosed,
-                  icon: Icon(
-                    Icons.close_rounded,
-                    size: 18.r,
-                    color: AppColors.primary,
-                  ),
-                  label: Text(AppLocalizations.of(context)!.cancel,
-                    style:theme.textTheme.bodyMedium!.copyWith(
-                      color: AppColors.primary
-                    )
-                  ),
-                ),
-              ),
-            ),
-          ): const SizedBox.shrink(),
-        ],
-      );
-    }
-    return ImageThumbnailOverlay(
-      onPlayPressed: _onPlayPressed,
-      widget: widget.mealInfoOverlay,
-      thumbnailImage: widget.thumbnailImage,
     );
   }
 }

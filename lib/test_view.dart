@@ -4,7 +4,7 @@ import 'package:fitness_app/core/shared/custom_background_image.dart';
 
 import 'package:fitness_app/core/shared/custom_video_player.dart';
 import 'package:fitness_app/core/shared/helper/custom_button_click.dart';
-import 'package:fitness_app/core/shared/helper/meal_info_overlay.dart';
+import 'package:fitness_app/features/meals/presentation/widgets/meal_info_overlay.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -30,7 +30,7 @@ class TestView extends StatelessWidget {
                 children: [
                   CustomVideoPlayer(
                     videoUrl: 'https://www.youtube.com/watch?v=xvPR2Tfw5k0',
-                    mealInfoOverlay: MealInfoOverlay(
+                    overlayContent: MealInfoOverlay(
                       energyAmount: '200',
                       protenAmount: '10',
                       carbAmount: '30',

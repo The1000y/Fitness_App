@@ -1,4 +1,4 @@
-import 'package:fitness_app/core/shared/helper/information_data_about_meals.dart';
+import 'package:fitness_app/features/meals/presentation/widgets/information_data_about_meals.dart';
 import 'package:fitness_app/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -44,31 +44,21 @@ class MealInfoOverlay extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               InformationDataAboutMeals(
-                theme: theme,
                 number: energyAmount,
                 title: l10n.energy,
               ),
 
               InformationDataAboutMeals(
-                theme: theme,
                 number: protenAmount,
                 title: l10n.protein,
               ),
 
-              InformationDataAboutMeals(
-                theme: theme,
-                number: carbAmount,
-                title: l10n.carbs,
-              ),
+              InformationDataAboutMeals(number: carbAmount, title: l10n.carbs),
 
-              InformationDataAboutMeals(
-                theme: theme,
-                number: fatAmount,
-                title: l10n.fat,
-              ),
+              InformationDataAboutMeals(number: fatAmount, title: l10n.fat),
             ],
           ),
-              Gap(10),
+          Gap(10),
         ],
       ),
     );

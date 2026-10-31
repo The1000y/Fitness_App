@@ -7,16 +7,17 @@ class InformationDataAboutMeals extends StatelessWidget {
   const InformationDataAboutMeals({
     super.key,
     required this.number,
-    required this.theme,
+
     required this.title,
   });
 
   final String number;
-  final ThemeData theme;
+
   final String title;
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
     return Container(
       width: 54.w,
       height: 44.w,
