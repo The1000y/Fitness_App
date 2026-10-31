@@ -550,4 +550,35 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get settingsSaved => 'تم حفظ الإعدادات';
+
+  @override
+  String get failedToLoadVideo =>
+      'تعذر تحميل الفيديو. يرجى التحقق من اتصال الإنترنت والمحاولة مرة أخرى.';
+
+  @override
+  String get videoPlayerError =>
+      'حدث خطأ أثناء تشغيل الفيديو. يرجى المحاولة مرة أخرى.';
+
+  @override
+  String get invalidVideo => 'رابط الفيديو غير صالح أو غير متاح.';
+
+  @override
+  String get embeddingDisabled =>
+      'لا يمكن تشغيل هذا الفيديو هنا لأن مالكه عطّل إمكانية تضمينه.';
+
+  @override
+  String get videoNotFound =>
+      'هذا الفيديو غير متاح. ربما تمت إزالته أو تم تعيينه كخاص.';
+
+  @override
+  String get notFound => 'تعذر العثور على المطلوب.';
+
+  @override
+  String get retry => 'إعادة المحاولة';
+
+  @override
+  String get unableToPlayVideo => 'تعذر تشغيل الفيديو';
+
+  @override
+  String get cancel => 'إغلاق الفيديو';
 }

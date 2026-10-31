@@ -173,4 +173,6 @@ abstract final class AppStrings {
   static String tasksCount(int count) => '$count tasks';
   static String selectLanguageWith(String language) =>
       'Select Language ($language)';
+
+  static const String appFont = 'BalooThambi2';
 }

@@ -233,5 +233,17 @@
   "newPersonalRecord": "New personal record!",
 
   "reminderSet": "Reminder set",
-  "settingsSaved": "Settings saved"
+  "settingsSaved": "Settings saved",
+  
+  "failedToLoadVideo": "Couldn't load the video. Please check your internet connection and try again.",
+  "videoPlayerError": "Something went wrong while playing the video. Please try again.",
+  "invalidVideo": "The video link is invalid or unavailable.",
+  "embeddingDisabled": "This video can't be played here because the owner has disabled embedding.",
+  "videoNotFound": "This video isn't available. It may have been removed or set to private.",
+  "notFound": "Unable to find the requested resource.",
+  "retry": "Retry",
+  "back": "Back",
+  "unableToPlayVideo": "Unable to play video",
+  "cancel": "cancel the video"
+
 }
