@@ -9,9 +9,7 @@ class GetMusclesByGroupUseCase {
 
   GetMusclesByGroupUseCase(this._repo);
 
-  Future<BaseResponse<MusclesEntity>> call({
-    required String id,
-  }) {
+  Future<BaseResponse<MusclesEntity>> call({required String id}) {
     return _repo.getMusclesByGroup(id: id);
   }
 }

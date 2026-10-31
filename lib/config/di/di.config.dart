@@ -38,8 +38,8 @@ import '../../features/exercise/data/repo_impl/exercise_repo_impl.dart'
 import '../../features/exercise/domain/repo/exercise_repo.dart' as _i628;
 import '../../features/exercise/domain/use_cases/get_muscle_groups_use_case.dart'
     as _i593;
-import '../../features/exercise/domain/use_cases/get_muscle_py_group_use_case%20.dart'
-    as _i336;
+import '../../features/exercise/domain/use_cases/get_muscles_by_group_use_case.dart'
+    as _i559;
 import '../../features/exercise/presentation/workout_categories/manager/workout_categories_cubit.dart'
     as _i355;
 import '../dio/app_interceptor.dart' as _i264;
@@ -98,13 +98,13 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i593.GetMuscleGroupsUseCase>(
       () => _i593.GetMuscleGroupsUseCase(gh<_i628.ExerciseRepo>()),
     );
-    gh.factory<_i336.GetMusclesByGroupUseCase>(
-      () => _i336.GetMusclesByGroupUseCase(gh<_i628.ExerciseRepo>()),
+    gh.factory<_i559.GetMusclesByGroupUseCase>(
+      () => _i559.GetMusclesByGroupUseCase(gh<_i628.ExerciseRepo>()),
     );
     gh.factory<_i355.WorkoutCategoriesCubit>(
       () => _i355.WorkoutCategoriesCubit(
         gh<_i593.GetMuscleGroupsUseCase>(),
-        gh<_i336.GetMusclesByGroupUseCase>(),
+        gh<_i559.GetMusclesByGroupUseCase>(),
       ),
     );
     return this;

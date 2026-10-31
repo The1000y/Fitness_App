@@ -2,6 +2,7 @@ import 'package:fitness_app/core/shared/category_filter_widget.dart';
 import 'package:fitness_app/core/shared/custom_app_bar.dart';
 import 'package:fitness_app/core/shared/custom_background_image.dart';
 import 'package:fitness_app/core/shared/image_title_card.dart';
+import 'package:fitness_app/config/localization/app_failure_message_mapper.dart';
 import 'package:fitness_app/features/exercise/presentation/workout_categories/manager/workout_categories_cubit.dart';
 import 'package:fitness_app/features/exercise/presentation/workout_categories/manager/workout_categories_event.dart';
 import 'package:fitness_app/features/exercise/presentation/workout_categories/manager/workout_categories_state.dart';
@@ -16,8 +17,7 @@ class WorkoutCategoriesBody extends StatefulWidget {
   const WorkoutCategoriesBody({super.key});
 
   @override
-  State<WorkoutCategoriesBody> createState() =>
-      _WorkoutCategoriesBodyState();
+  State<WorkoutCategoriesBody> createState() => _WorkoutCategoriesBodyState();
 }
 
 class _WorkoutCategoriesBodyState extends State<WorkoutCategoriesBody> {
@@ -46,7 +46,7 @@ class _WorkoutCategoriesBodyState extends State<WorkoutCategoriesBody> {
       listener: (context, state) {
         final groups = state.workoutCategoriesState.data?.musclesGroup;
 
-        if (groups != null && groups.isNotEmpty) {
+        if (groups != null && groups.isNotEmpty && selectedCategory.isEmpty) {
           final firstGroup = groups.first;
 
           setState(() {
@@ -54,8 +54,8 @@ class _WorkoutCategoriesBodyState extends State<WorkoutCategoriesBody> {
           });
 
           context.read<WorkoutCategoriesCubit>().onEvent(
-                MusclesByGroupRequested(id: firstGroup.id),
-              );
+            MusclesByGroupRequested(id: firstGroup.id),
+          );
         }
 
         // عرض الأخطاء
@@ -68,7 +68,7 @@ class _WorkoutCategoriesBodyState extends State<WorkoutCategoriesBody> {
             ..hideCurrentSnackBar()
             ..showSnackBar(
               SnackBar(
-                content: Text(errorMessage.toString()),
+                content: Text(appFailureMessageMapper(errorMessage, l10n)),
               ),
             );
         }
@@ -84,8 +84,7 @@ class _WorkoutCategoriesBodyState extends State<WorkoutCategoriesBody> {
               final groups =
                   state.workoutCategoriesState.data?.musclesGroup ?? [];
 
-              final muscles =
-                  state.musclesState.data?.muscles ?? [];
+              final muscles = state.musclesState.data?.muscles ?? [];
 
               return Column(
                 children: [
@@ -109,10 +108,8 @@ class _WorkoutCategoriesBodyState extends State<WorkoutCategoriesBody> {
                         });
 
                         context.read<WorkoutCategoriesCubit>().onEvent(
-                              MusclesByGroupRequested(
-                                id: selectedGroup.id,
-                              ),
-                            );
+                          MusclesByGroupRequested(id: selectedGroup.id),
+                        );
                       },
                     ),
 
@@ -141,40 +138,27 @@ class _WorkoutCategoriesBodyState extends State<WorkoutCategoriesBody> {
     required AppLocalizations l10n,
   }) {
     if (state.workoutCategoriesState.isLoading) {
-      return const Center(
-        child: CircularProgressIndicator(),
-      );
+      return const Center(child: CircularProgressIndicator());
     }
 
     if (state.workoutCategoriesState.data == null) {
-      return Center(
-        child: Text(l10n.noCategoriesAvailable),
-      );
+      return Center(child: Text(l10n.noCategoriesAvailable));
     }
 
     if (state.musclesState.isLoading) {
-      return const Center(
-        child: CircularProgressIndicator(),
-      );
+      return const Center(child: CircularProgressIndicator());
     }
 
     if (state.musclesState.data == null) {
-      return Center(
-        child: Text(l10n.selectCategory),
-      );
+      return Center(child: Text(l10n.selectCategory));
     }
 
     if (muscles.isEmpty) {
-      return Center(
-        child: Text(l10n.noMusclesAvailable),
-      );
+      return Center(child: Text(l10n.noMusclesAvailable));
     }
 
     return GridView.builder(
-      padding: EdgeInsets.symmetric(
-        horizontal: 16.w,
-        vertical: 12.h,
-      ),
+      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         crossAxisSpacing: 12.w,
