@@ -235,5 +235,12 @@
   "newPersonalRecord": "رقم شخصي جديد!",
 
   "reminderSet": "تم ضبط التذكير",
-  "settingsSaved": "تم حفظ الإعدادات"
+  "settingsSaved": "تم حفظ الإعدادات",
+  "otpRequired": "رمز التحقق مطلوب",
+  "otpIncomplete": "يرجى إدخال رمز التحقق كاملاً",
+  "otpInvalid": "رمز التحقق غير صالح، يرجى المحاولة مرة أخرى",
+  "otpExpired": "انتهت صلاحية رمز التحقق، يرجى طلب رمز جديد",
+  "otpSentSuccessfully": "تم إرسال رمز التحقق بنجاح",
+  "otpResentSuccessfully": "تمت إعادة إرسال رمز التحقق بنجاح",
+  "otpVerifiedSuccessfully": "تم تأكيد الرمز بنجاح"
 }

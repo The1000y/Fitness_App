@@ -25,5 +25,7 @@ String? mapValidationErrorToMessage(
     ValidationError.phoneInvalid => l10n.phoneInvalid,
     ValidationError.fieldRequired => l10n.fieldRequired,
     ValidationError.fieldMinLength => l10n.fieldMinLength,
+    ValidationError.otpRequired => l10n.otpRequired,
+    ValidationError.otpIncomplete => l10n.otpIncomplete,
   };
 }
