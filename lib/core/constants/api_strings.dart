@@ -14,7 +14,7 @@ abstract class ApiStrings {
   // ---------------------------------------------------------------------------
   // Auth
   // ---------------------------------------------------------------------------
-  static const String  signup = '/auth/signup'; // POST
+  static const String signup = '/auth/signup'; // POST
   static String get signin => '/auth/signin'; // POST
   static String get changePassword => '/auth/change-password'; // PATCH
   static String get uploadPhoto =>
@@ -23,7 +23,7 @@ abstract class ApiStrings {
   static String get logout => '/auth/logout'; // GET
   static const String forgotPassword = '/auth/forgotPassword'; // POST
   static const String verifyResetCode = '/auth/verifyResetCode'; // POST
-  static const String resetPassword =  '/auth/resetPassword'; // PUT
+  static const String resetPassword = '/auth/resetPassword'; // PUT
   static String get deleteMe => '/auth/deleteMe'; // DELETE
   static String get editProfile => '/auth/editProfile'; // PUT (Bearer)
 

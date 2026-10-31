@@ -38,9 +38,12 @@ Widget buildTestScreen({
       supportedLocales: AppLocalizations.supportedLocales,
       home: BlocProvider<ForgetPasswordCubit>.value(
         value: cubit,
-        child: BaseUiEventListener<ForgetPasswordCubit, ForgetPasswordState, BaseUiEvent>(
-          child: const ResetPassword(),
-        ),
+        child:
+            BaseUiEventListener<
+              ForgetPasswordCubit,
+              ForgetPasswordState,
+              BaseUiEvent
+            >(child: const ResetPassword()),
       ),
     ),
   );
@@ -60,7 +63,9 @@ void main() {
     uiEventController = StreamController<BaseUiEvent>.broadcast();
     stateController = StreamController<ForgetPasswordState>.broadcast();
 
-    when(() => mockCubit.uiEventStream).thenAnswer((_) => uiEventController.stream);
+    when(
+      () => mockCubit.uiEventStream,
+    ).thenAnswer((_) => uiEventController.stream);
     when(() => mockCubit.stream).thenAnswer((_) => stateController.stream);
     when(() => mockCubit.state).thenReturn(const ForgetPasswordState());
     when(() => mockCubit.doEvent(any())).thenAnswer((_) async {});
@@ -89,7 +94,9 @@ void main() {
       expect(find.byType(TextFormField), findsNWidgets(2));
     });
 
-    testWidgets('shows validation error when passwords are empty', (tester) async {
+    testWidgets('shows validation error when passwords are empty', (
+      tester,
+    ) async {
       await tester.pumpWidget(buildTestScreen(cubit: mockCubit));
       await tester.pumpAndSettle();
       final l10n = getL10n(tester);
@@ -101,7 +108,9 @@ void main() {
       verifyNever(() => mockCubit.doEvent(any()));
     });
 
-    testWidgets('shows validation error when confirm password does not match', (tester) async {
+    testWidgets('shows validation error when confirm password does not match', (
+      tester,
+    ) async {
       await tester.pumpWidget(buildTestScreen(cubit: mockCubit));
       await tester.pumpAndSettle();
 
@@ -116,31 +125,36 @@ void main() {
       verifyNever(() => mockCubit.doEvent(any()));
     });
 
-    testWidgets('triggers ResetPasswordEvent when valid matching passwords are submitted', (tester) async {
-      await tester.pumpWidget(buildTestScreen(cubit: mockCubit));
-      await tester.pumpAndSettle();
+    testWidgets(
+      'triggers ResetPasswordEvent when valid matching passwords are submitted',
+      (tester) async {
+        await tester.pumpWidget(buildTestScreen(cubit: mockCubit));
+        await tester.pumpAndSettle();
 
-      final textFields = find.byType(TextFormField);
-      await tester.enterText(textFields.at(0), 'Password123!');
-      await tester.enterText(textFields.at(1), 'Password123!');
-      final l10n = getL10n(tester);
-      await tester.tap(find.text(l10n.confirm));
-      await tester.pumpAndSettle();
+        final textFields = find.byType(TextFormField);
+        await tester.enterText(textFields.at(0), 'Password123!');
+        await tester.enterText(textFields.at(1), 'Password123!');
+        final l10n = getL10n(tester);
+        await tester.tap(find.text(l10n.confirm));
+        await tester.pumpAndSettle();
 
-      verify(
-        () => mockCubit.doEvent(
-          any(
-            that: isA<ResetPasswordEvent>().having(
-              (e) => e.newPassword,
-              'newPassword',
-              'Password123!',
+        verify(
+          () => mockCubit.doEvent(
+            any(
+              that: isA<ResetPasswordEvent>().having(
+                (e) => e.newPassword,
+                'newPassword',
+                'Password123!',
+              ),
             ),
           ),
-        ),
-      ).called(1);
-    });
+        ).called(1);
+      },
+    );
 
-    testWidgets('navigates to login on NavigateAndRemoveUntil event', (tester) async {
+    testWidgets('navigates to login on NavigateAndRemoveUntil event', (
+      tester,
+    ) async {
       bool loginPushed = false;
 
       await tester.pumpWidget(
@@ -163,17 +177,20 @@ void main() {
       expect(find.text('Login Screen'), findsOneWidget);
     });
 
-    testWidgets('displays loading indicator on button when resetPasswordState is loading', (tester) async {
-      when(() => mockCubit.state).thenReturn(
-        const ForgetPasswordState(
-          resetPasswordState: BaseState<void>(isLoading: true),
-        ),
-      );
+    testWidgets(
+      'displays loading indicator on button when resetPasswordState is loading',
+      (tester) async {
+        when(() => mockCubit.state).thenReturn(
+          const ForgetPasswordState(
+            resetPasswordState: BaseState<void>(isLoading: true),
+          ),
+        );
 
-      await tester.pumpWidget(buildTestScreen(cubit: mockCubit));
-      await tester.pump();
+        await tester.pumpWidget(buildTestScreen(cubit: mockCubit));
+        await tester.pump();
 
-      expect(find.byType(CircularProgressIndicator), findsOneWidget);
-    });
+        expect(find.byType(CircularProgressIndicator), findsOneWidget);
+      },
+    );
   });
 }

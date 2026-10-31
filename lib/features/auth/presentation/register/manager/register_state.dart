@@ -4,7 +4,6 @@ import 'package:fitness_app/features/auth/presentation/register/manager/register
 
 typedef RegisterState = BaseState<RegisterFormData>;
 
-
 // imake this data to avoid ! null data
 extension RegisterStateX on RegisterState {
   RegisterFormData get form => data ?? RegisterFormData();

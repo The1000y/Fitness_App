@@ -8,6 +8,6 @@ import 'package:fitness_app/features/auth/domain/entities/params/verify_otp_para
 abstract interface class AuthRepo {
   Future<BaseResponse<RegisterResponeEntity>> register(RegisterParams params);
   Future<BaseResponse<void>> forgetPassword(ForgetPasswordParam email);
-  Future<BaseResponse<void>> resetPassword( ResetPasswordParam restPassword);
-  Future<BaseResponse<void>> verifyOtp( VerifyOtpParam verifyOtp);
+  Future<BaseResponse<void>> resetPassword(ResetPasswordParam restPassword);
+  Future<BaseResponse<void>> verifyOtp(VerifyOtpParam verifyOtp);
 }

@@ -24,17 +24,22 @@ class _ForgetPasswordFlowState extends State<ForgetPasswordFlow> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => getIt<ForgetPasswordCubit>(),
-      child: BaseUiEventListener<ForgetPasswordCubit, ForgetPasswordState, BaseUiEvent>(
-        navigatorKey: _navKey,
-        child: NavigatorPopHandler(
-          onPopWithResult: (_) => _navKey.currentState!.maybePop(),
-          child: Navigator(
-            key: _navKey,
-            initialRoute: AppRoutes.forgotPassword,
-            onGenerateRoute: _onGenerateRoute,
+      child:
+          BaseUiEventListener<
+            ForgetPasswordCubit,
+            ForgetPasswordState,
+            BaseUiEvent
+          >(
+            navigatorKey: _navKey,
+            child: NavigatorPopHandler(
+              onPopWithResult: (_) => _navKey.currentState!.maybePop(),
+              child: Navigator(
+                key: _navKey,
+                initialRoute: AppRoutes.forgotPassword,
+                onGenerateRoute: _onGenerateRoute,
+              ),
+            ),
           ),
-        ),
-      ),
     );
   }
 

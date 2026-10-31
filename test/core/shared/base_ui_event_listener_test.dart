@@ -50,7 +50,9 @@ void main() {
   });
 
   group('BaseUiEventListener', () {
-    testWidgets('shows success SnackBar when ShowSuccessMessage is emitted', (tester) async {
+    testWidgets('shows success SnackBar when ShowSuccessMessage is emitted', (
+      tester,
+    ) async {
       await tester.pumpWidget(
         wrapWithApp(
           BaseUiEventListener<TestBaseCubit, int, BaseUiEvent>(
@@ -61,14 +63,18 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      cubit.sendEvent(const ShowSuccessMessage(AppSuccessMessage.accountCreated));
+      cubit.sendEvent(
+        const ShowSuccessMessage(AppSuccessMessage.accountCreated),
+      );
       await tester.pump(); // Start SnackBar animation
       await tester.pump(const Duration(milliseconds: 300)); // Finish appearance
 
       expect(find.byType(SnackBar), findsOneWidget);
     });
 
-    testWidgets('shows failure SnackBar when ShowFailureMessage is emitted', (tester) async {
+    testWidgets('shows failure SnackBar when ShowFailureMessage is emitted', (
+      tester,
+    ) async {
       await tester.pumpWidget(
         wrapWithApp(
           BaseUiEventListener<TestBaseCubit, int, BaseUiEvent>(
@@ -86,28 +92,31 @@ void main() {
       expect(find.byType(SnackBar), findsOneWidget);
     });
 
-    testWidgets('calls onCustomEvent callback when non-common event is emitted', (tester) async {
-      bool customEventCalled = false;
+    testWidgets(
+      'calls onCustomEvent callback when non-common event is emitted',
+      (tester) async {
+        bool customEventCalled = false;
 
-      await tester.pumpWidget(
-        wrapWithApp(
-          BaseUiEventListener<TestBaseCubit, int, BaseUiEvent>(
-            cubit: cubit,
-            onCustomEvent: (context, event) {
-              if (event is CustomTestEvent) {
-                customEventCalled = true;
-              }
-            },
-            child: const Text('Listener Child'),
+        await tester.pumpWidget(
+          wrapWithApp(
+            BaseUiEventListener<TestBaseCubit, int, BaseUiEvent>(
+              cubit: cubit,
+              onCustomEvent: (context, event) {
+                if (event is CustomTestEvent) {
+                  customEventCalled = true;
+                }
+              },
+              child: const Text('Listener Child'),
+            ),
           ),
-        ),
-      );
-      await tester.pumpAndSettle();
+        );
+        await tester.pumpAndSettle();
 
-      cubit.sendEvent(const CustomTestEvent());
-      await tester.pump();
+        cubit.sendEvent(const CustomTestEvent());
+        await tester.pump();
 
-      expect(customEventCalled, isTrue);
-    });
+        expect(customEventCalled, isTrue);
+      },
+    );
   });
 }

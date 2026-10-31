@@ -5,8 +5,8 @@ import 'package:injectable/injectable.dart';
 
 @injectable
 class VerifyOtpUserCase {
- final AuthRepo authRepo;
- const VerifyOtpUserCase(this.authRepo);
+  final AuthRepo authRepo;
+  const VerifyOtpUserCase(this.authRepo);
 
   Future<BaseResponse<void>> call(VerifyOtpParam param) async {
     return await authRepo.verifyOtp(param);

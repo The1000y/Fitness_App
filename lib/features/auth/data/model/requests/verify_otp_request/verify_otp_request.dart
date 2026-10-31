@@ -7,20 +7,21 @@ import 'dart:convert';
 
 part 'verify_otp_request.g.dart';
 
-VerifyOtpRequest verifyOtpRequestFromJson(String str) => VerifyOtpRequest.fromJson(json.decode(str));
+VerifyOtpRequest verifyOtpRequestFromJson(String str) =>
+    VerifyOtpRequest.fromJson(json.decode(str));
 
-String verifyOtpRequestToJson(VerifyOtpRequest data) => json.encode(data.toJson());
+String verifyOtpRequestToJson(VerifyOtpRequest data) =>
+    json.encode(data.toJson());
 
 @JsonSerializable()
 class VerifyOtpRequest {
-    @JsonKey(name: "resetCode")
-    String? resetCode;
+  @JsonKey(name: "resetCode")
+  String? resetCode;
 
-    VerifyOtpRequest({
-        this.resetCode,
-    });
+  VerifyOtpRequest({this.resetCode});
 
-    factory VerifyOtpRequest.fromJson(Map<String, dynamic> json) => _$VerifyOtpRequestFromJson(json);
+  factory VerifyOtpRequest.fromJson(Map<String, dynamic> json) =>
+      _$VerifyOtpRequestFromJson(json);
 
-    Map<String, dynamic> toJson() => _$VerifyOtpRequestToJson(this);
+  Map<String, dynamic> toJson() => _$VerifyOtpRequestToJson(this);
 }

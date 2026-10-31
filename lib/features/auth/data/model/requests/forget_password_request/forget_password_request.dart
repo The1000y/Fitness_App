@@ -7,20 +7,21 @@ import 'dart:convert';
 
 part 'forget_password_request.g.dart';
 
-ForgetPasswordRequest forgetPasswordRequestFromJson(String str) => ForgetPasswordRequest.fromJson(json.decode(str));
+ForgetPasswordRequest forgetPasswordRequestFromJson(String str) =>
+    ForgetPasswordRequest.fromJson(json.decode(str));
 
-String forgetPasswordRequestToJson(ForgetPasswordRequest data) => json.encode(data.toJson());
+String forgetPasswordRequestToJson(ForgetPasswordRequest data) =>
+    json.encode(data.toJson());
 
 @JsonSerializable()
 class ForgetPasswordRequest {
-    @JsonKey(name: "email")
-    String? email;
+  @JsonKey(name: "email")
+  String? email;
 
-    ForgetPasswordRequest({
-        this.email,
-    });
+  ForgetPasswordRequest({this.email});
 
-    factory ForgetPasswordRequest.fromJson(Map<String, dynamic> json) => _$ForgetPasswordRequestFromJson(json);
+  factory ForgetPasswordRequest.fromJson(Map<String, dynamic> json) =>
+      _$ForgetPasswordRequestFromJson(json);
 
-    Map<String, dynamic> toJson() => _$ForgetPasswordRequestToJson(this);
+  Map<String, dynamic> toJson() => _$ForgetPasswordRequestToJson(this);
 }

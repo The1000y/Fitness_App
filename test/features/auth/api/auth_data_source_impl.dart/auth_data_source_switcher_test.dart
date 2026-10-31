@@ -21,7 +21,9 @@ void main() {
 
   setUpAll(() {
     registerFallbackValue(ForgetPasswordRequest(email: 'fallback@example.com'));
-    registerFallbackValue(ResetPasswordRequest(email: 'fallback', newPassword: '123'));
+    registerFallbackValue(
+      ResetPasswordRequest(email: 'fallback', newPassword: '123'),
+    );
     registerFallbackValue(VerifyOtpRequest(resetCode: '0000'));
   });
 
@@ -35,43 +37,55 @@ void main() {
   });
 
   group('AuthDataSourceSwitcher', () {
-    test('forgetPassword delegates to local data source when useDummyData is true', () async {
-      final tRequest = ForgetPasswordRequest(email: 'test@example.com');
-      when(() => mockLocal.forgetPassword(any()))
-          .thenAnswer((_) async => const Success<void>(null));
+    test(
+      'forgetPassword delegates to local data source when useDummyData is true',
+      () async {
+        final tRequest = ForgetPasswordRequest(email: 'test@example.com');
+        when(
+          () => mockLocal.forgetPassword(any()),
+        ).thenAnswer((_) async => const Success<void>(null));
 
-      final result = await switcher.forgetPassword(tRequest);
+        final result = await switcher.forgetPassword(tRequest);
 
-      expect(result, isA<Success<void>>());
-      verify(() => mockLocal.forgetPassword(tRequest)).called(1);
-      verifyZeroInteractions(mockRemote);
-    });
+        expect(result, isA<Success<void>>());
+        verify(() => mockLocal.forgetPassword(tRequest)).called(1);
+        verifyZeroInteractions(mockRemote);
+      },
+    );
 
-    test('resetPassword delegates to local data source when useDummyData is true', () async {
-      final tRequest = ResetPasswordRequest(
-        email: 'test@example.com',
-        newPassword: 'Password1!',
-      );
-      when(() => mockLocal.resetPassword(any()))
-          .thenAnswer((_) async => const Success<void>(null));
+    test(
+      'resetPassword delegates to local data source when useDummyData is true',
+      () async {
+        final tRequest = ResetPasswordRequest(
+          email: 'test@example.com',
+          newPassword: 'Password1!',
+        );
+        when(
+          () => mockLocal.resetPassword(any()),
+        ).thenAnswer((_) async => const Success<void>(null));
 
-      final result = await switcher.resetPassword(tRequest);
+        final result = await switcher.resetPassword(tRequest);
 
-      expect(result, isA<Success<void>>());
-      verify(() => mockLocal.resetPassword(tRequest)).called(1);
-      verifyZeroInteractions(mockRemote);
-    });
+        expect(result, isA<Success<void>>());
+        verify(() => mockLocal.resetPassword(tRequest)).called(1);
+        verifyZeroInteractions(mockRemote);
+      },
+    );
 
-    test('verifyOtp delegates to local data source when useDummyData is true', () async {
-      final tRequest = VerifyOtpRequest(resetCode: '1234');
-      when(() => mockLocal.verifyOtp(any()))
-          .thenAnswer((_) async => const Success<void>(null));
+    test(
+      'verifyOtp delegates to local data source when useDummyData is true',
+      () async {
+        final tRequest = VerifyOtpRequest(resetCode: '1234');
+        when(
+          () => mockLocal.verifyOtp(any()),
+        ).thenAnswer((_) async => const Success<void>(null));
 
-      final result = await switcher.verifyOtp(tRequest);
+        final result = await switcher.verifyOtp(tRequest);
 
-      expect(result, isA<Success<void>>());
-      verify(() => mockLocal.verifyOtp(tRequest)).called(1);
-      verifyZeroInteractions(mockRemote);
-    });
+        expect(result, isA<Success<void>>());
+        verify(() => mockLocal.verifyOtp(tRequest)).called(1);
+        verifyZeroInteractions(mockRemote);
+      },
+    );
   });
 }

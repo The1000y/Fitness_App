@@ -17,7 +17,9 @@ void main() {
 
   setUpAll(() {
     registerFallbackValue(ForgetPasswordRequest(email: 'fallback@example.com'));
-    registerFallbackValue(ResetPasswordRequest(email: 'fallback', newPassword: '123'));
+    registerFallbackValue(
+      ResetPasswordRequest(email: 'fallback', newPassword: '123'),
+    );
     registerFallbackValue(VerifyOtpRequest(resetCode: '0000'));
   });
 
@@ -32,8 +34,9 @@ void main() {
 
       test('should return Success<void> when authApiClient succeeds', () async {
         // Arrange
-        when(() => mockApiClient.forgetPassword(any()))
-            .thenAnswer((_) async {});
+        when(
+          () => mockApiClient.forgetPassword(any()),
+        ).thenAnswer((_) async {});
 
         // Act
         final result = await dataSource.forgetPassword(tRequest);
@@ -43,37 +46,46 @@ void main() {
         verify(() => mockApiClient.forgetPassword(tRequest)).called(1);
       });
 
-      test('should return Error<void> when authApiClient throws DioException', () async {
-        // Arrange
-        final dioException = DioException(
-          requestOptions: RequestOptions(path: '/forgotPassword'),
-          type: DioExceptionType.connectionError,
-        );
-        when(() => mockApiClient.forgetPassword(any())).thenThrow(dioException);
+      test(
+        'should return Error<void> when authApiClient throws DioException',
+        () async {
+          // Arrange
+          final dioException = DioException(
+            requestOptions: RequestOptions(path: '/forgotPassword'),
+            type: DioExceptionType.connectionError,
+          );
+          when(
+            () => mockApiClient.forgetPassword(any()),
+          ).thenThrow(dioException);
 
-        // Act
-        final result = await dataSource.forgetPassword(tRequest);
+          // Act
+          final result = await dataSource.forgetPassword(tRequest);
 
-        // Assert
-        expect(result, isA<Error<void>>());
-        final error = result as Error<void>;
-        expect(error.failure, isA<InternetConnectionFailure>());
-        verify(() => mockApiClient.forgetPassword(tRequest)).called(1);
-      });
+          // Assert
+          expect(result, isA<Error<void>>());
+          final error = result as Error<void>;
+          expect(error.failure, isA<InternetConnectionFailure>());
+          verify(() => mockApiClient.forgetPassword(tRequest)).called(1);
+        },
+      );
 
-      test('should return Error<void> with UnknownFailure on generic Exception', () async {
-        // Arrange
-        when(() => mockApiClient.forgetPassword(any()))
-            .thenThrow(Exception('Unexpected error'));
+      test(
+        'should return Error<void> with UnknownFailure on generic Exception',
+        () async {
+          // Arrange
+          when(
+            () => mockApiClient.forgetPassword(any()),
+          ).thenThrow(Exception('Unexpected error'));
 
-        // Act
-        final result = await dataSource.forgetPassword(tRequest);
+          // Act
+          final result = await dataSource.forgetPassword(tRequest);
 
-        // Assert
-        expect(result, isA<Error<void>>());
-        final error = result as Error<void>;
-        expect(error.failure, isA<UnknownFailure>());
-      });
+          // Assert
+          expect(result, isA<Error<void>>());
+          final error = result as Error<void>;
+          expect(error.failure, isA<UnknownFailure>());
+        },
+      );
     });
 
     group('resetPassword', () {
@@ -84,8 +96,7 @@ void main() {
 
       test('should return Success<void> when authApiClient succeeds', () async {
         // Arrange
-        when(() => mockApiClient.resetPassword(any()))
-            .thenAnswer((_) async {});
+        when(() => mockApiClient.resetPassword(any())).thenAnswer((_) async {});
 
         // Act
         final result = await dataSource.resetPassword(tRequest);
@@ -95,22 +106,27 @@ void main() {
         verify(() => mockApiClient.resetPassword(tRequest)).called(1);
       });
 
-      test('should return Error<void> when authApiClient throws DioException', () async {
-        // Arrange
-        final dioException = DioException(
-          requestOptions: RequestOptions(path: '/resetPassword'),
-          type: DioExceptionType.connectionTimeout,
-        );
-        when(() => mockApiClient.resetPassword(any())).thenThrow(dioException);
+      test(
+        'should return Error<void> when authApiClient throws DioException',
+        () async {
+          // Arrange
+          final dioException = DioException(
+            requestOptions: RequestOptions(path: '/resetPassword'),
+            type: DioExceptionType.connectionTimeout,
+          );
+          when(
+            () => mockApiClient.resetPassword(any()),
+          ).thenThrow(dioException);
 
-        // Act
-        final result = await dataSource.resetPassword(tRequest);
+          // Act
+          final result = await dataSource.resetPassword(tRequest);
 
-        // Assert
-        expect(result, isA<Error<void>>());
-        final error = result as Error<void>;
-        expect(error.failure, isA<TimeoutFailure>());
-      });
+          // Assert
+          expect(result, isA<Error<void>>());
+          final error = result as Error<void>;
+          expect(error.failure, isA<TimeoutFailure>());
+        },
+      );
     });
 
     group('verifyOtp', () {
@@ -118,8 +134,7 @@ void main() {
 
       test('should return Success<void> when authApiClient succeeds', () async {
         // Arrange
-        when(() => mockApiClient.verifyOtp(any()))
-            .thenAnswer((_) async {});
+        when(() => mockApiClient.verifyOtp(any())).thenAnswer((_) async {});
 
         // Act
         final result = await dataSource.verifyOtp(tRequest);
@@ -129,28 +144,34 @@ void main() {
         verify(() => mockApiClient.verifyOtp(tRequest)).called(1);
       });
 
-      test('should return Error<void> when authApiClient throws DioException with 400', () async {
-        // Arrange
-        final dioException = DioException(
-          requestOptions: RequestOptions(path: '/verifyOtp'),
-          type: DioExceptionType.badResponse,
-          response: Response(
+      test(
+        'should return Error<void> when authApiClient throws DioException with 400',
+        () async {
+          // Arrange
+          final dioException = DioException(
             requestOptions: RequestOptions(path: '/verifyOtp'),
-            statusCode: 400,
-            data: {'message': 'Invalid OTP'},
-          ),
-        );
-        when(() => mockApiClient.verifyOtp(any())).thenThrow(dioException);
+            type: DioExceptionType.badResponse,
+            response: Response(
+              requestOptions: RequestOptions(path: '/verifyOtp'),
+              statusCode: 400,
+              data: {'message': 'Invalid OTP'},
+            ),
+          );
+          when(() => mockApiClient.verifyOtp(any())).thenThrow(dioException);
 
-        // Act
-        final result = await dataSource.verifyOtp(tRequest);
+          // Act
+          final result = await dataSource.verifyOtp(tRequest);
 
-        // Assert
-        expect(result, isA<Error<void>>());
-        final error = result as Error<void>;
-        expect(error.failure, isA<BadRequestFailure>());
-        expect((error.failure as BadRequestFailure).serverMessage, equals('Invalid OTP'));
-      });
+          // Assert
+          expect(result, isA<Error<void>>());
+          final error = result as Error<void>;
+          expect(error.failure, isA<BadRequestFailure>());
+          expect(
+            (error.failure as BadRequestFailure).serverMessage,
+            equals('Invalid OTP'),
+          );
+        },
+      );
     });
   });
 }

@@ -19,7 +19,9 @@ void main() {
 
   setUpAll(() {
     registerFallbackValue(ForgetPasswordRequest(email: 'fallback@example.com'));
-    registerFallbackValue(ResetPasswordRequest(email: 'fallback', newPassword: '123'));
+    registerFallbackValue(
+      ResetPasswordRequest(email: 'fallback', newPassword: '123'),
+    );
     registerFallbackValue(VerifyOtpRequest(resetCode: '0000'));
   });
 
@@ -32,71 +34,93 @@ void main() {
     group('forgetPassword', () {
       const tParam = ForgetPasswordParam(email: 'user@example.com');
 
-      test('should return Success<void> when remoteDataSource succeeds', () async {
-        // Arrange
-        when(() => mockRemoteDataSource.forgetPassword(any()))
-            .thenAnswer((_) async => const Success<void>(null));
+      test(
+        'should return Success<void> when remoteDataSource succeeds',
+        () async {
+          // Arrange
+          when(
+            () => mockRemoteDataSource.forgetPassword(any()),
+          ).thenAnswer((_) async => const Success<void>(null));
 
-        // Act
-        final result = await repository.forgetPassword(tParam);
+          // Act
+          final result = await repository.forgetPassword(tParam);
 
-        // Assert
-        expect(result, isA<Success<void>>());
-        final captured = verify(
-          () => mockRemoteDataSource.forgetPassword(captureAny()),
-        ).captured;
-        expect((captured.first as ForgetPasswordRequest).email, equals('user@example.com'));
-      });
+          // Assert
+          expect(result, isA<Success<void>>());
+          final captured = verify(
+            () => mockRemoteDataSource.forgetPassword(captureAny()),
+          ).captured;
+          expect(
+            (captured.first as ForgetPasswordRequest).email,
+            equals('user@example.com'),
+          );
+        },
+      );
 
-      test('should return Error<void> when remoteDataSource returns Error', () async {
-        // Arrange
-        const tFailure = NotFoundFailure();
-        when(() => mockRemoteDataSource.forgetPassword(any()))
-            .thenAnswer((_) async => const Error<void>(tFailure));
+      test(
+        'should return Error<void> when remoteDataSource returns Error',
+        () async {
+          // Arrange
+          const tFailure = NotFoundFailure();
+          when(
+            () => mockRemoteDataSource.forgetPassword(any()),
+          ).thenAnswer((_) async => const Error<void>(tFailure));
 
-        // Act
-        final result = await repository.forgetPassword(tParam);
+          // Act
+          final result = await repository.forgetPassword(tParam);
 
-        // Assert
-        expect(result, isA<Error<void>>());
-        final error = result as Error<void>;
-        expect(error.failure, equals(tFailure));
-      });
+          // Assert
+          expect(result, isA<Error<void>>());
+          final error = result as Error<void>;
+          expect(error.failure, equals(tFailure));
+        },
+      );
     });
 
     group('verifyOtp', () {
       const tParam = VerifyOtpParam('1234');
 
-      test('should return Success<void> when remoteDataSource succeeds', () async {
-        // Arrange
-        when(() => mockRemoteDataSource.verifyOtp(any()))
-            .thenAnswer((_) async => const Success<void>(null));
+      test(
+        'should return Success<void> when remoteDataSource succeeds',
+        () async {
+          // Arrange
+          when(
+            () => mockRemoteDataSource.verifyOtp(any()),
+          ).thenAnswer((_) async => const Success<void>(null));
 
-        // Act
-        final result = await repository.verifyOtp(tParam);
+          // Act
+          final result = await repository.verifyOtp(tParam);
 
-        // Assert
-        expect(result, isA<Success<void>>());
-        final captured = verify(
-          () => mockRemoteDataSource.verifyOtp(captureAny()),
-        ).captured;
-        expect((captured.first as VerifyOtpRequest).resetCode, equals('1234'));
-      });
+          // Assert
+          expect(result, isA<Success<void>>());
+          final captured = verify(
+            () => mockRemoteDataSource.verifyOtp(captureAny()),
+          ).captured;
+          expect(
+            (captured.first as VerifyOtpRequest).resetCode,
+            equals('1234'),
+          );
+        },
+      );
 
-      test('should return Error<void> when remoteDataSource returns Error', () async {
-        // Arrange
-        const tFailure = BadRequestFailure(serverMessage: 'Invalid code');
-        when(() => mockRemoteDataSource.verifyOtp(any()))
-            .thenAnswer((_) async => const Error<void>(tFailure));
+      test(
+        'should return Error<void> when remoteDataSource returns Error',
+        () async {
+          // Arrange
+          const tFailure = BadRequestFailure(serverMessage: 'Invalid code');
+          when(
+            () => mockRemoteDataSource.verifyOtp(any()),
+          ).thenAnswer((_) async => const Error<void>(tFailure));
 
-        // Act
-        final result = await repository.verifyOtp(tParam);
+          // Act
+          final result = await repository.verifyOtp(tParam);
 
-        // Assert
-        expect(result, isA<Error<void>>());
-        final error = result as Error<void>;
-        expect(error.failure, equals(tFailure));
-      });
+          // Assert
+          expect(result, isA<Error<void>>());
+          final error = result as Error<void>;
+          expect(error.failure, equals(tFailure));
+        },
+      );
     });
 
     group('resetPassword', () {
@@ -105,38 +129,46 @@ void main() {
         password: 'Password123!',
       );
 
-      test('should return Success<void> when remoteDataSource succeeds', () async {
-        // Arrange
-        when(() => mockRemoteDataSource.resetPassword(any()))
-            .thenAnswer((_) async => const Success<void>(null));
+      test(
+        'should return Success<void> when remoteDataSource succeeds',
+        () async {
+          // Arrange
+          when(
+            () => mockRemoteDataSource.resetPassword(any()),
+          ).thenAnswer((_) async => const Success<void>(null));
 
-        // Act
-        final result = await repository.resetPassword(tParam);
+          // Act
+          final result = await repository.resetPassword(tParam);
 
-        // Assert
-        expect(result, isA<Success<void>>());
-        final captured = verify(
-          () => mockRemoteDataSource.resetPassword(captureAny()),
-        ).captured;
-        final req = captured.first as ResetPasswordRequest;
-        expect(req.email, equals('user@example.com'));
-        expect(req.newPassword, equals('Password123!'));
-      });
+          // Assert
+          expect(result, isA<Success<void>>());
+          final captured = verify(
+            () => mockRemoteDataSource.resetPassword(captureAny()),
+          ).captured;
+          final req = captured.first as ResetPasswordRequest;
+          expect(req.email, equals('user@example.com'));
+          expect(req.newPassword, equals('Password123!'));
+        },
+      );
 
-      test('should return Error<void> when remoteDataSource returns Error', () async {
-        // Arrange
-        const tFailure = ServerFailure(statusCode: 500);
-        when(() => mockRemoteDataSource.resetPassword(any()))
-            .thenAnswer((_) async => const Error<void>(tFailure));
+      test(
+        'should return Error<void> when remoteDataSource returns Error',
+        () async {
+          // Arrange
+          const tFailure = ServerFailure(statusCode: 500);
+          when(
+            () => mockRemoteDataSource.resetPassword(any()),
+          ).thenAnswer((_) async => const Error<void>(tFailure));
 
-        // Act
-        final result = await repository.resetPassword(tParam);
+          // Act
+          final result = await repository.resetPassword(tParam);
 
-        // Assert
-        expect(result, isA<Error<void>>());
-        final error = result as Error<void>;
-        expect(error.failure, equals(tFailure));
-      });
+          // Assert
+          expect(result, isA<Error<void>>());
+          final error = result as Error<void>;
+          expect(error.failure, equals(tFailure));
+        },
+      );
     });
   });
 }

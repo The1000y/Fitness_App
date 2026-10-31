@@ -11,10 +11,12 @@ import 'package:injectable/injectable.dart';
 @injectable
 class AuthFakeRemoteDataSourceImpl implements AuthRemoteDataSource {
   static const _errorEmail = 'error@test.com';
-static const _invalidOtp = '0000';
+  static const _invalidOtp = '0000';
 
   @override
-  Future<BaseResponse<RegisterResponseDto>> register(RegisterRequestDto req) async {
+  Future<BaseResponse<RegisterResponseDto>> register(
+    RegisterRequestDto req,
+  ) async {
     await Future.delayed(const Duration(milliseconds: 800));
     return Error<RegisterResponseDto>(const UnknownFailure());
   }
@@ -27,7 +29,7 @@ static const _invalidOtp = '0000';
     await Future.delayed(const Duration(milliseconds: 800));
 
     // تجربة لاختبار الخطأ لو الإيميل مش موجود مثلاً
-    if (forgetPasswordRequest.email ==_errorEmail) {
+    if (forgetPasswordRequest.email == _errorEmail) {
       return Error<void>(const UnknownFailure());
     }
 
@@ -42,7 +44,7 @@ static const _invalidOtp = '0000';
     await Future.delayed(const Duration(milliseconds: 800));
 
     // لو حابب تختبر كود خطأ (مثلاً لو الكود 0000 اعتبره غلط)
-      if (verifyOtpRequest.resetCode == _invalidOtp) {
+    if (verifyOtpRequest.resetCode == _invalidOtp) {
       return Error<void>(const UnknownFailure());
     }
 
@@ -56,11 +58,11 @@ static const _invalidOtp = '0000';
   ) async {
     await Future.delayed(const Duration(milliseconds: 800));
 
-        if (resetPasswordRequest.newPassword == _invalidOtp) {
+    if (resetPasswordRequest.newPassword == _invalidOtp) {
       return Error<void>(const UnknownFailure());
     }
 
     // إرجاع BaseResponse وهمي ناجح
     return Success<void>(null);
   }
-  }
+}

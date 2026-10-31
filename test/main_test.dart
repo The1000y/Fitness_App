@@ -13,6 +13,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
 class MockAppAuthCubit extends Mock implements AppAuthCubit {}
+
 class MockForgetPasswordCubit extends Mock implements ForgetPasswordCubit {}
 
 void main() {
@@ -27,20 +28,25 @@ void main() {
     mockForgetPasswordCubit = MockForgetPasswordCubit();
     authUiEventController = StreamController<AppAuthUiEvent>.broadcast();
     forgetPasswordUiEventController = StreamController<BaseUiEvent>.broadcast();
-    forgetPasswordStateController = StreamController<ForgetPasswordState>.broadcast();
+    forgetPasswordStateController =
+        StreamController<ForgetPasswordState>.broadcast();
 
     when(() => mockAppAuthCubit.state).thenReturn(const AppAuthState());
     when(() => mockAppAuthCubit.stream).thenAnswer((_) => const Stream.empty());
-    when(() => mockAppAuthCubit.uiEventStream)
-        .thenAnswer((_) => authUiEventController.stream);
+    when(
+      () => mockAppAuthCubit.uiEventStream,
+    ).thenAnswer((_) => authUiEventController.stream);
     when(() => mockAppAuthCubit.close()).thenAnswer((_) async {});
 
-    when(() => mockForgetPasswordCubit.state)
-        .thenReturn(const ForgetPasswordState());
-    when(() => mockForgetPasswordCubit.stream)
-        .thenAnswer((_) => forgetPasswordStateController.stream);
-    when(() => mockForgetPasswordCubit.uiEventStream)
-        .thenAnswer((_) => forgetPasswordUiEventController.stream);
+    when(
+      () => mockForgetPasswordCubit.state,
+    ).thenReturn(const ForgetPasswordState());
+    when(
+      () => mockForgetPasswordCubit.stream,
+    ).thenAnswer((_) => forgetPasswordStateController.stream);
+    when(
+      () => mockForgetPasswordCubit.uiEventStream,
+    ).thenAnswer((_) => forgetPasswordUiEventController.stream);
     when(() => mockForgetPasswordCubit.close()).thenAnswer((_) async {});
 
     if (getIt.isRegistered<AppAuthCubit>()) {
@@ -68,13 +74,16 @@ void main() {
   });
 
   group('FitnessApp', () {
-    testWidgets('pumps successfully and displays initial forgotPassword route', (tester) async {
-      await tester.pumpWidget(const FitnessApp());
-      await tester.pumpAndSettle();
+    testWidgets(
+      'pumps successfully and displays initial forgotPassword route',
+      (tester) async {
+        await tester.pumpWidget(const FitnessApp());
+        await tester.pumpAndSettle();
 
-      expect(find.byType(FitnessApp), findsOneWidget);
-      expect(find.byType(MaterialApp), findsOneWidget);
-      expect(find.byType(ForgetPassword), findsOneWidget);
-    });
+        expect(find.byType(FitnessApp), findsOneWidget);
+        expect(find.byType(MaterialApp), findsOneWidget);
+        expect(find.byType(ForgetPassword), findsOneWidget);
+      },
+    );
   });
 }

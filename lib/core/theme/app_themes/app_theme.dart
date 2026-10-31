@@ -7,7 +7,6 @@ abstract final class AppTheme {
   static ThemeData get lightTheme => _buildTheme();
 
   static ThemeData _buildTheme() {
-    
     final inputRadius = BorderRadius.circular(20.r);
     final buttonRadius = BorderRadius.circular(30.r);
 
@@ -39,14 +38,13 @@ abstract final class AppTheme {
       fontFamily: 'BalooThambi2',
       brightness: Brightness.dark,
       // scaffoldBackgroundColor: AppColors.background,
-         scaffoldBackgroundColor: Colors.transparent,
+      scaffoldBackgroundColor: Colors.transparent,
       colorScheme: const ColorScheme.dark(
         primary: AppColors.primary,
         secondary: AppColors.accent,
         surface: AppColors.background,
       ),
       textTheme: AppTextTheme.textTheme,
-  
 
       // ===== Input Decoration =====
       inputDecorationTheme: InputDecorationTheme(
@@ -76,7 +74,7 @@ abstract final class AppTheme {
           padding: EdgeInsets.symmetric(horizontal: 24.w),
           shape: RoundedRectangleBorder(borderRadius: buttonRadius),
           // textStyle: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w700 , ),
-          textStyle:AppTextTheme.textTheme.labelLarge,
+          textStyle: AppTextTheme.textTheme.labelLarge,
         ),
       ),
 

@@ -11,8 +11,8 @@ import 'package:injectable/injectable.dart';
 
 @Injectable(as: AuthRemoteDataSource)
 class AuthDataSourceSwitcher implements AuthRemoteDataSource {
- final  AuthRemoteDataSourceImpl authRemoteDataSourceImpl;
- final AuthFakeRemoteDataSourceImpl authFackDataSourceImpl;
+  final AuthRemoteDataSourceImpl authRemoteDataSourceImpl;
+  final AuthFakeRemoteDataSourceImpl authFackDataSourceImpl;
   AuthDataSourceSwitcher({
     required this.authRemoteDataSourceImpl,
     required this.authFackDataSourceImpl,

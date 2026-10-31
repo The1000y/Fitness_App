@@ -9,7 +9,6 @@ import 'package:fitness_app/features/profile/presentation/views/profile_view.dar
 import 'package:fitness_app/features/workouts/presentation/views/workouts_view.dart';
 import 'package:flutter/material.dart';
 
-
 abstract final class GenerateRoutes {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -23,12 +22,12 @@ abstract final class GenerateRoutes {
       case AppRoutes.login:
         return _pageRoute(const _StubScreen('Login'), settings);
 
-     case AppRoutes.register:
-  return _pageRoute(const  RegisterView (), settings);
+      case AppRoutes.register:
+        return _pageRoute(const RegisterView(), settings);
 
       case AppRoutes.forgotPassword:
         return _pageRoute(const ForgetPasswordFlow(), settings);
-        
+
       case AppRoutes.changePassword:
         return _pageRoute(const _StubScreen('Change Password'), settings);
 

@@ -26,8 +26,9 @@ void main() {
   group('VerifyOtpUserCase', () {
     test('should return Success<void> when repository call succeeds', () async {
       // Arrange
-      when(() => mockAuthRepo.verifyOtp(any()))
-          .thenAnswer((_) async => const Success<void>(null));
+      when(
+        () => mockAuthRepo.verifyOtp(any()),
+      ).thenAnswer((_) async => const Success<void>(null));
 
       // Act
       final result = await useCase.call(tParam);
@@ -38,21 +39,25 @@ void main() {
       verifyNoMoreInteractions(mockAuthRepo);
     });
 
-    test('should return Error<void> with failure when repository call fails', () async {
-      // Arrange
-      const tFailure = BadRequestFailure(serverMessage: 'Invalid code');
-      when(() => mockAuthRepo.verifyOtp(any()))
-          .thenAnswer((_) async => const Error<void>(tFailure));
+    test(
+      'should return Error<void> with failure when repository call fails',
+      () async {
+        // Arrange
+        const tFailure = BadRequestFailure(serverMessage: 'Invalid code');
+        when(
+          () => mockAuthRepo.verifyOtp(any()),
+        ).thenAnswer((_) async => const Error<void>(tFailure));
 
-      // Act
-      final result = await useCase.call(tParam);
+        // Act
+        final result = await useCase.call(tParam);
 
-      // Assert
-      expect(result, isA<Error<void>>());
-      final errorResult = result as Error<void>;
-      expect(errorResult.failure, equals(tFailure));
-      verify(() => mockAuthRepo.verifyOtp(tParam)).called(1);
-      verifyNoMoreInteractions(mockAuthRepo);
-    });
+        // Assert
+        expect(result, isA<Error<void>>());
+        final errorResult = result as Error<void>;
+        expect(errorResult.failure, equals(tFailure));
+        verify(() => mockAuthRepo.verifyOtp(tParam)).called(1);
+        verifyNoMoreInteractions(mockAuthRepo);
+      },
+    );
   });
 }

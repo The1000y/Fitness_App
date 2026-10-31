@@ -43,7 +43,10 @@ void main() {
 
       expect(updated.isLoading, isTrue);
       expect(updated.data, equals('updated'));
-      expect(updated.errorMessage, equals(const ServerFailure(statusCode: 500)));
+      expect(
+        updated.errorMessage,
+        equals(const ServerFailure(statusCode: 500)),
+      );
     });
   });
 }

@@ -5,7 +5,7 @@ import 'package:fitness_app/config/errors/app_failure.dart';
 
 import 'package:flutter/foundation.dart';
 
-Future<BaseResponse<T>> excecuteApiCall<T>(Future<T> Function( ) request) async {
+Future<BaseResponse<T>> excecuteApiCall<T>(Future<T> Function() request) async {
   try {
     return Success<T>(await request());
   } on DioException catch (e) {

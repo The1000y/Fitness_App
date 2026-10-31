@@ -9,10 +9,7 @@ Widget wrapWithScreenUtil(Widget child) {
     minTextAdapt: true,
     child: MaterialApp(
       home: Scaffold(
-        body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: child,
-        ),
+        body: Padding(padding: const EdgeInsets.all(16.0), child: child),
       ),
     ),
   );
@@ -28,7 +25,10 @@ void main() {
           CustomTextFormField(
             controller: controller,
             hintText: 'Enter your email',
-            prefixIconConstraints: const BoxConstraints(minWidth: 46, minHeight: 18),
+            prefixIconConstraints: const BoxConstraints(
+              minWidth: 46,
+              minHeight: 18,
+            ),
           ),
         ),
       );
@@ -52,7 +52,10 @@ void main() {
             onChanged: (val) {
               typed = val;
             },
-            prefixIconConstraints: const BoxConstraints(minWidth: 46, minHeight: 18),
+            prefixIconConstraints: const BoxConstraints(
+              minWidth: 46,
+              minHeight: 18,
+            ),
           ),
         ),
       );
@@ -81,7 +84,10 @@ void main() {
                     }
                     return null;
                   },
-                  prefixIconConstraints: const BoxConstraints(minWidth: 46, minHeight: 18),
+                  prefixIconConstraints: const BoxConstraints(
+                    minWidth: 46,
+                    minHeight: 18,
+                  ),
                 ),
               ],
             ),
@@ -96,32 +102,38 @@ void main() {
       expect(find.text('Field cannot be empty'), findsOneWidget);
     });
 
-    testWidgets('toggles obscureText when isPassword is true and eye icon tapped', (tester) async {
-      await tester.pumpWidget(
-        wrapWithScreenUtil(
-          const CustomTextFormField(
-            isPassword: true,
-            hintText: 'Password',
-            prefixIconConstraints: BoxConstraints(minWidth: 46, minHeight: 18),
+    testWidgets(
+      'toggles obscureText when isPassword is true and eye icon tapped',
+      (tester) async {
+        await tester.pumpWidget(
+          wrapWithScreenUtil(
+            const CustomTextFormField(
+              isPassword: true,
+              hintText: 'Password',
+              prefixIconConstraints: BoxConstraints(
+                minWidth: 46,
+                minHeight: 18,
+              ),
+            ),
           ),
-        ),
-      );
-      await tester.pumpAndSettle();
+        );
+        await tester.pumpAndSettle();
 
-      // By default obscureText should be true and visibility_off icon shown
-      expect(find.byIcon(Icons.visibility_off_outlined), findsOneWidget);
+        // By default obscureText should be true and visibility_off icon shown
+        expect(find.byIcon(Icons.visibility_off_outlined), findsOneWidget);
 
-      final textFieldFinder = find.byType(TextField);
-      TextField textField = tester.widget(textFieldFinder);
-      expect(textField.obscureText, isTrue);
+        final textFieldFinder = find.byType(TextField);
+        TextField textField = tester.widget(textFieldFinder);
+        expect(textField.obscureText, isTrue);
 
-      // Tap toggle icon
-      await tester.tap(find.byType(IconButton));
-      await tester.pumpAndSettle();
+        // Tap toggle icon
+        await tester.tap(find.byType(IconButton));
+        await tester.pumpAndSettle();
 
-      expect(find.byIcon(Icons.visibility_outlined), findsOneWidget);
-      textField = tester.widget(textFieldFinder);
-      expect(textField.obscureText, isFalse);
-    });
+        expect(find.byIcon(Icons.visibility_outlined), findsOneWidget);
+        textField = tester.widget(textFieldFinder);
+        expect(textField.obscureText, isFalse);
+      },
+    );
   });
 }

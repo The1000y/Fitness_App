@@ -31,10 +31,7 @@ class OptionTile extends StatelessWidget {
         child: Row(
           children: [
             Expanded(
-              child: Text(
-                label,
-                style: Theme.of(context).textTheme.titleSmall,
-              ),
+              child: Text(label, style: Theme.of(context).textTheme.titleSmall),
             ),
             _RadioDot(selected: selected),
           ],

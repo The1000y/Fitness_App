@@ -6,10 +6,7 @@ void main() {
   group('ResetPasswordRequest', () {
     const tEmail = 'test@example.com';
     const tPassword = 'NewPassword123!';
-    final tJson = {
-      'email': tEmail,
-      'newPassword': tPassword,
-    };
+    final tJson = {'email': tEmail, 'newPassword': tPassword};
     final tJsonString = json.encode(tJson);
 
     test('fromJson should return valid model when given valid json', () {
@@ -20,10 +17,7 @@ void main() {
     });
 
     test('toJson should return correct json map', () {
-      final model = ResetPasswordRequest(
-        email: tEmail,
-        newPassword: tPassword,
-      );
+      final model = ResetPasswordRequest(email: tEmail, newPassword: tPassword);
       final result = model.toJson();
 
       expect(result, equals(tJson));
@@ -37,10 +31,7 @@ void main() {
     });
 
     test('resetPasswordRequestToJson should serialize to json string', () {
-      final model = ResetPasswordRequest(
-        email: tEmail,
-        newPassword: tPassword,
-      );
+      final model = ResetPasswordRequest(email: tEmail, newPassword: tPassword);
       final result = resetPasswordRequestToJson(model);
 
       expect(result, equals(tJsonString));

@@ -52,7 +52,9 @@ void main() {
     uiEventController = StreamController<BaseUiEvent>.broadcast();
     stateController = StreamController<ForgetPasswordState>.broadcast();
 
-    when(() => mockCubit.uiEventStream,).thenAnswer((_) => uiEventController.stream);
+    when(
+      () => mockCubit.uiEventStream,
+    ).thenAnswer((_) => uiEventController.stream);
     when(() => mockCubit.stream).thenAnswer((_) => stateController.stream);
     when(() => mockCubit.state).thenReturn(const ForgetPasswordState());
     when(() => mockCubit.doEvent(any())).thenAnswer((_) async {});

@@ -8,10 +8,7 @@ void main() {
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
-            body: CustomBlurEffect(
-              sigma: 15,
-              child: Text('Blurred Child'),
-            ),
+            body: CustomBlurEffect(sigma: 15, child: Text('Blurred Child')),
           ),
         ),
       );

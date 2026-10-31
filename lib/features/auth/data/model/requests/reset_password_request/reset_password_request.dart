@@ -7,23 +7,23 @@ import 'dart:convert';
 
 part 'reset_password_request.g.dart';
 
-ResetPasswordRequest resetPasswordRequestFromJson(String str) => ResetPasswordRequest.fromJson(json.decode(str));
+ResetPasswordRequest resetPasswordRequestFromJson(String str) =>
+    ResetPasswordRequest.fromJson(json.decode(str));
 
-String resetPasswordRequestToJson(ResetPasswordRequest data) => json.encode(data.toJson());
+String resetPasswordRequestToJson(ResetPasswordRequest data) =>
+    json.encode(data.toJson());
 
 @JsonSerializable()
 class ResetPasswordRequest {
-    @JsonKey(name: "email")
-    String? email;
-    @JsonKey(name: "newPassword")
-    String? newPassword;
+  @JsonKey(name: "email")
+  String? email;
+  @JsonKey(name: "newPassword")
+  String? newPassword;
 
-    ResetPasswordRequest({
-        this.email,
-        this.newPassword,
-    });
+  ResetPasswordRequest({this.email, this.newPassword});
 
-    factory ResetPasswordRequest.fromJson(Map<String, dynamic> json) => _$ResetPasswordRequestFromJson(json);
+  factory ResetPasswordRequest.fromJson(Map<String, dynamic> json) =>
+      _$ResetPasswordRequestFromJson(json);
 
-    Map<String, dynamic> toJson() => _$ResetPasswordRequestToJson(this);
+  Map<String, dynamic> toJson() => _$ResetPasswordRequestToJson(this);
 }

@@ -16,7 +16,9 @@ Widget wrapWithScreenUtil(Widget child) {
 
 void main() {
   group('CustomBlurCard', () {
-    testWidgets('renders child within ClipRRect and CustomBlurEffect', (tester) async {
+    testWidgets('renders child within ClipRRect and CustomBlurEffect', (
+      tester,
+    ) async {
       await tester.pumpWidget(
         wrapWithScreenUtil(
           const CustomBlurCard(

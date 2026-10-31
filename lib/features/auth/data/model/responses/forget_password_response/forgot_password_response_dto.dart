@@ -1,4 +1,3 @@
-
 import 'package:fitness_app/features/auth/domain/entities/forget_password_entity/forget_password_entity.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'forgot_password_response_dto.g.dart';

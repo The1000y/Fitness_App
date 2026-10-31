@@ -197,83 +197,101 @@ void main() {
       expect(mapValidationErrorToMessage(null, l10n), isNull);
     });
 
-    test('maps all ValidationError enum cases to corresponding localized string', () {
-      expect(
-        mapValidationErrorToMessage(ValidationError.emailRequired, l10n),
-        equals(l10n.emailRequired),
-      );
-      expect(
-        mapValidationErrorToMessage(ValidationError.emailInvalid, l10n),
-        equals(l10n.emailInvalid),
-      );
-      expect(
-        mapValidationErrorToMessage(ValidationError.passwordRequired, l10n),
-        equals(l10n.passwordRequired),
-      );
-      expect(
-        mapValidationErrorToMessage(ValidationError.passwordMinLength, l10n),
-        equals(l10n.passwordMinLength),
-      );
-      expect(
-        mapValidationErrorToMessage(ValidationError.passwordStrongRules, l10n),
-        equals(l10n.passwordStrongRules),
-      );
-      expect(
-        mapValidationErrorToMessage(ValidationError.confirmPasswordRequired, l10n),
-        equals(l10n.confirmPasswordRequired),
-      );
-      expect(
-        mapValidationErrorToMessage(ValidationError.confirmPasswordMismatch, l10n),
-        equals(l10n.confirmPasswordMismatch),
-      );
-      expect(
-        mapValidationErrorToMessage(ValidationError.usernameRequired, l10n),
-        equals(l10n.usernameRequired),
-      );
-      expect(
-        mapValidationErrorToMessage(ValidationError.usernameMinLength, l10n),
-        equals(l10n.usernameMinLength),
-      );
-      expect(
-        mapValidationErrorToMessage(ValidationError.firstNameRequired, l10n),
-        equals(l10n.firstNameRequired),
-      );
-      expect(
-        mapValidationErrorToMessage(ValidationError.firstNameOnlyLetters, l10n),
-        equals(l10n.firstNameOnlyLetters),
-      );
-      expect(
-        mapValidationErrorToMessage(ValidationError.lastNameRequired, l10n),
-        equals(l10n.lastNameRequired),
-      );
-      expect(
-        mapValidationErrorToMessage(ValidationError.lastNameOnlyLetters, l10n),
-        equals(l10n.lastNameOnlyLetters),
-      );
-      expect(
-        mapValidationErrorToMessage(ValidationError.phoneRequired, l10n),
-        equals(l10n.phoneRequired),
-      );
-      expect(
-        mapValidationErrorToMessage(ValidationError.phoneInvalid, l10n),
-        equals(l10n.phoneInvalid),
-      );
-      expect(
-        mapValidationErrorToMessage(ValidationError.fieldRequired, l10n),
-        equals(l10n.fieldRequired),
-      );
-      expect(
-        mapValidationErrorToMessage(ValidationError.fieldMinLength, l10n),
-        equals(l10n.fieldMinLength),
-      );
-      expect(
-        mapValidationErrorToMessage(ValidationError.otpRequired, l10n),
-        equals(l10n.otpRequired),
-      );
-      expect(
-        mapValidationErrorToMessage(ValidationError.otpIncomplete, l10n),
-        equals(l10n.otpIncomplete),
-      );
-    });
+    test(
+      'maps all ValidationError enum cases to corresponding localized string',
+      () {
+        expect(
+          mapValidationErrorToMessage(ValidationError.emailRequired, l10n),
+          equals(l10n.emailRequired),
+        );
+        expect(
+          mapValidationErrorToMessage(ValidationError.emailInvalid, l10n),
+          equals(l10n.emailInvalid),
+        );
+        expect(
+          mapValidationErrorToMessage(ValidationError.passwordRequired, l10n),
+          equals(l10n.passwordRequired),
+        );
+        expect(
+          mapValidationErrorToMessage(ValidationError.passwordMinLength, l10n),
+          equals(l10n.passwordMinLength),
+        );
+        expect(
+          mapValidationErrorToMessage(
+            ValidationError.passwordStrongRules,
+            l10n,
+          ),
+          equals(l10n.passwordStrongRules),
+        );
+        expect(
+          mapValidationErrorToMessage(
+            ValidationError.confirmPasswordRequired,
+            l10n,
+          ),
+          equals(l10n.confirmPasswordRequired),
+        );
+        expect(
+          mapValidationErrorToMessage(
+            ValidationError.confirmPasswordMismatch,
+            l10n,
+          ),
+          equals(l10n.confirmPasswordMismatch),
+        );
+        expect(
+          mapValidationErrorToMessage(ValidationError.usernameRequired, l10n),
+          equals(l10n.usernameRequired),
+        );
+        expect(
+          mapValidationErrorToMessage(ValidationError.usernameMinLength, l10n),
+          equals(l10n.usernameMinLength),
+        );
+        expect(
+          mapValidationErrorToMessage(ValidationError.firstNameRequired, l10n),
+          equals(l10n.firstNameRequired),
+        );
+        expect(
+          mapValidationErrorToMessage(
+            ValidationError.firstNameOnlyLetters,
+            l10n,
+          ),
+          equals(l10n.firstNameOnlyLetters),
+        );
+        expect(
+          mapValidationErrorToMessage(ValidationError.lastNameRequired, l10n),
+          equals(l10n.lastNameRequired),
+        );
+        expect(
+          mapValidationErrorToMessage(
+            ValidationError.lastNameOnlyLetters,
+            l10n,
+          ),
+          equals(l10n.lastNameOnlyLetters),
+        );
+        expect(
+          mapValidationErrorToMessage(ValidationError.phoneRequired, l10n),
+          equals(l10n.phoneRequired),
+        );
+        expect(
+          mapValidationErrorToMessage(ValidationError.phoneInvalid, l10n),
+          equals(l10n.phoneInvalid),
+        );
+        expect(
+          mapValidationErrorToMessage(ValidationError.fieldRequired, l10n),
+          equals(l10n.fieldRequired),
+        );
+        expect(
+          mapValidationErrorToMessage(ValidationError.fieldMinLength, l10n),
+          equals(l10n.fieldMinLength),
+        );
+        expect(
+          mapValidationErrorToMessage(ValidationError.otpRequired, l10n),
+          equals(l10n.otpRequired),
+        );
+        expect(
+          mapValidationErrorToMessage(ValidationError.otpIncomplete, l10n),
+          equals(l10n.otpIncomplete),
+        );
+      },
+    );
   });
 }

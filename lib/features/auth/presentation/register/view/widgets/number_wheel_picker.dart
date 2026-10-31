@@ -58,19 +58,16 @@ class _NumberWheelPickerState extends State<NumberWheelPicker> {
     final base = Theme.of(context).textTheme.titleLarge;
 
     return switch (distance) {
-      0 => base?.copyWith(
-          fontSize: 40.sp,
-          color: AppColors.primary,
-        ),
+      0 => base?.copyWith(fontSize: 40.sp, color: AppColors.primary),
       1 => base?.copyWith(fontSize: 26.sp),
       2 => base?.copyWith(
-          fontSize: 20.sp,
-          color: AppColors.white.withValues(alpha: 0.7),
-        ),
+        fontSize: 20.sp,
+        color: AppColors.white.withValues(alpha: 0.7),
+      ),
       _ => base?.copyWith(
-          fontSize: 14.sp,
-          color: AppColors.white.withValues(alpha: 0.4),
-        ),
+        fontSize: 14.sp,
+        color: AppColors.white.withValues(alpha: 0.4),
+      ),
     };
   }
 
@@ -83,9 +80,7 @@ class _NumberWheelPickerState extends State<NumberWheelPicker> {
       children: [
         Text(
           widget.unit,
-          style: theme.textTheme.titleSmall?.copyWith(
-            color: AppColors.primary,
-          ),
+          style: theme.textTheme.titleSmall?.copyWith(color: AppColors.primary),
         ),
         SizedBox(
           height: 72.h,
@@ -130,11 +125,7 @@ class _NumberWheelPickerState extends State<NumberWheelPicker> {
             ),
           ),
         ),
-        Icon(
-          Icons.arrow_drop_up_rounded,
-          color: AppColors.primary,
-          size: 30.r,
-        ),
+        Icon(Icons.arrow_drop_up_rounded, color: AppColors.primary, size: 30.r),
       ],
     );
   }

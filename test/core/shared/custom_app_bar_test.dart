@@ -7,11 +7,7 @@ Widget wrapWithScreenUtil(Widget child) {
   return ScreenUtilPlusInit(
     designSize: const Size(375, 812),
     minTextAdapt: true,
-    child: MaterialApp(
-      home: Scaffold(
-        appBar: child as PreferredSizeWidget,
-      ),
-    ),
+    child: MaterialApp(home: Scaffold(appBar: child as PreferredSizeWidget)),
   );
 }
 
@@ -31,9 +27,7 @@ void main() {
     testWidgets('renders titleWidget when provided', (tester) async {
       await tester.pumpWidget(
         wrapWithScreenUtil(
-          const CustomAppBar(
-            titleWidget: Text('Custom Title Widget'),
-          ),
+          const CustomAppBar(titleWidget: Text('Custom Title Widget')),
         ),
       );
       await tester.pumpAndSettle();
@@ -47,10 +41,7 @@ void main() {
           CustomAppBar(
             title: 'Title',
             actions: [
-              IconButton(
-                icon: const Icon(Icons.settings),
-                onPressed: () {},
-              ),
+              IconButton(icon: const Icon(Icons.settings), onPressed: () {}),
             ],
           ),
         ),
@@ -82,13 +73,12 @@ void main() {
       expect(backTapped, isTrue);
     });
 
-    testWidgets('does not render back button when showBackButton is false', (tester) async {
+    testWidgets('does not render back button when showBackButton is false', (
+      tester,
+    ) async {
       await tester.pumpWidget(
         wrapWithScreenUtil(
-          const CustomAppBar(
-            title: 'No Back',
-            showBackButton: false,
-          ),
+          const CustomAppBar(title: 'No Back', showBackButton: false),
         ),
       );
       await tester.pumpAndSettle();

@@ -15,8 +15,8 @@ class CustomTextFormField extends StatefulWidget {
     this.onChanged,
     this.textInputAction,
     this.prefixIconConstraints,
-    
-    super.key,  
+
+    super.key,
   });
 
   final TextEditingController? controller;

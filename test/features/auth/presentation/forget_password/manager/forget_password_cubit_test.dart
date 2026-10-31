@@ -17,8 +17,11 @@ import 'package:fitness_app/features/auth/presentation/forget_password/manager/f
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
-class MockForgetPasswordUserCase extends Mock implements ForgetPasswordUserCase {}
+class MockForgetPasswordUserCase extends Mock
+    implements ForgetPasswordUserCase {}
+
 class MockVerifyOtpUserCase extends Mock implements VerifyOtpUserCase {}
+
 class MockResetPasswordUserCase extends Mock implements ResetPasswordUserCase {}
 
 void main() {
@@ -27,7 +30,9 @@ void main() {
   late MockResetPasswordUserCase mockResetPasswordUseCase;
 
   setUpAll(() {
-    registerFallbackValue(const ForgetPasswordParam(email: 'fallback@example.com'));
+    registerFallbackValue(
+      const ForgetPasswordParam(email: 'fallback@example.com'),
+    );
     registerFallbackValue(const VerifyOtpParam('0000'));
     registerFallbackValue(
       const ResetPasswordParam(
@@ -67,8 +72,9 @@ void main() {
       blocTest<ForgetPasswordCubit, ForgetPasswordState>(
         'emits [isLoading: true, isLoading: false, data: null] and UI events on success',
         build: () {
-          when(() => mockForgetPasswordUseCase.call(any()))
-              .thenAnswer((_) async => const Success<void>(null));
+          when(
+            () => mockForgetPasswordUseCase.call(any()),
+          ).thenAnswer((_) async => const Success<void>(null));
           return buildCubit();
         },
         act: (cubit) async {
@@ -85,7 +91,10 @@ void main() {
             equals(AppSuccessMessage.otpSentSuccessfully),
           );
           expect(uiEvents[1], isA<NavigateTo>());
-          expect((uiEvents[1] as NavigateTo).routeName, equals(AppRoutes.otpVerification));
+          expect(
+            (uiEvents[1] as NavigateTo).routeName,
+            equals(AppRoutes.otpVerification),
+          );
 
           await sub.cancel();
         },
@@ -100,7 +109,13 @@ void main() {
         verify: (_) {
           verify(
             () => mockForgetPasswordUseCase.call(
-              any(that: isA<ForgetPasswordParam>().having((p) => p.email, 'email', tEmail)),
+              any(
+                that: isA<ForgetPasswordParam>().having(
+                  (p) => p.email,
+                  'email',
+                  tEmail,
+                ),
+              ),
             ),
           ).called(1);
         },
@@ -109,8 +124,9 @@ void main() {
       blocTest<ForgetPasswordCubit, ForgetPasswordState>(
         'emits [isLoading: true, errorMessage: failure] and ShowFailureMessage on error',
         build: () {
-          when(() => mockForgetPasswordUseCase.call(any()))
-              .thenAnswer((_) async => const Error<void>(InternetConnectionFailure()));
+          when(() => mockForgetPasswordUseCase.call(any())).thenAnswer(
+            (_) async => const Error<void>(InternetConnectionFailure()),
+          );
           return buildCubit();
         },
         act: (cubit) async {
@@ -142,19 +158,24 @@ void main() {
         ],
       );
 
-      test('does not trigger useCase if forgetPasswordState is already loading', () async {
-        final cubit = buildCubit();
-        cubit.emit(
-          cubit.state.copyWith(
-            forgetPasswordState: cubit.state.forgetPasswordState.copyWith(isLoading: true),
-          ),
-        );
+      test(
+        'does not trigger useCase if forgetPasswordState is already loading',
+        () async {
+          final cubit = buildCubit();
+          cubit.emit(
+            cubit.state.copyWith(
+              forgetPasswordState: cubit.state.forgetPasswordState.copyWith(
+                isLoading: true,
+              ),
+            ),
+          );
 
-        await cubit.doEvent(const SendCodeEvent(tEmail));
+          await cubit.doEvent(const SendCodeEvent(tEmail));
 
-        verifyZeroInteractions(mockForgetPasswordUseCase);
-        await cubit.close();
-      });
+          verifyZeroInteractions(mockForgetPasswordUseCase);
+          await cubit.close();
+        },
+      );
     });
 
     group('VerifyOtpEvent', () {
@@ -163,8 +184,9 @@ void main() {
       blocTest<ForgetPasswordCubit, ForgetPasswordState>(
         'emits [isLoading: true, isLoading: false] and NavigateTo(createPassword) on success',
         build: () {
-          when(() => mockVerifyOtpUseCase.call(any()))
-              .thenAnswer((_) async => const Success<void>(null));
+          when(
+            () => mockVerifyOtpUseCase.call(any()),
+          ).thenAnswer((_) async => const Success<void>(null));
           return buildCubit();
         },
         act: (cubit) async {
@@ -176,7 +198,10 @@ void main() {
 
           expect(uiEvents.length, equals(1));
           expect(uiEvents[0], isA<NavigateTo>());
-          expect((uiEvents[0] as NavigateTo).routeName, equals(AppRoutes.createPassword));
+          expect(
+            (uiEvents[0] as NavigateTo).routeName,
+            equals(AppRoutes.createPassword),
+          );
 
           await sub.cancel();
         },
@@ -191,7 +216,13 @@ void main() {
         verify: (_) {
           verify(
             () => mockVerifyOtpUseCase.call(
-              any(that: isA<VerifyOtpParam>().having((p) => p.resetCode, 'resetCode', tCode)),
+              any(
+                that: isA<VerifyOtpParam>().having(
+                  (p) => p.resetCode,
+                  'resetCode',
+                  tCode,
+                ),
+              ),
             ),
           ).called(1);
         },
@@ -200,8 +231,11 @@ void main() {
       blocTest<ForgetPasswordCubit, ForgetPasswordState>(
         'emits [isLoading: true, errorMessage: failure] and ShowFailureMessage on error',
         build: () {
-          when(() => mockVerifyOtpUseCase.call(any()))
-              .thenAnswer((_) async => const Error<void>(BadRequestFailure(serverMessage: 'Invalid code')));
+          when(() => mockVerifyOtpUseCase.call(any())).thenAnswer(
+            (_) async => const Error<void>(
+              BadRequestFailure(serverMessage: 'Invalid code'),
+            ),
+          );
           return buildCubit();
         },
         act: (cubit) async {
@@ -229,40 +263,50 @@ void main() {
         ],
       );
 
-      test('does not trigger useCase if verifyOtpState is already loading', () async {
-        final cubit = buildCubit();
-        cubit.emit(
-          cubit.state.copyWith(
-            verifyOtpState: cubit.state.verifyOtpState.copyWith(isLoading: true),
-          ),
-        );
+      test(
+        'does not trigger useCase if verifyOtpState is already loading',
+        () async {
+          final cubit = buildCubit();
+          cubit.emit(
+            cubit.state.copyWith(
+              verifyOtpState: cubit.state.verifyOtpState.copyWith(
+                isLoading: true,
+              ),
+            ),
+          );
 
-        await cubit.doEvent(const VerifyOtpEvent(tCode));
+          await cubit.doEvent(const VerifyOtpEvent(tCode));
 
-        verifyZeroInteractions(mockVerifyOtpUseCase);
-        await cubit.close();
-      });
+          verifyZeroInteractions(mockVerifyOtpUseCase);
+          await cubit.close();
+        },
+      );
     });
 
     group('ResetPasswordEvent', () {
       const tNewPassword = 'Password123!';
 
-      test('does not call resetPasswordUseCase if email was not stored', () async {
-        final cubit = buildCubit();
+      test(
+        'does not call resetPasswordUseCase if email was not stored',
+        () async {
+          final cubit = buildCubit();
 
-        await cubit.doEvent(const ResetPasswordEvent(tNewPassword));
+          await cubit.doEvent(const ResetPasswordEvent(tNewPassword));
 
-        verifyZeroInteractions(mockResetPasswordUseCase);
-        await cubit.close();
-      });
+          verifyZeroInteractions(mockResetPasswordUseCase);
+          await cubit.close();
+        },
+      );
 
       blocTest<ForgetPasswordCubit, ForgetPasswordState>(
         'resets password successfully when email was stored via SendCodeEvent',
         build: () {
-          when(() => mockForgetPasswordUseCase.call(any()))
-              .thenAnswer((_) async => const Success<void>(null));
-          when(() => mockResetPasswordUseCase.call(any()))
-              .thenAnswer((_) async => const Success<void>(null));
+          when(
+            () => mockForgetPasswordUseCase.call(any()),
+          ).thenAnswer((_) async => const Success<void>(null));
+          when(
+            () => mockResetPasswordUseCase.call(any()),
+          ).thenAnswer((_) async => const Success<void>(null));
           return buildCubit();
         },
         act: (cubit) async {
@@ -324,10 +368,12 @@ void main() {
       blocTest<ForgetPasswordCubit, ForgetPasswordState>(
         'emits error state and ShowFailureMessage on reset failure',
         build: () {
-          when(() => mockForgetPasswordUseCase.call(any()))
-              .thenAnswer((_) async => const Success<void>(null));
-          when(() => mockResetPasswordUseCase.call(any()))
-              .thenAnswer((_) async => const Error<void>(ServerFailure(statusCode: 500)));
+          when(
+            () => mockForgetPasswordUseCase.call(any()),
+          ).thenAnswer((_) async => const Success<void>(null));
+          when(() => mockResetPasswordUseCase.call(any())).thenAnswer(
+            (_) async => const Error<void>(ServerFailure(statusCode: 500)),
+          );
           return buildCubit();
         },
         act: (cubit) async {

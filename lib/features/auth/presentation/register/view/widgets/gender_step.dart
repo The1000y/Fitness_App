@@ -32,7 +32,8 @@ class GenderStep extends StatelessWidget {
               label: l10n.male,
               icon: AppIcons.maleGender,
               selected: state.form.gender == Gender.male,
-              onTap: () => cubit.doEvent(const GenderSelectedEvent(Gender.male)),
+              onTap: () =>
+                  cubit.doEvent(const GenderSelectedEvent(Gender.male)),
             ),
             Gap(20.h),
             GenderOption(

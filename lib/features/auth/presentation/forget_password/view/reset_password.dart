@@ -58,7 +58,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                     Gap(96.h),
                     Text(
                       l10n.passwordLengthHint,
-    
+
                       style: theme.textTheme.headlineSmall,
                     ),
                     Gap(2.h),

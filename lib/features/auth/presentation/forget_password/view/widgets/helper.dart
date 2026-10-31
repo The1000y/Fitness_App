@@ -36,7 +36,7 @@ abstract class Helper {
     ),
   );
 
-  static  PinTheme? get submittedPinTheme => PinTheme(
+  static PinTheme? get submittedPinTheme => PinTheme(
     width: 56,
     height: 60,
     textStyle: const TextStyle(

@@ -9,7 +9,6 @@ import 'package:fitness_app/features/auth/data/model/requests/reset_password_req
 import 'package:fitness_app/features/auth/data/model/requests/verify_otp_request/verify_otp_request.dart';
 import 'package:injectable/injectable.dart';
 
-
 @injectable
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   final AuthApiClient authApiClient;
@@ -39,7 +38,9 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   }
 
   @override
-  Future<BaseResponse<void>> verifyOtp(VerifyOtpRequest verifyOtpRequest) async {
+  Future<BaseResponse<void>> verifyOtp(
+    VerifyOtpRequest verifyOtpRequest,
+  ) async {
     return await excecuteApiCall(
       () => authApiClient.verifyOtp(verifyOtpRequest),
     );

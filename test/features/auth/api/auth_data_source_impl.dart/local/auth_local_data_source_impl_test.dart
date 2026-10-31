@@ -15,15 +15,18 @@ void main() {
 
   group('AuthLocalDataSourceImpl', () {
     group('forgetPassword', () {
-      test('returns Error with UnknownFailure when email is error@test.com', () async {
-        final result = await localDataSource.forgetPassword(
-          ForgetPasswordRequest(email: 'error@test.com'),
-        );
+      test(
+        'returns Error with UnknownFailure when email is error@test.com',
+        () async {
+          final result = await localDataSource.forgetPassword(
+            ForgetPasswordRequest(email: 'error@test.com'),
+          );
 
-        expect(result, isA<Error<void>>());
-        final error = result as Error<void>;
-        expect(error.failure, isA<UnknownFailure>());
-      });
+          expect(result, isA<Error<void>>());
+          final error = result as Error<void>;
+          expect(error.failure, isA<UnknownFailure>());
+        },
+      );
 
       test('returns Success when email is not error@test.com', () async {
         final result = await localDataSource.forgetPassword(
@@ -35,15 +38,18 @@ void main() {
     });
 
     group('verifyOtp', () {
-      test('returns Error with UnknownFailure when resetCode is 0000', () async {
-        final result = await localDataSource.verifyOtp(
-          VerifyOtpRequest(resetCode: '0000'),
-        );
+      test(
+        'returns Error with UnknownFailure when resetCode is 0000',
+        () async {
+          final result = await localDataSource.verifyOtp(
+            VerifyOtpRequest(resetCode: '0000'),
+          );
 
-        expect(result, isA<Error<void>>());
-        final error = result as Error<void>;
-        expect(error.failure, isA<UnknownFailure>());
-      });
+          expect(result, isA<Error<void>>());
+          final error = result as Error<void>;
+          expect(error.failure, isA<UnknownFailure>());
+        },
+      );
 
       test('returns Success when resetCode is valid', () async {
         final result = await localDataSource.verifyOtp(
@@ -55,19 +61,28 @@ void main() {
     });
 
     group('resetPassword', () {
-      test('returns Error with UnknownFailure when newPassword is 0000', () async {
-        final result = await localDataSource.resetPassword(
-          ResetPasswordRequest(email: 'test@example.com', newPassword: '0000'),
-        );
+      test(
+        'returns Error with UnknownFailure when newPassword is 0000',
+        () async {
+          final result = await localDataSource.resetPassword(
+            ResetPasswordRequest(
+              email: 'test@example.com',
+              newPassword: '0000',
+            ),
+          );
 
-        expect(result, isA<Error<void>>());
-        final error = result as Error<void>;
-        expect(error.failure, isA<UnknownFailure>());
-      });
+          expect(result, isA<Error<void>>());
+          final error = result as Error<void>;
+          expect(error.failure, isA<UnknownFailure>());
+        },
+      );
 
       test('returns Success when newPassword is valid', () async {
         final result = await localDataSource.resetPassword(
-          ResetPasswordRequest(email: 'test@example.com', newPassword: 'Password123!'),
+          ResetPasswordRequest(
+            email: 'test@example.com',
+            newPassword: 'Password123!',
+          ),
         );
 
         expect(result, isA<Success<void>>());

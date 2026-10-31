@@ -13,7 +13,6 @@ import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 
-
 class StepScaffold extends StatelessWidget {
   const StepScaffold({
     super.key,

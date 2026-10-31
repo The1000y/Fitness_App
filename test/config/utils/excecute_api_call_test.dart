@@ -24,7 +24,10 @@ void main() {
       });
 
       expect(result, isA<Error<String>>());
-      expect((result as Error<String>).failure, isA<InternetConnectionFailure>());
+      expect(
+        (result as Error<String>).failure,
+        isA<InternetConnectionFailure>(),
+      );
     });
 
     test('returns Error<T> with UnknownFailure on generic Exception', () async {

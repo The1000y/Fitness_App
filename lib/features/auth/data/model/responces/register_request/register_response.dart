@@ -17,9 +17,9 @@ class RegisterResponseDto {
   RegisterResponseDto({this.message, this.user, this.token});
   RegisterResponeEntity toEntity() {
     return RegisterResponeEntity(
-      message: message??'',
-      user: user?.toEntity(user)?? UserEntity(),
-      token: token??''
+      message: message ?? '',
+      user: user?.toEntity(user) ?? UserEntity(),
+      token: token ?? '',
     );
   }
 

@@ -6,7 +6,9 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('CustomBackgroundImage', () {
-    testWidgets('renders child and overlay when showOverlay is true', (tester) async {
+    testWidgets('renders child and overlay when showOverlay is true', (
+      tester,
+    ) async {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -28,7 +30,9 @@ void main() {
       );
     });
 
-    testWidgets('does not render overlay when showOverlay is false', (tester) async {
+    testWidgets('does not render overlay when showOverlay is false', (
+      tester,
+    ) async {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(

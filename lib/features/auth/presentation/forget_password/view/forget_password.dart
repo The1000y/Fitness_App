@@ -44,7 +44,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
       child: Scaffold(
         body: SafeArea(
           child: Padding(
-            padding:  EdgeInsets.all(16.r),
+            padding: EdgeInsets.all(16.r),
             child: Form(
               key: formKey,
               child: Column(
@@ -105,13 +105,12 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                               label: l10n.sendOtp,
                               height: 38.h,
                               onPressed: () async {
-                                      if (formKey.currentState!.validate()) {
-                                        await cubit.doEvent(
-                                          SendCodeEvent(emailController.text),
-                                        );
-                                       
-                                      }
-                                    },
+                                if (formKey.currentState!.validate()) {
+                                  await cubit.doEvent(
+                                    SendCodeEvent(emailController.text),
+                                  );
+                                }
+                              },
                             );
                           },
                         ),
