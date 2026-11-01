@@ -12,7 +12,8 @@ part 'auth_api_client.g.dart';
 @RestApi()
 abstract class AuthApiClient {
   @factoryMethod
-  factory AuthApiClient(@Named(ApiStrings.namedFitnessDio) Dio dio) = _AuthApiClient;
+  factory AuthApiClient(@Named(ApiStrings.namedFitnessDio) Dio dio) =
+      _AuthApiClient;
 
   @POST(ApiStrings.signin)
   Future<LoginResponse> login(@Body() LoginRequest request);

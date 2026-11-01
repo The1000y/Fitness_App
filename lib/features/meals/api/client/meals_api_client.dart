@@ -11,6 +11,4 @@ abstract class MealsApiClient {
   @factoryMethod
   factory MealsApiClient(@Named(ApiStrings.namedMealDio) Dio dio) =
       _MealsApiClient;
-
-
 }
