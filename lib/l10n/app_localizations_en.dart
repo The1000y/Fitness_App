@@ -216,6 +216,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get category => 'Category';
 
   @override
+  String get noCategoriesAvailable => 'No categories available';
+
+  @override
+  String get selectCategory => 'Select a category';
+
+  @override
+  String get noMusclesAvailable => 'No muscles available';
+
+  @override
   String get categoryGym => 'Gym';
 
   @override

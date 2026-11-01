@@ -500,6 +500,24 @@ abstract class AppLocalizations {
   /// **'Category'**
   String get category;
 
+  /// No description provided for @noCategoriesAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'No categories available'**
+  String get noCategoriesAvailable;
+
+  /// No description provided for @selectCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a category'**
+  String get selectCategory;
+
+  /// No description provided for @noMusclesAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'No muscles available'**
+  String get noMusclesAvailable;
+
   /// No description provided for @categoryGym.
   ///
   /// In en, this message translates to:
