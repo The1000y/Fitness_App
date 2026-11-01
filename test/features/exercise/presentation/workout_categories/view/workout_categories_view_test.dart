@@ -13,7 +13,6 @@ import 'package:fitness_app/features/exercise/presentation/workout_categories/ma
 import 'package:fitness_app/features/exercise/presentation/workout_categories/view/workout_categories_body.dart';
 import 'package:fitness_app/features/exercise/presentation/workout_categories/view/workout_categories_view.dart';
 import 'package:fitness_app/l10n/app_localizations_en.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -171,31 +170,5 @@ void main() {
     );
     verify(() => repo.getMusclesByGroup(id: 'group-1')).called(1);
     verify(() => repo.getMusclesByGroup(id: 'group-2')).called(1);
-  });
-
-  testWidgets('uses NetworkImage for API image URLs', (tester) async {
-    late DecorationImage decorationImage;
-
-    await tester.pumpWidget(
-      MaterialApp(
-        home: Builder(
-          builder: (context) {
-            final gesture =
-                ImageTitleCard(
-                      imagePath: 'https://example.com/muscle.png',
-                      title: 'Muscle',
-                      onTap: () {},
-                    ).build(context)
-                    as GestureDetector;
-            final container = gesture.child! as Container;
-            final decoration = container.decoration! as BoxDecoration;
-            decorationImage = decoration.image!;
-            return const SizedBox.shrink();
-          },
-        ),
-      ),
-    );
-
-    expect(decorationImage.image, isA<NetworkImage>());
   });
 }

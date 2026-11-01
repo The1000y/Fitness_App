@@ -5,7 +5,6 @@ import 'package:fitness_app/features/exercise/presentation/workout_categories/vi
 import 'package:fitness_app/features/home/presentation/views/home_view.dart';
 import 'package:fitness_app/features/main/presentation/views/main_layout_view.dart';
 import 'package:fitness_app/features/profile/presentation/views/profile_view.dart';
-import 'package:fitness_app/features/workouts/presentation/views/workouts_view.dart';
 import 'package:fitness_app/test_view.dart';
 import 'package:flutter/material.dart';
 
