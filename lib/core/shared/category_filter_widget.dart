@@ -43,6 +43,7 @@ class CategoryTabBar extends StatelessWidget {
     );
   }
 
+
   Widget _buildCategoryItem(
     BuildContext context,
     String category, {
@@ -59,7 +60,7 @@ class CategoryTabBar extends StatelessWidget {
           width: isExpanded ? double.infinity : null,
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
           decoration: BoxDecoration(
-            color: isSelected ? AppColors.primary : AppColors.surfaceMuted,
+            color: isSelected ? AppColors.primary : Colors.transparent,
             borderRadius: BorderRadius.circular(24.r),
           ),
           alignment: Alignment.center,
