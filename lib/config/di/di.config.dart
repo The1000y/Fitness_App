@@ -28,6 +28,7 @@ import '../../features/auth/domain/repo/auth_repo.dart' as _i170;
 import '../../features/auth/domain/use_cases/login_use_case.dart' as _i1038;
 import '../../features/auth/presentation/login/manager/login_cubit.dart'
     as _i889;
+import '../../features/meals/api/client/meals_api_client.dart' as _i293;
 import '../dio/app_interceptor.dart' as _i264;
 import '../dio/dio_module.dart' as _i977;
 import '../utils/secure_storage_module.dart' as _i327;
@@ -48,17 +49,25 @@ extension GetItInjectableX on _i174.GetIt {
       () => secureStorageModule.secureStorage,
     );
     gh.lazySingleton<_i760.AppAuthCubit>(() => _i760.AppAuthCubit());
+    gh.lazySingleton<_i361.Dio>(
+      () => dioModule.mealDio(),
+      instanceName: 'mealDio',
+    );
     gh.lazySingleton<_i264.AppInterceptors>(
       () => _i264.AppInterceptors(
         gh<_i558.FlutterSecureStorage>(),
         gh<_i760.AppAuthCubit>(),
       ),
     );
+    gh.singleton<_i293.MealsApiClient>(
+      () => _i293.MealsApiClient(gh<_i361.Dio>(instanceName: 'mealDio')),
+    );
     gh.lazySingleton<_i361.Dio>(
-      () => dioModule.dioMethod(gh<_i264.AppInterceptors>()),
+      () => dioModule.fitnessDio(gh<_i264.AppInterceptors>()),
+      instanceName: 'fitnessDio',
     );
     gh.singleton<_i213.AuthApiClient>(
-      () => _i213.AuthApiClient(gh<_i361.Dio>()),
+      () => _i213.AuthApiClient(gh<_i361.Dio>(instanceName: 'fitnessDio')),
     );
     gh.factory<_i548.RemoteDataSource>(
       () => _i192.RemoteDataSourceImpl(gh<_i213.AuthApiClient>()),

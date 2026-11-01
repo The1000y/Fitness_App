@@ -1,4 +1,4 @@
-import 'package:fitness_app/features/meals/presentation/widgets/information_data_about_meals.dart';
+import 'package:fitness_app/features/meals/presentation/view/widgets/information_data_about_meals.dart';
 import 'package:fitness_app/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';

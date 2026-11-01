@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:fitness_app/config/localization/map_youtube_error.dart';
-import 'package:fitness_app/features/meals/presentation/widgets/video_player_content.dart';
+import 'package:fitness_app/features/meals/presentation/view/widgets/video_player_content.dart';
 import 'package:fitness_app/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
