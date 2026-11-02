@@ -8,8 +8,8 @@ import 'package:injectable/injectable.dart';
 
 @Injectable(as: MealsRemoteDataSource)
 class MealsRemoteDataSourceImpl implements MealsRemoteDataSource {
- final MealsApiClient apiClient;
- const MealsRemoteDataSourceImpl({required this.apiClient});
+  final MealsApiClient apiClient;
+  const MealsRemoteDataSourceImpl({required this.apiClient});
 
   @override
   Future<BaseResponse<List<DetailsMealDto>>> getMealDetails(

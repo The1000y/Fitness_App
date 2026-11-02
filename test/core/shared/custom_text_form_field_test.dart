@@ -33,41 +33,43 @@ void main() {
       expect(changedValue, 'test@example.com');
     });
 
-    testWidgets('toggles obscureText when visibility icon is pressed for password fields', (tester) async {
-      await tester.pumpWidget(
-        _buildTestApp(
-          const CustomTextFormField(
-            hintText: 'Password',
-            isPassword: true,
+    testWidgets(
+      'toggles obscureText when visibility icon is pressed for password fields',
+      (tester) async {
+        await tester.pumpWidget(
+          _buildTestApp(
+            const CustomTextFormField(hintText: 'Password', isPassword: true),
           ),
-        ),
-      );
+        );
 
-      final textFieldFinder = find.byType(TextField);
-      expect(textFieldFinder, findsOneWidget);
+        final textFieldFinder = find.byType(TextField);
+        expect(textFieldFinder, findsOneWidget);
 
-      // Initially obscured
-      TextField textField = tester.widget<TextField>(textFieldFinder);
-      expect(textField.obscureText, isTrue);
-      expect(find.byIcon(Icons.visibility_off_outlined), findsOneWidget);
+        // Initially obscured
+        TextField textField = tester.widget<TextField>(textFieldFinder);
+        expect(textField.obscureText, isTrue);
+        expect(find.byIcon(Icons.visibility_off_outlined), findsOneWidget);
 
-      // Tap toggle button to show password
-      await tester.tap(find.byType(IconButton));
-      await tester.pumpAndSettle();
+        // Tap toggle button to show password
+        await tester.tap(find.byType(IconButton));
+        await tester.pumpAndSettle();
 
-      textField = tester.widget<TextField>(textFieldFinder);
-      expect(textField.obscureText, isFalse);
-      expect(find.byIcon(Icons.visibility_outlined), findsOneWidget);
+        textField = tester.widget<TextField>(textFieldFinder);
+        expect(textField.obscureText, isFalse);
+        expect(find.byIcon(Icons.visibility_outlined), findsOneWidget);
 
-      // Tap again to hide
-      await tester.tap(find.byType(IconButton));
-      await tester.pumpAndSettle();
+        // Tap again to hide
+        await tester.tap(find.byType(IconButton));
+        await tester.pumpAndSettle();
 
-      textField = tester.widget<TextField>(textFieldFinder);
-      expect(textField.obscureText, isTrue);
-    });
+        textField = tester.widget<TextField>(textFieldFinder);
+        expect(textField.obscureText, isTrue);
+      },
+    );
 
-    testWidgets('displays validation error message when validator fails', (tester) async {
+    testWidgets('displays validation error message when validator fails', (
+      tester,
+    ) async {
       final formKey = GlobalKey<FormState>();
 
       await tester.pumpWidget(
@@ -76,7 +78,8 @@ void main() {
             key: formKey,
             child: CustomTextFormField(
               hintText: 'Required field',
-              validator: (value) => (value == null || value.isEmpty) ? 'Field is required' : null,
+              validator: (value) =>
+                  (value == null || value.isEmpty) ? 'Field is required' : null,
             ),
           ),
         ),
@@ -89,4 +92,3 @@ void main() {
     });
   });
 }
-

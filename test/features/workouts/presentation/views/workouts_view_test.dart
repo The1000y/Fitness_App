@@ -5,10 +5,10 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('WorkoutsView', () {
-    testWidgets('renders CustomBackgroundImage and transparent Scaffold', (tester) async {
-      await tester.pumpWidget(
-        const MaterialApp(home: WorkoutsView()),
-      );
+    testWidgets('renders CustomBackgroundImage and transparent Scaffold', (
+      tester,
+    ) async {
+      await tester.pumpWidget(const MaterialApp(home: WorkoutsView()));
 
       expect(find.byType(WorkoutsView), findsOneWidget);
       expect(find.byType(CustomBackgroundImage), findsOneWidget);
@@ -19,4 +19,3 @@ void main() {
     });
   });
 }
-

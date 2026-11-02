@@ -5,7 +5,9 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('CustomBackgroundImage', () {
-    testWidgets('renders background image and child with overlay', (tester) async {
+    testWidgets('renders background image and child with overlay', (
+      tester,
+    ) async {
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
@@ -21,7 +23,9 @@ void main() {
       expect(find.text('Foreground Content'), findsOneWidget);
       expect(find.byType(Image), findsOneWidget);
       expect(
-        find.byWidgetPredicate((w) => w is ColoredBox && w.color == AppColors.overlay),
+        find.byWidgetPredicate(
+          (w) => w is ColoredBox && w.color == AppColors.overlay,
+        ),
         findsOneWidget,
       );
     });
@@ -41,7 +45,9 @@ void main() {
 
       expect(find.text('No Overlay Content'), findsOneWidget);
       expect(
-        find.byWidgetPredicate((w) => w is ColoredBox && w.color == AppColors.overlay),
+        find.byWidgetPredicate(
+          (w) => w is ColoredBox && w.color == AppColors.overlay,
+        ),
         findsNothing,
       );
     });

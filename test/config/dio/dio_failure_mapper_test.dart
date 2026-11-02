@@ -31,7 +31,9 @@ void main() {
         DioExceptionType.receiveTimeout,
         DioExceptionType.transformTimeout,
       ]) {
-        final failure = mapDioExceptionToAppFailure(createDioException(type: type));
+        final failure = mapDioExceptionToAppFailure(
+          createDioException(type: type),
+        );
         expect(failure, isA<TimeoutFailure>());
       }
     });
@@ -86,7 +88,10 @@ void main() {
           ),
         );
         expect(failure, isA<UnauthorizedFailure>());
-        expect((failure as UnauthorizedFailure).serverMessage, 'Invalid credentials');
+        expect(
+          (failure as UnauthorizedFailure).serverMessage,
+          'Invalid credentials',
+        );
       });
 
       test('403 maps to ForbiddenFailure with extracted message', () {
@@ -130,7 +135,10 @@ void main() {
           ),
         );
         expect(failure, isA<ConflictFailure>());
-        expect((failure as ConflictFailure).serverMessage, 'User already exists');
+        expect(
+          (failure as ConflictFailure).serverMessage,
+          'User already exists',
+        );
       });
 
       test('422 maps to UnprocessableEntityFailure with extracted message', () {
@@ -142,7 +150,10 @@ void main() {
           ),
         );
         expect(failure, isA<UnprocessableEntityFailure>());
-        expect((failure as UnprocessableEntityFailure).serverMessage, 'Validation failed');
+        expect(
+          (failure as UnprocessableEntityFailure).serverMessage,
+          'Validation failed',
+        );
       });
 
       test('429 maps to TooManyRequestsFailure', () {
@@ -168,4 +179,3 @@ void main() {
     });
   });
 }
-

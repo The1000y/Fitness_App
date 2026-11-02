@@ -5,7 +5,9 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('DataOfIngredients', () {
-    testWidgets('renders ingredient name and measure with appropriate styles', (tester) async {
+    testWidgets('renders ingredient name and measure with appropriate styles', (
+      tester,
+    ) async {
       final theme = ThemeData.light();
 
       await tester.pumpWidget(
@@ -29,4 +31,3 @@ void main() {
     });
   });
 }
-

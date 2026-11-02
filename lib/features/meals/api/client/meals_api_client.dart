@@ -13,9 +13,6 @@ abstract class MealsApiClient {
   factory MealsApiClient(@Named(ApiStrings.namedMealDio) Dio dio) =
       _MealsApiClient;
 
-
   @GET(ApiStrings.mealDetails)
-  Future<DetailsMealResponse> getMealDetails(
-    @Query('i') String mealId
-  );  
+  Future<DetailsMealResponse> getMealDetails(@Query('i') String mealId);
 }

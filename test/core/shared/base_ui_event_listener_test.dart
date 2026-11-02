@@ -37,26 +37,33 @@ void main() {
   });
 
   group('BaseUiEventListener', () {
-    testWidgets('shows failure SnackBar when ShowFailureMessage event is emitted', (tester) async {
-      await tester.pumpApp(
-        Scaffold(
-          body: BaseUiEventListener<_TestCubit, int, BaseUiEvent>(
-            cubit: cubit,
-            child: const Text('Child Content'),
+    testWidgets(
+      'shows failure SnackBar when ShowFailureMessage event is emitted',
+      (tester) async {
+        await tester.pumpApp(
+          Scaffold(
+            body: BaseUiEventListener<_TestCubit, int, BaseUiEvent>(
+              cubit: cubit,
+              child: const Text('Child Content'),
+            ),
           ),
-        ),
-      );
+        );
 
-      expect(find.text('Child Content'), findsOneWidget);
+        expect(find.text('Child Content'), findsOneWidget);
 
-      cubit.triggerEvent(const ShowFailureMessage(InternetConnectionFailure()));
-      await tester.pumpAndSettle();
+        cubit.triggerEvent(
+          const ShowFailureMessage(InternetConnectionFailure()),
+        );
+        await tester.pumpAndSettle();
 
-      expect(find.text(l10n.failureInternetConnection), findsOneWidget);
-      expect(find.byType(SnackBar), findsOneWidget);
-    });
+        expect(find.text(l10n.failureInternetConnection), findsOneWidget);
+        expect(find.byType(SnackBar), findsOneWidget);
+      },
+    );
 
-    testWidgets('delegates custom event to onCustomEvent callback', (tester) async {
+    testWidgets('delegates custom event to onCustomEvent callback', (
+      tester,
+    ) async {
       String? receivedPayload;
 
       await tester.pumpApp(

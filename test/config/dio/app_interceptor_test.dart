@@ -37,24 +37,36 @@ void main() {
       expect(adapter.lastRequestOptions?.headers['Authorization'], isNull);
     });
 
-    test('attaches Bearer token for protected endpoints when token exists', () async {
-      await storage.write(key: StorageKeys.kUserToken, value: 'valid_jwt_token');
-      adapter.statusCode = 200;
-      adapter.responseBody = {'message': 'success'};
+    test(
+      'attaches Bearer token for protected endpoints when token exists',
+      () async {
+        await storage.write(
+          key: StorageKeys.kUserToken,
+          value: 'valid_jwt_token',
+        );
+        adapter.statusCode = 200;
+        adapter.responseBody = {'message': 'success'};
 
-      await dio.get('/user/profile');
+        await dio.get('/user/profile');
 
-      expect(adapter.lastRequestOptions?.headers['Authorization'], 'Bearer valid_jwt_token');
-    });
+        expect(
+          adapter.lastRequestOptions?.headers['Authorization'],
+          'Bearer valid_jwt_token',
+        );
+      },
+    );
 
-    test('does not attach Authorization header if no token in storage', () async {
-      adapter.statusCode = 200;
-      adapter.responseBody = {'message': 'success'};
+    test(
+      'does not attach Authorization header if no token in storage',
+      () async {
+        adapter.statusCode = 200;
+        adapter.responseBody = {'message': 'success'};
 
-      await dio.get('/user/profile');
+        await dio.get('/user/profile');
 
-      expect(adapter.lastRequestOptions?.headers['Authorization'], isNull);
-    });
+        expect(adapter.lastRequestOptions?.headers['Authorization'], isNull);
+      },
+    );
 
     test('onResponse on signIn saves returned token to storage', () async {
       adapter.statusCode = 200;
@@ -66,48 +78,57 @@ void main() {
       expect(savedToken, 'new_login_token');
     });
 
-    test('onError on protected 401 clears token and triggers sessionExpired on authCubit', () async {
-      await storage.write(key: StorageKeys.kUserToken, value: 'expired_token');
-      adapter.statusCode = 401;
-      adapter.responseBody = {'message': 'Unauthorized'};
+    test(
+      'onError on protected 401 clears token and triggers sessionExpired on authCubit',
+      () async {
+        await storage.write(
+          key: StorageKeys.kUserToken,
+          value: 'expired_token',
+        );
+        adapter.statusCode = 401;
+        adapter.responseBody = {'message': 'Unauthorized'};
 
-      final events = <AppAuthUiEvent>[];
-      final subscription = authCubit.uiEventStream.listen(events.add);
+        final events = <AppAuthUiEvent>[];
+        final subscription = authCubit.uiEventStream.listen(events.add);
 
-      await expectLater(
-        dio.get('/user/profile'),
-        throwsA(isA<DioException>()),
-      );
-      await pumpEventQueue();
+        await expectLater(
+          dio.get('/user/profile'),
+          throwsA(isA<DioException>()),
+        );
+        await pumpEventQueue();
 
-      final savedToken = await storage.read(key: StorageKeys.kUserToken);
-      expect(savedToken, isNull);
+        final savedToken = await storage.read(key: StorageKeys.kUserToken);
+        expect(savedToken, isNull);
 
-      expect(events.length, 1);
-      expect(events.first, isA<SessionExpiredUiEvent>());
+        expect(events.length, 1);
+        expect(events.first, isA<SessionExpiredUiEvent>());
 
-      await subscription.cancel();
-    });
+        await subscription.cancel();
+      },
+    );
 
-    test('onError on public 401 does not clear token or trigger sessionExpired', () async {
-      await storage.write(key: StorageKeys.kUserToken, value: 'some_token');
-      adapter.statusCode = 401;
-      adapter.responseBody = {'message': 'Invalid credentials'};
+    test(
+      'onError on public 401 does not clear token or trigger sessionExpired',
+      () async {
+        await storage.write(key: StorageKeys.kUserToken, value: 'some_token');
+        adapter.statusCode = 401;
+        adapter.responseBody = {'message': 'Invalid credentials'};
 
-      final events = <AppAuthUiEvent>[];
-      final subscription = authCubit.uiEventStream.listen(events.add);
+        final events = <AppAuthUiEvent>[];
+        final subscription = authCubit.uiEventStream.listen(events.add);
 
-      await expectLater(
-        dio.post(ApiStrings.signin),
-        throwsA(isA<DioException>()),
-      );
-      await pumpEventQueue();
+        await expectLater(
+          dio.post(ApiStrings.signin),
+          throwsA(isA<DioException>()),
+        );
+        await pumpEventQueue();
 
-      final savedToken = await storage.read(key: StorageKeys.kUserToken);
-      expect(savedToken, 'some_token');
-      expect(events, isEmpty);
+        final savedToken = await storage.read(key: StorageKeys.kUserToken);
+        expect(savedToken, 'some_token');
+        expect(events, isEmpty);
 
-      await subscription.cancel();
-    });
+        await subscription.cancel();
+      },
+    );
   });
 }

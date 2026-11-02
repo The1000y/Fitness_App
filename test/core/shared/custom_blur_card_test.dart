@@ -14,11 +14,7 @@ void main() {
   group('CustomBlurCard', () {
     testWidgets('renders child widget inside blur container', (tester) async {
       await tester.pumpWidget(
-        _buildTestApp(
-          const CustomBlurCard(
-            child: Text('Card Content'),
-          ),
-        ),
+        _buildTestApp(const CustomBlurCard(child: Text('Card Content'))),
       );
 
       expect(find.text('Card Content'), findsOneWidget);
@@ -63,4 +59,3 @@ void main() {
     });
   });
 }
-

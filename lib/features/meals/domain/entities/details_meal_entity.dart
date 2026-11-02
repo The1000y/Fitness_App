@@ -45,19 +45,19 @@ class DetailsMealEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        idMeal,
-        strMeal,
-        strMealAlternate,
-        strCategory,
-        strArea,
-        strInstructions,
-        strMealThumb,
-        strTags,
-        strYoutube,
-        strSource,
-        strImageSource,
-        strCreativeCommonsConfirmed,
-        dateModified,
-        ingredients,
-      ];
+    idMeal,
+    strMeal,
+    strMealAlternate,
+    strCategory,
+    strArea,
+    strInstructions,
+    strMealThumb,
+    strTags,
+    strYoutube,
+    strSource,
+    strImageSource,
+    strCreativeCommonsConfirmed,
+    dateModified,
+    ingredients,
+  ];
 }

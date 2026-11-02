@@ -8,16 +8,16 @@ Widget _buildTestApp(Widget child) {
   return ScreenUtilPlusInit(
     designSize: const Size(375, 812),
     child: MaterialApp(
-      home: Scaffold(
-        body: SizedBox(width: 375, height: 250, child: child),
-      ),
+      home: Scaffold(body: SizedBox(width: 375, height: 250, child: child)),
     ),
   );
 }
 
 void main() {
   group('ImageThumbnailOverlay', () {
-    testWidgets('renders overlay widget and handles play button tap', (tester) async {
+    testWidgets('renders overlay widget and handles play button tap', (
+      tester,
+    ) async {
       var playTapped = false;
 
       await tester.pumpWidget(
@@ -39,4 +39,3 @@ void main() {
     });
   });
 }
-

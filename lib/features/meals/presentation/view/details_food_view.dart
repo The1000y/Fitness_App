@@ -24,7 +24,7 @@ class DetailsFoodView extends StatelessWidget {
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
     var l10n = AppLocalizations.of(context)!;
-    
+
     return BaseUiEventListener<MealsCubit, MealsState, BaseUiEvent>(
       child: CustomBackgroundImage(
         backgroundImage: AppImages.layoutBackground,

@@ -17,44 +17,52 @@ void main() {
   });
 
   group('MealsRepoImpl', () {
-    test('getMealDetails delegates to data source with correct mealId and maps DTOs to entities', () async {
-      fakeDataSource.nextResult = Success([TestData.detailsMealDto]);
+    test(
+      'getMealDetails delegates to data source with correct mealId and maps DTOs to entities',
+      () async {
+        fakeDataSource.nextResult = Success([TestData.detailsMealDto]);
 
-      final result = await repo.getMealDetails(TestData.mealId);
+        final result = await repo.getMealDetails(TestData.mealId);
 
-      expect(fakeDataSource.callCount, 1);
-      expect(fakeDataSource.lastMealId, TestData.mealId);
-      expect(result, isA<Success<List<DetailsMealEntity>>>());
+        expect(fakeDataSource.callCount, 1);
+        expect(fakeDataSource.lastMealId, TestData.mealId);
+        expect(result, isA<Success<List<DetailsMealEntity>>>());
 
-      final success = result as Success<List<DetailsMealEntity>>;
-      expect(success.data.length, 1);
-      expect(success.data.first.idMeal, TestData.mealId);
-      expect(success.data.first.strMeal, TestData.mealName);
-      expect(success.data.first.ingredients.length, 3);
-    });
+        final success = result as Success<List<DetailsMealEntity>>;
+        expect(success.data.length, 1);
+        expect(success.data.first.idMeal, TestData.mealId);
+        expect(success.data.first.strMeal, TestData.mealName);
+        expect(success.data.first.ingredients.length, 3);
+      },
+    );
 
-    test('getMealDetails returns Success with empty list when data source returns empty list', () async {
-      fakeDataSource.nextResult = const Success(<DetailsMealDto>[]);
+    test(
+      'getMealDetails returns Success with empty list when data source returns empty list',
+      () async {
+        fakeDataSource.nextResult = const Success(<DetailsMealDto>[]);
 
-      final result = await repo.getMealDetails(TestData.mealId);
+        final result = await repo.getMealDetails(TestData.mealId);
 
-      expect(fakeDataSource.callCount, 1);
-      expect(result, isA<Success<List<DetailsMealEntity>>>());
-      final success = result as Success<List<DetailsMealEntity>>;
-      expect(success.data, isEmpty);
-    });
+        expect(fakeDataSource.callCount, 1);
+        expect(result, isA<Success<List<DetailsMealEntity>>>());
+        final success = result as Success<List<DetailsMealEntity>>;
+        expect(success.data, isEmpty);
+      },
+    );
 
-    test('getMealDetails forwards Error when data source returns Error', () async {
-      const failure = InternetConnectionFailure();
-      fakeDataSource.nextResult = const Error<List<DetailsMealDto>>(failure);
+    test(
+      'getMealDetails forwards Error when data source returns Error',
+      () async {
+        const failure = InternetConnectionFailure();
+        fakeDataSource.nextResult = const Error<List<DetailsMealDto>>(failure);
 
-      final result = await repo.getMealDetails(TestData.mealId);
+        final result = await repo.getMealDetails(TestData.mealId);
 
-      expect(fakeDataSource.callCount, 1);
-      expect(result, isA<Error<List<DetailsMealEntity>>>());
-      final error = result as Error<List<DetailsMealEntity>>;
-      expect(error.failure, equals(failure));
-    });
+        expect(fakeDataSource.callCount, 1);
+        expect(result, isA<Error<List<DetailsMealEntity>>>());
+        final error = result as Error<List<DetailsMealEntity>>;
+        expect(error.failure, equals(failure));
+      },
+    );
   });
 }
-

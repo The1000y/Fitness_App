@@ -6,16 +6,15 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('InformationDataAboutMeals', () {
-    testWidgets('renders number and title inside decorated container', (tester) async {
+    testWidgets('renders number and title inside decorated container', (
+      tester,
+    ) async {
       await tester.pumpWidget(
         ScreenUtilPlusInit(
           designSize: const Size(375, 812),
           child: const MaterialApp(
             home: Scaffold(
-              body: InformationDataAboutMeals(
-                number: '100 k',
-                title: 'Energy',
-              ),
+              body: InformationDataAboutMeals(number: '100 k', title: 'Energy'),
             ),
           ),
         ),
@@ -29,4 +28,3 @@ void main() {
     });
   });
 }
-

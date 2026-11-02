@@ -13,28 +13,33 @@ void main() {
       expect((result as Success<String>).data, 'Hello');
     });
 
-    test('returns Error with mapped failure when DioException occurs', () async {
-      final dioException = DioException(
-        requestOptions: RequestOptions(path: '/test'),
-        type: DioExceptionType.connectionTimeout,
-      );
+    test(
+      'returns Error with mapped failure when DioException occurs',
+      () async {
+        final dioException = DioException(
+          requestOptions: RequestOptions(path: '/test'),
+          type: DioExceptionType.connectionTimeout,
+        );
 
-      final result = await excecuteApiCall<String>(() async {
-        throw dioException;
-      });
+        final result = await excecuteApiCall<String>(() async {
+          throw dioException;
+        });
 
-      expect(result, isA<Error<String>>());
-      expect((result as Error<String>).failure, isA<TimeoutFailure>());
-    });
+        expect(result, isA<Error<String>>());
+        expect((result as Error<String>).failure, isA<TimeoutFailure>());
+      },
+    );
 
-    test('returns Error with UnknownFailure when unexpected exception occurs', () async {
-      final result = await excecuteApiCall<String>(() async {
-        throw StateError('Unexpected crash');
-      });
+    test(
+      'returns Error with UnknownFailure when unexpected exception occurs',
+      () async {
+        final result = await excecuteApiCall<String>(() async {
+          throw StateError('Unexpected crash');
+        });
 
-      expect(result, isA<Error<String>>());
-      expect((result as Error<String>).failure, isA<UnknownFailure>());
-    });
+        expect(result, isA<Error<String>>());
+        expect((result as Error<String>).failure, isA<UnknownFailure>());
+      },
+    );
   });
 }
-

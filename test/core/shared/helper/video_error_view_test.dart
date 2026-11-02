@@ -12,7 +12,9 @@ void main() {
   });
 
   group('VideoErrorView', () {
-    testWidgets('renders error icon, errorMessage, retry and back buttons', (tester) async {
+    testWidgets('renders error icon, errorMessage, retry and back buttons', (
+      tester,
+    ) async {
       var retryTapped = false;
       var closeTapped = false;
 
@@ -41,10 +43,7 @@ void main() {
     testWidgets('omits retry button when onRetry is null', (tester) async {
       await tester.pumpApp(
         Scaffold(
-          body: VideoErrorView(
-            errorMessage: 'Playback error',
-            onClose: () {},
-          ),
+          body: VideoErrorView(errorMessage: 'Playback error', onClose: () {}),
         ),
       );
 

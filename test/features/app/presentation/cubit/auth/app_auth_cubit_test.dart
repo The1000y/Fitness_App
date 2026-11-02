@@ -19,18 +19,20 @@ void main() {
       expect(cubit.state, isA<AppAuthState>());
     });
 
-    test('sessionExpired emits SessionExpiredUiEvent on uiEventStream', () async {
-      final events = <AppAuthUiEvent>[];
-      final subscription = cubit.uiEventStream.listen(events.add);
+    test(
+      'sessionExpired emits SessionExpiredUiEvent on uiEventStream',
+      () async {
+        final events = <AppAuthUiEvent>[];
+        final subscription = cubit.uiEventStream.listen(events.add);
 
-      cubit.sessionExpired();
-      await pumpEventQueue();
+        cubit.sessionExpired();
+        await pumpEventQueue();
 
-      expect(events.length, 1);
-      expect(events.first, isA<SessionExpiredUiEvent>());
+        expect(events.length, 1);
+        expect(events.first, isA<SessionExpiredUiEvent>());
 
-      await subscription.cancel();
-    });
+        await subscription.cancel();
+      },
+    );
   });
 }
-

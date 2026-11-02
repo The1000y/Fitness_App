@@ -15,9 +15,7 @@ void main() {
     });
 
     test('copyWith without arguments preserves current mealsState', () {
-      const state = MealsState(
-        mealsState: BaseState(isLoading: true),
-      );
+      const state = MealsState(mealsState: BaseState(isLoading: true));
 
       final copy = state.copyWith();
 
@@ -28,7 +26,10 @@ void main() {
     test('copyWith with new mealsState updates state correctly', () {
       const state = MealsState();
       final newState = state.copyWith(
-        mealsState: BaseState(data: [TestData.detailsMealEntity], isLoading: false),
+        mealsState: BaseState(
+          data: [TestData.detailsMealEntity],
+          isLoading: false,
+        ),
       );
 
       expect(newState.mealsState.data?.length, 1);

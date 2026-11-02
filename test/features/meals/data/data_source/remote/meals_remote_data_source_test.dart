@@ -17,29 +17,35 @@ void main() {
   });
 
   group('MealsRemoteDataSourceImpl', () {
-    test('getMealDetails delegates to MealsApiClient and returns Success on valid response', () async {
-      fakeApiClient.nextResponse = TestData.detailsMealResponse;
+    test(
+      'getMealDetails delegates to MealsApiClient and returns Success on valid response',
+      () async {
+        fakeApiClient.nextResponse = TestData.detailsMealResponse;
 
-      final result = await dataSource.getMealDetails(TestData.mealId);
+        final result = await dataSource.getMealDetails(TestData.mealId);
 
-      expect(fakeApiClient.callCount, 1);
-      expect(fakeApiClient.lastMealId, TestData.mealId);
-      expect(result, isA<Success<List<DetailsMealDto>>>());
-      final success = result as Success<List<DetailsMealDto>>;
-      expect(success.data.length, 1);
-      expect(success.data.first.idMeal, TestData.mealId);
-    });
+        expect(fakeApiClient.callCount, 1);
+        expect(fakeApiClient.lastMealId, TestData.mealId);
+        expect(result, isA<Success<List<DetailsMealDto>>>());
+        final success = result as Success<List<DetailsMealDto>>;
+        expect(success.data.length, 1);
+        expect(success.data.first.idMeal, TestData.mealId);
+      },
+    );
 
-    test('getMealDetails returns Success with empty list when response.meals is null', () async {
-      fakeApiClient.nextResponse = DetailsMealResponse(meals: null);
+    test(
+      'getMealDetails returns Success with empty list when response.meals is null',
+      () async {
+        fakeApiClient.nextResponse = DetailsMealResponse(meals: null);
 
-      final result = await dataSource.getMealDetails(TestData.mealId);
+        final result = await dataSource.getMealDetails(TestData.mealId);
 
-      expect(fakeApiClient.callCount, 1);
-      expect(result, isA<Success<List<DetailsMealDto>>>());
-      final success = result as Success<List<DetailsMealDto>>;
-      expect(success.data, isEmpty);
-    });
+        expect(fakeApiClient.callCount, 1);
+        expect(result, isA<Success<List<DetailsMealDto>>>());
+        final success = result as Success<List<DetailsMealDto>>;
+        expect(success.data, isEmpty);
+      },
+    );
 
     test('getMealDetails propagates DioException when apiClient throws', () async {
       final dioException = DioException(

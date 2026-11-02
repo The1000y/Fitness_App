@@ -18,9 +18,7 @@ void main() {
           const CustomAppBar(
             title: 'Profile Settings',
             showBackButton: false,
-            actions: [
-              Icon(Icons.more_vert),
-            ],
+            actions: [Icon(Icons.more_vert)],
           ),
         ),
       );
@@ -29,7 +27,9 @@ void main() {
       expect(find.byIcon(Icons.more_vert), findsOneWidget);
     });
 
-    testWidgets('renders titleWidget when provided instead of title', (tester) async {
+    testWidgets('renders titleWidget when provided instead of title', (
+      tester,
+    ) async {
       await tester.pumpWidget(
         _buildTestApp(
           const CustomAppBar(
@@ -42,13 +42,12 @@ void main() {
       expect(find.text('Custom Title Widget'), findsOneWidget);
     });
 
-    testWidgets('hides back button when showBackButton is false', (tester) async {
+    testWidgets('hides back button when showBackButton is false', (
+      tester,
+    ) async {
       await tester.pumpWidget(
         _buildTestApp(
-          const CustomAppBar(
-            title: 'No Back Button',
-            showBackButton: false,
-          ),
+          const CustomAppBar(title: 'No Back Button', showBackButton: false),
         ),
       );
 
@@ -76,4 +75,3 @@ void main() {
     });
   });
 }
-

@@ -27,8 +27,12 @@ void main() {
 
       expect(entity1, equals(entity2));
       expect(entity1 == entity3, isFalse);
-      expect(entity1.props, ['1', 'assets/images/onboarding1.png', 'Track your progress', 'Keep track of all your workout stats easily.']);
+      expect(entity1.props, [
+        '1',
+        'assets/images/onboarding1.png',
+        'Track your progress',
+        'Keep track of all your workout stats easily.',
+      ]);
     });
   });
 }
-

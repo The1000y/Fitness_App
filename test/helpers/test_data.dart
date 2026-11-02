@@ -40,10 +40,13 @@ class TestData {
   static const String mealCategory = 'Seafood';
   static const String mealArea = 'British';
   static const String mealInstructions = 'Heat oven to 180C/160C fan/gas 4...';
-  static const String mealThumb = 'https://www.themealdb.com/images/media/meals/1548772327.jpg';
-  static const String mealYoutube = 'https://www.youtube.com/watch?v=4aZr5hZXP_s';
+  static const String mealThumb =
+      'https://www.themealdb.com/images/media/meals/1548772327.jpg';
+  static const String mealYoutube =
+      'https://www.youtube.com/watch?v=4aZr5hZXP_s';
   static const String mealTags = 'Fish,Keto';
-  static const String mealSource = 'https://www.bbcgoodfood.com/recipes/baked-salmon-fennel-tomatoes';
+  static const String mealSource =
+      'https://www.bbcgoodfood.com/recipes/baked-salmon-fennel-tomatoes';
 
   static const Map<String, dynamic> detailsMealDtoJson = {
     'idMeal': mealId,
@@ -112,8 +115,8 @@ class TestData {
       DetailsMealResponse.fromJson(detailsMealResponseJson);
   static DetailsMealEntity get detailsMealEntity => detailsMealDto.toEntity();
   static List<IngredientEntity> get sampleIngredients => [
-        const IngredientEntity(name: 'Salmon', measure: '2 fillets'),
-        const IngredientEntity(name: 'Fennel', measure: '1 bulb'),
-        const IngredientEntity(name: 'Cherry Tomatoes', measure: '150g'),
-      ];
+    const IngredientEntity(name: 'Salmon', measure: '2 fillets'),
+    const IngredientEntity(name: 'Fennel', measure: '1 bulb'),
+    const IngredientEntity(name: 'Cherry Tomatoes', measure: '150g'),
+  ];
 }

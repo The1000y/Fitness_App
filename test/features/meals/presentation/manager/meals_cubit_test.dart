@@ -42,7 +42,11 @@ void main() {
       act: (c) => c.onEvent(GetMealDetailsEvent(TestData.mealId)),
       expect: () => [
         const MealsState(
-          mealsState: BaseState(data: null, isLoading: true, errorMessage: null),
+          mealsState: BaseState(
+            data: null,
+            isLoading: true,
+            errorMessage: null,
+          ),
         ),
         MealsState(
           mealsState: BaseState(
@@ -58,59 +62,68 @@ void main() {
       },
     );
 
-    test('failed GetMealDetailsEvent emits loading then error state and emits ShowFailureMessage event', () async {
-      const failure = InternetConnectionFailure();
-      fakeMealsRepo.nextResult = const Error<List<DetailsMealEntity>>(failure);
+    test(
+      'failed GetMealDetailsEvent emits loading then error state and emits ShowFailureMessage event',
+      () async {
+        const failure = InternetConnectionFailure();
+        fakeMealsRepo.nextResult = const Error<List<DetailsMealEntity>>(
+          failure,
+        );
 
-      final events = <BaseUiEvent>[];
-      final subscription = cubit.uiEventStream.listen(events.add);
+        final events = <BaseUiEvent>[];
+        final subscription = cubit.uiEventStream.listen(events.add);
 
-      final states = <MealsState>[];
-      final stateSub = cubit.stream.listen(states.add);
+        final states = <MealsState>[];
+        final stateSub = cubit.stream.listen(states.add);
 
-      cubit.onEvent(GetMealDetailsEvent(TestData.mealId));
+        cubit.onEvent(GetMealDetailsEvent(TestData.mealId));
 
-      await pumpEventQueue();
+        await pumpEventQueue();
 
-      expect(states, [
-        const MealsState(
-          mealsState: BaseState(data: null, isLoading: true, errorMessage: null),
-        ),
-        const MealsState(
-          mealsState: BaseState(
-            isLoading: false,
-            errorMessage: failure,
+        expect(states, [
+          const MealsState(
+            mealsState: BaseState(
+              data: null,
+              isLoading: true,
+              errorMessage: null,
+            ),
           ),
-        ),
-      ]);
+          const MealsState(
+            mealsState: BaseState(isLoading: false, errorMessage: failure),
+          ),
+        ]);
 
-      expect(events.length, 1);
-      expect(events.first, isA<ShowFailureMessage>());
-      expect((events.first as ShowFailureMessage).failure, equals(failure));
+        expect(events.length, 1);
+        expect(events.first, isA<ShowFailureMessage>());
+        expect((events.first as ShowFailureMessage).failure, equals(failure));
 
-      await subscription.cancel();
-      await stateSub.cancel();
-    });
+        await subscription.cancel();
+        await stateSub.cancel();
+      },
+    );
 
-    test('closing cubit while request is in flight emits nothing after close', () async {
-      final completer = Completer<BaseResponse<List<DetailsMealEntity>>>();
-      fakeMealsRepo.completer = completer;
+    test(
+      'closing cubit while request is in flight emits nothing after close',
+      () async {
+        final completer = Completer<BaseResponse<List<DetailsMealEntity>>>();
+        fakeMealsRepo.completer = completer;
 
-      final states = <MealsState>[];
-      cubit.stream.listen(states.add);
+        final states = <MealsState>[];
+        cubit.stream.listen(states.add);
 
-      cubit.onEvent(GetMealDetailsEvent(TestData.mealId));
-      await pumpEventQueue();
-      expect(states.length, 1);
-      expect(states.first.mealsState.isLoading, isTrue);
+        cubit.onEvent(GetMealDetailsEvent(TestData.mealId));
+        await pumpEventQueue();
+        expect(states.length, 1);
+        expect(states.first.mealsState.isLoading, isTrue);
 
-      await cubit.close();
+        await cubit.close();
 
-      completer.complete(Success([TestData.detailsMealEntity]));
-      await pumpEventQueue();
+        completer.complete(Success([TestData.detailsMealEntity]));
+        await pumpEventQueue();
 
-      // No new states emitted after closing
-      expect(states.length, 1);
-    });
+        // No new states emitted after closing
+        expect(states.length, 1);
+      },
+    );
   });
 }

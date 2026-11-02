@@ -8,21 +8,21 @@ import 'dart:convert';
 
 part 'details_meal_response.g.dart';
 
-DetailsMealResponse detailsMealResponseFromJson(String str) => DetailsMealResponse.fromJson(json.decode(str));
+DetailsMealResponse detailsMealResponseFromJson(String str) =>
+    DetailsMealResponse.fromJson(json.decode(str));
 
-String detailsMealResponseToJson(DetailsMealResponse data) => json.encode(data.toJson());
+String detailsMealResponseToJson(DetailsMealResponse data) =>
+    json.encode(data.toJson());
 
 @JsonSerializable()
 class DetailsMealResponse {
-    @JsonKey(name: "meals")
-    List<DetailsMealDto>? meals;
+  @JsonKey(name: "meals")
+  List<DetailsMealDto>? meals;
 
-    DetailsMealResponse({
-        this.meals,
-    });
+  DetailsMealResponse({this.meals});
 
-    factory DetailsMealResponse.fromJson(Map<String, dynamic> json) => _$DetailsMealResponseFromJson(json);
+  factory DetailsMealResponse.fromJson(Map<String, dynamic> json) =>
+      _$DetailsMealResponseFromJson(json);
 
-    Map<String, dynamic> toJson() => _$DetailsMealResponseToJson(this);
+  Map<String, dynamic> toJson() => _$DetailsMealResponseToJson(this);
 }
-

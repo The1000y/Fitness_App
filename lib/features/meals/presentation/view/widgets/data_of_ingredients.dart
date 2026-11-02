@@ -5,11 +5,12 @@ class DataOfIngredients extends StatelessWidget {
   const DataOfIngredients({
     super.key,
     required this.strIngredient,
-    required this.strMeasure, required this.theme,
+    required this.strMeasure,
+    required this.theme,
   });
   final String strIngredient;
   final String strMeasure;
-  final ThemeData theme ;
+  final ThemeData theme;
 
   @override
   Widget build(BuildContext context) {

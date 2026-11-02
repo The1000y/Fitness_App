@@ -5,10 +5,10 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('ChatView', () {
-    testWidgets('renders CustomBackgroundImage and transparent Scaffold', (tester) async {
-      await tester.pumpWidget(
-        const MaterialApp(home: ChatView()),
-      );
+    testWidgets('renders CustomBackgroundImage and transparent Scaffold', (
+      tester,
+    ) async {
+      await tester.pumpWidget(const MaterialApp(home: ChatView()));
 
       expect(find.byType(ChatView), findsOneWidget);
       expect(find.byType(CustomBackgroundImage), findsOneWidget);
@@ -19,4 +19,3 @@ void main() {
     });
   });
 }
-

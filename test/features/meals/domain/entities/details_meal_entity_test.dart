@@ -4,8 +4,14 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   group('IngredientEntity', () {
     test('props equality works correctly', () {
-      const ingredient1 = IngredientEntity(name: 'Salmon', measure: '2 fillets');
-      const ingredient2 = IngredientEntity(name: 'Salmon', measure: '2 fillets');
+      const ingredient1 = IngredientEntity(
+        name: 'Salmon',
+        measure: '2 fillets',
+      );
+      const ingredient2 = IngredientEntity(
+        name: 'Salmon',
+        measure: '2 fillets',
+      );
       const ingredient3 = IngredientEntity(name: 'Fennel', measure: '1 bulb');
 
       expect(ingredient1, equals(ingredient2));
@@ -30,9 +36,7 @@ void main() {
         strImageSource: null,
         strCreativeCommonsConfirmed: null,
         dateModified: null,
-        ingredients: [
-          IngredientEntity(name: 'Salmon', measure: '2 fillets'),
-        ],
+        ingredients: [IngredientEntity(name: 'Salmon', measure: '2 fillets')],
       );
 
       const entity2 = DetailsMealEntity(
@@ -49,9 +53,7 @@ void main() {
         strImageSource: null,
         strCreativeCommonsConfirmed: null,
         dateModified: null,
-        ingredients: [
-          IngredientEntity(name: 'Salmon', measure: '2 fillets'),
-        ],
+        ingredients: [IngredientEntity(name: 'Salmon', measure: '2 fillets')],
       );
 
       const entity3 = DetailsMealEntity(
@@ -77,4 +79,3 @@ void main() {
     });
   });
 }
-

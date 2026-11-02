@@ -16,17 +16,20 @@ void main() {
   });
 
   group('GetMealDetailsUseCase', () {
-    test('calls MealsRepo.getMealDetails with provided mealId and returns Success', () async {
-      fakeMealsRepo.nextResult = Success([TestData.detailsMealEntity]);
+    test(
+      'calls MealsRepo.getMealDetails with provided mealId and returns Success',
+      () async {
+        fakeMealsRepo.nextResult = Success([TestData.detailsMealEntity]);
 
-      final result = await useCase.call(TestData.mealId);
+        final result = await useCase.call(TestData.mealId);
 
-      expect(fakeMealsRepo.callCount, 1);
-      expect(fakeMealsRepo.lastMealId, TestData.mealId);
-      expect(result, isA<Success<List<DetailsMealEntity>>>());
-      final success = result as Success<List<DetailsMealEntity>>;
-      expect(success.data.first.idMeal, TestData.mealId);
-    });
+        expect(fakeMealsRepo.callCount, 1);
+        expect(fakeMealsRepo.lastMealId, TestData.mealId);
+        expect(result, isA<Success<List<DetailsMealEntity>>>());
+        final success = result as Success<List<DetailsMealEntity>>;
+        expect(success.data.first.idMeal, TestData.mealId);
+      },
+    );
 
     test('forwards Error result unchanged from MealsRepo', () async {
       const failure = ServerFailure(statusCode: 500);
@@ -42,4 +45,3 @@ void main() {
     });
   });
 }
-

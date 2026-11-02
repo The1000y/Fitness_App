@@ -27,7 +27,7 @@ class MealsCubit extends BaseCubit<MealsState, BaseUiEvent> {
       ),
     );
     var result = await _getMealDetailsUseCase.call(mealId);
-    if(isClosed) return;
+    if (isClosed) return;
     switch (result) {
       case Success<List<DetailsMealEntity>>():
         emit(
