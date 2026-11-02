@@ -25,7 +25,7 @@ class MealInfoOverlay extends StatelessWidget {
     var l10n = AppLocalizations.of(context)!;
     var theme = Theme.of(context);
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       child: Column(
         mainAxisSize: MainAxisSize.min,
 

@@ -3,6 +3,7 @@ import 'package:fitness_app/features/auth/presentation/onboarding/views/onboardi
 import 'package:fitness_app/features/chat/presentation/views/chat_view.dart';
 import 'package:fitness_app/features/home/presentation/views/home_view.dart';
 import 'package:fitness_app/features/main/presentation/views/main_layout_view.dart';
+import 'package:fitness_app/features/meals/presentation/view/details_food_view.dart';
 import 'package:fitness_app/features/profile/presentation/views/profile_view.dart';
 import 'package:fitness_app/features/workouts/presentation/views/workouts_view.dart';
 import 'package:fitness_app/test_view.dart';
@@ -74,7 +75,8 @@ abstract final class GenerateRoutes {
         return _pageRoute(const _StubScreen('Food'), settings);
 
       case AppRoutes.foodDetails:
-        return _pageRoute(const _StubScreen('Food Details'), settings);
+      var mealId = settings.arguments as String;
+        return _pageRoute(DetailsFoodView(mealId: mealId,), settings);
 
       case AppRoutes.chatHistory:
         return _pageRoute(const _StubScreen('Chat History'), settings);

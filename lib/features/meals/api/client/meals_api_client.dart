@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:fitness_app/core/constants/api_strings.dart';
+import 'package:fitness_app/features/meals/data/model/details_meal_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
 
@@ -11,4 +12,10 @@ abstract class MealsApiClient {
   @factoryMethod
   factory MealsApiClient(@Named(ApiStrings.namedMealDio) Dio dio) =
       _MealsApiClient;
+
+
+  @GET(ApiStrings.mealDetails)
+  Future<DetailsMealResponse> getMealDetails(
+    @Query('i') String mealId
+  );  
 }
