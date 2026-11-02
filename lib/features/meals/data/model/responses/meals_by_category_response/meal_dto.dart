@@ -1,9 +1,9 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part 'meal_response.g.dart';
+part 'meal_dto.g.dart';
 
 @JsonSerializable()
-class MealResponse {
+class MealDTO {
   @JsonKey(name: 'idMeal')
   final String? idMeal;
 
@@ -19,7 +19,7 @@ class MealResponse {
   @JsonKey(name: 'strCountry')
   final String? strCountry;
 
-  MealResponse({
+  MealDTO({
     this.idMeal,
     this.strMeal,
     this.strMealThumb,
@@ -27,8 +27,8 @@ class MealResponse {
     this.strCountry,
   });
 
-  factory MealResponse.fromJson(Map<String, dynamic> json) =>
-      _$MealResponseFromJson(json);
+  factory MealDTO.fromJson(Map<String, dynamic> json) =>
+      _$MealDTOFromJson(json);
 
-  Map<String, dynamic> toJson() => _$MealResponseToJson(this);
+  Map<String, dynamic> toJson() => _$MealDTOToJson(this);
 }

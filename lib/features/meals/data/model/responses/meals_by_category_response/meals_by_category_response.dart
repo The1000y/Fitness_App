@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-import 'package:fitness_app/features/meals/data/model/responses/meals_by_category_response/meal_response.dart';
+import 'package:fitness_app/features/meals/data/model/responses/meals_by_category_response/meal_dto.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-export 'meal_response.dart';
+export 'meal_dto.dart';
 
 part 'meals_by_category_response.g.dart';
 
@@ -16,7 +16,7 @@ String mealsByCategoryResponseToJson(MealsByCategoryResponse data) =>
 @JsonSerializable(explicitToJson: true)
 class MealsByCategoryResponse {
   @JsonKey(name: 'meals')
-  final List<MealResponse>? meals;
+  final List<MealDTO>? meals;
 
   MealsByCategoryResponse({this.meals});
 

@@ -1,30 +1,9 @@
 import 'package:fitness_app/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 
-import '../theme/app_colors/app_colors.dart';
+import '../../../../../core/theme/app_colors/app_colors.dart';
 
-// ═════════════════════════════════════════════════════════════
-// Theme / Color Constants
-// ═════════════════════════════════════════════════════════════
-
-abstract final class _T {
-  static const Color primary = AppColors.primary;
-  static const Color accent = AppColors.accent;
-  static const Color textPrimary = AppColors.textPrimary;
-  static const Color textSecondary = AppColors.textSecondary;
-  static const Color textMuted = Color(0xFFA7A7A7);
-  static const Color iconBubble = Color(0x22FF4100);
-  static const Color strip = AppColors.surfaceMuted;
-  static const double radius = 24.0;
-  static const String? font = null;
-}
-
-// ═════════════════════════════════════════════════════════════
-// MEALS  (full-area states that replace the grid)
-// ═════════════════════════════════════════════════════════════
-
-/// Shown when the meals list is empty.
-///   MealsEmptyState(categoryLabel: 'Dinner', onRefresh: reload)
 class MealsEmptyState extends StatelessWidget {
   const MealsEmptyState({super.key, this.categoryLabel, this.onRefresh});
 
@@ -46,9 +25,6 @@ class MealsEmptyState extends StatelessWidget {
   }
 }
 
-/// Shown when loading meals fails.
-///   MealsErrorState(onRetry: reload)
-///   MealsErrorState(isOffline: true, onRetry: reload)
 class MealsErrorState extends StatelessWidget {
   const MealsErrorState({
     super.key,
@@ -116,10 +92,6 @@ class CategoriesErrorState extends StatelessWidget {
   }
 }
 
-// ═════════════════════════════════════════════════════════════
-// Shared building blocks
-// ═════════════════════════════════════════════════════════════
-
 class _FullState extends StatelessWidget {
   const _FullState({
     required this.icon,
@@ -141,42 +113,41 @@ class _FullState extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Padding(
-        // bottom space keeps content clear of the floating nav bar
-        padding: const EdgeInsets.fromLTRB(24, 0, 24, 100),
+        padding: EdgeInsets.fromLTRB(24.w, 0, 24.w, 100.h),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-              width: 88,
-              height: 88,
+              width: 88.w,
+              height: 88.h,
               decoration: const BoxDecoration(
-                color: _T.iconBubble,
+                color: AppColors.iconBubble,
                 shape: BoxShape.circle,
               ),
-              child: Icon(icon, size: 40, color: _T.primary),
+              child: Icon(icon, size: 40.r, color: AppColors.primary),
             ),
+
             const SizedBox(height: 24),
+
             Text(
               title,
               textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontFamily: _T.font,
+              style: TextStyle(
                 fontWeight: FontWeight.w700,
-                fontSize: 20,
+                fontSize: 20.sp,
                 height: 1.2,
-                color: _T.textPrimary,
+                color: AppColors.textPrimary,
               ),
             ),
             const SizedBox(height: 8),
             Text(
               message,
               textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontFamily: _T.font,
+              style: TextStyle(
                 fontWeight: FontWeight.w400,
-                fontSize: 14,
+                fontSize: 14.sp,
                 height: 1.4,
-                color: _T.textSecondary,
+                color: AppColors.textSecondary,
               ),
             ),
             if (actionLabel != null && onAction != null) ...[
@@ -212,27 +183,30 @@ class _CompactState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      constraints: const BoxConstraints(minHeight: 46),
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+      constraints: BoxConstraints(minHeight: 46.h),
+      padding: REdgeInsets.symmetric(horizontal: 12, vertical: 4),
       decoration: BoxDecoration(
-        color: _T.strip,
-        borderRadius: BorderRadius.circular(_T.radius),
+        color: AppColors.surfaceMuted,
+        borderRadius: BorderRadius.circular(24.r),
       ),
       child: Row(
         children: [
-          Icon(icon, size: 18, color: isError ? _T.primary : _T.textSecondary),
+          Icon(
+            icon,
+            size: 18.r,
+            color: isError ? AppColors.primary : AppColors.textSecondary,
+          ),
           const SizedBox(width: 8),
           Expanded(
             child: Text(
               text,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: const TextStyle(
-                fontFamily: _T.font,
+              style: TextStyle(
                 fontWeight: FontWeight.w700,
-                fontSize: 12,
+                fontSize: 12.sp,
                 height: 1.2,
-                color: _T.textSecondary,
+                color: AppColors.textSecondary,
               ),
             ),
           ),
@@ -240,20 +214,16 @@ class _CompactState extends StatelessWidget {
             TextButton(
               onPressed: onAction,
               style: TextButton.styleFrom(
-                foregroundColor: _T.primary,
-                minimumSize: const Size(48, 40),
-                padding: const EdgeInsets.symmetric(horizontal: 12),
+                foregroundColor: AppColors.primary,
+                minimumSize: Size(48.w, 40.h),
+                padding: REdgeInsets.symmetric(horizontal: 12),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(_T.radius),
+                  borderRadius: BorderRadius.circular(24.r),
                 ),
               ),
               child: Text(
                 actionLabel!,
-                style: const TextStyle(
-                  fontFamily: _T.font,
-                  fontWeight: FontWeight.w800,
-                  fontSize: 12,
-                ),
+                style: TextStyle(fontWeight: FontWeight.w800, fontSize: 12.sp),
               ),
             ),
         ],
@@ -275,29 +245,30 @@ class _PillButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final radius = BorderRadius.circular(_T.radius);
+    final radius = BorderRadius.circular(24.r);
     return Material(
-      color: filled ? _T.primary : Colors.transparent,
+      color: filled ? AppColors.primary : Colors.transparent,
       shape: RoundedRectangleBorder(
         borderRadius: radius,
-        side: filled ? BorderSide.none : const BorderSide(color: _T.accent),
+        side: filled
+            ? BorderSide.none
+            : const BorderSide(color: AppColors.accent),
       ),
       child: InkWell(
         borderRadius: radius,
         onTap: onPressed,
         child: ConstrainedBox(
-          constraints: const BoxConstraints(minHeight: 40, minWidth: 96),
+          constraints: BoxConstraints(minHeight: 40.h, minWidth: 96.w),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+            padding: REdgeInsets.symmetric(horizontal: 20, vertical: 8),
             child: Center(
               widthFactor: 1,
               child: Text(
                 label,
                 style: TextStyle(
-                  fontFamily: _T.font,
                   fontWeight: FontWeight.w800,
-                  fontSize: 14,
-                  color: filled ? Colors.white : _T.textMuted,
+                  fontSize: 14.sp,
+                  color: filled ? Colors.white : AppColors.textMuted,
                 ),
               ),
             ),

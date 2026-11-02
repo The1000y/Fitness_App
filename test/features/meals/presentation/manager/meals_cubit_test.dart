@@ -126,12 +126,12 @@ void main() {
     );
 
     test(
-      'TriggerMealsAfterCategoriesCalledEvent fetches both categories and meals',
+      'GetMealsCategoriesEvent with category fetches both categories and meals',
       () async {
         fakeRepo.nextCategoriesResult = Success(MealsTestData.categoryEntities);
         fakeRepo.nextMealsResult = Success(MealsTestData.mealEntities);
 
-        await cubit.doEvent(TriggerMealsAfterCategoriesCalledEvent('Beef'));
+        await cubit.doEvent(GetMealsCategoriesEvent('Beef'));
         await pumpEventQueue();
 
         expect(fakeRepo.getCategoriesCallCount, 1);

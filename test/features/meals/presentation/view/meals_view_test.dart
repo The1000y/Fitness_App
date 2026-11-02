@@ -6,7 +6,7 @@ import 'package:fitness_app/core/constants/app_images.dart';
 import 'package:fitness_app/core/shared/category_filter_widget.dart';
 import 'package:fitness_app/core/shared/custom_app_bar.dart';
 import 'package:fitness_app/core/shared/custom_background_image.dart';
-import 'package:fitness_app/core/shared/custom_ui_states.dart';
+import 'package:fitness_app/features/meals/presentation/view/widgets/custom_ui_states.dart';
 import 'package:fitness_app/core/shared/image_title_card.dart';
 import 'package:fitness_app/features/meals/domain/use_cases/get_meals_by_category_use_case.dart';
 import 'package:fitness_app/features/meals/domain/use_cases/get_meals_categories_use_case.dart';

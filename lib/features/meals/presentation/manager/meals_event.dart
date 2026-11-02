@@ -1,13 +1,16 @@
 sealed class MealsEvent {}
 
-class GetMealsCategoriesEvent extends MealsEvent {}
+class GetMealsCategoriesEvent extends MealsEvent {
+  String? category;
+  GetMealsCategoriesEvent([this.category]);
+}
 
 class GetMealsByCategoryEvent extends MealsEvent {
-  String category;
+  final String category;
   GetMealsByCategoryEvent(this.category);
 }
 
-class TriggerMealsAfterCategoriesCalledEvent extends MealsEvent {
-  String category;
-  TriggerMealsAfterCategoriesCalledEvent(this.category);
+class ChangeSelectedMealCategoryEvent extends MealsEvent {
+  final String category;
+  ChangeSelectedMealCategoryEvent(this.category);
 }

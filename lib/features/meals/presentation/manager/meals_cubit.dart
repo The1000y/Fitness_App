@@ -23,19 +23,19 @@ class MealsCubit extends BaseCubit<MealsState, BaseUiEvent> {
   Future<void> doEvent(MealsEvent event) async {
     switch (event) {
       case GetMealsCategoriesEvent():
-        await _getMealsCategories();
+        await _getMealsCategories(event.category);
+
       case GetMealsByCategoryEvent():
         await _getMealsByCategory(event.category);
-      case TriggerMealsAfterCategoriesCalledEvent():
-        {
-          await _getMealsCategories();
-          await _getMealsByCategory(event.category);
-        }
+
+      case ChangeSelectedMealCategoryEvent():
+        emit(state.copyWith(selectedCategory: event.category));
+        await _getMealsByCategory(event.category);
     }
   }
 
-  Future<void> _getMealsCategories() async {
-    if (state.mealsCategoriesState.isLoading) return;
+  Future<void> _getMealsCategories([String? category]) async {
+    if (state.mealsCategoriesState.isLoading || isClosed) return;
     emit(
       state.copyWith(
         mealsCategoriesState: state.mealsCategoriesState.copyWith(
@@ -45,8 +45,8 @@ class MealsCubit extends BaseCubit<MealsState, BaseUiEvent> {
     );
 
     final result = await _getMealsCategoriesUseCase.call();
-    if (isClosed) return;
 
+    if (isClosed) return;
     switch (result) {
       case Success<List<MealCategoryEntity>>():
         emit(
@@ -57,6 +57,10 @@ class MealsCubit extends BaseCubit<MealsState, BaseUiEvent> {
             ),
           ),
         );
+        if (category != null && category.isNotEmpty) {
+          emit(state.copyWith(selectedCategory: category));
+          await _getMealsByCategory(category);
+        }
 
       case Error<List<MealCategoryEntity>>():
         emit(
@@ -71,7 +75,7 @@ class MealsCubit extends BaseCubit<MealsState, BaseUiEvent> {
   }
 
   Future<void> _getMealsByCategory(String category) async {
-    if (state.mealsByCategoriesState.isLoading) return;
+    if (state.mealsByCategoriesState.isLoading || isClosed) return;
     emit(
       state.copyWith(
         mealsByCategoriesState: state.mealsByCategoriesState.copyWith(
@@ -81,8 +85,8 @@ class MealsCubit extends BaseCubit<MealsState, BaseUiEvent> {
     );
 
     final response = await _getMealsByCategoryUseCase.call(category);
-    if (isClosed) return;
 
+    if (isClosed) return;
     switch (response) {
       case Success<List<MealEntity>>():
         emit(

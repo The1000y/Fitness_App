@@ -22,10 +22,7 @@ class MealsRepoImpl implements MealsRepo {
       return response.toEntity();
     });
 
-    return switch (result) {
-      Success(:final data) => Success(data),
-      Error(:final failure) => Error(failure),
-    };
+    return result;
   }
 
   @override

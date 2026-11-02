@@ -1,7 +1,7 @@
 import 'package:fitness_app/features/meals/data/model/responses/meals_by_category_response/meals_by_category_response.dart';
 import 'package:fitness_app/features/meals/domain/entities/meal_entity.dart';
 
-extension MealResponseMapper on MealResponse {
+extension MealResponseMapper on MealDTO {
   MealEntity toEntity() => MealEntity(
     id: idMeal ?? '',
     name: strMeal ?? '',

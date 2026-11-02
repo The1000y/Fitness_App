@@ -1,18 +1,18 @@
+import 'package:fitness_app/config/base/base_ui_event.dart';
 import 'package:fitness_app/core/constants/app_images.dart';
-import 'package:fitness_app/core/shared/category_filter_widget.dart';
+import 'package:fitness_app/core/shared/base_ui_event_listener.dart';
 import 'package:fitness_app/core/shared/custom_app_bar.dart';
 import 'package:fitness_app/core/shared/custom_background_image.dart';
-import 'package:fitness_app/core/shared/custom_ui_states.dart';
-import 'package:fitness_app/core/shared/image_title_card.dart';
+import 'package:fitness_app/features/meals/domain/entities/meal_category_entity.dart';
 import 'package:fitness_app/features/meals/presentation/manager/meals_cubit.dart';
 import 'package:fitness_app/features/meals/presentation/manager/meals_event.dart';
 import 'package:fitness_app/features/meals/presentation/manager/meals_state.dart';
+import 'package:fitness_app/features/meals/presentation/view/widgets/meals_categories_bar.dart';
+import 'package:fitness_app/features/meals/presentation/view/widgets/meals_grid_content.dart';
 import 'package:fitness_app/features/meals/presentation/view/widgets/shimmers/shimmers.dart';
 import 'package:fitness_app/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
-import 'package:gap/gap.dart';
 
 class MealsView extends StatefulWidget {
   final String? activeCategory;
@@ -24,183 +24,89 @@ class MealsView extends StatefulWidget {
 }
 
 class _MealsViewState extends State<MealsView> {
-  String? _selectedCategory;
-
   @override
   void initState() {
-    _selectedCategory = widget.activeCategory;
     super.initState();
+    final cubit = context.read<MealsCubit>();
+    final categoriesState = cubit.state.mealsCategoriesState;
+
+    if (categoriesState.data == null && !categoriesState.isLoading) {
+      cubit.doEvent(GetMealsCategoriesEvent(widget.activeCategory));
+    } else if (categoriesState.data != null &&
+        categoriesState.data!.isNotEmpty) {
+      _initInitialCategory(cubit, categoriesState.data!);
+    }
+  }
+
+  @override
+  void didUpdateWidget(covariant MealsView oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.activeCategory != oldWidget.activeCategory &&
+        widget.activeCategory != null) {
+      final cubit = context.read<MealsCubit>();
+      final categories = cubit.state.mealsCategoriesState.data;
+      if (categories != null && categories.isNotEmpty) {
+        _initInitialCategory(cubit, categories);
+      }
+    }
+  }
+
+  void _initInitialCategory(
+    MealsCubit cubit,
+    List<MealCategoryEntity> categories,
+  ) {
+    if (categories.isEmpty) return;
+    final categoryNames = categories.map((e) => e.name).toList();
+    final targetCategory =
+        (widget.activeCategory != null &&
+            categoryNames.contains(widget.activeCategory))
+        ? widget.activeCategory!
+        : (categoryNames.contains(cubit.state.selectedCategory)
+              ? cubit.state.selectedCategory
+              : categoryNames.first);
+
+    if (cubit.state.selectedCategory != targetCategory) {
+      cubit.doEvent(ChangeSelectedMealCategoryEvent(targetCategory));
+    } else if (cubit.state.mealsByCategoriesState.data == null &&
+        !cubit.state.mealsByCategoriesState.isLoading &&
+        cubit.state.mealsByCategoriesState.errorMessage == null) {
+      cubit.doEvent(GetMealsByCategoryEvent(targetCategory));
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final isCategoriesLoading = context.select<MealsCubit, bool>(
+      (c) => c.state.mealsCategoriesState.isLoading,
+    );
 
     return CustomBackgroundImage(
       backgroundImage: AppImages.layoutBackground,
-      child: Scaffold(
-        appBar: CustomAppBar(title: l10n.foodRecommendation),
-        backgroundColor: Colors.transparent,
-        body: SafeArea(
-          child: BlocBuilder<MealsCubit, MealsState>(
-            builder: (context, state) {
-              final categoriesState = state.mealsCategoriesState;
-
-              if (categoriesState.isLoading) {
-                return const MealsViewShimmer();
-              }
-
-              if (categoriesState.errorMessage != null) {
-                return Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16.w),
-                  child: CategoriesErrorState(
-                    onRetry: () {
-                      context.read<MealsCubit>().doEvent(
-                        GetMealsCategoriesEvent(),
-                      );
-                    },
-                  ),
-                );
-              }
-
-              if (categoriesState.data == null) {
-                return const MealsViewShimmer();
-              }
-
-              final List<String> categories =
-                  categoriesState.data?.map((e) => e.name).toList() ?? [];
-
-              if (categories.isEmpty) {
-                return Padding(
-                  padding: REdgeInsets.symmetric(horizontal: 16),
-                  child: CategoriesEmptyState(
-                    onRefresh: () {
-                      context.read<MealsCubit>().doEvent(
-                        GetMealsCategoriesEvent(),
-                      );
-                    },
-                  ),
-                );
-              }
-
-              final currentSelected =
-                  (_selectedCategory != null &&
-                      categories.contains(_selectedCategory))
-                  ? _selectedCategory!
-                  : categories.first;
-
-              final mealsByCategoriesState = state.mealsByCategoriesState;
-
-              if (mealsByCategoriesState.data == null &&
-                  !mealsByCategoriesState.isLoading &&
-                  mealsByCategoriesState.errorMessage == null) {
-                WidgetsBinding.instance.addPostFrameCallback((_) {
-                  if (context.mounted &&
-                      context
-                              .read<MealsCubit>()
-                              .state
-                              .mealsByCategoriesState
-                              .data ==
-                          null &&
-                      !context
-                          .read<MealsCubit>()
-                          .state
-                          .mealsByCategoriesState
-                          .isLoading &&
-                      context
-                              .read<MealsCubit>()
-                              .state
-                              .mealsByCategoriesState
-                              .errorMessage ==
-                          null) {
-                    context.read<MealsCubit>().doEvent(
-                      GetMealsByCategoryEvent(currentSelected),
-                    );
-                  }
-                });
-              }
-
-              return Column(
-                children: [
-                  const Gap(16),
-                  CategoryTabBar(
-                    categories: categories,
-                    selectedCategory: currentSelected,
-                    onCategorySelected: (category) {
-                      if (_selectedCategory != category) {
-                        setState(() {
-                          _selectedCategory = category;
-                        });
-                        context.read<MealsCubit>().doEvent(
-                          GetMealsByCategoryEvent(category),
-                        );
-                      }
-                    },
-                  ),
-                  const Gap(16),
-                  Expanded(
-                    child: Padding(
-                      padding: EdgeInsets.all(16.w),
-                      child: Builder(
-                        builder: (context) {
-                          if (mealsByCategoriesState.isLoading) {
-                            return const MealsGridShimmer();
+      child: BaseUiEventListener<MealsCubit, MealsState, BaseUiEvent>(
+        child: Scaffold(
+          appBar: CustomAppBar(title: l10n.foodRecommendation),
+          backgroundColor: Colors.transparent,
+          body: SafeArea(
+            child: isCategoriesLoading
+                ? const MealsViewShimmer()
+                : Column(
+                    children: [
+                      MealsCategoriesBar(
+                        activeCategory: widget.activeCategory,
+                        onNeedsCategoryInit: () {
+                          if (mounted) {
+                            final cubit = context.read<MealsCubit>();
+                            final cats = cubit.state.mealsCategoriesState.data;
+                            if (cats != null && cats.isNotEmpty) {
+                              _initInitialCategory(cubit, cats);
+                            }
                           }
-
-                          if (mealsByCategoriesState.errorMessage != null) {
-                            return MealsErrorState(
-                              onRetry: () {
-                                context.read<MealsCubit>().doEvent(
-                                  GetMealsByCategoryEvent(currentSelected),
-                                );
-                              },
-                            );
-                          }
-
-                          if (mealsByCategoriesState.data == null) {
-                            return const MealsGridShimmer();
-                          }
-
-                          final meals = mealsByCategoriesState.data ?? [];
-
-                          if (meals.isEmpty) {
-                            return MealsEmptyState(
-                              categoryLabel: currentSelected,
-                              onRefresh: () {
-                                context.read<MealsCubit>().doEvent(
-                                  GetMealsByCategoryEvent(currentSelected),
-                                );
-                              },
-                            );
-                          }
-
-                          return GridView.builder(
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2,
-                                  crossAxisSpacing: 16.w,
-                                  mainAxisSpacing: 16.h,
-                                  childAspectRatio: 170 / 220,
-                                ),
-                            itemCount: meals.length,
-                            itemBuilder: (context, index) {
-                              final meal = meals[index];
-                              return ImageTitleCard(
-                                imagePath: meal.thumbnail,
-                                title: meal.name,
-                                onTap: () {
-                                  // Action on tapping a meal card
-                                },
-                              );
-                            },
-                          );
                         },
                       ),
-                    ),
+                      const Expanded(child: MealsGridContent()),
+                    ],
                   ),
-                ],
-              );
-            },
           ),
         ),
       ),
