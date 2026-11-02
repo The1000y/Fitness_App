@@ -1,14 +1,11 @@
-import 'package:fitness_app/config/base/base_ui_event.dart';
 import 'package:fitness_app/config/di/di.dart';
 import 'package:fitness_app/config/routing/app_routes.dart';
-import 'package:fitness_app/core/shared/base_ui_event_listener.dart';
 import 'package:fitness_app/features/auth/presentation/onboarding/views/onboarding_view.dart';
 import 'package:fitness_app/features/chat/presentation/views/chat_view.dart';
 import 'package:fitness_app/features/home/presentation/views/home_view.dart';
 import 'package:fitness_app/features/main/presentation/views/main_layout_view.dart';
 import 'package:fitness_app/features/meals/presentation/manager/meals_cubit.dart';
 import 'package:fitness_app/features/meals/presentation/manager/meals_event.dart';
-import 'package:fitness_app/features/meals/presentation/manager/meals_state.dart';
 import 'package:fitness_app/features/meals/presentation/view/meals_view.dart';
 import 'package:fitness_app/features/profile/presentation/views/profile_view.dart';
 import 'package:fitness_app/features/workouts/presentation/views/workouts_view.dart';
@@ -86,9 +83,7 @@ abstract final class GenerateRoutes {
           BlocProvider(
             create: (context) =>
                 getIt.get<MealsCubit>()..doEvent(GetMealsCategoriesEvent()),
-            child: BaseUiEventListener<MealsCubit, MealsState, BaseUiEvent>(
-              child: MealsView(activeCategory: category),
-            ),
+            child: MealsView(activeCategory: category),
           ),
           settings,
         );
