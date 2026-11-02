@@ -598,4 +598,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get cancel => 'cancel the video';
+
+  @override
+  String get dataNotAvailable => 'Data is currently unavailable.';
 }

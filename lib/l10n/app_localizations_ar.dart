@@ -594,4 +594,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get cancel => 'إغلاق الفيديو';
+
+  @override
+  String get dataNotAvailable => 'البيانات غير متوفرة حالياً.';
 }

@@ -248,6 +248,7 @@
   "retry": "Retry",
   "back": "Back",
   "unableToPlayVideo": "Unable to play video",
-  "cancel": "cancel the video"
+  "cancel": "cancel the video",
+  "dataNotAvailable": "Data is currently unavailable."
 
 }
