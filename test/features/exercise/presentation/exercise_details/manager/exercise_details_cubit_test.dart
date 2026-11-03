@@ -37,6 +37,24 @@ void main() {
       expect(fakeRepo.callCount, 0);
     });
 
+    test('SelectExercise clamps to the loaded exercise range', () async {
+      fakeRepo.nextResult = Success(TestData.exercisesListEntity);
+
+      cubit.onEvent(
+        const LoadExercises(
+          primeMoverMuscleId: TestData.primeMoverMuscleId,
+          difficultyLevelId: TestData.difficultyLevelId,
+        ),
+      );
+      await pumpEventQueue();
+
+      cubit.onEvent(const SelectExercise(99));
+      expect(cubit.state.selectedIndex, 1);
+
+      cubit.onEvent(const SelectExercise(-4));
+      expect(cubit.state.selectedIndex, 0);
+    });
+
     test('LoadExercises emits loading then the loaded data', () async {
       fakeRepo.nextResult = Success(TestData.exercisesListEntity);
 

@@ -1,18 +1,19 @@
 import 'dart:async';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:fitness_app/config/base/base_response.dart';
-import 'package:fitness_app/config/di/di.dart';
 import 'package:fitness_app/config/errors/app_failure.dart';
 import 'package:fitness_app/features/exercise/domain/entities/exercise_entity.dart';
 import 'package:fitness_app/features/exercise/domain/entities/exercises_list_entity.dart';
 import 'package:fitness_app/features/exercise/domain/use_cases/get_exercises_use_case.dart';
 import 'package:fitness_app/features/exercise/presentation/exercise_details/manager/exercise_details_cubit.dart';
+import 'package:fitness_app/features/exercise/presentation/exercise_details/manager/exercise_details_event.dart';
 import 'package:fitness_app/features/exercise/presentation/exercise_details/view/exercise_details_view.dart';
 import 'package:fitness_app/features/exercise/presentation/exercise_details/view/widgets/exercise_empty_view.dart';
 import 'package:fitness_app/features/exercise/presentation/exercise_details/view/widgets/exercise_error_view.dart';
 import 'package:fitness_app/features/exercise/presentation/exercise_details/view/widgets/hero_video_section.dart';
 import 'package:fitness_app/l10n/app_localizations.dart';
-import 'package:flutter/material.dart';
 import '../../../../../helpers/fakes.dart';
 import '../../../../../helpers/pump_app.dart';
 import '../../../../../helpers/test_data.dart';
@@ -20,6 +21,7 @@ import '../../../../../helpers/test_data.dart';
 void main() {
   late AppLocalizations l10n;
   late FakeExerciseRepo fakeRepo;
+  late ExerciseDetailsCubit cubit;
 
   const exercises = [
     ExerciseEntity(
@@ -49,26 +51,35 @@ void main() {
 
   setUp(() {
     fakeRepo = FakeExerciseRepo();
-    getIt.registerFactory<ExerciseDetailsCubit>(
-      () => ExerciseDetailsCubit(GetExercisesUseCase(fakeRepo)),
-    );
+    cubit = ExerciseDetailsCubit(GetExercisesUseCase(fakeRepo));
   });
 
   tearDown(() async {
-    await getIt.reset();
+    await cubit.close();
   });
 
-  Widget view() => ExerciseDetailsView(
-    primeMoverMuscleId: TestData.primeMoverMuscleId,
-    difficultyLevelId: TestData.difficultyLevelId,
-    muscleName: 'Chest',
-  );
+  Widget view() {
+    return BlocProvider<ExerciseDetailsCubit>.value(
+      value: cubit,
+      child: const ExerciseDetailsView(muscleName: 'Chest'),
+    );
+  }
+
+  void load() {
+    cubit.onEvent(
+      const LoadExercises(
+        primeMoverMuscleId: TestData.primeMoverMuscleId,
+        difficultyLevelId: TestData.difficultyLevelId,
+      ),
+    );
+  }
 
   group('ExerciseDetailsView', () {
     testWidgets('loads the exercises with the received ids', (tester) async {
       fakeRepo.nextResult = const Success(loadedEntity);
 
       await tester.pumpApp(view());
+      load();
       await tester.pumpAndSettle();
 
       expect(fakeRepo.callCount, 1);
@@ -83,6 +94,7 @@ void main() {
       fakeRepo.completer = Completer<BaseResponse<ExercisesListEntity>>();
 
       await tester.pumpApp(view());
+      load();
       await tester.pump();
 
       expect(find.byType(CircularProgressIndicator), findsOneWidget);
@@ -100,6 +112,7 @@ void main() {
       fakeRepo.nextResult = const Error(InternetConnectionFailure());
 
       await tester.pumpApp(view());
+      load();
       await tester.pumpAndSettle();
 
       expect(find.byType(ExerciseErrorView), findsOneWidget);
@@ -125,6 +138,7 @@ void main() {
       );
 
       await tester.pumpApp(view());
+      load();
       await tester.pumpAndSettle();
 
       expect(find.byType(ExerciseEmptyView), findsOneWidget);

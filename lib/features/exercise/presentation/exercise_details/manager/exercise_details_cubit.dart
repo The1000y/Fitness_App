@@ -21,9 +21,15 @@ class ExerciseDetailsCubit
   void onEvent(ExerciseDetailsEvent event) {
     switch (event) {
       case LoadExercises():
-        unawaited(_loadExercises(event));
+        if (!state.exercisesState.isLoading) {
+          unawaited(_loadExercises(event));
+        }
       case SelectExercise():
-        emit(state.copyWith(selectedIndex: event.index));
+        final exercises = state.exercisesState.data?.exercises;
+        final index = exercises == null || exercises.isEmpty
+            ? event.index
+            : event.index.clamp(0, exercises.length - 1);
+        emit(state.copyWith(selectedIndex: index));
     }
   }
 

@@ -7,13 +7,13 @@ class CustomButtonClick extends StatelessWidget {
     super.key,
     required this.onPressed,
     this.widthBackground = 60,
-    this.hightBackground = 60,
+    this.heightBackground = 60,
     required this.iconWidget,
   });
 
   final VoidCallback onPressed;
   final double widthBackground;
-  final double hightBackground;
+  final double heightBackground;
   final Widget iconWidget;
 
   @override
@@ -22,7 +22,7 @@ class CustomButtonClick extends StatelessWidget {
       onTap: onPressed,
       child: Container(
         width: widthBackground.w,
-        height: hightBackground.h,
+        height: heightBackground.h,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           color: AppColors.accent,

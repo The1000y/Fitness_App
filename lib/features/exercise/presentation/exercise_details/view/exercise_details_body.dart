@@ -32,8 +32,11 @@ class ExerciseDetailsBody extends StatelessWidget {
           final exercises = state.exercisesState.data?.exercises ?? [];
           if (exercises.isEmpty) return const ExerciseEmptyView();
 
-          final selected =
-              exercises[state.selectedIndex.clamp(0, exercises.length - 1)];
+          final selectedIndex = state.selectedIndex.clamp(
+            0,
+            exercises.length - 1,
+          );
+          final selected = exercises[selectedIndex];
 
           return CustomScrollView(
             slivers: [

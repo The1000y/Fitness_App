@@ -72,6 +72,19 @@ class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
     }
   }
 
+  @override
+  void didUpdateWidget(covariant CustomVideoPlayer oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.videoUrl != widget.videoUrl) {
+      _subscription?.cancel();
+      _subscription = null;
+      _controller?.close();
+      _controller = null;
+      _isLoading = true;
+      _error = null;
+    }
+  }
+
   void _onClosed() {
     _subscription?.cancel();
     _subscription = null;

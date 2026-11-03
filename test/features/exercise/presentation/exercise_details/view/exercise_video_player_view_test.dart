@@ -39,6 +39,28 @@ void main() {
       expect(find.text('Anterior Deltoid'), findsOneWidget);
     });
 
+    testWidgets('shows the short demo when the in-depth link is different', (
+      tester,
+    ) async {
+      const withDemo = ExerciseEntity(
+        id: 'exercise_4',
+        exercise: 'Squat',
+        difficultyLevel: 'Intermediate',
+        targetMuscleGroup: 'Legs',
+        primeMoverMuscle: 'Quadriceps',
+        primaryEquipment: 'Barbell',
+        shortYoutubeDemonstrationLink: 'https://www.youtube.com/watch?v=abc123',
+        inDepthYoutubeExplanationLink: 'https://www.youtube.com/watch?v=def456',
+        bodyRegion: 'Lower Body',
+        mechanics: 'Compound',
+      );
+
+      await tester.pumpApp(const ExerciseVideoPlayerView(exercise: withDemo));
+      await tester.pump();
+
+      expect(find.text('Short Demo'), findsOneWidget);
+    });
+
     testWidgets('renders the details section', (tester) async {
       await tester.pumpApp(const ExerciseVideoPlayerView(exercise: exercise));
       await tester.pump();
@@ -68,6 +90,28 @@ void main() {
 
       expect(find.text('Secondary: '), findsNothing);
       expect(find.text('Tertiary: '), findsNothing);
+      expect(find.text('Short Demo'), findsNothing);
+    });
+
+    testWidgets('does not repeat the short demo when both links match', (
+      tester,
+    ) async {
+      const sameLink = ExerciseEntity(
+        id: 'exercise_3',
+        exercise: 'Row',
+        difficultyLevel: 'Beginner',
+        targetMuscleGroup: 'Back',
+        primeMoverMuscle: 'Latissimus Dorsi',
+        primaryEquipment: 'Cable',
+        shortYoutubeDemonstrationLink: 'https://www.youtube.com/watch?v=abc123',
+        inDepthYoutubeExplanationLink: 'https://www.youtube.com/watch?v=abc123',
+        bodyRegion: 'Upper Body',
+        mechanics: 'Compound',
+      );
+
+      await tester.pumpApp(const ExerciseVideoPlayerView(exercise: sameLink));
+      await tester.pump();
+
       expect(find.text('Short Demo'), findsNothing);
     });
 

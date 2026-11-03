@@ -119,20 +119,14 @@ class _ExerciseInfo extends StatelessWidget {
             exercise.primaryEquipment,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-              color: AppColors.textSecondary,
-              fontSize: 12.sp,
-            ),
+            style: TextStyle(color: AppColors.textSecondary, fontSize: 12.sp),
           ),
           Gap(2.h),
           Text(
             '${exercise.difficultyLevel} • ${exercise.mechanics}',
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-              color: AppColors.textSecondary,
-              fontSize: 11.sp,
-            ),
+            style: TextStyle(color: AppColors.textSecondary, fontSize: 11.sp),
           ),
         ],
       ),
@@ -145,18 +139,10 @@ class _PlayButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 36.r,
-      height: 36.r,
-      decoration: const BoxDecoration(
-        color: AppColors.primary,
-        shape: BoxShape.circle,
-      ),
-      child: Icon(
-        Icons.play_arrow_rounded,
-        color: AppColors.white,
-        size: 22.r,
-      ),
+    return CircleAvatar(
+      radius: 18.r,
+      backgroundColor: AppColors.primary,
+      child: Icon(Icons.play_arrow_rounded, color: AppColors.white, size: 22.r),
     );
   }
 }

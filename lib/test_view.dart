@@ -12,7 +12,7 @@ import 'package:flutter_svg/svg.dart';
 class TestView extends StatelessWidget {
   const TestView({super.key});
 
-  final bool onBackTap = false;
+  
   @override
   Widget build(BuildContext context) {
     // var theme = Theme.of(context);
@@ -46,7 +46,7 @@ class TestView extends StatelessWidget {
                     child: Align(
                       alignment: const Alignment(-0.9, 0),
                       child: CustomButtonClick(
-                        hightBackground: 24,
+                        heightBackground: 24,
                         widthBackground: 24,
                         onPressed: () {
                           Navigator.maybePop(context);

@@ -73,6 +73,17 @@ class _HeroVideoSectionState extends State<HeroVideoSection> {
   }
 
   @override
+  void didUpdateWidget(covariant HeroVideoSection oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.exercise.shortYoutubeDemonstrationLink !=
+        widget.exercise.shortYoutubeDemonstrationLink) {
+      _controller?.close();
+      _controller = null;
+      _isPlaying = false;
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: _isPlaying ? _stopVideo : _startVideo,
@@ -177,10 +188,7 @@ class _BackButton extends StatelessWidget {
 }
 
 class _GradientOverlay extends StatelessWidget {
-  const _GradientOverlay({
-    required this.muscleName,
-    required this.isPlaying,
-  });
+  const _GradientOverlay({required this.muscleName, required this.isPlaying});
 
   final String muscleName;
   final bool isPlaying;
@@ -214,10 +222,7 @@ class _GradientOverlay extends StatelessWidget {
           Gap(4.h),
           Text(
             'Tap to ${isPlaying ? 'stop' : 'play'} demo',
-            style: TextStyle(
-              color: AppColors.textSecondary,
-              fontSize: 13.sp,
-            ),
+            style: TextStyle(color: AppColors.textSecondary, fontSize: 13.sp),
           ),
         ],
       ),

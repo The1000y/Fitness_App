@@ -21,8 +21,12 @@ class ExerciseVideoPlayerView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final videoUrl = exercise.inDepthYoutubeExplanationLink ??
-        exercise.shortYoutubeDemonstrationLink;
+    final inDepthUrl = exercise.inDepthYoutubeExplanationLink;
+    final shortDemoUrl = exercise.shortYoutubeDemonstrationLink;
+    final videoUrl = inDepthUrl != null && inDepthUrl.isNotEmpty
+        ? inDepthUrl
+        : shortDemoUrl;
+    final hasShortDemo = shortDemoUrl.isNotEmpty && shortDemoUrl != videoUrl;
 
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -110,20 +114,17 @@ class ExerciseVideoPlayerView extends StatelessWidget {
                   Gap(16.h),
                   const _SectionTitle(title: 'Details'),
                   Gap(8.h),
-                  _DetailRow(
-                    label: 'Body Region',
-                    value: exercise.bodyRegion,
-                  ),
+                  _DetailRow(label: 'Body Region', value: exercise.bodyRegion),
                   _DetailRow(
                     label: 'Target Group',
                     value: exercise.targetMuscleGroup,
                   ),
                   Gap(24.h),
-                  if (exercise.inDepthYoutubeExplanationLink != null) ...[
+                  if (hasShortDemo) ...[
                     const _SectionTitle(title: 'Short Demo'),
                     Gap(8.h),
                     CustomVideoPlayer(
-                      videoUrl: exercise.shortYoutubeDemonstrationLink,
+                      videoUrl: shortDemoUrl,
                       thumbnailImage: _thumbnailUrl,
                       aspectRatio: 16 / 9,
                     ),
@@ -204,10 +205,7 @@ class _DetailRow extends StatelessWidget {
         children: [
           Text(
             '$label: ',
-            style: TextStyle(
-              color: AppColors.textSecondary,
-              fontSize: 13.sp,
-            ),
+            style: TextStyle(color: AppColors.textSecondary, fontSize: 13.sp),
           ),
           Expanded(
             child: Text(
