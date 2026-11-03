@@ -42,7 +42,7 @@ abstract class ApiStrings {
   static String get muscles => '/muscles'; // GET (all muscle groups)
   static String get randomMuscles =>
       '/muscles/random'; // GET (20 random prime movers)
-
+  
   /// GET – all muscles by muscle group id
   static String musclesByGroupId(String muscleGroupId) =>
       '/musclesGroup/$muscleGroupId';
