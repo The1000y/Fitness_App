@@ -9,7 +9,6 @@ import 'package:fitness_app/features/meals/domain/use_cases/get_meals_categories
 import 'package:fitness_app/features/meals/presentation/manager/meals_event.dart';
 import 'package:fitness_app/features/meals/presentation/manager/meals_state.dart';
 import 'package:injectable/injectable.dart';
-
 import '../../../../config/base/base_response.dart';
 
 @injectable
@@ -71,6 +70,7 @@ class MealsCubit extends BaseCubit<MealsState, BaseUiEvent> {
               mealsCategoriesState: state.mealsCategoriesState.copyWith(
                 isLoading: false,
                 data: categories,
+                errorMessage: null,
               ),
               selectedCategory: chosenCategory,
             ),
@@ -82,6 +82,7 @@ class MealsCubit extends BaseCubit<MealsState, BaseUiEvent> {
               mealsCategoriesState: state.mealsCategoriesState.copyWith(
                 isLoading: false,
                 data: categories,
+                errorMessage: null,
               ),
             ),
           );
@@ -119,6 +120,7 @@ class MealsCubit extends BaseCubit<MealsState, BaseUiEvent> {
             mealsByCategoriesState: state.mealsByCategoriesState.copyWith(
               isLoading: false,
               data: response.data,
+              errorMessage: null,
             ),
           ),
         );

@@ -84,7 +84,7 @@ abstract final class GenerateRoutes {
             create: (context) =>
                 getIt.get<MealsCubit>()
                   ..doEvent(GetMealsCategoriesEvent(category)),
-            child: MealsView(activeCategory: category),
+            child: const MealsView(),
           ),
           settings,
         );
