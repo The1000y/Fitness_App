@@ -11,12 +11,12 @@ class MealsRemoteDataSourceImpl implements MealsRemoteDataSource {
   MealsRemoteDataSourceImpl(this._mealsApiClient);
 
   @override
-  Future<MealsCategoriesResponse> getMealsCategories() async {
-    return await _mealsApiClient.getMealsCategories();
+  Future<MealsCategoriesResponse> getMealsCategories() {
+    return _mealsApiClient.getMealsCategories();
   }
 
   @override
-  Future<MealsByCategoryResponse> getMealsByCategory(String category) async {
-    return await _mealsApiClient.getMealsByCategory(category);
+  Future<MealsByCategoryResponse> getMealsByCategory(String category) {
+    return _mealsApiClient.getMealsByCategory(category);
   }
 }

@@ -17,10 +17,10 @@ class MealsRepoImpl implements MealsRepo {
 
   @override
   Future<BaseResponse<List<MealCategoryEntity>>> getMealsCategories() async {
-    final result = await excecuteApiCall(() async {
-      final response = await _mealsRemoteDataSource.getMealsCategories();
-      return response.toEntity();
-    });
+    final result = await excecuteApiCall(
+      () =>
+          _mealsRemoteDataSource.getMealsCategories().then((r) => r.toEntity()),
+    );
 
     return result;
   }
@@ -29,16 +29,12 @@ class MealsRepoImpl implements MealsRepo {
   Future<BaseResponse<List<MealEntity>>> getMealsByCategory(
     String category,
   ) async {
-    final result = await excecuteApiCall(() async {
-      final response = await _mealsRemoteDataSource.getMealsByCategory(
-        category,
-      );
-      return response.toEntity();
-    });
+    final result = await excecuteApiCall(
+      () => _mealsRemoteDataSource
+          .getMealsByCategory(category)
+          .then((r) => r.toEntity()),
+    );
 
-    return switch (result) {
-      Success(:final data) => Success(data),
-      Error(:final failure) => Error(failure),
-    };
+    return result;
   }
 }

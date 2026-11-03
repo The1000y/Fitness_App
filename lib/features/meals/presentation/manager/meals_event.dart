@@ -1,7 +1,7 @@
 sealed class MealsEvent {}
 
 class GetMealsCategoriesEvent extends MealsEvent {
-  String? category;
+  final String? category;
   GetMealsCategoriesEvent([this.category]);
 }
 

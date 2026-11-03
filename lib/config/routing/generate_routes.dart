@@ -82,7 +82,8 @@ abstract final class GenerateRoutes {
         return _pageRoute(
           BlocProvider(
             create: (context) =>
-                getIt.get<MealsCubit>()..doEvent(GetMealsCategoriesEvent()),
+                getIt.get<MealsCubit>()
+                  ..doEvent(GetMealsCategoriesEvent(category)),
             child: MealsView(activeCategory: category),
           ),
           settings,

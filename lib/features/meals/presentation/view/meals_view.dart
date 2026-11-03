@@ -3,7 +3,6 @@ import 'package:fitness_app/core/constants/app_images.dart';
 import 'package:fitness_app/core/shared/base_ui_event_listener.dart';
 import 'package:fitness_app/core/shared/custom_app_bar.dart';
 import 'package:fitness_app/core/shared/custom_background_image.dart';
-import 'package:fitness_app/features/meals/domain/entities/meal_category_entity.dart';
 import 'package:fitness_app/features/meals/presentation/manager/meals_cubit.dart';
 import 'package:fitness_app/features/meals/presentation/manager/meals_event.dart';
 import 'package:fitness_app/features/meals/presentation/manager/meals_state.dart';
@@ -28,13 +27,10 @@ class _MealsViewState extends State<MealsView> {
   void initState() {
     super.initState();
     final cubit = context.read<MealsCubit>();
-    final categoriesState = cubit.state.mealsCategoriesState;
-
-    if (categoriesState.data == null && !categoriesState.isLoading) {
-      cubit.doEvent(GetMealsCategoriesEvent(widget.activeCategory));
-    } else if (categoriesState.data != null &&
-        categoriesState.data!.isNotEmpty) {
-      _initInitialCategory(cubit, categoriesState.data!);
+    if (widget.activeCategory != null &&
+        widget.activeCategory!.isNotEmpty &&
+        cubit.state.selectedCategory != widget.activeCategory) {
+      cubit.doEvent(ChangeSelectedMealCategoryEvent(widget.activeCategory!));
     }
   }
 
@@ -42,35 +38,11 @@ class _MealsViewState extends State<MealsView> {
   void didUpdateWidget(covariant MealsView oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.activeCategory != oldWidget.activeCategory &&
-        widget.activeCategory != null) {
-      final cubit = context.read<MealsCubit>();
-      final categories = cubit.state.mealsCategoriesState.data;
-      if (categories != null && categories.isNotEmpty) {
-        _initInitialCategory(cubit, categories);
-      }
-    }
-  }
-
-  void _initInitialCategory(
-    MealsCubit cubit,
-    List<MealCategoryEntity> categories,
-  ) {
-    if (categories.isEmpty) return;
-    final categoryNames = categories.map((e) => e.name).toList();
-    final targetCategory =
-        (widget.activeCategory != null &&
-            categoryNames.contains(widget.activeCategory))
-        ? widget.activeCategory!
-        : (categoryNames.contains(cubit.state.selectedCategory)
-              ? cubit.state.selectedCategory
-              : categoryNames.first);
-
-    if (cubit.state.selectedCategory != targetCategory) {
-      cubit.doEvent(ChangeSelectedMealCategoryEvent(targetCategory));
-    } else if (cubit.state.mealsByCategoriesState.data == null &&
-        !cubit.state.mealsByCategoriesState.isLoading &&
-        cubit.state.mealsByCategoriesState.errorMessage == null) {
-      cubit.doEvent(GetMealsByCategoryEvent(targetCategory));
+        widget.activeCategory != null &&
+        widget.activeCategory!.isNotEmpty) {
+      context.read<MealsCubit>().doEvent(
+        ChangeSelectedMealCategoryEvent(widget.activeCategory!),
+      );
     }
   }
 
@@ -90,21 +62,10 @@ class _MealsViewState extends State<MealsView> {
           body: SafeArea(
             child: isCategoriesLoading
                 ? const MealsViewShimmer()
-                : Column(
+                : const Column(
                     children: [
-                      MealsCategoriesBar(
-                        activeCategory: widget.activeCategory,
-                        onNeedsCategoryInit: () {
-                          if (mounted) {
-                            final cubit = context.read<MealsCubit>();
-                            final cats = cubit.state.mealsCategoriesState.data;
-                            if (cats != null && cats.isNotEmpty) {
-                              _initInitialCategory(cubit, cats);
-                            }
-                          }
-                        },
-                      ),
-                      const Expanded(child: MealsGridContent()),
+                      MealsCategoriesBar(),
+                      Expanded(child: MealsGridContent()),
                     ],
                   ),
           ),

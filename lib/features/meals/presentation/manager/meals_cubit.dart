@@ -29,8 +29,14 @@ class MealsCubit extends BaseCubit<MealsState, BaseUiEvent> {
         await _getMealsByCategory(event.category);
 
       case ChangeSelectedMealCategoryEvent():
-        emit(state.copyWith(selectedCategory: event.category));
-        await _getMealsByCategory(event.category);
+        final categories = state.mealsCategoriesState.data;
+        final chosenCategory = (categories != null && categories.isNotEmpty)
+            ? (categories.any((c) => c.name == event.category)
+                  ? event.category
+                  : categories.first.name)
+            : event.category;
+        emit(state.copyWith(selectedCategory: chosenCategory));
+        await _getMealsByCategory(chosenCategory);
     }
   }
 
@@ -49,17 +55,36 @@ class MealsCubit extends BaseCubit<MealsState, BaseUiEvent> {
     if (isClosed) return;
     switch (result) {
       case Success<List<MealCategoryEntity>>():
-        emit(
-          state.copyWith(
-            mealsCategoriesState: state.mealsCategoriesState.copyWith(
-              isLoading: false,
-              data: result.data,
+        final categories = result.data;
+        if (categories.isNotEmpty) {
+          final categoryNames = categories.map((e) => e.name).toList();
+          final chosenCategory =
+              (category != null && categoryNames.contains(category))
+              ? category
+              : (categoryNames.contains(state.selectedCategory) &&
+                        state.selectedCategory.isNotEmpty
+                    ? state.selectedCategory
+                    : categoryNames.first);
+
+          emit(
+            state.copyWith(
+              mealsCategoriesState: state.mealsCategoriesState.copyWith(
+                isLoading: false,
+                data: categories,
+              ),
+              selectedCategory: chosenCategory,
             ),
-          ),
-        );
-        if (category != null && category.isNotEmpty) {
-          emit(state.copyWith(selectedCategory: category));
-          await _getMealsByCategory(category);
+          );
+          unawaited(_getMealsByCategory(chosenCategory));
+        } else {
+          emit(
+            state.copyWith(
+              mealsCategoriesState: state.mealsCategoriesState.copyWith(
+                isLoading: false,
+                data: categories,
+              ),
+            ),
+          );
         }
 
       case Error<List<MealCategoryEntity>>():

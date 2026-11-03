@@ -39,7 +39,7 @@ void main() {
     });
 
     test(
-      'GetMealsCategoriesEvent success emits loading true then false with categories data',
+      'GetMealsCategoriesEvent success emits loading true then false with categories data and fetches meals',
       () async {
         fakeRepo.nextCategoriesResult = Success(MealsTestData.categoryEntities);
 
@@ -50,13 +50,16 @@ void main() {
         await cubit.doEvent(GetMealsCategoriesEvent());
         await pumpEventQueue();
 
-        expect(states.length, 2);
+        expect(states.length, 4);
         expect(states[0].mealsCategoriesState.isLoading, isTrue);
         expect(states[1].mealsCategoriesState.isLoading, isFalse);
         expect(
           states[1].mealsCategoriesState.data,
           MealsTestData.categoryEntities,
         );
+        expect(states[1].selectedCategory, 'Beef');
+        expect(states[2].mealsByCategoriesState.isLoading, isTrue);
+        expect(states[3].mealsByCategoriesState.isLoading, isFalse);
       },
     );
 
@@ -145,6 +148,20 @@ void main() {
           cubit.state.mealsByCategoriesState.data,
           MealsTestData.mealEntities,
         );
+      },
+    );
+
+    test(
+      'GetMealsCategoriesEvent with unknown category falls back to first category',
+      () async {
+        fakeRepo.nextCategoriesResult = Success(MealsTestData.categoryEntities);
+        fakeRepo.nextMealsResult = Success(MealsTestData.mealEntities);
+
+        await cubit.doEvent(GetMealsCategoriesEvent('UnknownCategory'));
+        await pumpEventQueue();
+
+        expect(fakeRepo.lastCategory, 'Beef');
+        expect(cubit.state.selectedCategory, 'Beef');
       },
     );
   });

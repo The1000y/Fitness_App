@@ -8,14 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 
 class MealsCategoriesBar extends StatelessWidget {
-  final String? activeCategory;
-  final VoidCallback onNeedsCategoryInit;
-
-  const MealsCategoriesBar({
-    super.key,
-    this.activeCategory,
-    required this.onNeedsCategoryInit,
-  });
+  const MealsCategoriesBar({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -31,9 +24,7 @@ class MealsCategoriesBar extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 16.w),
             child: CategoriesErrorState(
               onRetry: () {
-                context.read<MealsCubit>().doEvent(
-                  GetMealsCategoriesEvent(activeCategory),
-                );
+                context.read<MealsCubit>().doEvent(GetMealsCategoriesEvent());
               },
             ),
           );
@@ -47,22 +38,10 @@ class MealsCategoriesBar extends StatelessWidget {
             padding: REdgeInsets.symmetric(horizontal: 16),
             child: CategoriesEmptyState(
               onRefresh: () {
-                context.read<MealsCubit>().doEvent(
-                  GetMealsCategoriesEvent(activeCategory),
-                );
+                context.read<MealsCubit>().doEvent(GetMealsCategoriesEvent());
               },
             ),
           );
-        }
-
-        if (state.selectedCategory.isEmpty ||
-            !categories.contains(state.selectedCategory) ||
-            (state.mealsByCategoriesState.data == null &&
-                !state.mealsByCategoriesState.isLoading &&
-                state.mealsByCategoriesState.errorMessage == null)) {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            onNeedsCategoryInit();
-          });
         }
 
         return CategoryTabBar(
