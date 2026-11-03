@@ -1,4 +1,5 @@
 import 'package:fitness_app/config/errors/app_failure.dart';
+import 'package:fitness_app/config/routing/app_routes.dart';
 import 'package:fitness_app/core/shared/image_title_card.dart';
 import 'package:fitness_app/features/meals/presentation/manager/meals_cubit.dart';
 import 'package:fitness_app/features/meals/presentation/manager/meals_event.dart';
@@ -75,7 +76,7 @@ class MealsGridContent extends StatelessWidget {
                     imagePath: meal.thumbnail,
                     title: meal.name,
                     onTap: () {
-                      // Action on tapping a meal card
+                     Navigator.pushNamed(context, AppRoutes.mealDetails, arguments: meal.id);
                     },
                   );
                 },

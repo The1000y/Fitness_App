@@ -90,14 +90,14 @@ abstract final class GenerateRoutes {
           settings,
         );
 
-      case AppRoutes.foodDetails:
-        var mealId = settings.arguments as String?;
+      case AppRoutes.mealDetails:
+        var mealId = settings.arguments as String;
         return _pageRoute(
           BlocProvider<MealsCubit>(
             create: (context) =>
                 getIt<MealsCubit>()
-                  ..onEvent(GetMealDetailsEvent(mealId ?? '52959')),
-            child: DetailsFoodView(mealId: mealId ?? '52959'),
+                  ..onEvent(GetMealDetailsEvent(mealId)),
+            child: DetailsFoodView(mealId: mealId),
           ),
           settings,
         );

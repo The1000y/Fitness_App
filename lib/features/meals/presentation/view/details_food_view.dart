@@ -1,5 +1,5 @@
 import 'package:fitness_app/config/base/base_ui_event.dart';
-import 'package:fitness_app/config/localization/app_failure_message_mapper.dart';
+import 'package:fitness_app/config/errors/app_failure.dart';
 import 'package:fitness_app/core/constants/app_icons.dart';
 import 'package:fitness_app/core/constants/app_images.dart';
 import 'package:fitness_app/core/shared/base_ui_event_listener.dart';
@@ -9,9 +9,12 @@ import 'package:fitness_app/core/shared/custom_video_player.dart';
 import 'package:fitness_app/core/shared/helper/custom_button_click.dart';
 import 'package:fitness_app/core/theme/app_colors/app_colors.dart';
 import 'package:fitness_app/features/meals/presentation/manager/meals_cubit.dart';
+import 'package:fitness_app/features/meals/presentation/manager/meals_event.dart';
 import 'package:fitness_app/features/meals/presentation/manager/meals_state.dart';
+import 'package:fitness_app/features/meals/presentation/view/widgets/custom_ui_states.dart';
 import 'package:fitness_app/features/meals/presentation/view/widgets/data_of_ingredients.dart';
 import 'package:fitness_app/features/meals/presentation/view/widgets/meal_info_overlay.dart';
+import 'package:fitness_app/features/meals/presentation/view/widgets/shimmers/shimmers.dart';
 import 'package:fitness_app/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -37,21 +40,29 @@ class DetailsFoodView extends StatelessWidget {
             builder: (context, state) {
               var data = state.mealsState.data;
               if (state.mealsState.isLoading) {
-                return Center(
-                  child: CircularProgressIndicator(color: AppColors.primary),
-                );
+                return const DetailsFoodShimmer();
               } else if (state.mealsState.errorMessage != null) {
-                return Center(
-                  child: Text(
-                    appFailureMessageMapper(
-                      state.mealsState.errorMessage!,
-                      l10n,
-                    ),
-                    style: theme.textTheme.titleLarge?.copyWith(
-                      color: AppColors.primary,
-                    ),
-                  ),
+                return MealsErrorState(
+                  isOffline:
+                      state.mealsState.errorMessage
+                          is InternetConnectionFailure,
+                  onRetry: () {
+                    context.read<MealsCubit>().onEvent(
+                      GetMealDetailsEvent(mealId),
+                    );
+                  },
                 );
+                // return Center(
+                //   child: Text(
+                //     appFailureMessageMapper(
+                //       state.mealsState.errorMessage!,
+                //       l10n,
+                //     ),
+                //     style: theme.textTheme.titleLarge?.copyWith(
+                //       color: AppColors.primary,
+                //     ),
+                //   ),
+                // );
               } else if (state.mealsState.data == null ||
                   state.mealsState.data!.isEmpty) {
                 return Center(
