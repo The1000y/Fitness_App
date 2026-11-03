@@ -1,12 +1,17 @@
+import 'package:fitness_app/config/di/di.dart';
 import 'package:fitness_app/config/routing/app_routes.dart';
 import 'package:fitness_app/features/auth/presentation/onboarding/views/onboarding_view.dart';
 import 'package:fitness_app/features/chat/presentation/views/chat_view.dart';
 import 'package:fitness_app/features/home/presentation/views/home_view.dart';
 import 'package:fitness_app/features/main/presentation/views/main_layout_view.dart';
+import 'package:fitness_app/features/meals/presentation/manager/meals_cubit.dart';
+import 'package:fitness_app/features/meals/presentation/manager/meals_event.dart';
+import 'package:fitness_app/features/meals/presentation/view/meals_view.dart';
 import 'package:fitness_app/features/profile/presentation/views/profile_view.dart';
 import 'package:fitness_app/features/workouts/presentation/views/workouts_view.dart';
 import 'package:fitness_app/test_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../features/auth/presentation/login/view/login_view.dart';
 
@@ -69,11 +74,22 @@ abstract final class GenerateRoutes {
       case AppRoutes.exerciseDetails:
         return _pageRoute(const _StubScreen('Exercise Details'), settings);
 
-      // Food
-      case AppRoutes.food:
-        return _pageRoute(const _StubScreen('Food'), settings);
+      // meals
+      case AppRoutes.meals:
+        final args = settings.arguments;
+        final category = args is String ? args : null;
 
-      case AppRoutes.foodDetails:
+        return _pageRoute(
+          BlocProvider(
+            create: (context) =>
+                getIt.get<MealsCubit>()
+                  ..doEvent(GetMealsCategoriesEvent(category)),
+            child: MealsView(activeCategory: category),
+          ),
+          settings,
+        );
+
+      case AppRoutes.mealDetails:
         return _pageRoute(const _StubScreen('Food Details'), settings);
 
       case AppRoutes.chatHistory:

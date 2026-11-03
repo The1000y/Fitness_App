@@ -28,8 +28,8 @@ abstract final class AppRoutes {
   static const String exerciseDetails = '/exercise-details';
 
   // Food.
-  static const String food = '/food';
-  static const String foodDetails = '/food-details';
+  static const String meals = '/meals';
+  static const String mealDetails = '/meal-details';
 
   // Smart coach chat.
   static const String chatHistory = '/chat-history';

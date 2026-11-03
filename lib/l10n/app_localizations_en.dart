@@ -598,4 +598,41 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get cancel => 'cancel the video';
+
+  @override
+  String get noMealsYet => 'No meals yet';
+
+  @override
+  String noCategoryMealsYet(String category) {
+    return 'No $category meals yet';
+  }
+
+  @override
+  String get noMealsMessage =>
+      'There are no recommendations right now. Try another meal time or check back later.';
+
+  @override
+  String get refresh => 'Refresh';
+
+  @override
+  String get noInternetConnection => 'No internet connection';
+
+  @override
+  String get somethingWentWrong => 'Something went wrong';
+
+  @override
+  String get checkConnectionMessage => 'Check your connection and try again.';
+
+  @override
+  String get couldNotLoadMeals =>
+      'We could not load the meals. Please try again.';
+
+  @override
+  String get tryAgain => 'Try again';
+
+  @override
+  String get noCategoriesAvailable => 'No categories available';
+
+  @override
+  String get couldNotLoadCategories => 'Could not load categories';
 }
