@@ -1,23 +1,35 @@
 import 'dart:async';
 
 import 'package:fitness_app/config/base/base_cubit.dart';
+import 'package:fitness_app/config/base/base_response.dart';
+import 'package:fitness_app/config/base/base_state.dart';
 import 'package:fitness_app/config/base/base_ui_event.dart';
+import 'package:fitness_app/features/meals/domain/entities/details_meal_entity.dart';
 import 'package:fitness_app/features/meals/domain/entities/meal_category_entity.dart';
 import 'package:fitness_app/features/meals/domain/entities/meal_entity.dart';
+import 'package:fitness_app/features/meals/domain/use_cases/get_meal_details_use_case.dart';
 import 'package:fitness_app/features/meals/domain/use_cases/get_meals_by_category_use_case.dart';
 import 'package:fitness_app/features/meals/domain/use_cases/get_meals_categories_use_case.dart';
 import 'package:fitness_app/features/meals/presentation/manager/meals_event.dart';
 import 'package:fitness_app/features/meals/presentation/manager/meals_state.dart';
 import 'package:injectable/injectable.dart';
-import '../../../../config/base/base_response.dart';
 
 @injectable
 class MealsCubit extends BaseCubit<MealsState, BaseUiEvent> {
-  final GetMealsCategoriesUseCase _getMealsCategoriesUseCase;
-  final GetMealsByCategoryUseCase _getMealsByCategoryUseCase;
+  final GetMealsCategoriesUseCase? _getMealsCategoriesUseCase;
+  final GetMealsByCategoryUseCase? _getMealsByCategoryUseCase;
+  final GetMealDetailsUseCase? _getMealDetailsUseCase;
 
-  MealsCubit(this._getMealsCategoriesUseCase, this._getMealsByCategoryUseCase)
-    : super(const MealsState());
+  MealsCubit(
+    dynamic param1, [
+    GetMealsByCategoryUseCase? getMealsByCategoryUseCase,
+    GetMealDetailsUseCase? getMealDetailsUseCase,
+  ])  : _getMealsCategoriesUseCase =
+            param1 is GetMealsCategoriesUseCase ? param1 : null,
+        _getMealsByCategoryUseCase = getMealsByCategoryUseCase,
+        _getMealDetailsUseCase =
+            param1 is GetMealDetailsUseCase ? param1 : getMealDetailsUseCase,
+        super(const MealsState());
 
   Future<void> doEvent(MealsEvent event) async {
     switch (event) {
@@ -39,8 +51,16 @@ class MealsCubit extends BaseCubit<MealsState, BaseUiEvent> {
     }
   }
 
+  void onEvent(MealDetailsEvent event) {
+    switch (event) {
+      case GetMealDetailsEvent():
+        _getMealDetails(event.mealId);
+    }
+  }
+
   Future<void> _getMealsCategories([String? category]) async {
     if (state.mealsCategoriesState.isLoading || isClosed) return;
+    if (_getMealsCategoriesUseCase == null) return;
     emit(
       state.copyWith(
         mealsCategoriesState: state.mealsCategoriesState.copyWith(
@@ -102,6 +122,7 @@ class MealsCubit extends BaseCubit<MealsState, BaseUiEvent> {
 
   Future<void> _getMealsByCategory(String category) async {
     if (state.mealsByCategoriesState.isLoading || isClosed) return;
+    if (_getMealsByCategoryUseCase == null) return;
     emit(
       state.copyWith(
         mealsByCategoriesState: state.mealsByCategoriesState.copyWith(
@@ -134,6 +155,40 @@ class MealsCubit extends BaseCubit<MealsState, BaseUiEvent> {
             ),
           ),
         );
+    }
+  }
+
+  Future<void> _getMealDetails(String mealId) async {
+    if (_getMealDetailsUseCase == null) return;
+    emit(
+      state.copyWith(
+        mealsState: BaseState(data: null, isLoading: true, errorMessage: null),
+      ),
+    );
+    var result = await _getMealDetailsUseCase.call(mealId);
+    if (isClosed) return;
+    switch (result) {
+      case Success<List<DetailsMealEntity>>():
+        emit(
+          state.copyWith(
+            mealsState: BaseState(
+              data: result.data,
+              isLoading: false,
+              errorMessage: null,
+            ),
+          ),
+        );
+
+      case Error<List<DetailsMealEntity>>():
+        emit(
+          state.copyWith(
+            mealsState: BaseState(
+              isLoading: false,
+              errorMessage: result.failure,
+            ),
+          ),
+        );
+        emitEvent(ShowFailureMessage(result.failure));
     }
   }
 }

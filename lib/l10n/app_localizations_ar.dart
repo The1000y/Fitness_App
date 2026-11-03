@@ -631,4 +631,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get couldNotLoadCategories => 'تعذر تحميل الفئات';
+
+  @override
+  String get dataNotAvailable => 'البيانات غير متوفرة حالياً.';
 }

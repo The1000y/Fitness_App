@@ -265,5 +265,6 @@
   "couldNotLoadMeals": "تعذر تحميل الوجبات. يرجى المحاولة مرة أخرى.",
   "tryAgain": "حاول مرة أخرى",
   "noCategoriesAvailable": "لا توجد فئات متاحة",
-  "couldNotLoadCategories": "تعذر تحميل الفئات"
+  "couldNotLoadCategories": "تعذر تحميل الفئات",
+  "dataNotAvailable": "البيانات غير متوفرة حالياً."
 }

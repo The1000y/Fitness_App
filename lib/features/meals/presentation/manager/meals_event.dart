@@ -14,3 +14,10 @@ class ChangeSelectedMealCategoryEvent extends MealsEvent {
   final String category;
   ChangeSelectedMealCategoryEvent(this.category);
 }
+
+sealed class MealDetailsEvent {}
+
+class GetMealDetailsEvent extends MealDetailsEvent {
+  final String mealId;
+  GetMealDetailsEvent(this.mealId);
+}

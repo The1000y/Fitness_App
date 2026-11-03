@@ -30,6 +30,7 @@ abstract final class AppRoutes {
   // Food.
   static const String meals = '/meals';
   static const String mealDetails = '/meal-details';
+  static const String foodDetails = '/food-details';
 
   // Smart coach chat.
   static const String chatHistory = '/chat-history';

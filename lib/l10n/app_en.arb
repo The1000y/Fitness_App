@@ -266,6 +266,6 @@
   "couldNotLoadMeals": "We could not load the meals. Please try again.",
   "tryAgain": "Try again",
   "noCategoriesAvailable": "No categories available",
-  "couldNotLoadCategories": "Could not load categories"
+  "couldNotLoadCategories": "Could not load categories",  "dataNotAvailable": "Data is currently unavailable."
 
 }

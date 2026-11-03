@@ -1285,6 +1285,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Could not load categories'**
   String get couldNotLoadCategories;
+
+  /// No description provided for @dataNotAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Data is currently unavailable.'**
+  String get dataNotAvailable;
 }
 
 class _AppLocalizationsDelegate

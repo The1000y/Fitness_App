@@ -635,4 +635,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get couldNotLoadCategories => 'Could not load categories';
+
+  @override
+  String get dataNotAvailable => 'Data is currently unavailable.';
 }

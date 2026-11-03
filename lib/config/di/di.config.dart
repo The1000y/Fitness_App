@@ -29,6 +29,19 @@ import '../../features/auth/domain/use_cases/login_use_case.dart' as _i1038;
 import '../../features/auth/presentation/login/manager/login_cubit.dart'
     as _i889;
 import '../../features/meals/api/client/meals_api_client.dart' as _i293;
+import '../../features/meals/api/meals_remote_data_source_impl.dart/meals_remote_data_source_impl.dart'
+    as _i396;
+import '../../features/meals/data/data_source/remote/meals_remote_data_source.dart'
+    as _i452;
+import '../../features/meals/data/repo_impl/meals_repo_impl.dart' as _i459;
+import '../../features/meals/domain/repo/meals_repo.dart' as _i749;
+import '../../features/meals/domain/use_cases/get_meals_categories_use_case.dart'
+    as _i1039;
+import '../../features/meals/domain/use_cases/get_meals_by_category_use_case.dart'
+    as _i1040;
+import '../../features/meals/domain/use_cases/get_meal_details_use_case.dart'
+    as _i514;
+import '../../features/meals/presentation/manager/meals_cubit.dart' as _i773;
 import '../dio/app_interceptor.dart' as _i264;
 import '../dio/dio_module.dart' as _i977;
 import '../utils/secure_storage_module.dart' as _i327;
@@ -69,6 +82,16 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i213.AuthApiClient>(
       () => _i213.AuthApiClient(gh<_i361.Dio>(instanceName: 'fitnessDio')),
     );
+    gh.factory<_i452.MealsRemoteDataSource>(
+      () => _i396.MealsRemoteDataSourceImpl(
+        apiClient: gh<_i293.MealsApiClient>(),
+      ),
+    );
+    gh.factory<_i749.MealsRepo>(
+      () => _i459.MealsRepoImpl(
+        mealsRemoteDataSource: gh<_i452.MealsRemoteDataSource>(),
+      ),
+    );
     gh.factory<_i548.RemoteDataSource>(
       () => _i192.RemoteDataSourceImpl(gh<_i213.AuthApiClient>()),
     );
@@ -77,6 +100,22 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i1038.LoginUseCase>(
       () => _i1038.LoginUseCase(gh<_i170.AuthRepo>()),
+    );
+    gh.factory<_i1039.GetMealsCategoriesUseCase>(
+      () => _i1039.GetMealsCategoriesUseCase(gh<_i749.MealsRepo>()),
+    );
+    gh.factory<_i1040.GetMealsByCategoryUseCase>(
+      () => _i1040.GetMealsByCategoryUseCase(gh<_i749.MealsRepo>()),
+    );
+    gh.factory<_i514.GetMealDetailsUseCase>(
+      () => _i514.GetMealDetailsUseCase(gh<_i749.MealsRepo>()),
+    );
+    gh.factory<_i773.MealsCubit>(
+      () => _i773.MealsCubit(
+        gh<_i1039.GetMealsCategoriesUseCase>(),
+        gh<_i1040.GetMealsByCategoryUseCase>(),
+        gh<_i514.GetMealDetailsUseCase>(),
+      ),
     );
     gh.factory<_i889.LoginCubit>(
       () => _i889.LoginCubit(gh<_i1038.LoginUseCase>()),

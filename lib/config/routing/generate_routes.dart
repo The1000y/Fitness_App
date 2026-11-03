@@ -6,6 +6,7 @@ import 'package:fitness_app/features/home/presentation/views/home_view.dart';
 import 'package:fitness_app/features/main/presentation/views/main_layout_view.dart';
 import 'package:fitness_app/features/meals/presentation/manager/meals_cubit.dart';
 import 'package:fitness_app/features/meals/presentation/manager/meals_event.dart';
+import 'package:fitness_app/features/meals/presentation/view/details_food_view.dart';
 import 'package:fitness_app/features/meals/presentation/view/meals_view.dart';
 import 'package:fitness_app/features/profile/presentation/views/profile_view.dart';
 import 'package:fitness_app/features/workouts/presentation/views/workouts_view.dart';
@@ -89,8 +90,17 @@ abstract final class GenerateRoutes {
           settings,
         );
 
-      case AppRoutes.mealDetails:
-        return _pageRoute(const _StubScreen('Food Details'), settings);
+      case AppRoutes.foodDetails:
+        var mealId = settings.arguments as String?;
+        return _pageRoute(
+          BlocProvider<MealsCubit>(
+            create: (context) =>
+                getIt<MealsCubit>()
+                  ..onEvent(GetMealDetailsEvent(mealId ?? '52959')),
+            child: DetailsFoodView(mealId: mealId ?? '52959'),
+          ),
+          settings,
+        );
 
       case AppRoutes.chatHistory:
         return _pageRoute(const _StubScreen('Chat History'), settings);

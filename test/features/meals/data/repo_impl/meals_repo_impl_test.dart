@@ -1,13 +1,16 @@
 import 'package:dio/dio.dart';
 import 'package:fitness_app/config/base/base_response.dart';
 import 'package:fitness_app/config/errors/app_failure.dart';
+import 'package:fitness_app/features/meals/data/model/details_meal_dto.dart';
 import 'package:fitness_app/features/meals/data/repo_impl/meals_repo_impl.dart';
+import 'package:fitness_app/features/meals/domain/entities/details_meal_entity.dart';
 import 'package:fitness_app/features/meals/domain/entities/meal_category_entity.dart';
 import 'package:fitness_app/features/meals/domain/entities/meal_entity.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../../../../helpers/meals_fakes.dart';
+import '../../../../helpers/fakes.dart';
 import '../../../../helpers/meals_test_data.dart';
+import '../../../../helpers/test_data.dart';
 
 void main() {
   late FakeMealsRemoteDataSource fakeRemote;
@@ -15,7 +18,7 @@ void main() {
 
   setUp(() {
     fakeRemote = FakeMealsRemoteDataSource();
-    repo = MealsRepoImpl(fakeRemote);
+    repo = MealsRepoImpl(mealsRemoteDataSource: fakeRemote);
   });
 
   group('MealsRepoImpl', () {
@@ -40,6 +43,25 @@ void main() {
     );
 
     test(
+      'getMealDetails delegates to data source with correct mealId and maps DTOs to entities',
+      () async {
+        fakeRemote.nextResult = Success([TestData.detailsMealDto]);
+
+        final result = await repo.getMealDetails(TestData.mealId);
+
+        expect(fakeRemote.callCount, 1);
+        expect(fakeRemote.lastMealId, TestData.mealId);
+        expect(result, isA<Success<List<DetailsMealEntity>>>());
+
+        final success = result as Success<List<DetailsMealEntity>>;
+        expect(success.data.length, 1);
+        expect(success.data.first.idMeal, TestData.mealId);
+        expect(success.data.first.strMeal, TestData.mealName);
+        expect(success.data.first.ingredients.length, 3);
+      },
+    );
+
+    test(
       'getMealsCategories returns Error with InternetConnectionFailure on connection error',
       () async {
         fakeRemote.nextCategoriesError = DioException(
@@ -54,6 +76,20 @@ void main() {
           (result as Error<List<MealCategoryEntity>>).failure,
           isA<InternetConnectionFailure>(),
         );
+      },
+    );
+
+    test(
+      'getMealDetails returns Success with empty list when data source returns empty list',
+      () async {
+        fakeRemote.nextResult = const Success(<DetailsMealDto>[]);
+
+        final result = await repo.getMealDetails(TestData.mealId);
+
+        expect(fakeRemote.callCount, 1);
+        expect(result, isA<Success<List<DetailsMealEntity>>>());
+        final success = result as Success<List<DetailsMealEntity>>;
+        expect(success.data, isEmpty);
       },
     );
 
@@ -90,5 +126,20 @@ void main() {
 
       expect(result, isA<Error<List<MealEntity>>>());
     });
+
+    test(
+      'getMealDetails forwards Error when data source returns Error',
+      () async {
+        const failure = InternetConnectionFailure();
+        fakeRemote.nextResult = const Error<List<DetailsMealDto>>(failure);
+
+        final result = await repo.getMealDetails(TestData.mealId);
+
+        expect(fakeRemote.callCount, 1);
+        expect(result, isA<Error<List<DetailsMealEntity>>>());
+        final error = result as Error<List<DetailsMealEntity>>;
+        expect(error.failure, equals(failure));
+      },
+    );
   });
 }
