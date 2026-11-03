@@ -16,6 +16,7 @@ class WorkoutCategoriesCubit
     extends BaseCubit<WorkoutCategoriesState, CommonUiEvent> {
   final GetMuscleGroupsUseCase _getMuscleGroupsUseCase;
   final GetMusclesByGroupUseCase _getMusclesByGroupUseCase;
+
   int _musclesRequestId = 0;
 
   WorkoutCategoriesCubit(
@@ -28,13 +29,16 @@ class WorkoutCategoriesCubit
       case WorkoutCategoriesRequested():
         unawaited(_getWorkoutCategories());
 
-      case MusclesByGroupRequested():
-        unawaited(_getMusclesByGroup(event.id));
+      case MuscleGroupSelected():
+        unawaited(_selectMuscleGroup(event.id));
     }
   }
 
   Future<void> _getWorkoutCategories() async {
-    if (state.workoutCategoriesState.isLoading) return;
+    if (state.workoutCategoriesState.isLoading ||
+        state.workoutCategoriesState.data != null) {
+      return;
+    }
 
     emit(
       state.copyWith(
@@ -51,14 +55,23 @@ class WorkoutCategoriesCubit
 
     switch (result) {
       case Success():
+        final groups = result.data.musclesGroup;
+
+        final firstGroupId = groups.isNotEmpty ? groups.first.id : null;
+
         emit(
           state.copyWith(
             workoutCategoriesState: BaseState(
               data: result.data,
               isLoading: false,
             ),
+            selectedGroupId: firstGroupId,
           ),
         );
+
+        if (firstGroupId != null) {
+          await _getMusclesByGroup(firstGroupId);
+        }
 
       case Error():
         emit(
@@ -75,12 +88,23 @@ class WorkoutCategoriesCubit
     }
   }
 
+  Future<void> _selectMuscleGroup(String id) async {
+    if (state.selectedGroupId == id) return;
+
+    emit(state.copyWith(selectedGroupId: id));
+
+    await _getMusclesByGroup(id);
+  }
+
   Future<void> _getMusclesByGroup(String id) async {
     final requestId = ++_musclesRequestId;
 
     emit(
       state.copyWith(
-        musclesState: BaseState(data: state.musclesState.data, isLoading: true),
+        musclesState: BaseState(
+          data: state.musclesState.data,
+          isLoading: true,
+        ),
       ),
     );
 
@@ -92,7 +116,10 @@ class WorkoutCategoriesCubit
       case Success():
         emit(
           state.copyWith(
-            musclesState: BaseState(data: result.data, isLoading: false),
+            musclesState: BaseState(
+              data: result.data,
+              isLoading: false,
+            ),
           ),
         );
 

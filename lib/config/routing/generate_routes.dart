@@ -56,9 +56,7 @@ abstract final class GenerateRoutes {
       case AppRoutes.setupActivity:
         return _pageRoute(const _StubScreen('Setup Activity'), settings);
 
-      case AppRoutes.workoutCategories:
-        return _pageRoute(const WorkoutCategoriesView(), settings);
-
+     
       // Main
       case AppRoutes.main:
         return _pageRoute(

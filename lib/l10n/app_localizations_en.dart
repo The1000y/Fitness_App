@@ -85,10 +85,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get confirmPassword => 'Confirm password';
 
   @override
-  String get forgotPassword => 'Forgot password?';
+  String get forgotPassword => 'Forgot Password?';
 
   @override
-  String get dontHaveAccount => 'Don\'t have an account yet?';
+  String get dontHaveAccount => 'Don\'t have an account yet? ';
 
   @override
   String get register => 'Register';

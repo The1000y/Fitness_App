@@ -29,7 +29,7 @@ void main() {
       ],
     };
 
-    final response = await apiClient.getMuscles();
+    final response = await apiClient.getMuscleGroups();
 
     expect(adapter.lastRequestOptions?.method, 'GET');
     expect(adapter.lastRequestOptions?.path, ApiStrings.muscles);

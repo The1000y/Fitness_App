@@ -6,10 +6,8 @@ final class WorkoutCategoriesRequested extends WorkoutCategoriesEvent {
   const WorkoutCategoriesRequested();
 }
 
-final class MusclesByGroupRequested extends WorkoutCategoriesEvent {
+final class MuscleGroupSelected extends WorkoutCategoriesEvent {
   final String id;
 
-  const MusclesByGroupRequested({
-    required this.id,
-  });
+  const MuscleGroupSelected({required this.id});
 }

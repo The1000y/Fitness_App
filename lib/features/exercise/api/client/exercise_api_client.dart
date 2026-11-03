@@ -1,7 +1,7 @@
 
 import 'package:dio/dio.dart';
 import 'package:fitness_app/core/constants/api_strings.dart';
-import 'package:fitness_app/features/exercise/data/model/responses/muscles_response.dart';
+import 'package:fitness_app/features/exercise/data/model/responses/muscle_groups_response.dart';
 import 'package:fitness_app/features/exercise/data/model/responses/muscles_by_group_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
@@ -15,7 +15,7 @@ abstract class ExerciseApiClient {
   factory ExerciseApiClient(Dio dio) = _ExerciseApiClient;
 
   @GET(ApiStrings.muscles)
-  Future<MusclesResponse> getMuscles();
+  Future<MuscleGroupsResponse> getMuscleGroups();
 
   @GET(ApiStrings.musclesByGroup)
   Future<MusclesByGroupResponse> getMusclesByGroup(

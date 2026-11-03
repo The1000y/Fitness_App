@@ -4,8 +4,8 @@ import 'package:fitness_app/config/errors/app_failure.dart';
 import 'package:fitness_app/core/shared/image_title_card.dart';
 import 'package:fitness_app/features/exercise/domain/entities/muscle_entity.dart';
 import 'package:fitness_app/features/exercise/domain/entities/muscle_group_entity.dart';
+import 'package:fitness_app/features/exercise/domain/entities/muscle_groups_entity.dart';
 import 'package:fitness_app/features/exercise/domain/entities/muscles_by_group_entity.dart';
-import 'package:fitness_app/features/exercise/domain/entities/muscles_entity.dart';
 import 'package:fitness_app/features/exercise/domain/repo/exercise_repo.dart';
 import 'package:fitness_app/features/exercise/domain/use_cases/get_muscle_groups_use_case.dart';
 import 'package:fitness_app/features/exercise/domain/use_cases/get_muscles_by_group_use_case.dart';
@@ -42,14 +42,14 @@ void main() {
   testWidgets('loads categories and requests muscles for the first group', (
     tester,
   ) async {
-    const groupsResponse = Success<MusclesByGroupEntity>(
-      MusclesByGroupEntity(
+    const groupsResponse = Success<MuscleGroupsEntity>(
+      MuscleGroupsEntity(
         message: 'Success',
         musclesGroup: [MuscleGroupEntity(id: 'group-1', name: 'Upper body')],
       ),
     );
-    const musclesResponse = Success<MusclesEntity>(
-      MusclesEntity(message: 'Success', totalMuscles: 0, muscles: []),
+    const musclesResponse = Success<MusclesByGroupEntity>(
+      MusclesByGroupEntity(message: 'Success', muscles: []),
     );
 
     when(() => repo.getMusclesGroups()).thenAnswer((_) async => groupsResponse);
@@ -67,11 +67,29 @@ void main() {
     verify(() => repo.getMusclesByGroup(id: 'group-1')).called(1);
   });
 
+  testWidgets('shows an empty state when no categories are returned', (
+    tester,
+  ) async {
+    const groupsResponse = Success<MuscleGroupsEntity>(
+      MuscleGroupsEntity(message: 'Success', musclesGroup: []),
+    );
+    when(() => repo.getMusclesGroups()).thenAnswer((_) async => groupsResponse);
+
+    await tester.pumpApp(const WorkoutCategoriesView());
+    await tester.pumpAndSettle();
+
+    expect(
+      find.text(AppLocalizationsEn().noCategoriesAvailable),
+      findsOneWidget,
+    );
+    verifyNever(() => repo.getMusclesByGroup(id: any(named: 'id')));
+  });
+
   testWidgets('selecting another group displays its returned muscle', (
     tester,
   ) async {
-    const groupsResponse = Success<MusclesByGroupEntity>(
-      MusclesByGroupEntity(
+    const groupsResponse = Success<MuscleGroupsEntity>(
+      MuscleGroupsEntity(
         message: 'Success',
         musclesGroup: [
           MuscleGroupEntity(id: 'group-1', name: 'Upper body'),
@@ -79,13 +97,12 @@ void main() {
         ],
       ),
     );
-    const emptyMusclesResponse = Success<MusclesEntity>(
-      MusclesEntity(message: 'Success', totalMuscles: 0, muscles: []),
+    const emptyMusclesResponse = Success<MusclesByGroupEntity>(
+      MusclesByGroupEntity(message: 'Success', muscles: []),
     );
-    const lowerBodyMusclesResponse = Success<MusclesEntity>(
-      MusclesEntity(
+    const lowerBodyMusclesResponse = Success<MusclesByGroupEntity>(
+      MusclesByGroupEntity(
         message: 'Success',
-        totalMuscles: 1,
         muscles: [
           MuscleEntity(
             id: 'muscle-1',
@@ -119,8 +136,7 @@ void main() {
     tester,
   ) async {
     when(() => repo.getMusclesGroups()).thenAnswer(
-      (_) async =>
-          const Error<MusclesByGroupEntity>(InternetConnectionFailure()),
+      (_) async => const Error<MuscleGroupsEntity>(InternetConnectionFailure()),
     );
 
     await tester.pumpApp(const WorkoutCategoriesView());
@@ -135,8 +151,8 @@ void main() {
   testWidgets('does not reselect the first group when another group fails', (
     tester,
   ) async {
-    const groupsResponse = Success<MusclesByGroupEntity>(
-      MusclesByGroupEntity(
+    const groupsResponse = Success<MuscleGroupsEntity>(
+      MuscleGroupsEntity(
         message: 'Success',
         musclesGroup: [
           MuscleGroupEntity(id: 'group-1', name: 'Upper body'),
@@ -144,10 +160,10 @@ void main() {
         ],
       ),
     );
-    const emptyMusclesResponse = Success<MusclesEntity>(
-      MusclesEntity(message: 'Success', totalMuscles: 0, muscles: []),
+    const emptyMusclesResponse = Success<MusclesByGroupEntity>(
+      MusclesByGroupEntity(message: 'Success', muscles: []),
     );
-    const failureResponse = Error<MusclesEntity>(
+    const failureResponse = Error<MusclesByGroupEntity>(
       InternetConnectionFailure(),
     );
 

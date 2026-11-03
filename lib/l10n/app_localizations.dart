@@ -245,13 +245,13 @@ abstract class AppLocalizations {
   /// No description provided for @forgotPassword.
   ///
   /// In en, this message translates to:
-  /// **'Forgot password?'**
+  /// **'Forgot Password?'**
   String get forgotPassword;
 
   /// No description provided for @dontHaveAccount.
   ///
   /// In en, this message translates to:
-  /// **'Don\'t have an account yet?'**
+  /// **'Don\'t have an account yet? '**
   String get dontHaveAccount;
 
   /// No description provided for @register.

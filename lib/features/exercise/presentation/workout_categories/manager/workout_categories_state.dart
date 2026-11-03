@@ -1,27 +1,29 @@
 import 'package:equatable/equatable.dart';
 import 'package:fitness_app/config/base/base_state.dart';
+import 'package:fitness_app/features/exercise/domain/entities/muscle_groups_entity.dart';
 import 'package:fitness_app/features/exercise/domain/entities/muscles_by_group_entity.dart';
-import 'package:fitness_app/features/exercise/domain/entities/muscles_entity.dart';
 
 class WorkoutCategoriesState extends Equatable {
-  final BaseState<MusclesByGroupEntity> workoutCategoriesState;
-
-  final BaseState<MusclesEntity> musclesState;
+  final BaseState<MuscleGroupsEntity> workoutCategoriesState;
+  final BaseState<MusclesByGroupEntity> musclesState;
+  final String? selectedGroupId;
 
   const WorkoutCategoriesState({
-    this.workoutCategoriesState =
-        const BaseState<MusclesByGroupEntity>(),
-    this.musclesState = const BaseState<MusclesEntity>(),
+    this.workoutCategoriesState = const BaseState<MuscleGroupsEntity>(),
+    this.musclesState = const BaseState<MusclesByGroupEntity>(),
+    this.selectedGroupId,
   });
 
   WorkoutCategoriesState copyWith({
-    BaseState<MusclesByGroupEntity>? workoutCategoriesState,
-    BaseState<MusclesEntity>? musclesState,
+    BaseState<MuscleGroupsEntity>? workoutCategoriesState,
+    BaseState<MusclesByGroupEntity>? musclesState,
+    String? selectedGroupId,
   }) {
     return WorkoutCategoriesState(
       workoutCategoriesState:
           workoutCategoriesState ?? this.workoutCategoriesState,
       musclesState: musclesState ?? this.musclesState,
+      selectedGroupId: selectedGroupId ?? this.selectedGroupId,
     );
   }
 
@@ -29,5 +31,6 @@ class WorkoutCategoriesState extends Equatable {
   List<Object?> get props => [
         workoutCategoriesState,
         musclesState,
+        selectedGroupId,
       ];
 }

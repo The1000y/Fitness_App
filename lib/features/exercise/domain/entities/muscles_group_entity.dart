@@ -1,13 +1,13 @@
 
 import 'package:equatable/equatable.dart';
-import 'package:fitness_app/features/exercise/domain/entities/muscle_entity.dart';
+import 'package:fitness_app/features/exercise/domain/entities/muscle_group_entity.dart';
 
-class MusclesEntity extends Equatable {
+class MuscleGroupsEntity extends Equatable {
   final String message;
   final int totalMuscles;
-  final List<MuscleEntity> muscles;
+  final List<MuscleGroupEntity> muscles;
 
-  const MusclesEntity({
+  const MuscleGroupsEntity({
     required this.message,
     required this.totalMuscles,
     required this.muscles,

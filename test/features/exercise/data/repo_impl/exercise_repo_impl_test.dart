@@ -2,10 +2,10 @@ import 'package:dio/dio.dart';
 import 'package:fitness_app/config/base/base_response.dart';
 import 'package:fitness_app/config/errors/app_failure.dart';
 import 'package:fitness_app/features/exercise/data/data_source/remote/exercise_remote_data_source.dart';
-import 'package:fitness_app/features/exercise/data/model/responses/muscle_group_response.dart';
-import 'package:fitness_app/features/exercise/data/model/responses/muscle_response.dart';
+import 'package:fitness_app/features/exercise/data/model/responses/muscle_group_dto.dart';
+import 'package:fitness_app/features/exercise/data/model/responses/muscle_dto.dart';
 import 'package:fitness_app/features/exercise/data/model/responses/muscles_by_group_response.dart';
-import 'package:fitness_app/features/exercise/data/model/responses/muscles_response.dart';
+import 'package:fitness_app/features/exercise/data/model/responses/muscle_groups_response.dart';
 import 'package:fitness_app/features/exercise/data/repo_impl/exercise_repo_impl.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -24,9 +24,9 @@ void main() {
 
   test('maps group response to entities', () async {
     when(() => remote.getMusclesGroups()).thenAnswer(
-      (_) async => MusclesResponse(
+      (_) async => MuscleGroupsResponse(
         message: 'success',
-        musclesGroup: [MuscleGroupResponse(id: 'group-1', name: 'Abdominals')],
+        musclesGroup: [MuscleGroupDto(id: 'group-1', name: 'Abdominals')],
       ),
     );
 
@@ -43,7 +43,7 @@ void main() {
         message: 'success',
         totalMuscles: 1,
         muscles: [
-          MuscleResponse(
+          MuscleDto(
             id: 'muscle-1',
             name: 'Rectus Abdominis',
             image: 'https://example.com/rectus.png',

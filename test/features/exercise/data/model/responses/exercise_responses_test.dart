@@ -1,11 +1,11 @@
 import 'package:fitness_app/features/exercise/data/model/responses/muscles_by_group_response.dart';
-import 'package:fitness_app/features/exercise/data/model/responses/muscles_response.dart';
+import 'package:fitness_app/features/exercise/data/model/responses/muscle_groups_response.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('MusclesResponse', () {
     test('deserializes API group JSON and maps it to domain entities', () {
-      final response = MusclesResponse.fromJson({
+      final response = MuscleGroupsResponse.fromJson({
         'message': 'success',
         'musclesGroup': [
           {'_id': 'group-1', 'name': 'Abdominals'},
@@ -18,7 +18,7 @@ void main() {
     });
 
     test('handles a response with no groups', () {
-      final entity = MusclesResponse.fromJson({
+      final entity = MuscleGroupsResponse.fromJson({
         'message': 'success',
       }).toEntity();
 
@@ -43,18 +43,19 @@ void main() {
       final entity = response.toEntity();
 
       expect(entity.message, 'success');
-      expect(entity.totalMuscles, 1);
+      expect(response.totalMuscles, 1);
       expect(entity.muscles.single.id, 'muscle-1');
       expect(entity.muscles.single.name, 'Rectus Abdominis');
       expect(entity.muscles.single.image, 'https://example.com/rectus.png');
     });
 
     test('handles a response with no muscles', () {
-      final entity = MusclesByGroupResponse.fromJson({
+      final response = MusclesByGroupResponse.fromJson({
         'message': 'success',
-      }).toEntity();
+      });
+      final entity = response.toEntity();
 
-      expect(entity.totalMuscles, 0);
+      expect(response.totalMuscles, isNull);
       expect(entity.muscles, isEmpty);
     });
   });

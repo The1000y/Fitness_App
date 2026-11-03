@@ -21,12 +21,12 @@ class _ExerciseApiClient implements ExerciseApiClient {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<MusclesResponse> getMuscles() async {
+  Future<MuscleGroupsResponse> getMuscleGroups() async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<MusclesResponse>(
+    final _options = _setStreamType<MuscleGroupsResponse>(
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -37,9 +37,9 @@ class _ExerciseApiClient implements ExerciseApiClient {
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late MusclesResponse _value;
+    late MuscleGroupsResponse _value;
     try {
-      _value = MusclesResponse.fromJson(_result.data!);
+      _value = MuscleGroupsResponse.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options, response: _result);
       rethrow;

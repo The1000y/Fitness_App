@@ -12,7 +12,7 @@ MusclesByGroupResponse _$MusclesByGroupResponseFromJson(
   message: json['message'] as String?,
   totalMuscles: (json['totalMuscles'] as num?)?.toInt(),
   muscles: (json['muscles'] as List<dynamic>?)
-      ?.map((e) => MuscleResponse.fromJson(e as Map<String, dynamic>))
+      ?.map((e) => MuscleDto.fromJson(e as Map<String, dynamic>))
       .toList(),
 );
 

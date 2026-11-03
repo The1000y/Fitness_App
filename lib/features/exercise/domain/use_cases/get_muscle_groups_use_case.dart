@@ -1,6 +1,5 @@
-
 import 'package:fitness_app/config/base/base_response.dart';
-import 'package:fitness_app/features/exercise/domain/entities/muscles_by_group_entity.dart';
+import 'package:fitness_app/features/exercise/domain/entities/muscle_groups_entity.dart';
 import 'package:fitness_app/features/exercise/domain/repo/exercise_repo.dart';
 import 'package:injectable/injectable.dart';
 
@@ -10,7 +9,7 @@ class GetMuscleGroupsUseCase {
 
   GetMuscleGroupsUseCase(this._repo);
 
-  Future<BaseResponse<MusclesByGroupEntity>> call() {
+  Future<BaseResponse<MuscleGroupsEntity>> call() {
     return _repo.getMusclesGroups();
   }
 }

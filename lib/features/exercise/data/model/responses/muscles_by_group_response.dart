@@ -1,8 +1,8 @@
 
 import 'dart:convert';
 
-import 'package:fitness_app/features/exercise/data/model/responses/muscle_response.dart';
-import 'package:fitness_app/features/exercise/domain/entities/muscles_entity.dart';
+import 'package:fitness_app/features/exercise/data/model/responses/muscle_dto.dart';
+import 'package:fitness_app/features/exercise/domain/entities/muscles_by_group_entity.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'muscles_by_group_response.g.dart';
@@ -17,7 +17,7 @@ String musclesByGroupResponseToJson(MusclesByGroupResponse data) =>
 class MusclesByGroupResponse {
   final String? message;
   final int? totalMuscles;
-  final List<MuscleResponse>? muscles;
+  final List<MuscleDto>? muscles;
 
   MusclesByGroupResponse({
     this.message,
@@ -31,10 +31,9 @@ class MusclesByGroupResponse {
   Map<String, dynamic> toJson() =>
       _$MusclesByGroupResponseToJson(this);
 
-  MusclesEntity toEntity() {
-    return MusclesEntity(
+  MusclesByGroupEntity toEntity() {
+    return MusclesByGroupEntity(
       message: message ?? '',
-      totalMuscles: totalMuscles ?? 0,
       muscles: muscles?.map((muscle) => muscle.toEntity()).toList() ?? [],
     );
   }
