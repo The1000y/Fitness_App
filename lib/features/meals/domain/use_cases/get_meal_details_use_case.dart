@@ -5,7 +5,7 @@ import 'package:injectable/injectable.dart';
 
 @injectable
 class GetMealDetailsUseCase {
-  MealsRepo mealsRepo;
+  final MealsRepo mealsRepo;
   GetMealDetailsUseCase(this.mealsRepo);
   Future<BaseResponse<List<DetailsMealEntity>>> call(String mealId) async {
     final resultListMeals = await mealsRepo.getMealDetails(mealId);

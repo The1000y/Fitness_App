@@ -1,10 +1,12 @@
 import 'package:fitness_app/config/base/base_ui_event.dart';
 import 'package:fitness_app/config/localization/app_failure_message_mapper.dart';
+import 'package:fitness_app/core/constants/app_icons.dart';
 import 'package:fitness_app/core/constants/app_images.dart';
 import 'package:fitness_app/core/shared/base_ui_event_listener.dart';
 import 'package:fitness_app/core/shared/custom_background_image.dart';
 import 'package:fitness_app/core/shared/custom_blur_card.dart';
 import 'package:fitness_app/core/shared/custom_video_player.dart';
+import 'package:fitness_app/core/shared/helper/custom_button_click.dart';
 import 'package:fitness_app/core/theme/app_colors/app_colors.dart';
 import 'package:fitness_app/features/meals/presentation/manager/meals_cubit.dart';
 import 'package:fitness_app/features/meals/presentation/manager/meals_state.dart';
@@ -13,6 +15,7 @@ import 'package:fitness_app/features/meals/presentation/view/widgets/meal_info_o
 import 'package:fitness_app/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 
 class DetailsFoodView extends StatelessWidget {
@@ -63,13 +66,31 @@ class DetailsFoodView extends StatelessWidget {
 
               final meal = data!.first;
               final ingredientList = meal.ingredients;
-              debugPrint(meal.strYoutube);
-
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
 
                 children: [
                   CustomVideoPlayer(
+                    backNavigationButton: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 47,
+                        horizontal: 16,
+                      ),
+                      child: Align(
+                        alignment: Alignment.topLeft, // Alignment
+                        child: CustomButtonClick(
+                          hightBackground: 24,
+                          widthBackground: 24,
+                          onPressed: () {
+                            Navigator.maybePop(context);
+                          },
+                          iconWidget: SvgPicture.asset(
+                            fit: BoxFit.scaleDown,
+                            AppIcons.arrowBack,
+                          ),
+                        ),
+                      ),
+                    ),
                     overlayContent: MealInfoOverlay(
                       mealName: meal.strMeal,
                       mealDescription: meal.strCategory,

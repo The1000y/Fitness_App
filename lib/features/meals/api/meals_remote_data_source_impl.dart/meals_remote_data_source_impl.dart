@@ -15,9 +15,9 @@ class MealsRemoteDataSourceImpl implements MealsRemoteDataSource {
   Future<BaseResponse<List<DetailsMealDto>>> getMealDetails(
     String mealId,
   ) async {
-    final result = await apiClient.getMealDetails(mealId);
-    return excecuteApiCall<List<DetailsMealDto>>(
-      () async => result.meals ?? [],
-    );
+    return excecuteApiCall<List<DetailsMealDto>>(() async {
+      final response = await apiClient.getMealDetails(mealId);
+      return response.meals ?? const [];
+    });
   }
 }

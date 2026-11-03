@@ -1,6 +1,6 @@
 import 'package:fitness_app/core/shared/helper/image_thumbnail_overlay.dart';
 import 'package:fitness_app/core/shared/helper/video_error_view.dart';
-import 'package:fitness_app/features/meals/presentation/view/widgets/video_player_content.dart';
+import 'package:fitness_app/core/shared/video_player_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import '../../../../../helpers/pump_app.dart';

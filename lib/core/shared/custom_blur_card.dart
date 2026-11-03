@@ -24,7 +24,7 @@ class CustomBlurCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final effectiveBorderRadius = borderRadius ?? BorderRadius.circular(30.r);
     final effectivePadding =
-        padding ?? EdgeInsets.symmetric(horizontal: 0.w, vertical: 0.h);
+        padding ?? EdgeInsets.symmetric(horizontal: 20.w, vertical: 24.h);
 
     return ClipRRect(
       borderRadius: effectiveBorderRadius,
