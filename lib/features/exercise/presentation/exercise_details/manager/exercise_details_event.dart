@@ -11,3 +11,8 @@ final class LoadExercises extends ExerciseDetailsEvent {
     required this.difficultyLevelId,
   });
 }
+
+final class SelectExercise extends ExerciseDetailsEvent {
+  final int index;
+  const SelectExercise(this.index);
+}

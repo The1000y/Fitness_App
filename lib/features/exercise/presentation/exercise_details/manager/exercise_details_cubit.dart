@@ -16,12 +16,14 @@ class ExerciseDetailsCubit
   final GetExercisesUseCase _getExercisesUseCase;
 
   ExerciseDetailsCubit(this._getExercisesUseCase)
-      : super(const ExerciseDetailsState());
+    : super(const ExerciseDetailsState());
 
   void onEvent(ExerciseDetailsEvent event) {
     switch (event) {
       case LoadExercises():
         unawaited(_loadExercises(event));
+      case SelectExercise():
+        emit(state.copyWith(selectedIndex: event.index));
     }
   }
 

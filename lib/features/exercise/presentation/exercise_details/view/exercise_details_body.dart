@@ -30,23 +30,23 @@ class ExerciseDetailsBody extends StatelessWidget {
           }
 
           final exercises = state.exercisesState.data?.exercises ?? [];
+          if (exercises.isEmpty) return const ExerciseEmptyView();
 
-          if (exercises.isEmpty) {
-            return const ExerciseEmptyView();
-          }
+          final selected =
+              exercises[state.selectedIndex.clamp(0, exercises.length - 1)];
 
           return CustomScrollView(
             slivers: [
               SliverToBoxAdapter(
                 child: HeroVideoSection(
-                  exercise: exercises.first,
+                  key: ValueKey(
+                    selected.id,
+                  ), // new exercise -> new State -> new video
+                  exercise: selected,
                   muscleName: muscleName,
                 ),
               ),
-              ExerciseListSection(
-                muscleName: muscleName,
-                exercises: exercises,
-              ),
+              ExerciseListSection(muscleName: muscleName, exercises: exercises),
             ],
           );
         },

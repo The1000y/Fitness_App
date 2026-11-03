@@ -1,7 +1,10 @@
 import 'package:fitness_app/config/routing/app_routes.dart';
 import 'package:fitness_app/core/theme/app_colors/app_colors.dart';
 import 'package:fitness_app/features/exercise/domain/entities/exercise_entity.dart';
+import 'package:fitness_app/features/exercise/presentation/exercise_details/manager/exercise_details_cubit.dart';
+import 'package:fitness_app/features/exercise/presentation/exercise_details/manager/exercise_details_event.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 import 'package:gap/gap.dart';
 
@@ -43,6 +46,9 @@ class ExerciseListSection extends StatelessWidget {
               return ExerciseListItem(
                 exercise: exercises[index],
                 onTap: () {
+                  context.read<ExerciseDetailsCubit>().onEvent(
+                    SelectExercise(index),
+                  );
                   Navigator.pushNamed(
                     context,
                     AppRoutes.exerciseVideoPlayer,
