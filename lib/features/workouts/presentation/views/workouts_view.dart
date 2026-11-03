@@ -1,7 +1,6 @@
+import 'package:fitness_app/core/constants/app_images.dart';
+import 'package:fitness_app/core/shared/custom_background_image.dart';
 import 'package:flutter/material.dart';
-
-import '../../../../core/constants/app_images.dart';
-import '../../../../core/shared/custom_background_image.dart';
 
 class WorkoutsView extends StatelessWidget {
   const WorkoutsView({super.key});

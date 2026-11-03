@@ -4,7 +4,9 @@ import '../../../../../../helpers/pump_app.dart';
 
 void main() {
   group('AuthFooterLink', () {
-    testWidgets('shows text and link label, and link tap calls onPressed', (tester) async {
+    testWidgets('shows text and link label, and link tap calls onPressed', (
+      tester,
+    ) async {
       bool clicked = false;
       await tester.pumpApp(
         AuthFooterLink(

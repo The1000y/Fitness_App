@@ -32,91 +32,106 @@ void main() {
       expect(cubit.state, const LoginState());
     });
 
-    test('successful login emits isLoading true/false, stores the data, emits NavigateReplaceTo(AppRoutes.home), and no ShowFailureMessage', () async {
-      fakeRepo.nextResult = Success(TestData.loginEntity);
+    test(
+      'successful login emits isLoading true/false, stores the data, emits NavigateReplaceTo(AppRoutes.home), and no ShowFailureMessage',
+      () async {
+        fakeRepo.nextResult = Success(TestData.loginEntity);
 
-      final uiEvents = <BaseUiEvent>[];
-      final subUi = cubit.uiEventStream.listen(uiEvents.add);
-      addTearDown(subUi.cancel);
+        final uiEvents = <BaseUiEvent>[];
+        final subUi = cubit.uiEventStream.listen(uiEvents.add);
+        addTearDown(subUi.cancel);
 
-      final states = <LoginState>[];
-      final subState = cubit.stream.listen(states.add);
-      addTearDown(subState.cancel);
+        final states = <LoginState>[];
+        final subState = cubit.stream.listen(states.add);
+        addTearDown(subState.cancel);
 
-      cubit.onEvent(
-        const LoginSubmitted(
-          email: '  ${TestData.validEmail}  ',
-          password: TestData.validPassword,
-        ),
-      );
+        cubit.onEvent(
+          const LoginSubmitted(
+            email: '  ${TestData.validEmail}  ',
+            password: TestData.validPassword,
+          ),
+        );
 
-      await pumpEventQueue();
+        await pumpEventQueue();
 
-      expect(fakeRepo.lastEmail, TestData.validEmail);
-      expect(states.map((s) => s.loginState.isLoading).toList(), [true, false]);
-      expect(states.last.loginState.data, TestData.loginEntity);
-      expect(states.last.loginState.errorMessage, isNull);
-      expect(uiEvents, [const NavigateReplaceTo(AppRoutes.home)]);
-      expect(uiEvents.whereType<ShowFailureMessage>(), isEmpty);
-    });
+        expect(fakeRepo.lastEmail, TestData.validEmail);
+        expect(states.map((s) => s.loginState.isLoading).toList(), [
+          true,
+          false,
+        ]);
+        expect(states.last.loginState.data, TestData.loginEntity);
+        expect(states.last.loginState.errorMessage, isNull);
+        expect(uiEvents, [const NavigateReplaceTo(AppRoutes.main)]);
+        expect(uiEvents.whereType<ShowFailureMessage>(), isEmpty);
+      },
+    );
 
-    test('failed login emits state sequence [true, false], stores the failure, emits exactly one ShowFailureMessage carrying same failure, and no NavigateReplaceTo', () async {
-      const failure = UnauthorizedFailure(serverMessage: 'Wrong password');
-      fakeRepo.nextResult = const Error(failure);
+    test(
+      'failed login emits state sequence [true, false], stores the failure, emits exactly one ShowFailureMessage carrying same failure, and no NavigateReplaceTo',
+      () async {
+        const failure = UnauthorizedFailure(serverMessage: 'Wrong password');
+        fakeRepo.nextResult = const Error(failure);
 
-      final uiEvents = <BaseUiEvent>[];
-      final subUi = cubit.uiEventStream.listen(uiEvents.add);
-      addTearDown(subUi.cancel);
+        final uiEvents = <BaseUiEvent>[];
+        final subUi = cubit.uiEventStream.listen(uiEvents.add);
+        addTearDown(subUi.cancel);
 
-      final states = <LoginState>[];
-      final subState = cubit.stream.listen(states.add);
-      addTearDown(subState.cancel);
+        final states = <LoginState>[];
+        final subState = cubit.stream.listen(states.add);
+        addTearDown(subState.cancel);
 
-      cubit.onEvent(
-        const LoginSubmitted(
-          email: TestData.validEmail,
-          password: TestData.validPassword,
-        ),
-      );
+        cubit.onEvent(
+          const LoginSubmitted(
+            email: TestData.validEmail,
+            password: TestData.validPassword,
+          ),
+        );
 
-      await pumpEventQueue();
+        await pumpEventQueue();
 
-      expect(states.map((s) => s.loginState.isLoading).toList(), [true, false]);
-      expect(states.last.loginState.errorMessage, failure);
-      expect(states.last.loginState.data, isNull);
-      expect(uiEvents.length, 1);
-      final event = uiEvents.first as ShowFailureMessage;
-      expect(event.failure, failure);
-      expect(uiEvents.whereType<NavigateReplaceTo>(), isEmpty);
-    });
+        expect(states.map((s) => s.loginState.isLoading).toList(), [
+          true,
+          false,
+        ]);
+        expect(states.last.loginState.errorMessage, failure);
+        expect(states.last.loginState.data, isNull);
+        expect(uiEvents.length, 1);
+        final event = uiEvents.first as ShowFailureMessage;
+        expect(event.failure, failure);
+        expect(uiEvents.whereType<NavigateReplaceTo>(), isEmpty);
+      },
+    );
 
-    test('second LoginSubmitted while loading is ignored (repo called once)', () async {
-      final completer = Completer<BaseResponse<LoginEntity>>();
-      fakeRepo.completer = completer;
+    test(
+      'second LoginSubmitted while loading is ignored (repo called once)',
+      () async {
+        final completer = Completer<BaseResponse<LoginEntity>>();
+        fakeRepo.completer = completer;
 
-      cubit.onEvent(
-        const LoginSubmitted(
-          email: TestData.validEmail,
-          password: TestData.validPassword,
-        ),
-      );
-      await pumpEventQueue();
+        cubit.onEvent(
+          const LoginSubmitted(
+            email: TestData.validEmail,
+            password: TestData.validPassword,
+          ),
+        );
+        await pumpEventQueue();
 
-      expect(fakeRepo.callCount, 1);
+        expect(fakeRepo.callCount, 1);
 
-      cubit.onEvent(
-        const LoginSubmitted(
-          email: 'other@example.com',
-          password: TestData.validPassword,
-        ),
-      );
-      await pumpEventQueue();
+        cubit.onEvent(
+          const LoginSubmitted(
+            email: 'other@example.com',
+            password: TestData.validPassword,
+          ),
+        );
+        await pumpEventQueue();
 
-      expect(fakeRepo.callCount, 1);
+        expect(fakeRepo.callCount, 1);
 
-      completer.complete(Success(TestData.loginEntity));
-      await pumpEventQueue();
-    });
+        completer.complete(Success(TestData.loginEntity));
+        await pumpEventQueue();
+      },
+    );
 
     test('after a failure the user can submit again', () async {
       fakeRepo.nextResult = const Error(InternetConnectionFailure());
@@ -143,7 +158,7 @@ void main() {
 
     test(
       'closing cubit while request is pending, then completing it, throws nothing and emits nothing',
-          () async {
+      () async {
         final completer = Completer<BaseResponse<LoginEntity>>();
         fakeRepo.completer = completer;
 

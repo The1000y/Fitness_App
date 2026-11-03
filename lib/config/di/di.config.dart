@@ -36,6 +36,10 @@ import '../../features/exercise/data/data_source/remote/exercise_remote_data_sou
 import '../../features/exercise/data/repo_impl/exercise_repo_impl.dart'
     as _i824;
 import '../../features/exercise/domain/repo/exercise_repo.dart' as _i628;
+import '../../features/exercise/domain/use_cases/get_exercises_use_case.dart'
+    as _i685;
+import '../../features/exercise/presentation/exercise_details/manager/exercise_details_cubit.dart'
+    as _i944;
 import '../dio/app_interceptor.dart' as _i264;
 import '../dio/dio_module.dart' as _i977;
 import '../utils/secure_storage_module.dart' as _i327;
@@ -56,10 +60,6 @@ extension GetItInjectableX on _i174.GetIt {
       () => secureStorageModule.secureStorage,
     );
     gh.lazySingleton<_i760.AppAuthCubit>(() => _i760.AppAuthCubit());
-    gh.factory<_i27.ExerciseRemoteDataSource>(
-      () => _i669.ExerciseRemoteDataSourceImpl(),
-    );
-    gh.factory<_i628.ExerciseRepo>(() => _i824.ExerciseRepoImpl());
     gh.lazySingleton<_i264.AppInterceptors>(
       () => _i264.AppInterceptors(
         gh<_i558.FlutterSecureStorage>(),
@@ -75,14 +75,26 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i248.ExerciseApiClient>(
       () => _i248.ExerciseApiClient(gh<_i361.Dio>()),
     );
+    gh.factory<_i27.ExerciseRemoteDataSource>(
+      () => _i669.ExerciseRemoteDataSourceImpl(gh<_i248.ExerciseApiClient>()),
+    );
     gh.factory<_i548.RemoteDataSource>(
       () => _i192.RemoteDataSourceImpl(gh<_i213.AuthApiClient>()),
+    );
+    gh.factory<_i628.ExerciseRepo>(
+      () => _i824.ExerciseRepoImpl(gh<_i27.ExerciseRemoteDataSource>()),
     );
     gh.factory<_i170.AuthRepo>(
       () => _i279.AuthRepoImpl(gh<_i548.RemoteDataSource>()),
     );
     gh.factory<_i1038.LoginUseCase>(
       () => _i1038.LoginUseCase(gh<_i170.AuthRepo>()),
+    );
+    gh.factory<_i685.GetExercisesUseCase>(
+      () => _i685.GetExercisesUseCase(gh<_i628.ExerciseRepo>()),
+    );
+    gh.factory<_i944.ExerciseDetailsCubit>(
+      () => _i944.ExerciseDetailsCubit(gh<_i685.GetExercisesUseCase>()),
     );
     gh.factory<_i889.LoginCubit>(
       () => _i889.LoginCubit(gh<_i1038.LoginUseCase>()),

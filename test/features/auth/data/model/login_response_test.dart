@@ -20,18 +20,21 @@ void main() {
       expect(entity.user.email, TestData.validEmail);
     });
 
-    test('fromJson and toEntity with all-null/missing fields defaults correctly', () {
-      final response = LoginResponse.fromJson({});
-      expect(response.message, null);
-      expect(response.token, null);
-      expect(response.user, null);
+    test(
+      'fromJson and toEntity with all-null/missing fields defaults correctly',
+      () {
+        final response = LoginResponse.fromJson({});
+        expect(response.message, null);
+        expect(response.token, null);
+        expect(response.user, null);
 
-      final entity = response.toEntity();
-      expect(entity.message, '');
-      expect(entity.token, '');
-      expect(entity.user, isA<UserEntity>());
-      expect(entity.user.email, null);
-    });
+        final entity = response.toEntity();
+        expect(entity.message, '');
+        expect(entity.token, '');
+        expect(entity.user, isA<UserEntity>());
+        expect(entity.user.email, null);
+      },
+    );
 
     test('Equatable equality for LoginEntity and UserEntity', () {
       final u1 = UserEntity(email: 'a@b.com');
@@ -54,11 +57,7 @@ void main() {
       final jsonWithDoubles = {
         'message': 'OK',
         'token': 'tok',
-        'user': {
-          'age': 25.5,
-          'weight': 70.5,
-          'height': 175.5,
-        },
+        'user': {'age': 25.5, 'weight': 70.5, 'height': 175.5},
       };
       final res = LoginResponse.fromJson(jsonWithDoubles);
       expect(res.user?.weight, 70.5);
@@ -75,10 +74,7 @@ void main() {
       final jsonWithInts = {
         'message': 'OK',
         'token': 'tok',
-        'user': {
-          'weight': 70,
-          'height': 175,
-        },
+        'user': {'weight': 70, 'height': 175},
       };
       final res = LoginResponse.fromJson(jsonWithInts);
       expect(res.user?.weight, 70.0);

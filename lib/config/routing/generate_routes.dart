@@ -1,12 +1,19 @@
+import 'package:fitness_app/config/di/di.dart';
 import 'package:fitness_app/config/routing/app_routes.dart';
 import 'package:fitness_app/features/auth/presentation/onboarding/views/onboarding_view.dart';
 import 'package:fitness_app/features/chat/presentation/views/chat_view.dart';
+import 'package:fitness_app/features/exercise/domain/entities/exercise_entity.dart';
+import 'package:fitness_app/features/exercise/presentation/exercise_details/manager/exercise_details_cubit.dart';
+import 'package:fitness_app/features/exercise/presentation/exercise_details/manager/exercise_details_event.dart';
+import 'package:fitness_app/features/exercise/presentation/exercise_details/view/exercise_details_view.dart';
+import 'package:fitness_app/features/exercise/presentation/exercise_details/view/exercise_video_player_view.dart';
 import 'package:fitness_app/features/home/presentation/views/home_view.dart';
 import 'package:fitness_app/features/main/presentation/views/main_layout_view.dart';
 import 'package:fitness_app/features/profile/presentation/views/profile_view.dart';
 import 'package:fitness_app/features/workouts/presentation/views/workouts_view.dart';
 import 'package:fitness_app/test_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../features/auth/presentation/login/view/login_view.dart';
 
@@ -22,6 +29,7 @@ abstract final class GenerateRoutes {
       // Auth
       case AppRoutes.login:
         return _pageRoute(const LoginView(), settings);
+
       case AppRoutes.register:
         return _pageRoute(const _StubScreen('Register'), settings);
 
@@ -64,9 +72,31 @@ abstract final class GenerateRoutes {
           ),
           settings,
         );
-
+      // Exercise
       case AppRoutes.exerciseDetails:
-        return _pageRoute(const _StubScreen('Exercise Details'), settings);
+        final args = settings.arguments as Map<String, dynamic>;
+        return _pageRoute(
+          BlocProvider(
+            create: (_) => getIt<ExerciseDetailsCubit>()
+              ..onEvent(
+                LoadExercises(
+                  primeMoverMuscleId: args['primeMoverMuscleId'] as String,
+                  difficultyLevelId: args['difficultyLevelId'] as String,
+                ),
+              ),
+            child: ExerciseDetailsView(
+              muscleName: args['muscleName'] as String,
+            ),
+          ),
+          settings,
+        );
+
+      case AppRoutes.exerciseVideoPlayer:
+        final exercise = settings.arguments as ExerciseEntity;
+        return _pageRoute(
+          ExerciseVideoPlayerView(exercise: exercise),
+          settings,
+        );
 
       // Food
       case AppRoutes.food:

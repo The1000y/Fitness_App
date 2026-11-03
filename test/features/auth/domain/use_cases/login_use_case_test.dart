@@ -15,19 +15,22 @@ void main() {
   });
 
   group('LoginUseCase', () {
-    test('trims email, does not trim password, and forwards Success result', () async {
-      fakeRepo.nextResult = Success(TestData.loginEntity);
+    test(
+      'trims email, does not trim password, and forwards Success result',
+      () async {
+        fakeRepo.nextResult = Success(TestData.loginEntity);
 
-      final result = await useCase(
-        email: '  ${TestData.validEmail}   ',
-        password: ' ${TestData.validPassword} ',
-      );
+        final result = await useCase(
+          email: '  ${TestData.validEmail}   ',
+          password: ' ${TestData.validPassword} ',
+        );
 
-      expect(fakeRepo.lastEmail, TestData.validEmail);
-      expect(fakeRepo.lastPassword, ' ${TestData.validPassword} ');
-      expect(result, isA<Success<dynamic>>());
-      expect((result as Success).data, TestData.loginEntity);
-    });
+        expect(fakeRepo.lastEmail, TestData.validEmail);
+        expect(fakeRepo.lastPassword, ' ${TestData.validPassword} ');
+        expect(result, isA<Success<dynamic>>());
+        expect((result as Success).data, TestData.loginEntity);
+      },
+    );
 
     test('forwards Error result from repo untouched', () async {
       fakeRepo.nextResult = const Error(InternetConnectionFailure());
