@@ -1,3 +1,4 @@
+import 'package:fitness_app/config/errors/app_failure.dart';
 import 'package:fitness_app/core/shared/image_title_card.dart';
 import 'package:fitness_app/features/meals/presentation/manager/meals_cubit.dart';
 import 'package:fitness_app/features/meals/presentation/manager/meals_event.dart';
@@ -36,6 +37,9 @@ class MealsGridContent extends StatelessWidget {
 
               if (mealsByCategoriesState.errorMessage != null) {
                 return MealsErrorState(
+                  isOffline:
+                      mealsByCategoriesState.errorMessage
+                          is InternetConnectionFailure,
                   onRetry: () {
                     context.read<MealsCubit>().doEvent(
                       GetMealsByCategoryEvent(state.selectedCategory),
@@ -44,13 +48,9 @@ class MealsGridContent extends StatelessWidget {
                 );
               }
 
-              if (mealsByCategoriesState.data == null) {
-                return const MealsGridShimmer();
-              }
-
               final meals = mealsByCategoriesState.data ?? [];
 
-              if (meals.isEmpty) {
+              if (meals.isEmpty || mealsByCategoriesState.data == null) {
                 return MealsEmptyState(
                   categoryLabel: state.selectedCategory,
                   onRefresh: () {

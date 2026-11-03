@@ -43,10 +43,7 @@ void main() {
     await cubit.close();
   });
 
-  Future<void> pumpMealsView(
-    WidgetTester tester, {
-    String? activeCategory,
-  }) async {
+  Future<void> pumpMealsView(WidgetTester tester) async {
     tester.view.physicalSize = const Size(375, 812);
     tester.view.devicePixelRatio = 1.0;
     addTearDown(() {
@@ -67,7 +64,7 @@ void main() {
           supportedLocales: AppLocalizations.supportedLocales,
           home: BlocProvider<MealsCubit>.value(
             value: cubit,
-            child: MealsView(activeCategory: activeCategory),
+            child: const MealsView(),
           ),
         ),
       ),
@@ -275,14 +272,14 @@ void main() {
       },
     );
 
-    testWidgets('preselects activeCategory when provided via constructor', (
+    testWidgets('preselects activeCategory when provided via cubit', (
       WidgetTester tester,
     ) async {
       fakeRepo.nextCategoriesResult = Success(MealsTestData.categoryEntities);
       fakeRepo.nextMealsResult = Success(MealsTestData.chickenMealEntities);
 
-      await cubit.doEvent(GetMealsCategoriesEvent());
-      await pumpMealsView(tester, activeCategory: 'Chicken');
+      await cubit.doEvent(GetMealsCategoriesEvent('Chicken'));
+      await pumpMealsView(tester);
       await tester.pumpAndSettle();
 
       expect(fakeRepo.lastCategory, 'Chicken');
