@@ -11,6 +11,11 @@ import 'package:fitness_app/features/auth/data/model/responses/login_response/lo
 import 'package:fitness_app/features/auth/domain/entities/login_entity/login_entity.dart';
 import 'package:fitness_app/features/auth/domain/entities/login_entity/user_entity.dart';
 import 'package:fitness_app/features/auth/domain/repo/auth_repo.dart';
+import 'package:fitness_app/features/exercise/api/client/exercise_api_client.dart';
+import 'package:fitness_app/features/exercise/data/data_source/remote/exercise_remote_data_source.dart';
+import 'package:fitness_app/features/exercise/data/model/responses/exercises_list_response.dart';
+import 'package:fitness_app/features/exercise/domain/entities/exercises_list_entity.dart';
+import 'package:fitness_app/features/exercise/domain/repo/exercise_repo.dart';
 
 class FakeAuthRepo implements AuthRepo {
   int callCount = 0;
@@ -165,6 +170,77 @@ class InMemorySecureStorage implements FlutterSecureStorage {
 
   @override
   noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
+}
+
+class FakeExerciseApiClient implements ExerciseApiClient {
+  int callCount = 0;
+  String? lastPrimeMoverMuscleId;
+  String? lastDifficultyLevelId;
+  ExercisesListResponse? nextResponse;
+  Object? nextError;
+
+  @override
+  Future<ExercisesListResponse> getExercisesByMuscleDifficulty(
+    String primeMoverMuscleId,
+    String difficultyLevelId,
+  ) async {
+    callCount++;
+    lastPrimeMoverMuscleId = primeMoverMuscleId;
+    lastDifficultyLevelId = difficultyLevelId;
+    if (nextError != null) throw nextError!;
+    return nextResponse ?? ExercisesListResponse();
+  }
+}
+
+class FakeExerciseRemoteDataSource implements ExerciseRemoteDataSource {
+  int callCount = 0;
+  String? lastPrimeMoverMuscleId;
+  String? lastDifficultyLevelId;
+  ExercisesListResponse? nextResponse;
+  Object? nextError;
+
+  @override
+  Future<ExercisesListResponse> getExercisesByMuscleDifficulty({
+    required String primeMoverMuscleId,
+    required String difficultyLevelId,
+  }) async {
+    callCount++;
+    lastPrimeMoverMuscleId = primeMoverMuscleId;
+    lastDifficultyLevelId = difficultyLevelId;
+    if (nextError != null) throw nextError!;
+    return nextResponse ?? ExercisesListResponse();
+  }
+}
+
+class FakeExerciseRepo implements ExerciseRepo {
+  int callCount = 0;
+  String? lastPrimeMoverMuscleId;
+  String? lastDifficultyLevelId;
+  BaseResponse<ExercisesListEntity>? nextResult;
+  Completer<BaseResponse<ExercisesListEntity>>? completer;
+
+  @override
+  Future<BaseResponse<ExercisesListEntity>> getExercisesByMuscleDifficulty({
+    required String primeMoverMuscleId,
+    required String difficultyLevelId,
+  }) async {
+    callCount++;
+    lastPrimeMoverMuscleId = primeMoverMuscleId;
+    lastDifficultyLevelId = difficultyLevelId;
+    if (completer != null) {
+      return completer!.future;
+    }
+    return nextResult ??
+        const Success(
+          ExercisesListEntity(
+            message: '',
+            totalExercises: 0,
+            totalPages: 0,
+            currentPage: 0,
+            exercises: [],
+          ),
+        );
+  }
 }
 
 class FakeHttpClientAdapter implements HttpClientAdapter {
