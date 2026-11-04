@@ -84,16 +84,19 @@
   "homeSubtitle": "Let's start your day",
   "explore": "Explore",
   "category": "Category",
+  "noCategoriesAvailable": "No categories available",
+  "selectCategory": "Select a category",
+  "noMusclesAvailable": "No muscles available",
   "categoryGym": "Gym",
   "categoryFitness": "Fitness",
   "categoryYoga": "Yoga",
   "categoryAerobics": "Aerobics",
   "categoryTrainer": "Trainer",
-  "recommendationToday": "Recommendation for today",
+"recommendationToDay": "Recommendation To Day",
   "jogging": "Jogging",
   "pushUp": "Push-up",
   "squat": "Squat",
-  "upcomingWorkouts": "Upcoming workouts",
+  "upcomingWorkouts": "Upcoming Workouts",
   "fullBody": "Full body",
   "chest": "Chest",
   "arm": "Arm",
@@ -102,11 +105,10 @@
   "bodyBack": "Back",
   "legs": "Legs",
   "stomach": "Stomach",
-  "recommendationForYou": "Recommendation for you",
-  "breakfast": "Breakfast",
+  "recommendationForYou": "Recommendation For You",  "breakfast": "Breakfast",
   "lunch": "Lunch",
   "dinner": "Dinner",
-  "popularTraining": "Popular training",
+  "popularTraining": "Popular Training",
   "strengthenChest": "Exercises that strengthen your chest",
   "strengthenBack": "Exercises that strengthen your back",
   "strengthenBody": "Exercises that strengthen your body",
@@ -237,5 +239,35 @@
   "newPersonalRecord": "New personal record!",
 
   "reminderSet": "Reminder set",
-  "settingsSaved": "Settings saved"
+  "settingsSaved": "Settings saved",
+  
+  "failedToLoadVideo": "Couldn't load the video. Please check your internet connection and try again.",
+  "videoPlayerError": "Something went wrong while playing the video. Please try again.",
+  "invalidVideo": "The video link is invalid or unavailable.",
+  "embeddingDisabled": "This video can't be played here because the owner has disabled embedding.",
+  "videoNotFound": "This video isn't available. It may have been removed or set to private.",
+  "notFound": "Unable to find the requested resource.",
+  "retry": "Retry",
+  "back": "Back",
+  "unableToPlayVideo": "Unable to play video",
+  "cancel": "cancel the video",
+  "noMealsYet": "No meals yet",
+  "noCategoryMealsYet": "No {category} meals yet",
+  "@noCategoryMealsYet": {
+    "placeholders": {
+      "category": {
+        "type": "String"
+      }
+    }
+  },
+  "noMealsMessage": "There are no recommendations right now. Try another meal time or check back later.",
+  "refresh": "Refresh",
+  "noInternetConnection": "No internet connection",
+  "somethingWentWrong": "Something went wrong",
+  "checkConnectionMessage": "Check your connection and try again.",
+  "couldNotLoadMeals": "We could not load the meals. Please try again.",
+  "tryAgain": "Try again",
+  "noCategoriesAvailable": "No categories available",
+  "couldNotLoadCategories": "Could not load categories"
+
 }

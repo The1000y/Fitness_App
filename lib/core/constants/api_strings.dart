@@ -10,6 +10,8 @@ abstract class ApiStrings {
 
   /// TheMealDB (separate third-party API)
   static const String mealBaseUrl = 'https://www.themealdb.com/api/json/v1/1';
+  static const String namedFitnessDio = 'fitnessDio';
+  static const String namedMealDio = 'mealDio';
 
   // ---------------------------------------------------------------------------
   // Auth
@@ -39,13 +41,13 @@ abstract class ApiStrings {
   // ---------------------------------------------------------------------------
   // Muscles
   // ---------------------------------------------------------------------------
-  static String get muscles => '/muscles'; // GET (all muscle groups)
-  static String get randomMuscles =>
+  static const String  muscles = '/muscles'; // GET (all muscle groups)
+  static const String  randomMuscles =
       '/muscles/random'; // GET (20 random prime movers)
   
   /// GET – all muscles by muscle group id
-  static String musclesByGroupId(String muscleGroupId) =>
-      '/musclesGroup/$muscleGroupId';
+  static const String musclesByGroup =
+      '/musclesGroup/by-muscle-group';
 
   /// GET – query: muscleGroupId
   static String get primeMoversByMuscleGroup => '/musclesGroup/by-muscle-group';

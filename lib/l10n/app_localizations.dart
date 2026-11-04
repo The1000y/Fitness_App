@@ -500,6 +500,24 @@ abstract class AppLocalizations {
   /// **'Category'**
   String get category;
 
+  /// No description provided for @noCategoriesAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'No categories available'**
+  String get noCategoriesAvailable;
+
+  /// No description provided for @selectCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a category'**
+  String get selectCategory;
+
+  /// No description provided for @noMusclesAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'No muscles available'**
+  String get noMusclesAvailable;
+
   /// No description provided for @categoryGym.
   ///
   /// In en, this message translates to:
@@ -530,11 +548,11 @@ abstract class AppLocalizations {
   /// **'Trainer'**
   String get categoryTrainer;
 
-  /// No description provided for @recommendationToday.
+  /// No description provided for @recommendationToDay.
   ///
   /// In en, this message translates to:
-  /// **'Recommendation for today'**
-  String get recommendationToday;
+  /// **'Recommendation To Day'**
+  String get recommendationToDay;
 
   /// No description provided for @jogging.
   ///
@@ -557,7 +575,7 @@ abstract class AppLocalizations {
   /// No description provided for @upcomingWorkouts.
   ///
   /// In en, this message translates to:
-  /// **'Upcoming workouts'**
+  /// **'Upcoming Workouts'**
   String get upcomingWorkouts;
 
   /// No description provided for @fullBody.
@@ -611,7 +629,7 @@ abstract class AppLocalizations {
   /// No description provided for @recommendationForYou.
   ///
   /// In en, this message translates to:
-  /// **'Recommendation for you'**
+  /// **'Recommendation For You'**
   String get recommendationForYou;
 
   /// No description provided for @breakfast.
@@ -635,7 +653,7 @@ abstract class AppLocalizations {
   /// No description provided for @popularTraining.
   ///
   /// In en, this message translates to:
-  /// **'Popular training'**
+  /// **'Popular Training'**
   String get popularTraining;
 
   /// No description provided for @strengthenChest.
@@ -1165,6 +1183,120 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Settings saved'**
   String get settingsSaved;
+
+  /// No description provided for @failedToLoadVideo.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load the video. Please check your internet connection and try again.'**
+  String get failedToLoadVideo;
+
+  /// No description provided for @videoPlayerError.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong while playing the video. Please try again.'**
+  String get videoPlayerError;
+
+  /// No description provided for @invalidVideo.
+  ///
+  /// In en, this message translates to:
+  /// **'The video link is invalid or unavailable.'**
+  String get invalidVideo;
+
+  /// No description provided for @embeddingDisabled.
+  ///
+  /// In en, this message translates to:
+  /// **'This video can\'t be played here because the owner has disabled embedding.'**
+  String get embeddingDisabled;
+
+  /// No description provided for @videoNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'This video isn\'t available. It may have been removed or set to private.'**
+  String get videoNotFound;
+
+  /// No description provided for @notFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to find the requested resource.'**
+  String get notFound;
+
+  /// No description provided for @retry.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get retry;
+
+  /// No description provided for @unableToPlayVideo.
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to play video'**
+  String get unableToPlayVideo;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'cancel the video'**
+  String get cancel;
+
+  /// No description provided for @noMealsYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No meals yet'**
+  String get noMealsYet;
+
+  /// No description provided for @noCategoryMealsYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No {category} meals yet'**
+  String noCategoryMealsYet(String category);
+
+  /// No description provided for @noMealsMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'There are no recommendations right now. Try another meal time or check back later.'**
+  String get noMealsMessage;
+
+  /// No description provided for @refresh.
+  ///
+  /// In en, this message translates to:
+  /// **'Refresh'**
+  String get refresh;
+
+  /// No description provided for @noInternetConnection.
+  ///
+  /// In en, this message translates to:
+  /// **'No internet connection'**
+  String get noInternetConnection;
+
+  /// No description provided for @somethingWentWrong.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong'**
+  String get somethingWentWrong;
+
+  /// No description provided for @checkConnectionMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Check your connection and try again.'**
+  String get checkConnectionMessage;
+
+  /// No description provided for @couldNotLoadMeals.
+  ///
+  /// In en, this message translates to:
+  /// **'We could not load the meals. Please try again.'**
+  String get couldNotLoadMeals;
+
+  /// No description provided for @tryAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get tryAgain;
+
+  /// No description provided for @couldNotLoadCategories.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not load categories'**
+  String get couldNotLoadCategories;
 }
 
 class _AppLocalizationsDelegate

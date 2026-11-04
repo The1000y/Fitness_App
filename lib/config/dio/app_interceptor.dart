@@ -4,6 +4,7 @@ import 'package:fitness_app/core/constants/storage_keys.dart';
 import 'package:fitness_app/features/app/presentation/cubit/auth/app_auth_cubit.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:injectable/injectable.dart';
+import 'dart:convert';
 
 @lazySingleton
 class AppInterceptors extends QueuedInterceptor {
@@ -46,6 +47,7 @@ class AppInterceptors extends QueuedInterceptor {
   ) async {
     if (response.requestOptions.path.contains(_signInPath)) {
       await setToken(response.data["token"]);
+      await setUser(response.data["user"]);
     }
     handler.next(response);
   }
@@ -69,7 +71,15 @@ class AppInterceptors extends QueuedInterceptor {
   Future<void> setToken(String token) =>
       _storage.write(key: StorageKeys.kUserToken, value: token);
 
-  Future<void> clearToken() => _storage.delete(key: StorageKeys.kUserToken);
+  Future<void> setUser(Object? user) async {
+    if (user == null) return;
+    await _storage.write(key: StorageKeys.kUserData, value: jsonEncode(user));
+  }
+
+  Future<void> clearToken() async {
+    await _storage.delete(key: StorageKeys.kUserToken);
+    await _storage.delete(key: StorageKeys.kUserData);
+  }
 
   Future<bool> get hasToken async {
     final token = await _storage.read(key: StorageKeys.kUserToken);

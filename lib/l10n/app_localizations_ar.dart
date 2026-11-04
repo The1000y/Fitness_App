@@ -215,6 +215,15 @@ class AppLocalizationsAr extends AppLocalizations {
   String get category => 'الفئة';
 
   @override
+  String get noCategoriesAvailable => 'لا توجد فئات متاحة';
+
+  @override
+  String get selectCategory => 'اختر فئة';
+
+  @override
+  String get noMusclesAvailable => 'لا توجد عضلات متاحة';
+
+  @override
   String get categoryGym => 'الجيم';
 
   @override
@@ -230,7 +239,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get categoryTrainer => 'المدرب';
 
   @override
-  String get recommendationToday => 'توصية اليوم';
+  String get recommendationToDay => 'توصية اليوم';
 
   @override
   String get jogging => 'الجري الخفيف';
@@ -563,4 +572,69 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get settingsSaved => 'تم حفظ الإعدادات';
+
+  @override
+  String get failedToLoadVideo =>
+      'تعذر تحميل الفيديو. يرجى التحقق من اتصال الإنترنت والمحاولة مرة أخرى.';
+
+  @override
+  String get videoPlayerError =>
+      'حدث خطأ أثناء تشغيل الفيديو. يرجى المحاولة مرة أخرى.';
+
+  @override
+  String get invalidVideo => 'رابط الفيديو غير صالح أو غير متاح.';
+
+  @override
+  String get embeddingDisabled =>
+      'لا يمكن تشغيل هذا الفيديو هنا لأن مالكه عطّل إمكانية تضمينه.';
+
+  @override
+  String get videoNotFound =>
+      'هذا الفيديو غير متاح. ربما تمت إزالته أو تم تعيينه كخاص.';
+
+  @override
+  String get notFound => 'تعذر العثور على المطلوب.';
+
+  @override
+  String get retry => 'إعادة المحاولة';
+
+  @override
+  String get unableToPlayVideo => 'تعذر تشغيل الفيديو';
+
+  @override
+  String get cancel => 'إغلاق الفيديو';
+
+  @override
+  String get noMealsYet => 'لا توجد وجبات بعد';
+
+  @override
+  String noCategoryMealsYet(String category) {
+    return 'لا توجد وجبات $category بعد';
+  }
+
+  @override
+  String get noMealsMessage =>
+      'لا توجد ترشيحات في الوقت الحالي. جرّب وقت وجبة آخر أو عد لاحقاً.';
+
+  @override
+  String get refresh => 'تحديث';
+
+  @override
+  String get noInternetConnection => 'لا يوجد اتصال بالإنترنت';
+
+  @override
+  String get somethingWentWrong => 'حدث خطأ ما';
+
+  @override
+  String get checkConnectionMessage =>
+      'تحقق من اتصالك بالإنترنت وحاول مرة أخرى.';
+
+  @override
+  String get couldNotLoadMeals => 'تعذر تحميل الوجبات. يرجى المحاولة مرة أخرى.';
+
+  @override
+  String get tryAgain => 'حاول مرة أخرى';
+
+  @override
+  String get couldNotLoadCategories => 'تعذر تحميل الفئات';
 }

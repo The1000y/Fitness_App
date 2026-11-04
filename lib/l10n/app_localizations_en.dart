@@ -216,6 +216,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get category => 'Category';
 
   @override
+  String get noCategoriesAvailable => 'No categories available';
+
+  @override
+  String get selectCategory => 'Select a category';
+
+  @override
+  String get noMusclesAvailable => 'No muscles available';
+
+  @override
   String get categoryGym => 'Gym';
 
   @override
@@ -231,7 +240,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get categoryTrainer => 'Trainer';
 
   @override
-  String get recommendationToday => 'Recommendation for today';
+  String get recommendationToDay => 'Recommendation To Day';
 
   @override
   String get jogging => 'Jogging';
@@ -243,7 +252,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get squat => 'Squat';
 
   @override
-  String get upcomingWorkouts => 'Upcoming workouts';
+  String get upcomingWorkouts => 'Upcoming Workouts';
 
   @override
   String get fullBody => 'Full body';
@@ -270,7 +279,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get stomach => 'Stomach';
 
   @override
-  String get recommendationForYou => 'Recommendation for you';
+  String get recommendationForYou => 'Recommendation For You';
 
   @override
   String get breakfast => 'Breakfast';
@@ -282,7 +291,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get dinner => 'Dinner';
 
   @override
-  String get popularTraining => 'Popular training';
+  String get popularTraining => 'Popular Training';
 
   @override
   String get strengthenChest => 'Exercises that strengthen your chest';
@@ -567,4 +576,69 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingsSaved => 'Settings saved';
+
+  @override
+  String get failedToLoadVideo =>
+      'Couldn\'t load the video. Please check your internet connection and try again.';
+
+  @override
+  String get videoPlayerError =>
+      'Something went wrong while playing the video. Please try again.';
+
+  @override
+  String get invalidVideo => 'The video link is invalid or unavailable.';
+
+  @override
+  String get embeddingDisabled =>
+      'This video can\'t be played here because the owner has disabled embedding.';
+
+  @override
+  String get videoNotFound =>
+      'This video isn\'t available. It may have been removed or set to private.';
+
+  @override
+  String get notFound => 'Unable to find the requested resource.';
+
+  @override
+  String get retry => 'Retry';
+
+  @override
+  String get unableToPlayVideo => 'Unable to play video';
+
+  @override
+  String get cancel => 'cancel the video';
+
+  @override
+  String get noMealsYet => 'No meals yet';
+
+  @override
+  String noCategoryMealsYet(String category) {
+    return 'No $category meals yet';
+  }
+
+  @override
+  String get noMealsMessage =>
+      'There are no recommendations right now. Try another meal time or check back later.';
+
+  @override
+  String get refresh => 'Refresh';
+
+  @override
+  String get noInternetConnection => 'No internet connection';
+
+  @override
+  String get somethingWentWrong => 'Something went wrong';
+
+  @override
+  String get checkConnectionMessage => 'Check your connection and try again.';
+
+  @override
+  String get couldNotLoadMeals =>
+      'We could not load the meals. Please try again.';
+
+  @override
+  String get tryAgain => 'Try again';
+
+  @override
+  String get couldNotLoadCategories => 'Could not load categories';
 }
