@@ -51,7 +51,7 @@ class LoginCubit extends BaseCubit<LoginState, CommonUiEvent> {
           ),
         );
 
-        emitEvent(const NavigateReplaceTo(AppRoutes.home));
+        emitEvent(const NavigateReplaceTo(AppRoutes.main));
 
       case Error():
         emit(
