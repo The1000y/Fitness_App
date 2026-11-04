@@ -10,7 +10,7 @@ import 'package:fitness_app/features/auth/presentation/register/view/register_vi
 import 'package:fitness_app/features/chat/presentation/views/chat_view.dart';
 import 'package:fitness_app/features/home/presentation/views/home_view.dart';
 import 'package:fitness_app/features/main/presentation/views/main_layout_view.dart';
-import 'package:fitness_app/features/profile/presentation/views/profile_view.dart';
+import 'package:fitness_app/features/profile/presentation/view/profile_view.dart';
 import 'package:fitness_app/features/workouts/presentation/views/workouts_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

@@ -10,7 +10,8 @@ class ProfileView extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomBackgroundImage(
       backgroundImage: AppImages.layoutBackground,
-      child: Scaffold(backgroundColor: Colors.transparent),
+      child: const Scaffold(backgroundColor: Colors.transparent),
     );
   }
 }
+

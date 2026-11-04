@@ -43,6 +43,11 @@ import '../../features/auth/presentation/login/manager/login_cubit.dart'
     as _i889;
 import '../../features/auth/presentation/register/manager/register_cubit.dart'
     as _i784;
+import '../../features/profile/api/client/profile_api_client.dart' as _i418;
+import '../../features/profile/presentation/manager/profile_cubit.dart'
+    as _i735;
+import '../../features/profile/presentation/manager/profile_state.dart'
+    as _i837;
 import '../dio/app_interceptor.dart' as _i264;
 import '../dio/dio_module.dart' as _i977;
 import '../utils/secure_storage_module.dart' as _i327;
@@ -66,6 +71,9 @@ extension GetItInjectableX on _i174.GetIt {
       () => secureStorageModule.secureStorage,
     );
     gh.lazySingleton<_i760.AppAuthCubit>(() => _i760.AppAuthCubit());
+    gh.factory<_i735.ProfileCubit>(
+      () => _i735.ProfileCubit(gh<_i837.ProfileState>()),
+    );
     gh.lazySingleton<_i264.AppInterceptors>(
       () => _i264.AppInterceptors(
         gh<_i558.FlutterSecureStorage>(),
@@ -77,6 +85,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.singleton<_i213.AuthApiClient>(
       () => _i213.AuthApiClient(gh<_i361.Dio>()),
+    );
+    gh.singleton<_i418.ProfileApiClient>(
+      () => _i418.ProfileApiClient(gh<_i361.Dio>()),
     );
     gh.factory<_i548.RemoteDataSource>(
       () => _i192.RemoteDataSourceImpl(gh<_i213.AuthApiClient>()),
