@@ -1,20 +1,25 @@
+import 'package:fitness_app/config/di/di.dart';
 import 'package:fitness_app/config/routing/app_routes.dart';
+import 'package:fitness_app/features/auth/presentation/forget_password/manager/forget_password_cubit.dart';
+import 'package:fitness_app/features/auth/presentation/forget_password/view/reset_password.dart';
+import 'package:fitness_app/features/auth/presentation/forget_password/view/verify_otp.dart';
+import 'package:fitness_app/features/auth/presentation/forget_password/view/widgets/forget_pawword_flow.dart';
+import 'package:fitness_app/features/auth/presentation/login/view/login_view.dart';
 import 'package:fitness_app/features/auth/presentation/onboarding/views/onboarding_view.dart';
+import 'package:fitness_app/features/auth/presentation/register/view/register_view.dart';
 import 'package:fitness_app/features/chat/presentation/views/chat_view.dart';
 import 'package:fitness_app/features/home/presentation/views/home_view.dart';
 import 'package:fitness_app/features/main/presentation/views/main_layout_view.dart';
 import 'package:fitness_app/features/profile/presentation/views/profile_view.dart';
 import 'package:fitness_app/features/workouts/presentation/views/workouts_view.dart';
-import 'package:fitness_app/test_view.dart';
 import 'package:flutter/material.dart';
-
-import '../../features/auth/presentation/login/view/login_view.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 abstract final class GenerateRoutes {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case AppRoutes.splash:
-        return _pageRoute(const TestView(), settings);
+        return _pageRoute(const _StubScreen('Splash Screen'), settings);
 
       case AppRoutes.onboarding:
         return _pageRoute(const OnboardingView(), settings);
@@ -24,16 +29,28 @@ abstract final class GenerateRoutes {
         return _pageRoute(const LoginView(), settings);
 
       case AppRoutes.register:
-        return _pageRoute(const _StubScreen('Register'), settings);
+        return _pageRoute(const RegisterView(), settings);
 
       case AppRoutes.forgotPassword:
-        return _pageRoute(const _StubScreen('Forgot Password'), settings);
+        return _pageRoute(const ForgetPasswordFlow(), settings);
 
       case AppRoutes.otpVerification:
-        return _pageRoute(const _StubScreen('OTP Verification'), settings);
+        final cubit = (settings.arguments is ForgetPasswordCubit)
+            ? (settings.arguments as ForgetPasswordCubit)
+            : getIt<ForgetPasswordCubit>();
+        return _pageRoute(
+          BlocProvider.value(value: cubit, child: const VerifyOtp()),
+          settings,
+        );
 
       case AppRoutes.createPassword:
-        return _pageRoute(const _StubScreen('Create Password'), settings);
+        final cubit = (settings.arguments is ForgetPasswordCubit)
+            ? (settings.arguments as ForgetPasswordCubit)
+            : getIt<ForgetPasswordCubit>();
+        return _pageRoute(
+          BlocProvider.value(value: cubit, child: const ResetPassword()),
+          settings,
+        );
 
       case AppRoutes.changePassword:
         return _pageRoute(const _StubScreen('Change Password'), settings);
@@ -117,7 +134,7 @@ class _StubScreen extends StatelessWidget {
         child: ElevatedButton(
           onPressed: () => Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => TestView()),
+            MaterialPageRoute(builder: (context) => const _StubScreen('Next')),
           ),
           child: Text('Test'),
         ),

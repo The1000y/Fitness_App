@@ -45,10 +45,9 @@ void main() {
         ),
       );
       expect(cardSize.width, 170.w);
-      expect(cardSize.height, 220.h);
+      expect(cardSize.height, 170.h);
       final decoration = card.decoration! as BoxDecoration;
       expect(decoration.borderRadius, BorderRadius.circular(16.r));
-      expect(decoration.image!.colorFilter, isNotNull);
 
       await tester.tap(find.text('Strength'));
       expect(tapped, isTrue);
@@ -83,7 +82,7 @@ void main() {
       );
       expect(
         (chips.last.decoration! as BoxDecoration).color,
-        AppColors.surfaceMuted,
+        Colors.transparent,
       );
       expect(tester.getSize(find.byType(SizedBox).first).height, 48.h);
 

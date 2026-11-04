@@ -94,7 +94,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get register => 'Register';
 
   @override
-  String get registerTitle => 'Hey there, create an account';
+  String get registerTitle1 => 'Hey there';
+
+  @override
+  String get registerTitle2 => 'create an account';
 
   @override
   String get firstName => 'First name';
@@ -598,4 +601,26 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get cancel => 'cancel the video';
+
+  @override
+  String get otpRequired => 'Verification code is required';
+
+  @override
+  String get otpIncomplete => 'Please enter the complete verification code';
+
+  @override
+  String get otpInvalid => 'Invalid verification code. Please try again.';
+
+  @override
+  String get otpExpired =>
+      'Verification code has expired. Please request a new one.';
+
+  @override
+  String get otpSentSuccessfully => 'Verification code sent successfully';
+
+  @override
+  String get otpResentSuccessfully => 'Verification code resent successfully';
+
+  @override
+  String get otpVerifiedSuccessfully => 'Code verified successfully';
 }

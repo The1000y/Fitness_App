@@ -49,7 +49,8 @@ abstract final class AppTheme {
         ),
       ],
       brightness: Brightness.dark,
-      scaffoldBackgroundColor: AppColors.background,
+      // scaffoldBackgroundColor: AppColors.background,
+      scaffoldBackgroundColor: Colors.transparent,
       colorScheme: const ColorScheme.dark(
         primary: AppColors.primary,
         secondary: AppColors.accent,
@@ -66,7 +67,13 @@ abstract final class AppTheme {
         focusedBorder: focusedBorder,
         errorBorder: errorBorder,
         focusedErrorBorder: focusedErrorBorder,
-        hintStyle: TextStyle(color: AppColors.textSecondary, fontSize: 15.sp),
+        hintStyle: AppTextTheme.textTheme.bodySmall,
+        labelStyle: AppTextTheme.textTheme.bodyMedium,
+        alignLabelWithHint: true,
+        errorMaxLines: 1,
+        errorStyle: AppTextTheme.textTheme.bodySmall?.copyWith(
+          color: AppColors.accent,
+        ),
       ),
 
       // ===== Elevated Button (Filled) =====
@@ -78,7 +85,8 @@ abstract final class AppTheme {
           elevation: 0,
           padding: EdgeInsets.symmetric(horizontal: 24.w),
           shape: RoundedRectangleBorder(borderRadius: buttonRadius),
-          textStyle: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),
+          // textStyle: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w700 , ),
+          textStyle: AppTextTheme.textTheme.labelLarge,
         ),
       ),
 
@@ -92,7 +100,7 @@ abstract final class AppTheme {
           ),
           padding: EdgeInsets.symmetric(horizontal: 24.w),
           shape: RoundedRectangleBorder(borderRadius: buttonRadius),
-          textStyle: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),
+          textStyle: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w700),
         ),
       ),
 

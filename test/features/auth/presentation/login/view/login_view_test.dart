@@ -1,3 +1,4 @@
+import 'package:fitness_app/config/routing/app_routes.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -256,7 +257,17 @@ void main() {
     testWidgets('tapping forgot password and register navigates correctly', (
       tester,
     ) async {
-      await tester.pumpApp(const LoginView());
+      await tester.pumpApp(
+        const LoginView(),
+        routes: {
+          AppRoutes.forgotPassword: (_) => Scaffold(
+            appBar: AppBar(title: const Text('Forgot Password')),
+          ),
+          AppRoutes.register: (_) => Scaffold(
+            appBar: AppBar(title: const Text('Register')),
+          ),
+        },
+      );
 
       await tester.tap(find.text(l10n.forgotPassword));
       await tester.pumpAndSettle();

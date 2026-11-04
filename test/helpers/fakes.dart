@@ -39,6 +39,9 @@ class FakeAuthRepo implements AuthRepo {
           ),
         );
   }
+
+  @override
+  dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }
 
 class FakeRemoteDataSource implements RemoteDataSource {
@@ -71,6 +74,9 @@ class FakeAuthApiClient implements AuthApiClient {
     return nextResponse ??
         LoginResponse(message: 'Success', token: 'fake.jwt.token');
   }
+
+  @override
+  dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }
 
 class InMemorySecureStorage implements FlutterSecureStorage {

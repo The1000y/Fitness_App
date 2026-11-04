@@ -17,6 +17,7 @@ abstract final class AppStrings {
   static const String email = 'Email';
   static const String password = 'Password';
   static const String comingSoon = 'Coming Soon';
+  static const String appFont = 'BalooThambi2';
 
   // ──────────────────────── Onboarding & Splash ────────────────────────
   static const String onboarding1Title =
@@ -175,6 +176,4 @@ abstract final class AppStrings {
   static String tasksCount(int count) => '$count tasks';
   static String selectLanguageWith(String language) =>
       'Select Language ($language)';
-
-  static const String appFont = 'BalooThambi2';
 }

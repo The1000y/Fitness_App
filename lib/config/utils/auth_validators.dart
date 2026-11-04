@@ -16,10 +16,22 @@ enum ValidationError {
   phoneInvalid,
   fieldRequired,
   fieldMinLength,
+  otpRequired,
+  otpIncomplete,
 }
 
 class AppValidators {
   AppValidators._(); // prevent instantiation
+
+  static ValidationError? otpRequired(String? value) {
+    if (value == null || value.isEmpty) {
+      return ValidationError.otpRequired;
+    }
+    if (value.length < 4) {
+      return ValidationError.otpIncomplete;
+    }
+    return null;
+  }
 
   static ValidationError? email(String? value) {
     if (value == null || value.trim().isEmpty) {

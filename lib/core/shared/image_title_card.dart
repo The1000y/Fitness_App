@@ -69,7 +69,6 @@ class ImageTitleCard extends StatelessWidget {
                 ),
               ),
             ),
-            
           ],
         ),
       ),

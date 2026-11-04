@@ -1,10 +1,14 @@
 import 'package:dio/dio.dart';
 import 'package:fitness_app/core/constants/api_strings.dart';
+import 'package:fitness_app/features/auth/data/model/requests/forget_password_request/forget_password_request.dart';
+import 'package:fitness_app/features/auth/data/model/requests/login_request/login_request.dart';
+import 'package:fitness_app/features/auth/data/model/requests/register_request/register_request.dart';
+import 'package:fitness_app/features/auth/data/model/requests/reset_password_request/reset_password_request.dart';
+import 'package:fitness_app/features/auth/data/model/requests/verify_otp_request/verify_otp_request.dart';
+import 'package:fitness_app/features/auth/data/model/responces/register_request/register_response.dart';
+import 'package:fitness_app/features/auth/data/model/responses/login_response/login_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
-
-import '../../data/model/requests/login_request/login_request.dart';
-import '../../data/model/responses/login_response/login_response.dart';
 
 part 'auth_api_client.g.dart';
 
@@ -16,4 +20,16 @@ abstract class AuthApiClient {
 
   @POST(ApiStrings.signin)
   Future<LoginResponse> login(@Body() LoginRequest request);
+
+  @POST(ApiStrings.signup)
+  Future<RegisterResponseDto> register(@Body() RegisterRequestDto request);
+
+  @POST(ApiStrings.forgotPassword)
+  Future<void> forgetPassword(@Body() ForgetPasswordRequest requestEmail);
+
+  @POST(ApiStrings.resetPassword)
+  Future<void> resetPassword(@Body() ResetPasswordRequest params);
+
+  @POST(ApiStrings.verifyResetCode)
+  Future<void> verifyOtp(@Body() VerifyOtpRequest params);
 }
