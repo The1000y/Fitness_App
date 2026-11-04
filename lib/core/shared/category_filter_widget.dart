@@ -9,6 +9,7 @@ class CategoryTabBar extends StatelessWidget {
   final String selectedCategory;
   final ValueChanged<String> onCategorySelected;
   final bool isScrollable;
+  final double height;
 
   const CategoryTabBar({
     super.key,
@@ -16,42 +17,43 @@ class CategoryTabBar extends StatelessWidget {
     required this.selectedCategory,
     required this.onCategorySelected,
     this.isScrollable = true,
+    this.height = 48,
   });
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 48.h,
+      height: height.h,
       child: isScrollable
           ? ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: categories.length,
-              itemBuilder: (context, index) {
-                return _buildCategoryItem(
-                  context,
-                  categories[index],
-                );
-              },
-            )
+        scrollDirection: Axis.horizontal,
+        itemCount: categories.length,
+        itemBuilder: (context, index) {
+          return _buildCategoryItem(
+            context,
+            categories[index],
+          );
+        },
+      )
           : Row(
-              children: categories.map((category) {
-                return Expanded(
-                  child: _buildCategoryItem(
-                    context,
-                    category,
-                    isExpanded: true,
-                  ),
-                );
-              }).toList(),
+        children: categories.map((category) {
+          return Expanded(
+            child: _buildCategoryItem(
+              context,
+              category,
+              isExpanded: true,
             ),
+          );
+        }).toList(),
+      ),
     );
   }
 
   Widget _buildCategoryItem(
-    BuildContext context,
-    String category, {
-    bool isExpanded = false,
-  }) {
+      BuildContext context,
+      String category, {
+        bool isExpanded = false,
+      }) {
     final isSelected = category == selectedCategory;
 
     return Padding(
