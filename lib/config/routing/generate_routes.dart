@@ -4,11 +4,19 @@ import 'package:fitness_app/features/chat/presentation/views/chat_view.dart';
 import 'package:fitness_app/features/home/presentation/views/home_view.dart';
 import 'package:fitness_app/features/main/presentation/views/main_layout_view.dart';
 import 'package:fitness_app/features/profile/presentation/views/profile_view.dart';
-import 'package:fitness_app/features/workouts/presentation/views/workouts_view.dart';
 import 'package:fitness_app/test_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../core/shared/base_ui_event_listener.dart';
 import '../../features/auth/presentation/login/view/login_view.dart';
+import '../../features/exercise/presentation/workout_categories/view/workout_categories_view.dart';
+import '../../features/meals/presentation/manager/meals_cubit.dart';
+import '../../features/meals/presentation/manager/meals_event.dart';
+import '../../features/meals/presentation/manager/meals_state.dart';
+import '../../features/meals/presentation/view/meals_view.dart';
+import '../base/base_ui_event.dart';
+import '../di/di.dart';
 
 abstract final class GenerateRoutes {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -56,11 +64,14 @@ abstract final class GenerateRoutes {
       case AppRoutes.setupActivity:
         return _pageRoute(const _StubScreen('Setup Activity'), settings);
 
+      case AppRoutes.workoutCategories:
+        return _pageRoute(const WorkoutCategoriesView(), settings);
+
       // Main
       case AppRoutes.main:
         return _pageRoute(
           MainLayoutView(
-            tabs: [HomeView(), ChatView(), WorkoutsView(), ProfileView()],
+            tabs: [HomeView(), ChatView(), WorkoutCategoriesView(), ProfileView()],
           ),
           settings,
         );
@@ -69,10 +80,22 @@ abstract final class GenerateRoutes {
         return _pageRoute(const _StubScreen('Exercise Details'), settings);
 
       // Food
-      case AppRoutes.food:
-        return _pageRoute(const _StubScreen('Food'), settings);
+      case AppRoutes.meals:
+        final args = settings.arguments;
+        final category = args is String ? args : null;
 
-      case AppRoutes.foodDetails:
+        return _pageRoute(
+          BlocProvider(
+            create: (context) =>
+            getIt.get<MealsCubit>()..doEvent(GetMealsCategoriesEvent()),
+            child: BaseUiEventListener<MealsCubit, MealsState, BaseUiEvent>(
+              child: MealsView(activeCategory: category),
+            ),
+          ),
+          settings,
+        );
+
+      case AppRoutes.mealDetails:
         return _pageRoute(const _StubScreen('Food Details'), settings);
 
       case AppRoutes.chatHistory:
