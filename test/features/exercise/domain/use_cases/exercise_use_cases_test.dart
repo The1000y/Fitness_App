@@ -37,7 +37,7 @@ void main() {
     'GetMusclesByGroupUseCase forwards the id and returns a successful response',
     () async {
       const response = Success<MusclesByGroupEntity>(
-        MusclesByGroupEntity(message: 'success', muscles: []),
+        MusclesByGroupEntity(message: 'success', totalMuscles: 0, muscles: []),
       );
       when(
         () => repo.getMusclesByGroup(id: 'group-1'),

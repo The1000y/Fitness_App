@@ -38,7 +38,11 @@ void main() {
       message: 'success',
       musclesGroup: [MuscleGroupEntity(id: 'group-1', name: 'Chest')],
     );
-    const muscles = MusclesByGroupEntity(message: 'success', muscles: []);
+    const muscles = MusclesByGroupEntity(
+      message: 'success',
+      totalMuscles: 0,
+      muscles: [],
+    );
 
     when(
       () => repo.getMusclesGroups(),
@@ -116,6 +120,7 @@ void main() {
     );
     const existingMuscles = MusclesByGroupEntity(
       message: 'group-1',
+      totalMuscles: 1,
       muscles: [
         MuscleEntity(id: 'muscle-1', name: 'Pectoral', image: 'chest.png'),
       ],
@@ -181,6 +186,7 @@ void main() {
 
     const latestMuscles = MusclesByGroupEntity(
       message: 'group-2',
+      totalMuscles: 1,
       muscles: [MuscleEntity(id: 'muscle-2', name: 'Back', image: 'back.png')],
     );
     final latestLoaded = cubit.stream.firstWhere(
@@ -191,7 +197,11 @@ void main() {
 
     firstRequest.complete(
       const Success(
-        MusclesByGroupEntity(message: 'group-1', muscles: []),
+        MusclesByGroupEntity(
+          message: 'group-1',
+          totalMuscles: 0,
+          muscles: [],
+        ),
       ),
     );
     await Future<void>.delayed(Duration.zero);

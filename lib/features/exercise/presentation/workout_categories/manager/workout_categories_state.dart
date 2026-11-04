@@ -1,3 +1,4 @@
+
 import 'package:equatable/equatable.dart';
 import 'package:fitness_app/config/base/base_state.dart';
 import 'package:fitness_app/features/exercise/domain/entities/muscle_groups_entity.dart';
@@ -13,6 +14,18 @@ class WorkoutCategoriesState extends Equatable {
     this.musclesState = const BaseState<MusclesByGroupEntity>(),
     this.selectedGroupId,
   });
+
+  // Getter for selected muscle group
+  get selectedGroup {
+    final groups = workoutCategoriesState.data?.musclesGroup ?? [];
+
+    if (groups.isEmpty) return null;
+
+    return groups.firstWhere(
+      (group) => group.id == selectedGroupId,
+      orElse: () => groups.first,
+    );
+  }
 
   WorkoutCategoriesState copyWith({
     BaseState<MuscleGroupsEntity>? workoutCategoriesState,

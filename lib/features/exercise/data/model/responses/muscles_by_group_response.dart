@@ -31,10 +31,11 @@ class MusclesByGroupResponse {
   Map<String, dynamic> toJson() =>
       _$MusclesByGroupResponseToJson(this);
 
-  MusclesByGroupEntity toEntity() {
-    return MusclesByGroupEntity(
-      message: message ?? '',
-      muscles: muscles?.map((muscle) => muscle.toEntity()).toList() ?? [],
-    );
-  }
+ MusclesByGroupEntity toEntity() {
+  return MusclesByGroupEntity(
+    message: message ?? '',
+    totalMuscles: totalMuscles ?? 0,
+    muscles: muscles?.map((muscle) => muscle.toEntity()).toList() ?? [],
+  );
+}
 }

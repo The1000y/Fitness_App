@@ -43,6 +43,7 @@ void main() {
       final entity = response.toEntity();
 
       expect(entity.message, 'success');
+      expect(entity.totalMuscles, 1);
       expect(response.totalMuscles, 1);
       expect(entity.muscles.single.id, 'muscle-1');
       expect(entity.muscles.single.name, 'Rectus Abdominis');
@@ -56,6 +57,7 @@ void main() {
       final entity = response.toEntity();
 
       expect(response.totalMuscles, isNull);
+      expect(entity.totalMuscles, 0);
       expect(entity.muscles, isEmpty);
     });
   });

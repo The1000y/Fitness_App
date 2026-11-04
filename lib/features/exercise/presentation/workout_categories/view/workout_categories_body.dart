@@ -23,9 +23,10 @@ class WorkoutCategoriesBody extends StatelessWidget {
     final l10n = AppLocalizations.of(context)!;
 
     return BaseUiEventListener<
-        WorkoutCategoriesCubit,
-        WorkoutCategoriesState,
-        CommonUiEvent>(
+      WorkoutCategoriesCubit,
+      WorkoutCategoriesState,
+      CommonUiEvent
+    >(
       child: CustomBackgroundImage(
         backgroundImage: AppImages.authBackground,
         fit: BoxFit.cover,
@@ -36,7 +37,6 @@ class WorkoutCategoriesBody extends StatelessWidget {
             children: [
               SizedBox(height: 20.h),
 
-              // Muscle Groups
               BlocBuilder<WorkoutCategoriesCubit, WorkoutCategoriesState>(
                 buildWhen: (previous, current) {
                   return previous.workoutCategoriesState !=
@@ -55,22 +55,13 @@ class WorkoutCategoriesBody extends StatelessWidget {
                     return const SizedBox.shrink();
                   }
 
-                  final selectedGroup = groups.firstWhere(
-                    (group) => group.id == state.selectedGroupId,
-                    orElse: () => groups.first,
-                  );
-
                   return CategoryTabBar(
                     categories: groups.map((group) => group.name).toList(),
-                    selectedCategory: selectedGroup.name,
+                    selectedCategory: state.selectedGroup!.name,
                     onCategorySelected: (value) {
-                      final selectedGroup = groups.firstWhere(
-                        (group) => group.name == value,
+                      context.read<WorkoutCategoriesCubit>().onCategorySelected(
+                        value,
                       );
-
-                      context.read<WorkoutCategoriesCubit>().onEvent(
-                            MuscleGroupSelected(id: selectedGroup.id),
-                          );
                     },
                   );
                 },
@@ -79,9 +70,7 @@ class WorkoutCategoriesBody extends StatelessWidget {
               SizedBox(height: 10.h),
 
               // Muscles Grid
-              const Expanded(
-                child: WorkoutMusclesGrid(),
-              ),
+              const Expanded(child: WorkoutMusclesGrid()),
             ],
           ),
         ),
@@ -101,47 +90,34 @@ class WorkoutMusclesGrid extends StatelessWidget {
       buildWhen: (previous, current) {
         return previous.workoutCategoriesState !=
                 current.workoutCategoriesState ||
-            previous.musclesState != current.musclesState;
+            previous.musclesState != current.musclesState ||
+            previous.selectedGroupId != current.selectedGroupId;
       },
       builder: (context, state) {
-        final muscles =
-            state.musclesState.data?.muscles ?? <MuscleEntity>[];
+        final muscles = state.musclesState.data?.muscles ?? <MuscleEntity>[];
 
         if (state.workoutCategoriesState.isLoading) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
+          return const Center(child: CircularProgressIndicator());
         }
 
         if (state.workoutCategoriesState.data == null) {
-          return Center(
-            child: Text(l10n.noCategoriesAvailable),
-          );
+          return Center(child: Text(l10n.noCategoriesAvailable));
         }
 
         if (state.workoutCategoriesState.data!.musclesGroup.isEmpty) {
-          return Center(
-            child: Text(l10n.noCategoriesAvailable),
-          );
+          return Center(child: Text(l10n.noCategoriesAvailable));
         }
 
         if (state.musclesState.isLoading) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
+          return const Center(child: CircularProgressIndicator());
         }
 
         if (muscles.isEmpty) {
-          return Center(
-            child: Text(l10n.noMusclesAvailable),
-          );
+          return Center(child: Text(l10n.noMusclesAvailable));
         }
 
         return GridView.builder(
-          padding: EdgeInsets.symmetric(
-            horizontal: 16.w,
-            vertical: 12.h,
-          ),
+          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
             crossAxisSpacing: 12.w,
@@ -155,8 +131,7 @@ class WorkoutMusclesGrid extends StatelessWidget {
             return ImageTitleCard(
               imagePath: muscle.image,
               title: muscle.name,
-              onTap: () {
-              },
+              onTap: () {},
             );
           },
         );

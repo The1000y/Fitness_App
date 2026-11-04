@@ -55,7 +55,9 @@ void main() {
     final result = await repo.getMusclesByGroup(id: 'group-1');
 
     expect(result, isA<Success>());
-    final muscles = (result as Success).data.muscles;
+    final entity = (result as Success).data;
+    expect(entity.totalMuscles, 1);
+    final muscles = entity.muscles;
     expect(muscles.single.name, 'Rectus Abdominis');
     expect(muscles.single.image, 'https://example.com/rectus.png');
     verify(() => remote.getMusclesByGroup('group-1')).called(1);

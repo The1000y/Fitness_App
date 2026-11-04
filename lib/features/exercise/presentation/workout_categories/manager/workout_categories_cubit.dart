@@ -137,4 +137,13 @@ class WorkoutCategoriesCubit
         emitEvent(ShowFailureMessage(result.failure));
     }
   }
+  void onCategorySelected(String name) {
+  final groups = state.workoutCategoriesState.data?.musclesGroup ?? [];
+
+  final selectedGroup = groups.firstWhere(
+    (group) => group.name == name,
+  );
+
+  onEvent(MuscleGroupSelected(id: selectedGroup.id));
+}
 }

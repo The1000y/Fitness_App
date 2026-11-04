@@ -49,7 +49,7 @@ void main() {
       ),
     );
     const musclesResponse = Success<MusclesByGroupEntity>(
-      MusclesByGroupEntity(message: 'Success', muscles: []),
+      MusclesByGroupEntity(message: 'Success', totalMuscles: 0, muscles: []),
     );
 
     when(() => repo.getMusclesGroups()).thenAnswer((_) async => groupsResponse);
@@ -98,11 +98,12 @@ void main() {
       ),
     );
     const emptyMusclesResponse = Success<MusclesByGroupEntity>(
-      MusclesByGroupEntity(message: 'Success', muscles: []),
+      MusclesByGroupEntity(message: 'Success', totalMuscles: 0, muscles: []),
     );
     const lowerBodyMusclesResponse = Success<MusclesByGroupEntity>(
       MusclesByGroupEntity(
         message: 'Success',
+        totalMuscles: 1,
         muscles: [
           MuscleEntity(
             id: 'muscle-1',
@@ -161,7 +162,7 @@ void main() {
       ),
     );
     const emptyMusclesResponse = Success<MusclesByGroupEntity>(
-      MusclesByGroupEntity(message: 'Success', muscles: []),
+      MusclesByGroupEntity(message: 'Success', totalMuscles: 0, muscles: []),
     );
     const failureResponse = Error<MusclesByGroupEntity>(
       InternetConnectionFailure(),
