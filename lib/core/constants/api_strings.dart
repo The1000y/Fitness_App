@@ -16,7 +16,7 @@ abstract class ApiStrings {
   // ---------------------------------------------------------------------------
   static const String signup = '/auth/signup'; // POST
   static const String signin = '/auth/signin'; // POST
-  static String get changePassword => '/auth/change-password'; // PATCH
+  static const String changePassword = '/auth/change-password'; // PATCH
   static String get uploadPhoto =>
       '/auth/upload-photo'; // PUT (Bearer, form-data: photo, max 4MB)
   static String get profileData => '/auth/profile-data'; // GET (Bearer)

@@ -482,6 +482,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get confirmPasswordMismatch => 'Passwords do not match';
 
   @override
+  String get newPasswordSameAsOld =>
+      'New password must be different from the old password';
+
+  @override
   String get usernameRequired => 'Username is required';
 
   @override

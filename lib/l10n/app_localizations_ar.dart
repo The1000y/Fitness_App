@@ -478,6 +478,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get confirmPasswordMismatch => 'كلمتا المرور غير متطابقتين';
 
   @override
+  String get newPasswordSameAsOld =>
+      'يجب أن تختلف كلمة المرور الجديدة عن القديمة';
+
+  @override
   String get usernameRequired => 'اسم المستخدم مطلوب';
 
   @override
