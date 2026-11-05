@@ -1,3 +1,5 @@
+import 'package:fitness_app/features/exercise/domain/entities/difficulty_level_entity.dart';
+
 import '../../../../config/base/base_response.dart';
 import '../entities/exercises_list_entity.dart';
 
@@ -6,4 +8,8 @@ abstract interface class ExerciseRepo {
     required String primeMoverMuscleId,
     required String difficultyLevelId,
   });
+  
+Future<BaseResponse<List<DifficultyLevelEntity>>> getDifficultyLevels({
+  required String primeMoverMuscleId,
+});
 }

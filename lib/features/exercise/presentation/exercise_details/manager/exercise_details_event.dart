@@ -1,15 +1,14 @@
 sealed class ExerciseDetailsEvent {
   const ExerciseDetailsEvent();
 }
-
-final class LoadExercises extends ExerciseDetailsEvent {
+final class LoadLevels extends ExerciseDetailsEvent {
   final String primeMoverMuscleId;
-  final String difficultyLevelId;
+  const LoadLevels({required this.primeMoverMuscleId});
+}
 
-  const LoadExercises({
-    required this.primeMoverMuscleId,
-    required this.difficultyLevelId,
-  });
+final class SelectLevel extends ExerciseDetailsEvent {
+  final int index;
+  const SelectLevel(this.index);
 }
 
 final class SelectExercise extends ExerciseDetailsEvent {

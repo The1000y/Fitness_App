@@ -1,5 +1,6 @@
 import 'package:fitness_app/config/base/base_response.dart';
 import 'package:fitness_app/config/utils/excecute_api_call.dart';
+import 'package:fitness_app/features/exercise/domain/entities/difficulty_level_entity.dart';
 import 'package:fitness_app/features/exercise/domain/entities/exercises_list_entity.dart';
 import 'package:fitness_app/features/exercise/domain/repo/exercise_repo.dart';
 import 'package:injectable/injectable.dart';
@@ -21,6 +22,18 @@ class ExerciseRepoImpl implements ExerciseRepo {
       final response = await _remote.getExercisesByMuscleDifficulty(
         primeMoverMuscleId: primeMoverMuscleId,
         difficultyLevelId: difficultyLevelId,
+      );
+      return response.toEntity();
+    });
+  }
+
+  @override
+  Future<BaseResponse<List<DifficultyLevelEntity>>> getDifficultyLevels({
+    required String primeMoverMuscleId,
+  }) {
+    return excecuteApiCall(() async {
+      final response = await _remote.getDifficultyLevelsByPrimeMover(
+        primeMoverMuscleId: primeMoverMuscleId,
       );
       return response.toEntity();
     });

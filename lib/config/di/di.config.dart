@@ -36,6 +36,8 @@ import '../../features/exercise/data/data_source/remote/exercise_remote_data_sou
 import '../../features/exercise/data/repo_impl/exercise_repo_impl.dart'
     as _i824;
 import '../../features/exercise/domain/repo/exercise_repo.dart' as _i628;
+import '../../features/exercise/domain/use_cases/get_difficulty_levels_use_case.dart'
+    as _i615;
 import '../../features/exercise/domain/use_cases/get_exercises_use_case.dart'
     as _i685;
 import '../../features/exercise/presentation/exercise_details/manager/exercise_details_cubit.dart'
@@ -90,11 +92,17 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i1038.LoginUseCase>(
       () => _i1038.LoginUseCase(gh<_i170.AuthRepo>()),
     );
+    gh.factory<_i615.GetDifficultyLevelsUseCase>(
+      () => _i615.GetDifficultyLevelsUseCase(gh<_i628.ExerciseRepo>()),
+    );
     gh.factory<_i685.GetExercisesUseCase>(
       () => _i685.GetExercisesUseCase(gh<_i628.ExerciseRepo>()),
     );
     gh.factory<_i944.ExerciseDetailsCubit>(
-      () => _i944.ExerciseDetailsCubit(gh<_i685.GetExercisesUseCase>()),
+      () => _i944.ExerciseDetailsCubit(
+        gh<_i615.GetDifficultyLevelsUseCase>(),
+        gh<_i685.GetExercisesUseCase>(),
+      ),
     );
     gh.factory<_i889.LoginCubit>(
       () => _i889.LoginCubit(gh<_i1038.LoginUseCase>()),
