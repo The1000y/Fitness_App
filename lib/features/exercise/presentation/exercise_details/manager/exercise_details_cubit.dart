@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:fitness_app/features/exercise/domain/entities/exercises_list_entity.dart';
 import 'package:fitness_app/features/exercise/domain/use_cases/get_difficulty_levels_use_case.dart';
 import 'package:injectable/injectable.dart';
 
@@ -16,6 +17,8 @@ class ExerciseDetailsCubit
     extends BaseCubit<ExerciseDetailsState, CommonUiEvent> {
   final GetDifficultyLevelsUseCase _getLevelsUseCase;
   final GetExercisesUseCase _getExercisesUseCase;
+
+  static const int _pageSize = 10;
 
   ExerciseDetailsCubit(this._getLevelsUseCase, this._getExercisesUseCase)
     : super(const ExerciseDetailsState());
@@ -35,12 +38,24 @@ class ExerciseDetailsCubit
       case SelectLevel():
         _selectLevel(event.index);
       case SelectExercise():
-        final exercises = state.exercisesState.data?.exercises;
-        final index = exercises == null || exercises.isEmpty
-            ? event.index
-            : event.index.clamp(0, exercises.length - 1);
-        emit(state.copyWith(selectedIndex: index));
+        _selectExercise(event);
+      case LoadMoreExercises():
+        unawaited(_loadMore());
     }
+  }
+
+  void _selectExercise(SelectExercise event) {
+    final exercises = state.exercisesState.data?.exercises;
+    if (exercises == null || exercises.isEmpty) return;
+
+    final index = event.index.clamp(0, exercises.length - 1);
+    emit(
+      state.copyWith(
+        selectedIndex: index,
+        autoPlay: event.autoPlay,
+        playRequestId: state.playRequestId + 1,
+      ),
+    );
   }
 
   Future<void> _loadLevels(LoadLevels event) async {
@@ -58,7 +73,7 @@ class ExerciseDetailsCubit
         emit(
           state.copyWith(
             levelsState: BaseState(data: levels),
-            selectedLevelIndex: 0, // first level is the default
+            selectedLevelIndex: 0,
             selectedIndex: 0,
           ),
         );
@@ -74,7 +89,6 @@ class ExerciseDetailsCubit
   void _selectLevel(int index) {
     final levels = state.levelsState.data;
     if (levels == null || index < 0 || index >= levels.length) return;
-    // allow tapping the same tab again only to retry after an error
     if (index == state.selectedLevelIndex &&
         state.exercisesState.errorMessage == null) {
       return;
@@ -84,25 +98,84 @@ class ExerciseDetailsCubit
   }
 
   Future<void> _loadExercises(String levelId) async {
-    emit(state.copyWith(exercisesState: const BaseState(isLoading: true)));
+    emit(
+      state.copyWith(
+        exercisesState: const BaseState(isLoading: true),
+        isLoadingMore: false,
+      ),
+    );
 
     final result = await _getExercisesUseCase(
       primeMoverMuscleId: _primeMoverMuscleId,
       difficultyLevelId: levelId,
+      page: 1,
+      limit: _pageSize,
     );
 
-    // ignore stale responses (user switched tab while this was loading)
     if (isClosed || _selectedLevelId != levelId) return;
 
     switch (result) {
       case Success():
-        emit(state.copyWith(exercisesState: BaseState(data: result.data)));
+        emit(
+          state.copyWith(
+            exercisesState: BaseState(data: result.data),
+            selectedIndex: 0,
+            autoPlay: false,
+            isLoadingMore: false,
+          ),
+        );
       case Error():
         emit(
           state.copyWith(
             exercisesState: BaseState(errorMessage: result.failure),
+            isLoadingMore: false,
           ),
         );
+        emitEvent(ShowFailureMessage(result.failure));
+    }
+  }
+
+  Future<void> _loadMore() async {
+    final data = state.exercisesState.data;
+    final levelId = _selectedLevelId;
+
+    if (data == null ||
+        levelId == null ||
+        state.isLoadingMore ||
+        state.exercisesState.isLoading ||
+        !data.hasMore) {
+      return;
+    }
+
+    emit(state.copyWith(isLoadingMore: true));
+
+    final result = await _getExercisesUseCase(
+      primeMoverMuscleId: _primeMoverMuscleId,
+      difficultyLevelId: levelId,
+      page: data.currentPage + 1,
+      limit: _pageSize,
+    );
+
+    if (isClosed || _selectedLevelId != levelId) return;
+
+    switch (result) {
+      case Success():
+        final current = state.exercisesState.data ?? data;
+        final merged = ExercisesListEntity(
+          message: result.data.message,
+          totalExercises: result.data.totalExercises,
+          totalPages: result.data.totalPages,
+          currentPage: result.data.currentPage,
+          exercises: [...current.exercises, ...result.data.exercises],
+        );
+        emit(
+          state.copyWith(
+            exercisesState: BaseState(data: merged),
+            isLoadingMore: false,
+          ),
+        );
+      case Error():
+        emit(state.copyWith(isLoadingMore: false));
         emitEvent(ShowFailureMessage(result.failure));
     }
   }

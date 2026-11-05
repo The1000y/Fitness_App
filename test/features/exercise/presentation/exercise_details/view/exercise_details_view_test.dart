@@ -6,13 +6,14 @@ import 'package:fitness_app/config/base/base_response.dart';
 import 'package:fitness_app/config/errors/app_failure.dart';
 import 'package:fitness_app/features/exercise/domain/entities/exercise_entity.dart';
 import 'package:fitness_app/features/exercise/domain/entities/exercises_list_entity.dart';
+import 'package:fitness_app/core/shared/custom_video_player.dart';
+import 'package:fitness_app/features/exercise/domain/use_cases/get_difficulty_levels_use_case.dart';
 import 'package:fitness_app/features/exercise/domain/use_cases/get_exercises_use_case.dart';
 import 'package:fitness_app/features/exercise/presentation/exercise_details/manager/exercise_details_cubit.dart';
 import 'package:fitness_app/features/exercise/presentation/exercise_details/manager/exercise_details_event.dart';
 import 'package:fitness_app/features/exercise/presentation/exercise_details/view/exercise_details_view.dart';
 import 'package:fitness_app/features/exercise/presentation/exercise_details/view/widgets/exercise_empty_view.dart';
 import 'package:fitness_app/features/exercise/presentation/exercise_details/view/widgets/exercise_error_view.dart';
-import 'package:fitness_app/features/exercise/presentation/exercise_details/view/widgets/hero_video_section.dart';
 import 'package:fitness_app/l10n/app_localizations.dart';
 import '../../../../../helpers/fakes.dart';
 import '../../../../../helpers/pump_app.dart';
@@ -51,7 +52,10 @@ void main() {
 
   setUp(() {
     fakeRepo = FakeExerciseRepo();
-    cubit = ExerciseDetailsCubit(GetExercisesUseCase(fakeRepo));
+    cubit = ExerciseDetailsCubit(
+      GetDifficultyLevelsUseCase(fakeRepo),
+      GetExercisesUseCase(fakeRepo),
+    );
   });
 
   tearDown(() async {
@@ -67,10 +71,7 @@ void main() {
 
   void load() {
     cubit.onEvent(
-      const LoadExercises(
-        primeMoverMuscleId: TestData.primeMoverMuscleId,
-        difficultyLevelId: TestData.difficultyLevelId,
-      ),
+      const LoadLevels(primeMoverMuscleId: TestData.primeMoverMuscleId),
     );
   }
 
@@ -85,7 +86,7 @@ void main() {
       expect(fakeRepo.callCount, 1);
       expect(fakeRepo.lastPrimeMoverMuscleId, TestData.primeMoverMuscleId);
       expect(fakeRepo.lastDifficultyLevelId, TestData.difficultyLevelId);
-      expect(find.byType(HeroVideoSection), findsOneWidget);
+      expect(find.byType(CustomVideoPlayer), findsOneWidget);
       expect(find.text('Chest Exercises'), findsOneWidget);
       expect(find.text('Push Up'), findsOneWidget);
     });

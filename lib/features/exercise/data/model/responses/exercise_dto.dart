@@ -2,10 +2,10 @@ import 'package:json_annotation/json_annotation.dart';
 
 import '../../../domain/entities/exercise_entity.dart';
 
-part 'exercise_response.g.dart';
+part 'exercise_dto.g.dart';
 
 @JsonSerializable()
-class ExerciseResponse {
+class ExerciseDto {
   @JsonKey(name: '_id')
   final String? id;
   final String? exercise;
@@ -31,7 +31,7 @@ class ExerciseResponse {
   final String? bodyRegion;
   final String? mechanics;
 
-  ExerciseResponse({
+  ExerciseDto({
     this.id,
     this.exercise,
     this.difficultyLevel,
@@ -47,10 +47,10 @@ class ExerciseResponse {
     this.mechanics,
   });
 
-  factory ExerciseResponse.fromJson(Map<String, dynamic> json) =>
-      _$ExerciseResponseFromJson(json);
+  factory ExerciseDto.fromJson(Map<String, dynamic> json) =>
+      _$ExerciseDtoFromJson(json);
 
-  Map<String, dynamic> toJson() => _$ExerciseResponseToJson(this);
+  Map<String, dynamic> toJson() => _$ExerciseDtoToJson(this);
 
   ExerciseEntity toEntity() {
     return ExerciseEntity(

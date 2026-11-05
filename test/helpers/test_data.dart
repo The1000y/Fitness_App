@@ -1,8 +1,10 @@
 import 'package:fitness_app/features/auth/data/model/responses/login_response/login_response.dart';
 import 'package:fitness_app/features/auth/domain/entities/login_entity/login_entity.dart';
 import 'package:fitness_app/features/auth/domain/entities/login_entity/user_entity.dart';
-import 'package:fitness_app/features/exercise/data/model/responses/exercise_response.dart';
-import 'package:fitness_app/features/exercise/data/model/responses/exercises_list_response.dart';
+import 'package:fitness_app/features/exercise/data/model/responses/difficulty_levels_dto.dart';
+import 'package:fitness_app/features/exercise/data/model/responses/exercise_dto.dart';
+import 'package:fitness_app/features/exercise/data/model/responses/exercises_list_dto.dart';
+import 'package:fitness_app/features/exercise/domain/entities/difficulty_level_entity.dart';
 import 'package:fitness_app/features/exercise/domain/entities/exercise_entity.dart';
 import 'package:fitness_app/features/exercise/domain/entities/exercises_list_entity.dart';
 
@@ -37,6 +39,21 @@ class TestData {
 
   static const String primeMoverMuscleId = 'muscle_chest';
   static const String difficultyLevelId = 'difficulty_intermediate';
+
+  static const Map<String, dynamic> difficultyLevelsResponseJson = {
+    'message': 'Success',
+    'totalLevels': 2,
+    'difficulty_levels': [
+      {'id': 'difficulty_beginner', 'name': 'Beginner'},
+      {'id': 'difficulty_intermediate', 'name': 'Intermediate'},
+    ],
+  };
+
+  static DifficultyLevelsDto get difficultyLevelsResponse =>
+      DifficultyLevelsDto.fromJson(difficultyLevelsResponseJson);
+
+  static List<DifficultyLevelEntity> get difficultyLevelsEntity =>
+      difficultyLevelsResponse.toEntity();
 
   static const Map<String, dynamic> exerciseResponseJson = {
     '_id': 'exercise_1',
@@ -82,11 +99,11 @@ class TestData {
     ],
   };
 
-  static ExerciseResponse get exerciseResponse =>
-      ExerciseResponse.fromJson(exerciseResponseJson);
+  static ExerciseDto get exerciseResponse =>
+      ExerciseDto.fromJson(exerciseResponseJson);
   static ExerciseEntity get exerciseEntity => exerciseResponse.toEntity();
-  static ExercisesListResponse get exercisesListResponse =>
-      ExercisesListResponse.fromJson(exercisesListResponseJson);
+  static ExercisesListDto get exercisesListResponse =>
+      ExercisesListDto.fromJson(exercisesListResponseJson);
   static ExercisesListEntity get exercisesListEntity =>
       exercisesListResponse.toEntity();
   static ExerciseEntity get emptyLinkExerciseEntity => const ExerciseEntity(

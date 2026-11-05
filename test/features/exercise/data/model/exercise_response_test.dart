@@ -1,12 +1,12 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:fitness_app/features/exercise/data/model/responses/exercise_response.dart';
+import 'package:fitness_app/features/exercise/data/model/responses/exercise_dto.dart';
 import 'package:fitness_app/features/exercise/domain/entities/exercise_entity.dart';
 import '../../../../helpers/test_data.dart';
 
 void main() {
-  group('ExerciseResponse', () {
+  group('ExerciseDto', () {
     test('fromJson maps every snake_case field', () {
-      final response = ExerciseResponse.fromJson(TestData.exerciseResponseJson);
+      final response = ExerciseDto.fromJson(TestData.exerciseResponseJson);
 
       expect(response.id, 'exercise_1');
       expect(response.exercise, 'Push Up');
@@ -78,7 +78,7 @@ void main() {
     });
 
     test('toEntity falls back to empty strings for required fields', () {
-      final entity = ExerciseResponse.fromJson({}).toEntity();
+      final entity = ExerciseDto.fromJson({}).toEntity();
 
       expect(entity.id, '');
       expect(entity.exercise, '');
@@ -92,7 +92,7 @@ void main() {
     });
 
     test('toEntity keeps optional fields null when absent', () {
-      final entity = ExerciseResponse.fromJson({}).toEntity();
+      final entity = ExerciseDto.fromJson({}).toEntity();
 
       expect(entity.secondaryMuscle, isNull);
       expect(entity.tertiaryMuscle, isNull);
@@ -103,7 +103,7 @@ void main() {
     test('ExerciseEntity equality is value based', () {
       final first = TestData.exerciseEntity;
       final second = TestData.exerciseResponse.toEntity();
-      final different = ExerciseResponse.fromJson({
+      final different = ExerciseDto.fromJson({
         ...TestData.exerciseResponseJson,
         'exercise': 'Pull Up',
       }).toEntity();

@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:fitness_app/config/base/base_response.dart';
 import 'package:fitness_app/features/exercise/domain/entities/exercise_entity.dart';
+import 'package:fitness_app/features/exercise/domain/entities/exercises_list_entity.dart';
+import 'package:fitness_app/features/exercise/domain/use_cases/get_difficulty_levels_use_case.dart';
 import 'package:fitness_app/features/exercise/domain/use_cases/get_exercises_use_case.dart';
 import 'package:fitness_app/features/exercise/presentation/exercise_details/manager/exercise_details_cubit.dart';
+import 'package:fitness_app/features/exercise/presentation/exercise_details/manager/exercise_details_event.dart';
 import 'package:fitness_app/features/exercise/presentation/exercise_details/view/widgets/exercise_list_section.dart';
+import 'package:fitness_app/l10n/app_localizations.dart';
 import '../../../../../../helpers/fakes.dart';
+import '../../../../../../helpers/test_data.dart';
 
 void main() {
   const exercises = [
@@ -34,10 +41,15 @@ void main() {
     ),
   ];
 
+  late FakeExerciseRepo fakeRepo;
   late ExerciseDetailsCubit cubit;
 
   setUp(() {
-    cubit = ExerciseDetailsCubit(GetExercisesUseCase(FakeExerciseRepo()));
+    fakeRepo = FakeExerciseRepo();
+    cubit = ExerciseDetailsCubit(
+      GetDifficultyLevelsUseCase(fakeRepo),
+      GetExercisesUseCase(fakeRepo),
+    );
   });
 
   tearDown(() async {
@@ -45,6 +57,19 @@ void main() {
   });
 
   Future<void> pumpSection(WidgetTester tester) async {
+    fakeRepo.nextResult = const Success(
+      ExercisesListEntity(
+        message: 'Success',
+        totalExercises: 2,
+        totalPages: 1,
+        currentPage: 1,
+        exercises: exercises,
+      ),
+    );
+    cubit.onEvent(
+      const LoadLevels(primeMoverMuscleId: TestData.primeMoverMuscleId),
+    );
+
     tester.view.physicalSize =
         const Size(375, 812) * tester.view.devicePixelRatio;
     addTearDown(tester.view.reset);
@@ -55,6 +80,11 @@ void main() {
         minTextAdapt: true,
         splitScreenMode: true,
         child: MaterialApp(
+          localizationsDelegates: const [
+            AppLocalizations.delegate,
+            ...GlobalMaterialLocalizations.delegates,
+          ],
+          supportedLocales: AppLocalizations.supportedLocales,
           home: BlocProvider<ExerciseDetailsCubit>.value(
             value: cubit,
             child: Scaffold(
@@ -95,6 +125,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(cubit.state.selectedIndex, 1);
+      expect(cubit.state.autoPlay, false);
       expect(find.text('player screen'), findsOneWidget);
     });
 
@@ -108,6 +139,20 @@ void main() {
 
       expect(cubit.state.selectedIndex, 0);
       expect(find.text('player screen'), findsOneWidget);
+    });
+
+    testWidgets('tapping play selects the exercise without navigation', (
+      tester,
+    ) async {
+      await pumpSection(tester);
+
+      await tester.tap(find.byIcon(Icons.play_arrow_rounded).last);
+      await tester.pumpAndSettle();
+
+      expect(cubit.state.selectedIndex, 1);
+      expect(cubit.state.autoPlay, true);
+      expect(cubit.state.playRequestId, 1);
+      expect(find.text('player screen'), findsNothing);
     });
   });
 }

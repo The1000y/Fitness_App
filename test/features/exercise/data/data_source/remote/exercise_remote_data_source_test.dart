@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:fitness_app/features/exercise/api/remote/exercise_remote_data_source_impl.dart';
-import 'package:fitness_app/features/exercise/data/model/responses/exercises_list_response.dart';
+import 'package:fitness_app/features/exercise/data/model/responses/exercises_list_dto.dart';
 import '../../../../../helpers/fakes.dart';
 import '../../../../../helpers/test_data.dart';
 
@@ -20,16 +20,20 @@ void main() {
       final response = await dataSource.getExercisesByMuscleDifficulty(
         primeMoverMuscleId: TestData.primeMoverMuscleId,
         difficultyLevelId: TestData.difficultyLevelId,
+        page: 1,
+        limit: 10,
       );
 
       expect(fakeApiClient.callCount, 1);
       expect(fakeApiClient.lastPrimeMoverMuscleId, TestData.primeMoverMuscleId);
       expect(fakeApiClient.lastDifficultyLevelId, TestData.difficultyLevelId);
+      expect(fakeApiClient.lastPage, 1);
+      expect(fakeApiClient.lastLimit, 10);
       expect(response.totalExercises, 2);
     });
 
     test('returns the response produced by the api client', () async {
-      fakeApiClient.nextResponse = ExercisesListResponse(
+      fakeApiClient.nextResponse = ExercisesListDto(
         message: 'Empty',
         totalExercises: 0,
         totalPages: 0,
@@ -40,6 +44,8 @@ void main() {
       final response = await dataSource.getExercisesByMuscleDifficulty(
         primeMoverMuscleId: TestData.primeMoverMuscleId,
         difficultyLevelId: TestData.difficultyLevelId,
+        page: 1,
+        limit: 10,
       );
 
       expect(response.message, 'Empty');
@@ -53,6 +59,31 @@ void main() {
         dataSource.getExercisesByMuscleDifficulty(
           primeMoverMuscleId: TestData.primeMoverMuscleId,
           difficultyLevelId: TestData.difficultyLevelId,
+          page: 1,
+          limit: 10,
+        ),
+        throwsA(isA<Exception>()),
+      );
+    });
+
+    test('delegates the difficulty levels call', () async {
+      fakeApiClient.nextLevelsResponse = TestData.difficultyLevelsResponse;
+
+      final response = await dataSource.getDifficultyLevelsByPrimeMover(
+        primeMoverMuscleId: TestData.primeMoverMuscleId,
+      );
+
+      expect(fakeApiClient.lastPrimeMoverMuscleId, TestData.primeMoverMuscleId);
+      expect(response.totalLevels, 2);
+      expect(response.difficultyLevels, hasLength(2));
+    });
+
+    test('propagates difficulty levels errors', () async {
+      fakeApiClient.nextError = Exception('levels boom');
+
+      await expectLater(
+        dataSource.getDifficultyLevelsByPrimeMover(
+          primeMoverMuscleId: TestData.primeMoverMuscleId,
         ),
         throwsA(isA<Exception>()),
       );

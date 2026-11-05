@@ -17,11 +17,15 @@ class ExerciseRepoImpl implements ExerciseRepo {
   Future<BaseResponse<ExercisesListEntity>> getExercisesByMuscleDifficulty({
     required String primeMoverMuscleId,
     required String difficultyLevelId,
+    required int page,
+    required int limit,
   }) {
     return excecuteApiCall(() async {
       final response = await _remote.getExercisesByMuscleDifficulty(
         primeMoverMuscleId: primeMoverMuscleId,
         difficultyLevelId: difficultyLevelId,
+        page: page,
+        limit: limit,
       );
       return response.toEntity();
     });

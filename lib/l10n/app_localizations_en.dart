@@ -598,4 +598,48 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get cancel => 'cancel the video';
+
+  @override
+  String get exerciseNoExercisesFound => 'No exercises found';
+
+  @override
+  String get exerciseLoadFailed => 'Failed to load exercises';
+
+  @override
+  String get goBack => 'Go Back';
+
+  @override
+  String exercisesOfMuscle(String muscleName) {
+    return '$muscleName Exercises';
+  }
+
+  @override
+  String get targetMuscles => 'Target Muscles';
+
+  @override
+  String get primeMover => 'Prime Mover';
+
+  @override
+  String get secondaryMuscle => 'Secondary';
+
+  @override
+  String get tertiaryMuscle => 'Tertiary';
+
+  @override
+  String get exerciseDetailsTitle => 'Details';
+
+  @override
+  String get bodyRegion => 'Body Region';
+
+  @override
+  String get targetGroup => 'Target Group';
+
+  @override
+  String get shortDemo => 'Short Demo';
+
+  @override
+  String get tapToPlayDemo => 'Tap to play demo';
+
+  @override
+  String get tapToStopDemo => 'Tap to stop demo';
 }

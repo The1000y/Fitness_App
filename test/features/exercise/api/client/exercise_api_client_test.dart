@@ -24,6 +24,8 @@ void main() {
       await client.getExercisesByMuscleDifficulty(
         TestData.primeMoverMuscleId,
         TestData.difficultyLevelId,
+        1,
+        10,
       );
 
       expect(adapter.callCount, 1);
@@ -38,6 +40,8 @@ void main() {
         options.uri.queryParameters['difficultyLevelId'],
         TestData.difficultyLevelId,
       );
+      expect(options.uri.queryParameters['page'], '1');
+      expect(options.uri.queryParameters['limit'], '10');
     });
 
     test('parses the exercises list response', () async {
@@ -47,6 +51,8 @@ void main() {
       final response = await client.getExercisesByMuscleDifficulty(
         TestData.primeMoverMuscleId,
         TestData.difficultyLevelId,
+        1,
+        10,
       );
 
       expect(response.message, 'Success');
@@ -63,11 +69,62 @@ void main() {
         client.getExercisesByMuscleDifficulty(
           TestData.primeMoverMuscleId,
           TestData.difficultyLevelId,
+          1,
+          10,
         ),
         throwsA(
           isA<DioException>()
               .having((e) => e.response?.statusCode, 'statusCode', 401)
               .having((e) => e.type, 'type', DioExceptionType.badResponse),
+        ),
+      );
+    });
+
+    test('sends a GET request with the prime mover query', () async {
+      adapter.statusCode = 200;
+      adapter.responseBody = TestData.difficultyLevelsResponseJson;
+
+      await client.getDifficultyLevelsByPrimeMover(TestData.primeMoverMuscleId);
+
+      expect(adapter.callCount, 1);
+      final options = adapter.lastRequestOptions!;
+      expect(options.method, 'GET');
+      expect(
+        options.path,
+        contains('/levels/difficulty-levels/by-prime-mover'),
+      );
+      expect(
+        options.uri.queryParameters['primeMoverMuscleId'],
+        TestData.primeMoverMuscleId,
+      );
+    });
+
+    test('parses the difficulty levels response', () async {
+      adapter.statusCode = 200;
+      adapter.responseBody = TestData.difficultyLevelsResponseJson;
+
+      final response = await client.getDifficultyLevelsByPrimeMover(
+        TestData.primeMoverMuscleId,
+      );
+
+      expect(response.message, 'Success');
+      expect(response.totalLevels, 2);
+      expect(response.difficultyLevels, hasLength(2));
+      expect(response.difficultyLevels?.first.name, 'Beginner');
+    });
+
+    test('throws DioException when loading levels fails', () async {
+      adapter.statusCode = 401;
+      adapter.responseBody = {'message': 'Unauthorized'};
+
+      await expectLater(
+        client.getDifficultyLevelsByPrimeMover(TestData.primeMoverMuscleId),
+        throwsA(
+          isA<DioException>().having(
+            (e) => e.response?.statusCode,
+            'statusCode',
+            401,
+          ),
         ),
       );
     });

@@ -17,6 +17,8 @@ class ExercisesListEntity extends Equatable {
     required this.exercises,
   });
 
+  bool get hasMore => currentPage < totalPages;
+
   @override
   List<Object?> get props => [
         message,

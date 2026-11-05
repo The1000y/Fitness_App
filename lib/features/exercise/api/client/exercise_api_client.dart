@@ -1,8 +1,10 @@
 import 'package:dio/dio.dart';
+import 'package:fitness_app/core/constants/api_strings.dart';
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
-import '../../data/model/responses/exercises_list_response.dart';
-import '../../data/model/responses/difficulty_levels_response.dart';
+
+import '../../data/model/responses/difficulty_levels_dto.dart';
+import '../../data/model/responses/exercises_list_dto.dart';
 
 part 'exercise_api_client.g.dart';
 
@@ -12,13 +14,16 @@ abstract class ExerciseApiClient {
   @factoryMethod
   factory ExerciseApiClient(Dio dio) = _ExerciseApiClient;
 
-  @GET('/exercises/by-muscle-difficulty')
-  Future<ExercisesListResponse> getExercisesByMuscleDifficulty(
-    @Query('primeMoverMuscleId') String primeMoverMuscleId,
-    @Query('difficultyLevelId') String difficultyLevelId,
+  @GET(ApiStrings.exercisesByMuscleDifficulty)
+  Future<ExercisesListDto> getExercisesByMuscleDifficulty(
+    @Query(ApiStrings.qPrimeMoverMuscleId) String primeMoverMuscleId,
+    @Query(ApiStrings.qDifficultyLevelId) String difficultyLevelId,
+    @Query(ApiStrings.qPage) int page,
+    @Query(ApiStrings.qLimit) int limit,
   );
-  @GET('/levels/difficulty-levels/by-prime-mover')
-  Future<DifficultyLevelsResponse> getDifficultyLevelsByPrimeMover(
-    @Query('primeMoverMuscleId') String primeMoverMuscleId,
+
+  @GET(ApiStrings.difficultyLevelsByPrimeMover)
+  Future<DifficultyLevelsDto> getDifficultyLevelsByPrimeMover(
+    @Query(ApiStrings.qPrimeMoverMuscleId) String primeMoverMuscleId,
   );
 }

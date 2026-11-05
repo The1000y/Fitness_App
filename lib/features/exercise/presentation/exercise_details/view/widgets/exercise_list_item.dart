@@ -1,28 +1,22 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:fitness_app/core/extensions/youtube_url_extension.dart';
 import 'package:fitness_app/core/theme/app_colors/app_colors.dart';
 import 'package:fitness_app/features/exercise/domain/entities/exercise_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 import 'package:gap/gap.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class ExerciseListItem extends StatelessWidget {
   const ExerciseListItem({
     super.key,
     required this.exercise,
     required this.onTap,
+    required this.onPlayTap,
   });
 
   final ExerciseEntity exercise;
   final VoidCallback onTap;
-
-  String get _thumbnailUrl {
-    final url = exercise.shortYoutubeDemonstrationLink;
-    if (url.isEmpty) return '';
-    final id = YoutubePlayerController.convertUrlToId(url.trim());
-    if (id == null) return '';
-    return YoutubePlayerController.getThumbnail(videoId: id);
-  }
+  final VoidCallback onPlayTap;
 
   @override
   Widget build(BuildContext context) {
@@ -36,11 +30,18 @@ class ExerciseListItem extends StatelessWidget {
         ),
         child: Row(
           children: [
-            _ExerciseThumbnail(thumbnailUrl: _thumbnailUrl),
+            _ExerciseThumbnail(
+              thumbnailUrl:
+                  exercise.shortYoutubeDemonstrationLink.youtubeThumbnail,
+            ),
             Gap(12.w),
             _ExerciseInfo(exercise: exercise),
             Gap(8.w),
-            const _PlayButton(),
+            GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTap: onPlayTap,
+              child: const _PlayButton(),
+            ),
           ],
         ),
       ),

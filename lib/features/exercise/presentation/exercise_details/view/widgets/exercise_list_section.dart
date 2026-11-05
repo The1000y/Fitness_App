@@ -3,6 +3,7 @@ import 'package:fitness_app/core/theme/app_colors/app_colors.dart';
 import 'package:fitness_app/features/exercise/domain/entities/exercise_entity.dart';
 import 'package:fitness_app/features/exercise/presentation/exercise_details/manager/exercise_details_cubit.dart';
 import 'package:fitness_app/features/exercise/presentation/exercise_details/manager/exercise_details_event.dart';
+import 'package:fitness_app/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
@@ -22,13 +23,14 @@ class ExerciseListSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return SliverMainAxisGroup(
       slivers: [
         SliverToBoxAdapter(
           child: Padding(
             padding: EdgeInsets.fromLTRB(16.w, 20.h, 16.w, 12.h),
             child: Text(
-              '$muscleName Exercises',
+              l10n.exercisesOfMuscle(muscleName),
               style: TextStyle(
                 color: AppColors.textPrimary,
                 fontSize: 18.sp,
@@ -53,6 +55,11 @@ class ExerciseListSection extends StatelessWidget {
                     context,
                     AppRoutes.exerciseVideoPlayer,
                     arguments: exercises[index],
+                  );
+                },
+                onPlayTap: () {
+                  context.read<ExerciseDetailsCubit>().onEvent(
+                    SelectExercise(index, autoPlay: true),
                   );
                 },
               );

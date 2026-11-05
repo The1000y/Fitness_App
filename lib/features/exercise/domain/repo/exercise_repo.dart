@@ -7,9 +7,11 @@ abstract interface class ExerciseRepo {
   Future<BaseResponse<ExercisesListEntity>> getExercisesByMuscleDifficulty({
     required String primeMoverMuscleId,
     required String difficultyLevelId,
+    required int page,
+    required int limit,
   });
-  
-Future<BaseResponse<List<DifficultyLevelEntity>>> getDifficultyLevels({
-  required String primeMoverMuscleId,
-});
+
+  Future<BaseResponse<List<DifficultyLevelEntity>>> getDifficultyLevels({
+    required String primeMoverMuscleId,
+  });
 }

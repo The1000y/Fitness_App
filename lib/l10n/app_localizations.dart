@@ -1219,6 +1219,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'cancel the video'**
   String get cancel;
+
+  /// No description provided for @exerciseNoExercisesFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No exercises found'**
+  String get exerciseNoExercisesFound;
+
+  /// No description provided for @exerciseLoadFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load exercises'**
+  String get exerciseLoadFailed;
+
+  /// No description provided for @goBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Go Back'**
+  String get goBack;
+
+  /// No description provided for @exercisesOfMuscle.
+  ///
+  /// In en, this message translates to:
+  /// **'{muscleName} Exercises'**
+  String exercisesOfMuscle(String muscleName);
+
+  /// No description provided for @targetMuscles.
+  ///
+  /// In en, this message translates to:
+  /// **'Target Muscles'**
+  String get targetMuscles;
+
+  /// No description provided for @primeMover.
+  ///
+  /// In en, this message translates to:
+  /// **'Prime Mover'**
+  String get primeMover;
+
+  /// No description provided for @secondaryMuscle.
+  ///
+  /// In en, this message translates to:
+  /// **'Secondary'**
+  String get secondaryMuscle;
+
+  /// No description provided for @tertiaryMuscle.
+  ///
+  /// In en, this message translates to:
+  /// **'Tertiary'**
+  String get tertiaryMuscle;
+
+  /// No description provided for @exerciseDetailsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Details'**
+  String get exerciseDetailsTitle;
+
+  /// No description provided for @bodyRegion.
+  ///
+  /// In en, this message translates to:
+  /// **'Body Region'**
+  String get bodyRegion;
+
+  /// No description provided for @targetGroup.
+  ///
+  /// In en, this message translates to:
+  /// **'Target Group'**
+  String get targetGroup;
+
+  /// No description provided for @shortDemo.
+  ///
+  /// In en, this message translates to:
+  /// **'Short Demo'**
+  String get shortDemo;
+
+  /// No description provided for @tapToPlayDemo.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to play demo'**
+  String get tapToPlayDemo;
+
+  /// No description provided for @tapToStopDemo.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to stop demo'**
+  String get tapToStopDemo;
 }
 
 class _AppLocalizationsDelegate

@@ -3,6 +3,7 @@ import 'package:fitness_app/config/routing/app_routes.dart';
 import 'package:fitness_app/features/auth/presentation/onboarding/views/onboarding_view.dart';
 import 'package:fitness_app/features/chat/presentation/views/chat_view.dart';
 import 'package:fitness_app/features/exercise/domain/entities/exercise_entity.dart';
+import 'package:fitness_app/features/exercise/presentation/exercise_details/args/exercise_details_args.dart';
 import 'package:fitness_app/features/exercise/presentation/exercise_details/manager/exercise_details_cubit.dart';
 import 'package:fitness_app/features/exercise/presentation/exercise_details/manager/exercise_details_event.dart';
 import 'package:fitness_app/features/exercise/presentation/exercise_details/view/exercise_details_view.dart';
@@ -26,7 +27,6 @@ abstract final class GenerateRoutes {
       case AppRoutes.onboarding:
         return _pageRoute(const OnboardingView(), settings);
 
-      // Auth
       case AppRoutes.login:
         return _pageRoute(const LoginView(), settings);
 
@@ -45,7 +45,6 @@ abstract final class GenerateRoutes {
       case AppRoutes.changePassword:
         return _pageRoute(const _StubScreen('Change Password'), settings);
 
-      // Setup
       case AppRoutes.setupGender:
         return _pageRoute(const _StubScreen('Setup Gender'), settings);
 
@@ -64,7 +63,6 @@ abstract final class GenerateRoutes {
       case AppRoutes.setupActivity:
         return _pageRoute(const _StubScreen('Setup Activity'), settings);
 
-      // Main
       case AppRoutes.main:
         return _pageRoute(
           MainLayoutView(
@@ -72,20 +70,16 @@ abstract final class GenerateRoutes {
           ),
           settings,
         );
-      // Exercise
+
       case AppRoutes.exerciseDetails:
-        final args = settings.arguments as Map<String, dynamic>;
+        final args = settings.arguments as ExerciseDetailsArgs;
         return _pageRoute(
           BlocProvider(
             create: (_) => getIt<ExerciseDetailsCubit>()
               ..onEvent(
-                LoadLevels(
-                  primeMoverMuscleId: args['primeMoverMuscleId'] as String,
-                ),
+                LoadLevels(primeMoverMuscleId: args.primeMoverMuscleId),
               ),
-            child: ExerciseDetailsView(
-              muscleName: args['muscleName'] as String,
-            ),
+            child: ExerciseDetailsView(muscleName: args.muscleName),
           ),
           settings,
         );
@@ -97,7 +91,6 @@ abstract final class GenerateRoutes {
           settings,
         );
 
-      // Food
       case AppRoutes.food:
         return _pageRoute(const _StubScreen('Food'), settings);
 

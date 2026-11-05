@@ -21,11 +21,15 @@ void main() {
       final result = await useCase(
         primeMoverMuscleId: TestData.primeMoverMuscleId,
         difficultyLevelId: TestData.difficultyLevelId,
+        page: 1,
+        limit: 10,
       );
 
       expect(fakeRepo.callCount, 1);
       expect(fakeRepo.lastPrimeMoverMuscleId, TestData.primeMoverMuscleId);
       expect(fakeRepo.lastDifficultyLevelId, TestData.difficultyLevelId);
+      expect(fakeRepo.lastPage, 1);
+      expect(fakeRepo.lastLimit, 10);
       expect(result, isA<Success<dynamic>>());
       expect((result as Success).data, TestData.exercisesListEntity);
     });
@@ -36,6 +40,8 @@ void main() {
       final result = await useCase(
         primeMoverMuscleId: TestData.primeMoverMuscleId,
         difficultyLevelId: TestData.difficultyLevelId,
+        page: 1,
+        limit: 10,
       );
 
       expect(result, isA<Error<dynamic>>());

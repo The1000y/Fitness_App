@@ -1,12 +1,12 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:fitness_app/features/exercise/data/model/responses/exercises_list_response.dart';
+import 'package:fitness_app/features/exercise/data/model/responses/exercises_list_dto.dart';
 import 'package:fitness_app/features/exercise/domain/entities/exercises_list_entity.dart';
 import '../../../../helpers/test_data.dart';
 
 void main() {
-  group('ExercisesListResponse', () {
+  group('ExercisesListDto', () {
     test('fromJson maps counters and exercises', () {
-      final response = ExercisesListResponse.fromJson(
+      final response = ExercisesListDto.fromJson(
         TestData.exercisesListResponseJson,
       );
 
@@ -45,7 +45,7 @@ void main() {
     });
 
     test('fromJson with an empty payload produces safe defaults', () {
-      final response = ExercisesListResponse.fromJson({});
+      final response = ExercisesListDto.fromJson({});
 
       expect(response.message, isNull);
       expect(response.totalExercises, isNull);
@@ -55,7 +55,7 @@ void main() {
     });
 
     test('toEntity replaces missing values with defaults', () {
-      final entity = ExercisesListResponse.fromJson({}).toEntity();
+      final entity = ExercisesListDto.fromJson({}).toEntity();
 
       expect(entity.message, '');
       expect(entity.totalExercises, 0);
@@ -67,7 +67,7 @@ void main() {
     test('ExercisesListEntity equality is value based', () {
       final first = TestData.exercisesListEntity;
       final second = TestData.exercisesListResponse.toEntity();
-      final different = ExercisesListResponse.fromJson({
+      final different = ExercisesListDto.fromJson({
         ...TestData.exercisesListResponseJson,
         'totalExercises': 5,
       }).toEntity();

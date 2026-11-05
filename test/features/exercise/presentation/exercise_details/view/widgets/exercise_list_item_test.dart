@@ -24,7 +24,11 @@ void main() {
     testWidgets('renders the exercise summary', (tester) async {
       await tester.pumpApp(
         Scaffold(
-          body: ExerciseListItem(exercise: exercise, onTap: () {}),
+          body: ExerciseListItem(
+            exercise: exercise,
+            onTap: () {},
+            onPlayTap: () {},
+          ),
         ),
       );
 
@@ -42,6 +46,7 @@ void main() {
           body: ExerciseListItem(
             exercise: TestData.emptyLinkExerciseEntity,
             onTap: () {},
+            onPlayTap: () {},
           ),
         ),
       );
@@ -54,7 +59,11 @@ void main() {
 
       await tester.pumpApp(
         Scaffold(
-          body: ExerciseListItem(exercise: exercise, onTap: () => taps++),
+          body: ExerciseListItem(
+            exercise: exercise,
+            onTap: () => taps++,
+            onPlayTap: () {},
+          ),
         ),
       );
 
@@ -67,7 +76,11 @@ void main() {
     testWidgets('uses the surface color for the card', (tester) async {
       await tester.pumpApp(
         Scaffold(
-          body: ExerciseListItem(exercise: exercise, onTap: () {}),
+          body: ExerciseListItem(
+            exercise: exercise,
+            onTap: () {},
+            onPlayTap: () {},
+          ),
         ),
       );
 

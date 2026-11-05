@@ -1,9 +1,8 @@
-// Keeps the top area (and the back button) stable while exercises load.
 import 'package:fitness_app/core/theme/app_colors/app_colors.dart';
 import 'package:flutter/material.dart';
 
-class RePlaceholder extends StatelessWidget {
-  const RePlaceholder({super.key, required this.isLoading});
+class HeroPlaceholder extends StatelessWidget {
+  const HeroPlaceholder({super.key, required this.isLoading});
 
   final bool isLoading;
 

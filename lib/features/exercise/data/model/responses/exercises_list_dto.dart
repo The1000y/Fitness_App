@@ -1,19 +1,19 @@
 import 'package:json_annotation/json_annotation.dart';
 
 import '../../../domain/entities/exercises_list_entity.dart';
-import 'exercise_response.dart';
+import 'exercise_dto.dart';
 
-part 'exercises_list_response.g.dart';
+part 'exercises_list_dto.g.dart';
 
 @JsonSerializable(explicitToJson: true)
-class ExercisesListResponse {
+class ExercisesListDto {
   final String? message;
   final int? totalExercises;
   final int? totalPages;
   final int? currentPage;
-  final List<ExerciseResponse>? exercises;
+  final List<ExerciseDto>? exercises;
 
-  ExercisesListResponse({
+  ExercisesListDto({
     this.message,
     this.totalExercises,
     this.totalPages,
@@ -21,10 +21,10 @@ class ExercisesListResponse {
     this.exercises,
   });
 
-  factory ExercisesListResponse.fromJson(Map<String, dynamic> json) =>
-      _$ExercisesListResponseFromJson(json);
+  factory ExercisesListDto.fromJson(Map<String, dynamic> json) =>
+      _$ExercisesListDtoFromJson(json);
 
-  Map<String, dynamic> toJson() => _$ExercisesListResponseToJson(this);
+  Map<String, dynamic> toJson() => _$ExercisesListDtoToJson(this);
 
   ExercisesListEntity toEntity() {
     return ExercisesListEntity(

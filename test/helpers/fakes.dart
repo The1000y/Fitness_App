@@ -13,7 +13,9 @@ import 'package:fitness_app/features/auth/domain/entities/login_entity/user_enti
 import 'package:fitness_app/features/auth/domain/repo/auth_repo.dart';
 import 'package:fitness_app/features/exercise/api/client/exercise_api_client.dart';
 import 'package:fitness_app/features/exercise/data/data_source/remote/exercise_remote_data_source.dart';
-import 'package:fitness_app/features/exercise/data/model/responses/exercises_list_response.dart';
+import 'package:fitness_app/features/exercise/data/model/responses/difficulty_levels_dto.dart';
+import 'package:fitness_app/features/exercise/data/model/responses/exercises_list_dto.dart';
+import 'package:fitness_app/features/exercise/domain/entities/difficulty_level_entity.dart';
 import 'package:fitness_app/features/exercise/domain/entities/exercises_list_entity.dart';
 import 'package:fitness_app/features/exercise/domain/repo/exercise_repo.dart';
 
@@ -176,19 +178,35 @@ class FakeExerciseApiClient implements ExerciseApiClient {
   int callCount = 0;
   String? lastPrimeMoverMuscleId;
   String? lastDifficultyLevelId;
-  ExercisesListResponse? nextResponse;
+  int? lastPage;
+  int? lastLimit;
+  ExercisesListDto? nextResponse;
+  DifficultyLevelsDto? nextLevelsResponse;
   Object? nextError;
 
   @override
-  Future<ExercisesListResponse> getExercisesByMuscleDifficulty(
+  Future<ExercisesListDto> getExercisesByMuscleDifficulty(
     String primeMoverMuscleId,
     String difficultyLevelId,
+    int page,
+    int limit,
   ) async {
     callCount++;
     lastPrimeMoverMuscleId = primeMoverMuscleId;
     lastDifficultyLevelId = difficultyLevelId;
+    lastPage = page;
+    lastLimit = limit;
     if (nextError != null) throw nextError!;
-    return nextResponse ?? ExercisesListResponse();
+    return nextResponse ?? ExercisesListDto();
+  }
+
+  @override
+  Future<DifficultyLevelsDto> getDifficultyLevelsByPrimeMover(
+    String primeMoverMuscleId,
+  ) async {
+    lastPrimeMoverMuscleId = primeMoverMuscleId;
+    if (nextError != null) throw nextError!;
+    return nextLevelsResponse ?? DifficultyLevelsDto();
   }
 }
 
@@ -196,37 +214,61 @@ class FakeExerciseRemoteDataSource implements ExerciseRemoteDataSource {
   int callCount = 0;
   String? lastPrimeMoverMuscleId;
   String? lastDifficultyLevelId;
-  ExercisesListResponse? nextResponse;
+  int? lastPage;
+  int? lastLimit;
+  ExercisesListDto? nextResponse;
+  DifficultyLevelsDto? nextLevelsResponse;
   Object? nextError;
 
   @override
-  Future<ExercisesListResponse> getExercisesByMuscleDifficulty({
+  Future<ExercisesListDto> getExercisesByMuscleDifficulty({
     required String primeMoverMuscleId,
     required String difficultyLevelId,
+    required int page,
+    required int limit,
   }) async {
     callCount++;
     lastPrimeMoverMuscleId = primeMoverMuscleId;
     lastDifficultyLevelId = difficultyLevelId;
+    lastPage = page;
+    lastLimit = limit;
     if (nextError != null) throw nextError!;
-    return nextResponse ?? ExercisesListResponse();
+    return nextResponse ?? ExercisesListDto();
+  }
+
+  @override
+  Future<DifficultyLevelsDto> getDifficultyLevelsByPrimeMover({
+    required String primeMoverMuscleId,
+  }) async {
+    lastPrimeMoverMuscleId = primeMoverMuscleId;
+    if (nextError != null) throw nextError!;
+    return nextLevelsResponse ?? DifficultyLevelsDto();
   }
 }
 
 class FakeExerciseRepo implements ExerciseRepo {
   int callCount = 0;
+  int levelsCallCount = 0;
   String? lastPrimeMoverMuscleId;
   String? lastDifficultyLevelId;
+  int? lastPage;
+  int? lastLimit;
   BaseResponse<ExercisesListEntity>? nextResult;
+  BaseResponse<List<DifficultyLevelEntity>>? nextLevelsResult;
   Completer<BaseResponse<ExercisesListEntity>>? completer;
 
   @override
   Future<BaseResponse<ExercisesListEntity>> getExercisesByMuscleDifficulty({
     required String primeMoverMuscleId,
     required String difficultyLevelId,
+    required int page,
+    required int limit,
   }) async {
     callCount++;
     lastPrimeMoverMuscleId = primeMoverMuscleId;
     lastDifficultyLevelId = difficultyLevelId;
+    lastPage = page;
+    lastLimit = limit;
     if (completer != null) {
       return completer!.future;
     }
@@ -240,6 +282,21 @@ class FakeExerciseRepo implements ExerciseRepo {
             exercises: [],
           ),
         );
+  }
+
+  @override
+  Future<BaseResponse<List<DifficultyLevelEntity>>> getDifficultyLevels({
+    required String primeMoverMuscleId,
+  }) async {
+    levelsCallCount++;
+    lastPrimeMoverMuscleId = primeMoverMuscleId;
+    return nextLevelsResult ??
+        const Success([
+          DifficultyLevelEntity(
+            id: 'difficulty_intermediate',
+            name: 'Intermediate',
+          ),
+        ]);
   }
 }
 

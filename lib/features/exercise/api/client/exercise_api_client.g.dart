@@ -21,18 +21,22 @@ class _ExerciseApiClient implements ExerciseApiClient {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<ExercisesListResponse> getExercisesByMuscleDifficulty(
+  Future<ExercisesListDto> getExercisesByMuscleDifficulty(
     String primeMoverMuscleId,
     String difficultyLevelId,
+    int page,
+    int limit,
   ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'primeMoverMuscleId': primeMoverMuscleId,
       r'difficultyLevelId': difficultyLevelId,
+      r'page': page,
+      r'limit': limit,
     };
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<ExercisesListResponse>(
+    final _options = _setStreamType<ExercisesListDto>(
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -43,9 +47,9 @@ class _ExerciseApiClient implements ExerciseApiClient {
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late ExercisesListResponse _value;
+    late ExercisesListDto _value;
     try {
-      _value = ExercisesListResponse.fromJson(_result.data!);
+      _value = ExercisesListDto.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options, response: _result);
       rethrow;
@@ -54,7 +58,7 @@ class _ExerciseApiClient implements ExerciseApiClient {
   }
 
   @override
-  Future<DifficultyLevelsResponse> getDifficultyLevelsByPrimeMover(
+  Future<DifficultyLevelsDto> getDifficultyLevelsByPrimeMover(
     String primeMoverMuscleId,
   ) async {
     final _extra = <String, dynamic>{};
@@ -63,7 +67,7 @@ class _ExerciseApiClient implements ExerciseApiClient {
     };
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<DifficultyLevelsResponse>(
+    final _options = _setStreamType<DifficultyLevelsDto>(
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -74,9 +78,9 @@ class _ExerciseApiClient implements ExerciseApiClient {
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late DifficultyLevelsResponse _value;
+    late DifficultyLevelsDto _value;
     try {
-      _value = DifficultyLevelsResponse.fromJson(_result.data!);
+      _value = DifficultyLevelsDto.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options, response: _result);
       rethrow;

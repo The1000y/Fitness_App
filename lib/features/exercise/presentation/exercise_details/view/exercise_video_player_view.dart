@@ -1,26 +1,20 @@
+import 'package:fitness_app/core/extensions/youtube_url_extension.dart';
 import 'package:fitness_app/core/shared/custom_video_player.dart';
 import 'package:fitness_app/core/theme/app_colors/app_colors.dart';
 import 'package:fitness_app/features/exercise/domain/entities/exercise_entity.dart';
+import 'package:fitness_app/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 import 'package:gap/gap.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class ExerciseVideoPlayerView extends StatelessWidget {
   const ExerciseVideoPlayerView({super.key, required this.exercise});
 
   final ExerciseEntity exercise;
 
-  String get _thumbnailUrl {
-    final url = exercise.shortYoutubeDemonstrationLink;
-    if (url.isEmpty) return '';
-    final id = YoutubePlayerController.convertUrlToId(url.trim());
-    if (id == null) return '';
-    return YoutubePlayerController.getThumbnail(videoId: id);
-  }
-
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final inDepthUrl = exercise.inDepthYoutubeExplanationLink;
     final shortDemoUrl = exercise.shortYoutubeDemonstrationLink;
     final videoUrl = inDepthUrl != null && inDepthUrl.isNotEmpty
@@ -58,7 +52,7 @@ class ExerciseVideoPlayerView extends StatelessWidget {
           children: [
             CustomVideoPlayer(
               videoUrl: videoUrl,
-              thumbnailImage: _thumbnailUrl,
+              thumbnailImage: shortDemoUrl.youtubeThumbnail,
               aspectRatio: 16 / 9,
             ),
             Gap(20.h),
@@ -95,37 +89,40 @@ class ExerciseVideoPlayerView extends StatelessWidget {
                     ],
                   ),
                   Gap(20.h),
-                  const _SectionTitle(title: 'Target Muscles'),
+                  _SectionTitle(title: l10n.targetMuscles),
                   Gap(8.h),
                   _DetailRow(
-                    label: 'Prime Mover',
+                    label: l10n.primeMover,
                     value: exercise.primeMoverMuscle,
                   ),
                   if (exercise.secondaryMuscle != null)
                     _DetailRow(
-                      label: 'Secondary',
+                      label: l10n.secondaryMuscle,
                       value: exercise.secondaryMuscle!,
                     ),
                   if (exercise.tertiaryMuscle != null)
                     _DetailRow(
-                      label: 'Tertiary',
+                      label: l10n.tertiaryMuscle,
                       value: exercise.tertiaryMuscle!,
                     ),
                   Gap(16.h),
-                  const _SectionTitle(title: 'Details'),
+                  _SectionTitle(title: l10n.exerciseDetailsTitle),
                   Gap(8.h),
-                  _DetailRow(label: 'Body Region', value: exercise.bodyRegion),
                   _DetailRow(
-                    label: 'Target Group',
+                    label: l10n.bodyRegion,
+                    value: exercise.bodyRegion,
+                  ),
+                  _DetailRow(
+                    label: l10n.targetGroup,
                     value: exercise.targetMuscleGroup,
                   ),
                   Gap(24.h),
                   if (hasShortDemo) ...[
-                    const _SectionTitle(title: 'Short Demo'),
+                    _SectionTitle(title: l10n.shortDemo),
                     Gap(8.h),
                     CustomVideoPlayer(
                       videoUrl: shortDemoUrl,
-                      thumbnailImage: _thumbnailUrl,
+                      thumbnailImage: shortDemoUrl.youtubeThumbnail,
                       aspectRatio: 16 / 9,
                     ),
                     Gap(24.h),

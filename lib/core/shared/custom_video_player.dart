@@ -13,22 +13,36 @@ class CustomVideoPlayer extends StatefulWidget {
     required this.videoUrl,
     this.overlayContent,
     this.aspectRatio = 4 / 3,
+    this.autoPlay = false,
   });
 
   final String thumbnailImage;
   final String videoUrl;
   final Widget? overlayContent;
   final double? aspectRatio;
+  final bool autoPlay;
 
   @override
   State<CustomVideoPlayer> createState() => _CustomVideoPlayerState();
 }
 
 class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
+  static _CustomVideoPlayerState? _active;
+
   bool _isLoading = true;
   YoutubeError? _error;
   YoutubePlayerController? _controller;
   StreamSubscription<YoutubePlayerValue>? _subscription;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.autoPlay) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) _onPlayPressed();
+      });
+    }
+  }
 
   void _onPlayPressed() {
     if (_controller != null) return;
@@ -39,6 +53,15 @@ class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
       setState(() => _error = YoutubeError.invalidParam);
       return;
     }
+
+    final previous = _active;
+    if (previous != null && previous != this && previous.mounted) {
+      final previousController = previous._controller;
+      if (previousController != null) {
+        unawaited(previousController.pauseVideo());
+      }
+    }
+    _active = this;
 
     final controller = YoutubePlayerController.fromVideoId(
       videoId: videoId,
@@ -103,6 +126,7 @@ class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
 
   @override
   void dispose() {
+    if (_active == this) _active = null;
     _subscription?.cancel();
     _controller?.close();
     super.dispose();
