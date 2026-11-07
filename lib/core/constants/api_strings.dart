@@ -1,98 +1,52 @@
-
-/// All API endpoints used by the app.
-///
-/// .env should contain:
-/// BASE_URL=https://fitness.elevateegy.com/api/v1
 abstract class ApiStrings {
-  // ---------------------------------------------------------------------------
-  // Base URLs
-  // ---------------------------------------------------------------------------
-  static const String baseUrl =
-      'https://fitness.elevateegy.com/api/v1';
+  static final String baseUrl = 'https://fitness.elevateegy.com/api/v1';
 
-  /// TheMealDB (separate third-party API)
-  static const String mealBaseUrl =
-      'https://www.themealdb.com/api/json/v1/1';
+  static const String mealBaseUrl = 'https://www.themealdb.com/api/json/v1/1';
 
-  // ---------------------------------------------------------------------------
-  // Auth
-  // ---------------------------------------------------------------------------
-  static String get signup => '/auth/signup'; // POST
-  static const String signin = '/auth/signin'; // POST
-  static String get changePassword => '/auth/change-password'; // PATCH
-  static String get uploadPhoto => '/auth/upload-photo'; // PUT
-  static String get profileData => '/auth/profile-data'; // GET
-  static String get logout => '/auth/logout'; // GET
-  static String get forgotPassword => '/auth/forgotPassword'; // POST
-  static String get verifyResetCode => '/auth/verifyResetCode'; // POST
-  static String get resetPassword => '/auth/resetPassword'; // PUT
-  static String get deleteMe => '/auth/deleteMe'; // DELETE
-  static String get editProfile => '/auth/editProfile'; // PUT
+  static String get signup => '/auth/signup';
+  static const String signin = '/auth/signin';
+  static String get changePassword => '/auth/change-password';
+  static String get uploadPhoto => '/auth/upload-photo';
+  static String get profileData => '/auth/profile-data';
+  static String get logout => '/auth/logout';
+  static String get forgotPassword => '/auth/forgotPassword';
+  static String get verifyResetCode => '/auth/verifyResetCode';
+  static String get resetPassword => '/auth/resetPassword';
+  static String get deleteMe => '/auth/deleteMe';
+  static String get editProfile => '/auth/editProfile';
 
-  // ---------------------------------------------------------------------------
-  // Levels
-  // ---------------------------------------------------------------------------
-  static String get levels => '/levels'; // GET
+  static String get levels => '/levels';
 
-  /// GET (Bearer) – query: primeMoverMuscleId
-  static String get difficultyLevelsByPrimeMover =>
+  static const String difficultyLevelsByPrimeMover =
       '/levels/difficulty-levels/by-prime-mover';
 
-  // ---------------------------------------------------------------------------
-  // Muscles
-  // ---------------------------------------------------------------------------
-  static String get randomMuscles =>
-      '/muscles/random'; // GET (20 random prime movers)
+  static String get muscles => '/muscles';
+  static String get randomMuscles => '/muscles/random';
 
-  /// GET – all muscles
-  static const String muscles = '/muscles';
-
-  /// GET – query: muscleGroupId
-  static const String musclesByGroup =
-      '/musclesGroup/by-muscle-group';
-
-  /// GET – all muscles by muscle group id (path parameter)
   static String musclesByGroupId(String muscleGroupId) =>
       '/musclesGroup/$muscleGroupId';
 
-  /// GET – query: muscleGroupId
-  static String get primeMoversByMuscleGroup =>
-      '/musclesGroup/by-muscle-group';
+  static String get primeMoversByMuscleGroup => '/musclesGroup/by-muscle-group';
 
-  // ---------------------------------------------------------------------------
-  // Exercises
-  // ---------------------------------------------------------------------------
-  static String get exercises => '/exercises'; // GET
+  static String get exercises => '/exercises';
 
-  /// GET – query: primeMoverMuscleId, difficultyLevelId
-  static String get exercisesByMuscleDifficulty =>
+  static const String exercisesByMuscleDifficulty =
       '/exercises/by-muscle-difficulty';
 
-  /// GET – query: targetMuscleGroupId, difficultyLevelId, limit
   static String get randomExercises => '/exercises/random';
 
-  // ---------------------------------------------------------------------------
-  // Meals (TheMealDB)
-  // ---------------------------------------------------------------------------
-  static const String mealCategories =
-      '$mealBaseUrl/categories.php'; // GET
+  static const String mealCategories = '$mealBaseUrl/categories.php';
 
-  /// GET – query: c (category name, e.g. Seafood)
-  static const String mealsByCategory =
-      '$mealBaseUrl/filter.php';
+  static const String mealsByCategory = '$mealBaseUrl/filter.php';
 
-  /// GET – query: i (meal id, e.g. 52959)
-  static const String mealDetails =
-      '$mealBaseUrl/lookup.php';
+  static const String mealDetails = '$mealBaseUrl/lookup.php';
 
-  // ---------------------------------------------------------------------------
-  // Query parameter keys
-  // ---------------------------------------------------------------------------
   static const String qPrimeMoverMuscleId = 'primeMoverMuscleId';
   static const String qMuscleGroupId = 'muscleGroupId';
   static const String qDifficultyLevelId = 'difficultyLevelId';
   static const String qTargetMuscleGroupId = 'targetMuscleGroupId';
   static const String qLimit = 'limit';
+  static const String qPage = 'page';
   static const String qMealCategory = 'c';
   static const String qMealId = 'i';
 }

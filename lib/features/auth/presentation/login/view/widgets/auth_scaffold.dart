@@ -42,10 +42,7 @@ class AuthScaffold extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Center(
-                  child: Image.asset(
-                    AppImages.launchLogoX2,
-                    height: 48.h,
-                  ),
+                  child: Image.asset(AppImages.launchLogoX2, height: 48.h),
                 ),
                 SizedBox(height: 85.h),
                 if (hasHeader) ...[

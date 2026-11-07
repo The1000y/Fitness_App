@@ -576,4 +576,79 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingsSaved => 'Settings saved';
+
+  @override
+  String get failedToLoadVideo =>
+      'Couldn\'t load the video. Please check your internet connection and try again.';
+
+  @override
+  String get videoPlayerError =>
+      'Something went wrong while playing the video. Please try again.';
+
+  @override
+  String get invalidVideo => 'The video link is invalid or unavailable.';
+
+  @override
+  String get embeddingDisabled =>
+      'This video can\'t be played here because the owner has disabled embedding.';
+
+  @override
+  String get videoNotFound =>
+      'This video isn\'t available. It may have been removed or set to private.';
+
+  @override
+  String get notFound => 'Unable to find the requested resource.';
+
+  @override
+  String get retry => 'Retry';
+
+  @override
+  String get unableToPlayVideo => 'Unable to play video';
+
+  @override
+  String get cancel => 'cancel the video';
+
+  @override
+  String get exerciseNoExercisesFound => 'No exercises found';
+
+  @override
+  String get exerciseLoadFailed => 'Failed to load exercises';
+
+  @override
+  String get goBack => 'Go Back';
+
+  @override
+  String exercisesOfMuscle(String muscleName) {
+    return '$muscleName Exercises';
+  }
+
+  @override
+  String get targetMuscles => 'Target Muscles';
+
+  @override
+  String get primeMover => 'Prime Mover';
+
+  @override
+  String get secondaryMuscle => 'Secondary';
+
+  @override
+  String get tertiaryMuscle => 'Tertiary';
+
+  @override
+  String get exerciseDetailsTitle => 'Details';
+
+  @override
+  String get bodyRegion => 'Body Region';
+
+  @override
+  String get targetGroup => 'Target Group';
+
+  @override
+  String get shortDemo => 'Short Demo';
+
+  @override
+  String get tapToPlayDemo => 'Tap to play demo';
+
+  @override
+  String get tapToStopDemo => 'Tap to stop demo';
 }

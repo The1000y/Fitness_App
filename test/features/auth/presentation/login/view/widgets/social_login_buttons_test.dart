@@ -5,7 +5,9 @@ import '../../../../../../helpers/pump_app.dart';
 
 void main() {
   group('SocialLoginButtons', () {
-    testWidgets('callbacks fire per button and semantics labels are correct', (tester) async {
+    testWidgets('callbacks fire per button and semantics labels are correct', (
+      tester,
+    ) async {
       final handle = tester.ensureSemantics();
       try {
         bool fbClicked = false;
@@ -37,24 +39,28 @@ void main() {
       }
     });
 
-    testWidgets('null callback disables button semantics and tapping disabled button does nothing', (tester) async {
-      final handle = tester.ensureSemantics();
-      try {
-        await tester.pumpApp(
-          const SocialLoginButtons(),
-        );
+    testWidgets(
+      'null callback disables button semantics and tapping disabled button does nothing',
+      (tester) async {
+        final handle = tester.ensureSemantics();
+        try {
+          await tester.pumpApp(const SocialLoginButtons());
 
-        for (final label in ['Facebook', 'Google', 'Apple']) {
-          final semantics = tester.getSemantics(find.bySemanticsLabel(label));
-          expect(semantics.getSemanticsData().hasAction(SemanticsAction.tap), false);
+          for (final label in ['Facebook', 'Google', 'Apple']) {
+            final semantics = tester.getSemantics(find.bySemanticsLabel(label));
+            expect(
+              semantics.getSemanticsData().hasAction(SemanticsAction.tap),
+              false,
+            );
 
-          await tester.tap(find.bySemanticsLabel(label));
-          await tester.pump();
+            await tester.tap(find.bySemanticsLabel(label));
+            await tester.pump();
+          }
+        } finally {
+          handle.dispose();
         }
-      } finally {
-        handle.dispose();
-      }
-    });
+      },
+    );
 
     testWidgets('non-null callbacks have tap action enabled', (tester) async {
       final handle = tester.ensureSemantics();
@@ -69,7 +75,10 @@ void main() {
 
         for (final label in ['Facebook', 'Google', 'Apple']) {
           final semantics = tester.getSemantics(find.bySemanticsLabel(label));
-          expect(semantics.getSemanticsData().hasAction(SemanticsAction.tap), true);
+          expect(
+            semantics.getSemanticsData().hasAction(SemanticsAction.tap),
+            true,
+          );
         }
       } finally {
         handle.dispose();

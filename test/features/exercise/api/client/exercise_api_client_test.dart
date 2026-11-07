@@ -1,61 +1,132 @@
 import 'package:dio/dio.dart';
-import 'package:fitness_app/core/constants/api_strings.dart';
-import 'package:fitness_app/features/exercise/api/client/exercise_api_client.dart';
 import 'package:flutter_test/flutter_test.dart';
-
+import 'package:fitness_app/features/exercise/api/client/exercise_api_client.dart';
 import '../../../../helpers/fakes.dart';
+import '../../../../helpers/test_data.dart';
 
 void main() {
-  late FakeHttpClientAdapter adapter;
   late Dio dio;
-  late ExerciseApiClient apiClient;
+  late FakeHttpClientAdapter adapter;
+  late ExerciseApiClient client;
 
   setUp(() {
+    dio = Dio(BaseOptions(baseUrl: 'https://fitness.elevateegy.com/api/v1'));
     adapter = FakeHttpClientAdapter();
-    dio = Dio(BaseOptions(baseUrl: ApiStrings.baseUrl))
-      ..httpClientAdapter = adapter;
-    apiClient = ExerciseApiClient(dio);
+    dio.httpClientAdapter = adapter;
+    client = ExerciseApiClient(dio);
   });
 
-  tearDown(() {
-    dio.close(force: true);
-  });
+  group('ExerciseApiClient', () {
+    test('sends a GET request with both query parameters', () async {
+      adapter.statusCode = 200;
+      adapter.responseBody = TestData.exercisesListResponseJson;
 
-  test('gets all muscle groups from the muscles endpoint', () async {
-    adapter.responseBody = {
-      'message': 'success',
-      'musclesGroup': [
-        {'_id': 'group-1', 'name': 'Abdominals'},
-      ],
-    };
+      await client.getExercisesByMuscleDifficulty(
+        TestData.primeMoverMuscleId,
+        TestData.difficultyLevelId,
+        1,
+        10,
+      );
 
-    final response = await apiClient.getMuscleGroups();
-
-    expect(adapter.lastRequestOptions?.method, 'GET');
-    expect(adapter.lastRequestOptions?.path, ApiStrings.muscles);
-    expect(response.musclesGroup?.single.id, 'group-1');
-  });
-
-  test('gets muscles by group using the expected query parameter', () async {
-    adapter.responseBody = {
-      'message': 'success',
-      'totalMuscles': 1,
-      'muscles': [
-        {
-          '_id': 'muscle-1',
-          'name': 'Rectus Abdominis',
-          'image': 'https://example.com/rectus.png',
-        },
-      ],
-    };
-
-    final response = await apiClient.getMusclesByGroup('group-1');
-
-    expect(adapter.lastRequestOptions?.method, 'GET');
-    expect(adapter.lastRequestOptions?.path, ApiStrings.musclesByGroup);
-    expect(adapter.lastRequestOptions?.queryParameters, {
-      ApiStrings.qMuscleGroupId: 'group-1',
+      expect(adapter.callCount, 1);
+      final options = adapter.lastRequestOptions!;
+      expect(options.method, 'GET');
+      expect(options.path, contains('/exercises/by-muscle-difficulty'));
+      expect(
+        options.uri.queryParameters['primeMoverMuscleId'],
+        TestData.primeMoverMuscleId,
+      );
+      expect(
+        options.uri.queryParameters['difficultyLevelId'],
+        TestData.difficultyLevelId,
+      );
+      expect(options.uri.queryParameters['page'], '1');
+      expect(options.uri.queryParameters['limit'], '10');
     });
-    expect(response.muscles?.single.name, 'Rectus Abdominis');
+
+    test('parses the exercises list response', () async {
+      adapter.statusCode = 200;
+      adapter.responseBody = TestData.exercisesListResponseJson;
+
+      final response = await client.getExercisesByMuscleDifficulty(
+        TestData.primeMoverMuscleId,
+        TestData.difficultyLevelId,
+        1,
+        10,
+      );
+
+      expect(response.message, 'Success');
+      expect(response.totalExercises, 2);
+      expect(response.exercises, hasLength(2));
+      expect(response.exercises?.first.exercise, 'Push Up');
+    });
+
+    test('throws DioException on a 401 response', () async {
+      adapter.statusCode = 401;
+      adapter.responseBody = {'message': 'Unauthorized'};
+
+      await expectLater(
+        client.getExercisesByMuscleDifficulty(
+          TestData.primeMoverMuscleId,
+          TestData.difficultyLevelId,
+          1,
+          10,
+        ),
+        throwsA(
+          isA<DioException>()
+              .having((e) => e.response?.statusCode, 'statusCode', 401)
+              .having((e) => e.type, 'type', DioExceptionType.badResponse),
+        ),
+      );
+    });
+
+    test('sends a GET request with the prime mover query', () async {
+      adapter.statusCode = 200;
+      adapter.responseBody = TestData.difficultyLevelsResponseJson;
+
+      await client.getDifficultyLevelsByPrimeMover(TestData.primeMoverMuscleId);
+
+      expect(adapter.callCount, 1);
+      final options = adapter.lastRequestOptions!;
+      expect(options.method, 'GET');
+      expect(
+        options.path,
+        contains('/levels/difficulty-levels/by-prime-mover'),
+      );
+      expect(
+        options.uri.queryParameters['primeMoverMuscleId'],
+        TestData.primeMoverMuscleId,
+      );
+    });
+
+    test('parses the difficulty levels response', () async {
+      adapter.statusCode = 200;
+      adapter.responseBody = TestData.difficultyLevelsResponseJson;
+
+      final response = await client.getDifficultyLevelsByPrimeMover(
+        TestData.primeMoverMuscleId,
+      );
+
+      expect(response.message, 'Success');
+      expect(response.totalLevels, 2);
+      expect(response.difficultyLevels, hasLength(2));
+      expect(response.difficultyLevels?.first.name, 'Beginner');
+    });
+
+    test('throws DioException when loading levels fails', () async {
+      adapter.statusCode = 401;
+      adapter.responseBody = {'message': 'Unauthorized'};
+
+      await expectLater(
+        client.getDifficultyLevelsByPrimeMover(TestData.primeMoverMuscleId),
+        throwsA(
+          isA<DioException>().having(
+            (e) => e.response?.statusCode,
+            'statusCode',
+            401,
+          ),
+        ),
+      );
+    });
   });
 }

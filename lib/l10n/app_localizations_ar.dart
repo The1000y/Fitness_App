@@ -572,4 +572,79 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get settingsSaved => 'تم حفظ الإعدادات';
+
+  @override
+  String get failedToLoadVideo =>
+      'تعذر تحميل الفيديو. يرجى التحقق من اتصال الإنترنت والمحاولة مرة أخرى.';
+
+  @override
+  String get videoPlayerError =>
+      'حدث خطأ أثناء تشغيل الفيديو. يرجى المحاولة مرة أخرى.';
+
+  @override
+  String get invalidVideo => 'رابط الفيديو غير صالح أو غير متاح.';
+
+  @override
+  String get embeddingDisabled =>
+      'لا يمكن تشغيل هذا الفيديو هنا لأن مالكه عطّل إمكانية تضمينه.';
+
+  @override
+  String get videoNotFound =>
+      'هذا الفيديو غير متاح. ربما تمت إزالته أو تم تعيينه كخاص.';
+
+  @override
+  String get notFound => 'تعذر العثور على المطلوب.';
+
+  @override
+  String get retry => 'إعادة المحاولة';
+
+  @override
+  String get unableToPlayVideo => 'تعذر تشغيل الفيديو';
+
+  @override
+  String get cancel => 'إغلاق الفيديو';
+
+  @override
+  String get exerciseNoExercisesFound => 'لا توجد تمارين';
+
+  @override
+  String get exerciseLoadFailed => 'فشل تحميل التمارين';
+
+  @override
+  String get goBack => 'رجوع';
+
+  @override
+  String exercisesOfMuscle(String muscleName) {
+    return 'تمارين $muscleName';
+  }
+
+  @override
+  String get targetMuscles => 'العضلات المستهدفة';
+
+  @override
+  String get primeMover => 'العضلة الرئيسية';
+
+  @override
+  String get secondaryMuscle => 'ثانوية';
+
+  @override
+  String get tertiaryMuscle => 'ثالثية';
+
+  @override
+  String get exerciseDetailsTitle => 'التفاصيل';
+
+  @override
+  String get bodyRegion => 'منطقة الجسم';
+
+  @override
+  String get targetGroup => 'المجموعة المستهدفة';
+
+  @override
+  String get shortDemo => 'عرض مختصر';
+
+  @override
+  String get tapToPlayDemo => 'اضغط لتشغيل العرض';
+
+  @override
+  String get tapToStopDemo => 'اضغط لإيقاف العرض';
 }

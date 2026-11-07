@@ -27,11 +27,7 @@ class LoginCubit extends BaseCubit<LoginState, CommonUiEvent> {
   Future<void> _login(LoginSubmitted event) async {
     if (state.loginState.isLoading) return;
 
-    emit(
-      state.copyWith(
-        loginState: BaseState(isLoading: true),
-      ),
-    );
+    emit(state.copyWith(loginState: BaseState(isLoading: true)));
 
     final result = await _loginUseCase(
       email: event.email,
@@ -44,14 +40,11 @@ class LoginCubit extends BaseCubit<LoginState, CommonUiEvent> {
       case Success():
         emit(
           state.copyWith(
-            loginState: BaseState(
-              data: result.data,
-              isLoading: false,
-            ),
+            loginState: BaseState(data: result.data, isLoading: false),
           ),
         );
 
-        emitEvent(const NavigateReplaceTo(AppRoutes.home));
+        emitEvent(const NavigateReplaceTo(AppRoutes.main));
 
       case Error():
         emit(

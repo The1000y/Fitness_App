@@ -20,12 +20,10 @@ void main() {
       expect(find.byType(Image), findsNWidgets(2));
     });
 
-    testWidgets('omits headers when title and subtitle are null', (tester) async {
-      await tester.pumpApp(
-        const AuthScaffold(
-          child: Text('ChildContent'),
-        ),
-      );
+    testWidgets('omits headers when title and subtitle are null', (
+      tester,
+    ) async {
+      await tester.pumpApp(const AuthScaffold(child: Text('ChildContent')));
 
       expect(find.text('ChildContent'), findsOneWidget);
       expect(find.byType(SingleChildScrollView), findsOneWidget);

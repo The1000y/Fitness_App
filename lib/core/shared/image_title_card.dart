@@ -55,7 +55,7 @@ class ImageTitleCard extends StatelessWidget {
                     const Center(child: Icon(Icons.broken_image_outlined)),
               ),
             Padding(
-              padding: EdgeInsets.all(1.r),
+              padding: EdgeInsets.all(1),
               child: Align(
                 alignment: Alignment.bottomCenter,
                 child: Text(
