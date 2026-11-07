@@ -1,5 +1,7 @@
 import 'package:fitness_app/features/exercise/data/model/responses/difficulty_levels_dto.dart';
 import 'package:fitness_app/features/exercise/data/model/responses/exercises_list_dto.dart';
+import 'package:fitness_app/features/exercise/data/model/responses/muscle_difficulty_response.dart';
+import 'package:fitness_app/features/exercise/data/model/responses/muscles_by_group_response.dart';
 
 abstract interface class ExerciseRemoteDataSource {
   Future<ExercisesListDto> getExercisesByMuscleDifficulty({
@@ -12,4 +14,8 @@ abstract interface class ExerciseRemoteDataSource {
   Future<DifficultyLevelsDto> getDifficultyLevelsByPrimeMover({
     required String primeMoverMuscleId,
   });
+
+  Future<MuscleGroupsResponse> getMusclesGroups();
+
+  Future<MusclesByGroupResponse> getMusclesByGroup(String id);
 }
