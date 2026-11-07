@@ -15,8 +15,12 @@ import 'package:fitness_app/features/exercise/api/client/exercise_api_client.dar
 import 'package:fitness_app/features/exercise/data/data_source/remote/exercise_remote_data_source.dart';
 import 'package:fitness_app/features/exercise/data/model/responses/difficulty_levels_dto.dart';
 import 'package:fitness_app/features/exercise/data/model/responses/exercises_list_dto.dart';
+import 'package:fitness_app/features/exercise/data/model/responses/muscle_groups_response.dart';
+import 'package:fitness_app/features/exercise/data/model/responses/muscles_by_group_response.dart';
 import 'package:fitness_app/features/exercise/domain/entities/difficulty_level_entity.dart';
 import 'package:fitness_app/features/exercise/domain/entities/exercises_list_entity.dart';
+import 'package:fitness_app/features/exercise/domain/entities/muscle_groups_entity.dart';
+import 'package:fitness_app/features/exercise/domain/entities/muscles_by_group_entity.dart';
 import 'package:fitness_app/features/exercise/domain/repo/exercise_repo.dart';
 
 class FakeAuthRepo implements AuthRepo {
@@ -182,6 +186,9 @@ class FakeExerciseApiClient implements ExerciseApiClient {
   int? lastLimit;
   ExercisesListDto? nextResponse;
   DifficultyLevelsDto? nextLevelsResponse;
+  MuscleGroupsResponse? nextMuscleGroupsResponse;
+  MusclesByGroupResponse? nextMusclesByGroupResponse;
+  String? lastMuscleGroupId;
   Object? nextError;
 
   @override
@@ -208,6 +215,23 @@ class FakeExerciseApiClient implements ExerciseApiClient {
     if (nextError != null) throw nextError!;
     return nextLevelsResponse ?? DifficultyLevelsDto();
   }
+
+  @override
+  Future<MuscleGroupsResponse> getMuscleGroups() async {
+    callCount++;
+    if (nextError != null) throw nextError!;
+    return nextMuscleGroupsResponse ??
+        MuscleGroupsResponse(musclesGroup: const []);
+  }
+
+  @override
+  Future<MusclesByGroupResponse> getMusclesByGroup(String muscleGroupId) async {
+    callCount++;
+    lastMuscleGroupId = muscleGroupId;
+    if (nextError != null) throw nextError!;
+    return nextMusclesByGroupResponse ??
+        MusclesByGroupResponse(totalMuscles: 0, muscles: const []);
+  }
 }
 
 class FakeExerciseRemoteDataSource implements ExerciseRemoteDataSource {
@@ -218,6 +242,9 @@ class FakeExerciseRemoteDataSource implements ExerciseRemoteDataSource {
   int? lastLimit;
   ExercisesListDto? nextResponse;
   DifficultyLevelsDto? nextLevelsResponse;
+  MuscleGroupsResponse? nextMuscleGroupsResponse;
+  MusclesByGroupResponse? nextMusclesByGroupResponse;
+  String? lastMuscleGroupId;
   Object? nextError;
 
   @override
@@ -244,6 +271,21 @@ class FakeExerciseRemoteDataSource implements ExerciseRemoteDataSource {
     if (nextError != null) throw nextError!;
     return nextLevelsResponse ?? DifficultyLevelsDto();
   }
+
+  @override
+  Future<MuscleGroupsResponse> getMusclesGroups() async {
+    if (nextError != null) throw nextError!;
+    return nextMuscleGroupsResponse ??
+        MuscleGroupsResponse(musclesGroup: const []);
+  }
+
+  @override
+  Future<MusclesByGroupResponse> getMusclesByGroup(String id) async {
+    lastMuscleGroupId = id;
+    if (nextError != null) throw nextError!;
+    return nextMusclesByGroupResponse ??
+        MusclesByGroupResponse(totalMuscles: 0, muscles: const []);
+  }
 }
 
 class FakeExerciseRepo implements ExerciseRepo {
@@ -255,6 +297,9 @@ class FakeExerciseRepo implements ExerciseRepo {
   int? lastLimit;
   BaseResponse<ExercisesListEntity>? nextResult;
   BaseResponse<List<DifficultyLevelEntity>>? nextLevelsResult;
+  BaseResponse<MuscleGroupsEntity>? nextMuscleGroupsResult;
+  BaseResponse<MusclesByGroupEntity>? nextMusclesByGroupResult;
+  String? lastMuscleGroupId;
   Completer<BaseResponse<ExercisesListEntity>>? completer;
 
   @override
@@ -297,6 +342,23 @@ class FakeExerciseRepo implements ExerciseRepo {
             name: 'Intermediate',
           ),
         ]);
+  }
+
+  @override
+  Future<BaseResponse<MuscleGroupsEntity>> getMusclesGroups() async {
+    return nextMuscleGroupsResult ??
+        const Success(MuscleGroupsEntity(message: '', musclesGroup: []));
+  }
+
+  @override
+  Future<BaseResponse<MusclesByGroupEntity>> getMusclesByGroup({
+    required String id,
+  }) async {
+    lastMuscleGroupId = id;
+    return nextMusclesByGroupResult ??
+        const Success(
+          MusclesByGroupEntity(message: '', totalMuscles: 0, muscles: []),
+        );
   }
 }
 

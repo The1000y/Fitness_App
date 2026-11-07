@@ -1,7 +1,7 @@
-
 import 'package:equatable/equatable.dart';
 import 'package:fitness_app/config/base/base_state.dart';
 import 'package:fitness_app/features/exercise/domain/entities/muscle_groups_entity.dart';
+import 'package:fitness_app/features/exercise/domain/entities/muscle_group_entity.dart';
 import 'package:fitness_app/features/exercise/domain/entities/muscles_by_group_entity.dart';
 
 class WorkoutCategoriesState extends Equatable {
@@ -16,7 +16,7 @@ class WorkoutCategoriesState extends Equatable {
   });
 
   // Getter for selected muscle group
-  get selectedGroup {
+  MuscleGroupEntity? get selectedGroup {
     final groups = workoutCategoriesState.data?.musclesGroup ?? [];
 
     if (groups.isEmpty) return null;
@@ -42,8 +42,8 @@ class WorkoutCategoriesState extends Equatable {
 
   @override
   List<Object?> get props => [
-        workoutCategoriesState,
-        musclesState,
-        selectedGroupId,
-      ];
+    workoutCategoriesState,
+    musclesState,
+    selectedGroupId,
+  ];
 }

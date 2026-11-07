@@ -88,5 +88,20 @@ void main() {
         throwsA(isA<Exception>()),
       );
     });
+
+    test('delegates the muscle groups call', () async {
+      final response = await dataSource.getMusclesGroups();
+
+      expect(fakeApiClient.callCount, 1);
+      expect(response.musclesGroup, isEmpty);
+    });
+
+    test('delegates the muscles by group call', () async {
+      final response = await dataSource.getMusclesByGroup('group-1');
+
+      expect(fakeApiClient.callCount, 1);
+      expect(fakeApiClient.lastMuscleGroupId, 'group-1');
+      expect(response.muscles, isEmpty);
+    });
   });
 }

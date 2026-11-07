@@ -40,8 +40,14 @@ import '../../features/exercise/domain/use_cases/get_difficulty_levels_use_case.
     as _i615;
 import '../../features/exercise/domain/use_cases/get_exercises_use_case.dart'
     as _i685;
+import '../../features/exercise/domain/use_cases/get_muscle_groups_use_case.dart'
+    as _i593;
+import '../../features/exercise/domain/use_cases/get_muscles_by_group_use_case.dart'
+    as _i559;
 import '../../features/exercise/presentation/exercise_details/manager/exercise_details_cubit.dart'
     as _i944;
+import '../../features/exercise/presentation/workout_categories/manager/workout_categories_cubit.dart'
+    as _i355;
 import '../dio/app_interceptor.dart' as _i264;
 import '../dio/dio_module.dart' as _i977;
 import '../utils/secure_storage_module.dart' as _i327;
@@ -98,15 +104,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i685.GetExercisesUseCase>(
       () => _i685.GetExercisesUseCase(gh<_i628.ExerciseRepo>()),
     );
-    gh.factory<_i944.ExerciseDetailsCubit>(
-      () => _i944.ExerciseDetailsCubit(
-        gh<_i615.GetDifficultyLevelsUseCase>(),
-        gh<_i685.GetExercisesUseCase>(),
-      ),
-    );
-    gh.factory<_i889.LoginCubit>(
-      () => _i889.LoginCubit(gh<_i1038.LoginUseCase>()),
-    );
     gh.factory<_i593.GetMuscleGroupsUseCase>(
       () => _i593.GetMuscleGroupsUseCase(gh<_i628.ExerciseRepo>()),
     );
@@ -118,6 +115,15 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i593.GetMuscleGroupsUseCase>(),
         gh<_i559.GetMusclesByGroupUseCase>(),
       ),
+    );
+    gh.factory<_i944.ExerciseDetailsCubit>(
+      () => _i944.ExerciseDetailsCubit(
+        gh<_i615.GetDifficultyLevelsUseCase>(),
+        gh<_i685.GetExercisesUseCase>(),
+      ),
+    );
+    gh.factory<_i889.LoginCubit>(
+      () => _i889.LoginCubit(gh<_i1038.LoginUseCase>()),
     );
     return this;
   }

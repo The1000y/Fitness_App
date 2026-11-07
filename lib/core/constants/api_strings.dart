@@ -20,11 +20,13 @@ abstract class ApiStrings {
   static const String difficultyLevelsByPrimeMover =
       '/levels/difficulty-levels/by-prime-mover';
 
-  static String get muscles => '/muscles';
+  static const String muscles = '/muscles';
   static String get randomMuscles => '/muscles/random';
 
   static String musclesByGroupId(String muscleGroupId) =>
       '/musclesGroup/$muscleGroupId';
+
+  static const String musclesByGroup = '/musclesGroup/by-muscle-group';
 
   static String get primeMoversByMuscleGroup => '/musclesGroup/by-muscle-group';
 

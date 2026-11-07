@@ -8,6 +8,7 @@ import 'package:fitness_app/features/exercise/presentation/exercise_details/mana
 import 'package:fitness_app/features/exercise/presentation/exercise_details/manager/exercise_details_event.dart';
 import 'package:fitness_app/features/exercise/presentation/exercise_details/view/exercise_details_view.dart';
 import 'package:fitness_app/features/exercise/presentation/exercise_details/view/exercise_video_player_view.dart';
+import 'package:fitness_app/features/exercise/presentation/workout_categories/view/workout_categories_view.dart';
 import 'package:fitness_app/features/home/presentation/views/home_view.dart';
 import 'package:fitness_app/features/main/presentation/views/main_layout_view.dart';
 import 'package:fitness_app/features/profile/presentation/views/profile_view.dart';
@@ -65,10 +66,18 @@ abstract final class GenerateRoutes {
       case AppRoutes.main:
         return _pageRoute(
           MainLayoutView(
-            tabs: [HomeView(), ChatView(), WorkoutCategoriesView(), ProfileView()],
+            tabs: [
+              HomeView(),
+              ChatView(),
+              WorkoutCategoriesView(),
+              ProfileView(),
+            ],
           ),
           settings,
         );
+
+      case AppRoutes.workoutCategories:
+        return _pageRoute(const WorkoutCategoriesView(), settings);
 
       case AppRoutes.exerciseDetails:
         final args = settings.arguments as ExerciseDetailsArgs;

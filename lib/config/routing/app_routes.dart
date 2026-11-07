@@ -25,6 +25,7 @@ abstract final class AppRoutes {
   static const String main = '/main';
 
   // Workouts.
+  static const String workoutCategories = '/workout-categories';
   static const String exerciseDetails = '/exercise-details';
   static const String exerciseVideoPlayer = '/exercise-video-player';
 

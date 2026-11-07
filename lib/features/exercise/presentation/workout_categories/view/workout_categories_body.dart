@@ -6,7 +6,6 @@ import 'package:fitness_app/core/shared/custom_background_image.dart';
 import 'package:fitness_app/core/shared/image_title_card.dart';
 import 'package:fitness_app/features/exercise/domain/entities/muscle_entity.dart';
 import 'package:fitness_app/features/exercise/presentation/workout_categories/manager/workout_categories_cubit.dart';
-import 'package:fitness_app/features/exercise/presentation/workout_categories/manager/workout_categories_event.dart';
 import 'package:fitness_app/features/exercise/presentation/workout_categories/manager/workout_categories_state.dart';
 import 'package:fitness_app/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';

@@ -1,4 +1,3 @@
-
 import 'package:dio/dio.dart';
 import 'package:fitness_app/core/constants/api_strings.dart';
 import 'package:injectable/injectable.dart';
@@ -6,6 +5,8 @@ import 'package:retrofit/retrofit.dart';
 
 import '../../data/model/responses/difficulty_levels_dto.dart';
 import '../../data/model/responses/exercises_list_dto.dart';
+import '../../data/model/responses/muscle_groups_response.dart';
+import '../../data/model/responses/muscles_by_group_response.dart';
 
 part 'exercise_api_client.g.dart';
 
@@ -26,5 +27,13 @@ abstract class ExerciseApiClient {
   @GET(ApiStrings.difficultyLevelsByPrimeMover)
   Future<DifficultyLevelsDto> getDifficultyLevelsByPrimeMover(
     @Query(ApiStrings.qPrimeMoverMuscleId) String primeMoverMuscleId,
+  );
+
+  @GET(ApiStrings.muscles)
+  Future<MuscleGroupsResponse> getMuscleGroups();
+
+  @GET(ApiStrings.musclesByGroup)
+  Future<MusclesByGroupResponse> getMusclesByGroup(
+    @Query(ApiStrings.qMuscleGroupId) String muscleGroupId,
   );
 }

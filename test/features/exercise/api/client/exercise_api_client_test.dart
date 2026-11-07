@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:fitness_app/core/constants/api_strings.dart';
 import 'package:fitness_app/features/exercise/api/client/exercise_api_client.dart';
 import '../../../../helpers/fakes.dart';
 import '../../../../helpers/test_data.dart';
@@ -127,6 +128,44 @@ void main() {
           ),
         ),
       );
+    });
+
+    test('gets all muscle groups', () async {
+      adapter.responseBody = {
+        'message': 'success',
+        'musclesGroup': [
+          {'_id': 'group-1', 'name': 'Abdominals'},
+        ],
+      };
+
+      final response = await client.getMuscleGroups();
+
+      expect(adapter.lastRequestOptions?.method, 'GET');
+      expect(adapter.lastRequestOptions?.path, ApiStrings.muscles);
+      expect(response.musclesGroup?.single.id, 'group-1');
+    });
+
+    test('gets muscles by group using the expected query parameter', () async {
+      adapter.responseBody = {
+        'message': 'success',
+        'totalMuscles': 1,
+        'muscles': [
+          {
+            '_id': 'muscle-1',
+            'name': 'Rectus Abdominis',
+            'image': 'https://example.com/rectus.png',
+          },
+        ],
+      };
+
+      final response = await client.getMusclesByGroup('group-1');
+
+      expect(adapter.lastRequestOptions?.method, 'GET');
+      expect(adapter.lastRequestOptions?.path, ApiStrings.musclesByGroup);
+      expect(adapter.lastRequestOptions?.queryParameters, {
+        ApiStrings.qMuscleGroupId: 'group-1',
+      });
+      expect(response.muscles?.single.name, 'Rectus Abdominis');
     });
   });
 }
