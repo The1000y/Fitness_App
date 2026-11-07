@@ -215,6 +215,15 @@ class AppLocalizationsAr extends AppLocalizations {
   String get category => 'الفئة';
 
   @override
+  String get noCategoriesAvailable => 'لا توجد فئات متاحة';
+
+  @override
+  String get selectCategory => 'اختر فئة';
+
+  @override
+  String get noMusclesAvailable => 'لا توجد عضلات متاحة';
+
+  @override
   String get categoryGym => 'الجيم';
 
   @override

@@ -107,6 +107,18 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i889.LoginCubit>(
       () => _i889.LoginCubit(gh<_i1038.LoginUseCase>()),
     );
+    gh.factory<_i593.GetMuscleGroupsUseCase>(
+      () => _i593.GetMuscleGroupsUseCase(gh<_i628.ExerciseRepo>()),
+    );
+    gh.factory<_i559.GetMusclesByGroupUseCase>(
+      () => _i559.GetMusclesByGroupUseCase(gh<_i628.ExerciseRepo>()),
+    );
+    gh.factory<_i355.WorkoutCategoriesCubit>(
+      () => _i355.WorkoutCategoriesCubit(
+        gh<_i593.GetMuscleGroupsUseCase>(),
+        gh<_i559.GetMusclesByGroupUseCase>(),
+      ),
+    );
     return this;
   }
 }

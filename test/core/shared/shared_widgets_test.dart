@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fitness_app/core/shared/category_filter_widget.dart';
 import 'package:fitness_app/core/shared/image_title_card.dart';
 import 'package:fitness_app/core/theme/app_colors/app_colors.dart';
@@ -61,6 +62,27 @@ void main() {
       await tester.tap(find.text('Strength'));
       expect(tapped, isTrue);
     });
+
+    testWidgets('loads an HTTPS URL with CachedNetworkImage', (tester) async {
+      const imageUrl = 'https://images.example.com/muscle.png';
+
+      await tester.pumpWidget(
+        _buildTestApp(
+          const ImageTitleCard(
+            imagePath: imageUrl,
+            title: 'Chest',
+            onTap: _noop,
+          ),
+        ),
+      );
+
+      final cachedImage = tester.widget<CachedNetworkImage>(
+        find.byType(CachedNetworkImage),
+      );
+      expect(cachedImage.imageUrl, imageUrl);
+      expect(cachedImage.errorWidget, isNotNull);
+      expect(tester.takeException(), isNull);
+    });
   });
 
   group('CategoryTabBar', () {
@@ -100,3 +122,5 @@ void main() {
     });
   });
 }
+
+void _noop() {}
