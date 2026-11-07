@@ -46,14 +46,20 @@ class ExerciseRepoImpl implements ExerciseRepo {
   }
 
   @override
-  Future<BaseResponse<MusclesByGroupEntity>> getMusclesByGroup({required String id}) {
-    // TODO: implement getMusclesByGroup
-    throw UnimplementedError();
+  Future<BaseResponse<MusclesByGroupEntity>> getMusclesByGroup({
+    required String id,
+  }) async {
+    return await excecuteApiCall(() async {
+      final response = await _remote.getMusclesByGroup(id);
+      return response.toEntity();
+    });
   }
 
   @override
-  Future<BaseResponse<MuscleGroupsEntity>> getMusclesGroups() {
-    // TODO: implement getMusclesGroups
-    throw UnimplementedError();
+  Future<BaseResponse<MuscleGroupsEntity>> getMusclesGroups() async {
+    return await excecuteApiCall(() async {
+      final response = await _remote.getMusclesGroups();
+      return response.toEntity();
+    });
   }
 }

@@ -17,7 +17,7 @@ abstract interface class ExerciseRepo {
     required String primeMoverMuscleId,
   });
 
-    Future<BaseResponse<MuscleGroupsEntity>> getMusclesGroups();
+  Future<BaseResponse<MuscleGroupsEntity>> getMusclesGroups();
 
   Future<BaseResponse<MusclesByGroupEntity>> getMusclesByGroup({
     required String id,
