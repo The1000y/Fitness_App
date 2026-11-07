@@ -19,9 +19,6 @@ class ProfileRepoImpl implements ProfileRepo {
         newPassword: param.newPassword,
       ),
     );
-    return switch (response) {
-      Success<void>() => const Success<void>(null),
-      Error<void>(:final failure) => Error<void>(failure),
-    };
+    return response;
   }
 }
