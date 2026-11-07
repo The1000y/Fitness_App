@@ -6,6 +6,7 @@ enum ValidationError {
   passwordStrongRules,
   confirmPasswordRequired,
   confirmPasswordMismatch,
+  newPasswordSameAsOld,
   usernameRequired,
   usernameMinLength,
   firstNameRequired,
@@ -76,6 +77,15 @@ class AppValidators {
     if (value != original) {
       return ValidationError.confirmPasswordMismatch;
     }
+    return null;
+  }
+
+  /// Validates a *new* password: it must satisfy [strongPassword] and differ
+  /// from the [oldPassword] the user is replacing.
+  static ValidationError? newPassword(String? value, String oldPassword) {
+    final strongError = strongPassword(value);
+    if (strongError != null) return strongError;
+    if (value == oldPassword) return ValidationError.newPasswordSameAsOld;
     return null;
   }
 

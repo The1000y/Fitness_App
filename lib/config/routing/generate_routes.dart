@@ -10,6 +10,8 @@ import 'package:fitness_app/features/auth/presentation/register/view/register_vi
 import 'package:fitness_app/features/chat/presentation/views/chat_view.dart';
 import 'package:fitness_app/features/home/presentation/views/home_view.dart';
 import 'package:fitness_app/features/main/presentation/views/main_layout_view.dart';
+import 'package:fitness_app/features/profile/presentation/change_password/manager/change_password_cubit.dart';
+import 'package:fitness_app/features/profile/presentation/change_password/view/change_password_view.dart';
 import 'package:fitness_app/features/profile/presentation/view/profile_view.dart';
 import 'package:fitness_app/features/workouts/presentation/views/workouts_view.dart';
 import 'package:flutter/material.dart';
@@ -53,7 +55,13 @@ abstract final class GenerateRoutes {
         );
 
       case AppRoutes.changePassword:
-        return _pageRoute(const _StubScreen('Change Password'), settings);
+        return _pageRoute(
+          BlocProvider(
+            create: (_) => getIt<ChangePasswordCubit>(),
+            child: const ChangePasswordView(),
+          ),
+          settings,
+        );
 
       // Setup
       case AppRoutes.setupGender:

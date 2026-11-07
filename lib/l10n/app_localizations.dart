@@ -992,6 +992,12 @@ abstract class AppLocalizations {
   /// **'Passwords do not match'**
   String get confirmPasswordMismatch;
 
+  /// No description provided for @newPasswordSameAsOld.
+  ///
+  /// In en, this message translates to:
+  /// **'New password must be different from the old password'**
+  String get newPasswordSameAsOld;
+
   /// No description provided for @usernameRequired.
   ///
   /// In en, this message translates to:

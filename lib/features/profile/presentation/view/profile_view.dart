@@ -14,4 +14,3 @@ class ProfileView extends StatelessWidget {
     );
   }
 }
-
