@@ -2,6 +2,8 @@ import 'package:fitness_app/config/base/base_response.dart';
 import 'package:fitness_app/config/utils/excecute_api_call.dart';
 import 'package:fitness_app/features/exercise/domain/entities/difficulty_level_entity.dart';
 import 'package:fitness_app/features/exercise/domain/entities/exercises_list_entity.dart';
+import 'package:fitness_app/features/exercise/domain/entities/muscle_groups_entity.dart';
+import 'package:fitness_app/features/exercise/domain/entities/muscles_by_group_entity.dart';
 import 'package:fitness_app/features/exercise/domain/repo/exercise_repo.dart';
 import 'package:injectable/injectable.dart';
 
@@ -41,5 +43,17 @@ class ExerciseRepoImpl implements ExerciseRepo {
       );
       return response.toEntity();
     });
+  }
+
+  @override
+  Future<BaseResponse<MusclesByGroupEntity>> getMusclesByGroup({required String id}) {
+    // TODO: implement getMusclesByGroup
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<BaseResponse<MuscleGroupsEntity>> getMusclesGroups() {
+    // TODO: implement getMusclesGroups
+    throw UnimplementedError();
   }
 }
