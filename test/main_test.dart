@@ -73,16 +73,15 @@ void main() {
   });
 
   group('FitnessApp', () {
-    testWidgets(
-      'pumps successfully and displays initial onboarding route',
-      (tester) async {
-        await tester.pumpWidget(const FitnessApp());
-        await tester.pumpAndSettle();
+    testWidgets('pumps successfully and displays initial onboarding route', (
+      tester,
+    ) async {
+      await tester.pumpWidget(const FitnessApp());
+      await tester.pumpAndSettle();
 
-        expect(find.byType(FitnessApp), findsOneWidget);
-        expect(find.byType(MaterialApp), findsOneWidget);
-        expect(find.byType(OnboardingView), findsOneWidget);
-      },
-    );
+      expect(find.byType(FitnessApp), findsOneWidget);
+      expect(find.byType(MaterialApp), findsOneWidget);
+      expect(find.byType(OnboardingView), findsOneWidget);
+    });
   });
 }

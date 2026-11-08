@@ -255,6 +255,25 @@
   "otpExpired": "Verification code has expired. Please request a new one.",
   "otpSentSuccessfully": "Verification code sent successfully",
   "otpResentSuccessfully": "Verification code resent successfully",
-  "otpVerifiedSuccessfully": "Code verified successfully"
+  "otpVerifiedSuccessfully": "Code verified successfully",
+  "noMealsYet": "No meals yet",
+  "noCategoryMealsYet": "No {category} meals yet",
+  "@noCategoryMealsYet": {
+    "placeholders": {
+      "category": {
+        "type": "String"
+      }
+    }
+  },
+  "noMealsMessage": "There are no recommendations right now. Try another meal time or check back later.",
+  "refresh": "Refresh",
+  "noInternetConnection": "No internet connection",
+  "somethingWentWrong": "Something went wrong",
+  "checkConnectionMessage": "Check your connection and try again.",
+  "couldNotLoadMeals": "We could not load the meals. Please try again.",
+  "tryAgain": "Try again",
+  "noCategoriesAvailable": "No categories available",
+  "couldNotLoadCategories": "Could not load categories",
+  "dataNotAvailable": "Data is currently unavailable."
 
 }

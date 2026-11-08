@@ -260,12 +260,10 @@ void main() {
       await tester.pumpApp(
         const LoginView(),
         routes: {
-          AppRoutes.forgotPassword: (_) => Scaffold(
-            appBar: AppBar(title: const Text('Forgot Password')),
-          ),
-          AppRoutes.register: (_) => Scaffold(
-            appBar: AppBar(title: const Text('Register')),
-          ),
+          AppRoutes.forgotPassword: (_) =>
+              Scaffold(appBar: AppBar(title: const Text('Forgot Password'))),
+          AppRoutes.register: (_) =>
+              Scaffold(appBar: AppBar(title: const Text('Register'))),
         },
       );
 

@@ -25,6 +25,7 @@ class CategoryTabBar extends StatelessWidget {
           ? ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: categories.length,
+              padding: EdgeInsets.symmetric(horizontal: 16.w),
               itemBuilder: (context, index) {
                 return _buildCategoryItem(context, categories[index]);
               },

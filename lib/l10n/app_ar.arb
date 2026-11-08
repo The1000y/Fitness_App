@@ -255,5 +255,24 @@
   "retry": "إعادة المحاولة",
   "back": "رجوع",
   "unableToPlayVideo": "تعذر تشغيل الفيديو",
-  "cancel": "إغلاق الفيديو"
+  "cancel": "إغلاق الفيديو",
+  "noMealsYet": "لا توجد وجبات بعد",
+  "noCategoryMealsYet": "لا توجد وجبات {category} بعد",
+  "@noCategoryMealsYet": {
+    "placeholders": {
+      "category": {
+        "type": "String"
+      }
+    }
+  },
+  "noMealsMessage": "لا توجد ترشيحات في الوقت الحالي. جرّب وقت وجبة آخر أو عد لاحقاً.",
+  "refresh": "تحديث",
+  "noInternetConnection": "لا يوجد اتصال بالإنترنت",
+  "somethingWentWrong": "حدث خطأ ما",
+  "checkConnectionMessage": "تحقق من اتصالك بالإنترنت وحاول مرة أخرى.",
+  "couldNotLoadMeals": "تعذر تحميل الوجبات. يرجى المحاولة مرة أخرى.",
+  "tryAgain": "حاول مرة أخرى",
+  "noCategoriesAvailable": "لا توجد فئات متاحة",
+  "couldNotLoadCategories": "تعذر تحميل الفئات",
+  "dataNotAvailable": "البيانات غير متوفرة حالياً."
 }

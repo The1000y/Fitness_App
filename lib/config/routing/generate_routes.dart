@@ -10,6 +10,10 @@ import 'package:fitness_app/features/auth/presentation/register/view/register_vi
 import 'package:fitness_app/features/chat/presentation/views/chat_view.dart';
 import 'package:fitness_app/features/home/presentation/views/home_view.dart';
 import 'package:fitness_app/features/main/presentation/views/main_layout_view.dart';
+import 'package:fitness_app/features/meals/presentation/manager/meals_cubit.dart';
+import 'package:fitness_app/features/meals/presentation/manager/meals_event.dart';
+import 'package:fitness_app/features/meals/presentation/view/details_food_view.dart';
+import 'package:fitness_app/features/meals/presentation/view/meals_view.dart';
 import 'package:fitness_app/features/profile/presentation/views/profile_view.dart';
 import 'package:fitness_app/features/workouts/presentation/views/workouts_view.dart';
 import 'package:flutter/material.dart';
@@ -86,12 +90,31 @@ abstract final class GenerateRoutes {
       case AppRoutes.exerciseDetails:
         return _pageRoute(const _StubScreen('Exercise Details'), settings);
 
-      // Food
-      case AppRoutes.food:
-        return _pageRoute(const _StubScreen('Food'), settings);
+      // meals
+      case AppRoutes.meals:
+        final args = settings.arguments;
+        final category = args is String ? args : null;
 
-      case AppRoutes.foodDetails:
-        return _pageRoute(const _StubScreen('Food Details'), settings);
+        return _pageRoute(
+          BlocProvider(
+            create: (context) =>
+                getIt.get<MealsCubit>()
+                  ..doEvent(GetMealsCategoriesEvent(category)),
+            child: const MealsView(),
+          ),
+          settings,
+        );
+
+      case AppRoutes.mealDetails:
+        var mealId = settings.arguments as String;
+        return _pageRoute(
+          BlocProvider<MealsCubit>(
+            create: (context) =>
+                getIt<MealsCubit>()..onEvent(GetMealDetailsEvent(mealId)),
+            child: DetailsFoodView(mealId: mealId),
+          ),
+          settings,
+        );
 
       case AppRoutes.chatHistory:
         return _pageRoute(const _StubScreen('Chat History'), settings);

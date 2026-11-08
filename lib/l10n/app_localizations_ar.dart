@@ -618,4 +618,44 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get otpVerifiedSuccessfully => 'تم تأكيد الرمز بنجاح';
+
+  @override
+  String get noMealsYet => 'لا توجد وجبات بعد';
+
+  @override
+  String noCategoryMealsYet(String category) {
+    return 'لا توجد وجبات $category بعد';
+  }
+
+  @override
+  String get noMealsMessage =>
+      'لا توجد ترشيحات في الوقت الحالي. جرّب وقت وجبة آخر أو عد لاحقاً.';
+
+  @override
+  String get refresh => 'تحديث';
+
+  @override
+  String get noInternetConnection => 'لا يوجد اتصال بالإنترنت';
+
+  @override
+  String get somethingWentWrong => 'حدث خطأ ما';
+
+  @override
+  String get checkConnectionMessage =>
+      'تحقق من اتصالك بالإنترنت وحاول مرة أخرى.';
+
+  @override
+  String get couldNotLoadMeals => 'تعذر تحميل الوجبات. يرجى المحاولة مرة أخرى.';
+
+  @override
+  String get tryAgain => 'حاول مرة أخرى';
+
+  @override
+  String get noCategoriesAvailable => 'لا توجد فئات متاحة';
+
+  @override
+  String get couldNotLoadCategories => 'تعذر تحميل الفئات';
+
+  @override
+  String get dataNotAvailable => 'البيانات غير متوفرة حالياً.';
 }

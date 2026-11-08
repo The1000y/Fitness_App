@@ -4,17 +4,17 @@ import 'package:fitness_app/features/app/presentation/cubit/auth/app_auth_ui_eve
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
+  late AppAuthCubit cubit;
+
+  setUp(() {
+    cubit = AppAuthCubit();
+  });
+
+  tearDown(() async {
+    await cubit.close();
+  });
+
   group('AppAuthCubit', () {
-    late AppAuthCubit cubit;
-
-    setUp(() {
-      cubit = AppAuthCubit();
-    });
-
-    tearDown(() {
-      cubit.close();
-    });
-
     test('initial state is AppAuthState', () {
       expect(cubit.state, isA<AppAuthState>());
     });
@@ -26,7 +26,7 @@ void main() {
         final subscription = cubit.uiEventStream.listen(events.add);
 
         cubit.sessionExpired();
-        await Future.delayed(Duration.zero);
+        await pumpEventQueue();
 
         expect(events.length, equals(1));
         expect(events.first, isA<SessionExpiredUiEvent>());

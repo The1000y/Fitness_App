@@ -1267,6 +1267,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Code verified successfully'**
   String get otpVerifiedSuccessfully;
+
+  /// No description provided for @noMealsYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No meals yet'**
+  String get noMealsYet;
+
+  /// No description provided for @noCategoryMealsYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No {category} meals yet'**
+  String noCategoryMealsYet(String category);
+
+  /// No description provided for @noMealsMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'There are no recommendations right now. Try another meal time or check back later.'**
+  String get noMealsMessage;
+
+  /// No description provided for @refresh.
+  ///
+  /// In en, this message translates to:
+  /// **'Refresh'**
+  String get refresh;
+
+  /// No description provided for @noInternetConnection.
+  ///
+  /// In en, this message translates to:
+  /// **'No internet connection'**
+  String get noInternetConnection;
+
+  /// No description provided for @somethingWentWrong.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong'**
+  String get somethingWentWrong;
+
+  /// No description provided for @checkConnectionMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Check your connection and try again.'**
+  String get checkConnectionMessage;
+
+  /// No description provided for @couldNotLoadMeals.
+  ///
+  /// In en, this message translates to:
+  /// **'We could not load the meals. Please try again.'**
+  String get couldNotLoadMeals;
+
+  /// No description provided for @tryAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get tryAgain;
+
+  /// No description provided for @noCategoriesAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'No categories available'**
+  String get noCategoriesAvailable;
+
+  /// No description provided for @couldNotLoadCategories.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not load categories'**
+  String get couldNotLoadCategories;
+
+  /// No description provided for @dataNotAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Data is currently unavailable.'**
+  String get dataNotAvailable;
 }
 
 class _AppLocalizationsDelegate

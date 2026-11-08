@@ -1,4 +1,4 @@
-import 'package:fitness_app/features/meals/presentation/widgets/information_data_about_meals.dart';
+import 'package:fitness_app/features/meals/presentation/view/widgets/information_data_about_meals.dart';
 import 'package:fitness_app/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -25,7 +25,7 @@ class MealInfoOverlay extends StatelessWidget {
     var l10n = AppLocalizations.of(context)!;
     var theme = Theme.of(context);
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       child: Column(
         mainAxisSize: MainAxisSize.min,
 

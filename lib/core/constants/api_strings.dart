@@ -10,6 +10,8 @@ abstract class ApiStrings {
 
   /// TheMealDB (separate third-party API)
   static const String mealBaseUrl = 'https://www.themealdb.com/api/json/v1/1';
+  static const String namedFitnessDio = 'fitnessDio';
+  static const String namedMealDio = 'mealDio';
 
   // ---------------------------------------------------------------------------
   // Auth

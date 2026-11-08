@@ -51,6 +51,21 @@ void main() {
       expect(find.byIcon(Icons.settings), findsOneWidget);
     });
 
+    testWidgets('renders title text and additional actions', (tester) async {
+      await tester.pumpWidget(
+        wrapWithScreenUtil(
+          const CustomAppBar(
+            title: 'Profile Settings',
+            showBackButton: false,
+            actions: [Icon(Icons.more_vert)],
+          ),
+        ),
+      );
+
+      expect(find.text('Profile Settings'), findsOneWidget);
+      expect(find.byIcon(Icons.more_vert), findsOneWidget);
+    });
+
     testWidgets('calls onBackTap when back button tapped', (tester) async {
       bool backTapped = false;
 

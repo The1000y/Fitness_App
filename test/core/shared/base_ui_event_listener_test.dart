@@ -13,6 +13,11 @@ class CustomTestEvent extends BaseUiEvent {
   const CustomTestEvent();
 }
 
+final class _CustomTestEventWithPayload extends BaseUiEvent {
+  final String payload;
+  const _CustomTestEventWithPayload(this.payload);
+}
+
 class TestBaseCubit extends BaseCubit<int, BaseUiEvent> {
   TestBaseCubit() : super(0);
 
@@ -118,5 +123,31 @@ void main() {
         expect(customEventCalled, isTrue);
       },
     );
+
+    testWidgets('delegates custom event payload to onCustomEvent callback', (
+      tester,
+    ) async {
+      String? receivedPayload;
+
+      await tester.pumpWidget(
+        wrapWithApp(
+          BaseUiEventListener<TestBaseCubit, int, BaseUiEvent>(
+            cubit: cubit,
+            onCustomEvent: (context, event) {
+              if (event is _CustomTestEventWithPayload) {
+                receivedPayload = event.payload;
+              }
+            },
+            child: const Text('Listener Child'),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      cubit.sendEvent(const _CustomTestEventWithPayload('Custom Action'));
+      await tester.pump();
+
+      expect(receivedPayload, 'Custom Action');
+    });
   });
 }

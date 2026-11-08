@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:fitness_app/config/localization/map_youtube_error.dart';
-import 'package:fitness_app/features/meals/presentation/widgets/video_player_content.dart';
+import 'package:fitness_app/core/shared/video_player_content.dart';
 import 'package:fitness_app/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
@@ -13,12 +13,14 @@ class CustomVideoPlayer extends StatefulWidget {
     required this.videoUrl,
     this.overlayContent,
     this.aspectRatio = 4 / 3,
+    this.backNavigationButton,
   });
 
   final String thumbnailImage;
   final String videoUrl;
   final Widget? overlayContent;
   final double? aspectRatio;
+  final Widget? backNavigationButton;
 
   @override
   State<CustomVideoPlayer> createState() => _CustomVideoPlayerState();
@@ -105,6 +107,7 @@ class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
         clipBehavior: Clip.antiAlias,
         borderRadius: BorderRadius.vertical(bottom: Radius.circular(20.r)),
         child: VideoPlayerContent(
+          backNavigationButton: widget.backNavigationButton,
           controller: _controller,
           errorMessage: errorMessage,
           isLoading: _isLoading,
