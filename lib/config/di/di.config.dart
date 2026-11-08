@@ -18,6 +18,10 @@ import 'package:injectable/injectable.dart' as _i526;
 
 import '../../features/app/presentation/cubit/auth/app_auth_cubit.dart'
     as _i760;
+import '../../features/auth/api/auth_data_source_impl.dart/auth_data_source_switcher.dart'
+    as _i981;
+import '../../features/auth/api/auth_data_source_impl.dart/remote/auth_fake_remote_data_source_impl.dart'
+    as _i508;
 import '../../features/auth/api/auth_data_source_impl.dart/remote/auth_remote_data_source_impl.dart'
     as _i192;
 import '../../features/auth/api/client/auth_api_client.dart' as _i213;
@@ -25,7 +29,16 @@ import '../../features/auth/data/data_source/remote/auth_remote_data_source.dart
     as _i548;
 import '../../features/auth/data/repo_impl/auth_repo_impl.dart' as _i279;
 import '../../features/auth/domain/repo/auth_repo.dart' as _i170;
+import '../../features/auth/domain/use_cases/forget_password_user_case.dart'
+    as _i839;
 import '../../features/auth/domain/use_cases/login_use_case.dart' as _i1038;
+import '../../features/auth/domain/use_cases/register_use_case.dart' as _i1010;
+import '../../features/auth/domain/use_cases/reset_password_user_case.dart'
+    as _i1012;
+import '../../features/auth/domain/use_cases/verify_otp_user_case.dart'
+    as _i397;
+import '../../features/auth/presentation/forget_password/manager/forget_password_cubit.dart'
+    as _i332;
 import '../../features/auth/presentation/login/manager/login_cubit.dart'
     as _i889;
 import '../../features/exercise/api/client/exercise_api_client.dart' as _i248;
@@ -48,6 +61,8 @@ import '../../features/exercise/presentation/exercise_details/manager/exercise_d
     as _i944;
 import '../../features/exercise/presentation/workout_categories/manager/workout_categories_cubit.dart'
     as _i355;
+import '../../features/auth/presentation/register/manager/register_cubit.dart'
+    as _i784;
 import '../dio/app_interceptor.dart' as _i264;
 import '../dio/dio_module.dart' as _i977;
 import '../utils/secure_storage_module.dart' as _i327;
@@ -63,6 +78,9 @@ extension GetItInjectableX on _i174.GetIt {
     final appModule = _$AppModule();
     final secureStorageModule = _$SecureStorageModule();
     final dioModule = _$DioModule();
+    gh.factory<_i508.AuthFakeRemoteDataSourceImpl>(
+      () => _i508.AuthFakeRemoteDataSourceImpl(),
+    );
     gh.lazySingleton<_i281.AssetBundle>(() => appModule.assetBundle);
     gh.lazySingleton<_i558.FlutterSecureStorage>(
       () => secureStorageModule.secureStorage,
@@ -92,8 +110,22 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i628.ExerciseRepo>(
       () => _i824.ExerciseRepoImpl(gh<_i27.ExerciseRemoteDataSource>()),
     );
+    gh.factory<_i192.AuthRemoteDataSourceImpl>(
+      () => _i192.AuthRemoteDataSourceImpl(
+        authApiClient: gh<_i213.AuthApiClient>(),
+      ),
+    );
+    gh.factory<_i548.AuthRemoteDataSource>(
+      () => _i981.AuthDataSourceSwitcher(
+        authRemoteDataSourceImpl: gh<_i192.AuthRemoteDataSourceImpl>(),
+        authFackDataSourceImpl: gh<_i508.AuthFakeRemoteDataSourceImpl>(),
+      ),
+    );
     gh.factory<_i170.AuthRepo>(
-      () => _i279.AuthRepoImpl(gh<_i548.RemoteDataSource>()),
+      () => _i279.AuthRepoImpl(
+        gh<_i548.RemoteDataSource>(),
+        gh<_i548.AuthRemoteDataSource>(),
+      ),
     );
     gh.factory<_i1038.LoginUseCase>(
       () => _i1038.LoginUseCase(gh<_i170.AuthRepo>()),
@@ -122,8 +154,30 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i685.GetExercisesUseCase>(),
       ),
     );
+    gh.factory<_i839.ForgetPasswordUserCase>(
+      () => _i839.ForgetPasswordUserCase(authRepo: gh<_i170.AuthRepo>()),
+    );
+    gh.factory<_i1010.RegisterUseCase>(
+      () => _i1010.RegisterUseCase(repo: gh<_i170.AuthRepo>()),
+    );
+    gh.factory<_i1012.ResetPasswordUserCase>(
+      () => _i1012.ResetPasswordUserCase(gh<_i170.AuthRepo>()),
+    );
+    gh.factory<_i397.VerifyOtpUserCase>(
+      () => _i397.VerifyOtpUserCase(gh<_i170.AuthRepo>()),
+    );
     gh.factory<_i889.LoginCubit>(
       () => _i889.LoginCubit(gh<_i1038.LoginUseCase>()),
+    );
+    gh.factory<_i784.RegisterCubit>(
+      () => _i784.RegisterCubit(ucase: gh<_i1010.RegisterUseCase>()),
+    );
+    gh.factory<_i332.ForgetPasswordCubit>(
+      () => _i332.ForgetPasswordCubit(
+        gh<_i839.ForgetPasswordUserCase>(),
+        gh<_i397.VerifyOtpUserCase>(),
+        gh<_i1012.ResetPasswordUserCase>(),
+      ),
     );
     return this;
   }

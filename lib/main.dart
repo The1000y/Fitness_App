@@ -27,6 +27,7 @@ class FitnessApp extends StatelessWidget {
       designSize: const Size(375, 812),
       minTextAdapt: true,
       splitScreenMode: true,
+      ensureScreenSize: true,
       child: MaterialApp(
         builder: (context, child) {
           return BaseUiEventListener<

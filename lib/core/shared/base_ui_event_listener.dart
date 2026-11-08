@@ -16,12 +16,14 @@ class BaseUiEventListener<C extends BaseCubit<S, E>, S, E extends BaseUiEvent>
     super.key,
     this.cubit,
     this.onCustomEvent,
+    this.navigatorKey,
     required this.child,
   });
 
   final C? cubit;
   final void Function(BuildContext context, E event)? onCustomEvent;
   final Widget child;
+  final GlobalKey<NavigatorState>? navigatorKey;
 
   @override
   State<BaseUiEventListener<C, S, E>> createState() =>
@@ -35,6 +37,9 @@ class _BaseUiEventListenerState<
 >
     extends State<BaseUiEventListener<C, S, E>> {
   StreamSubscription<E>? _subscription;
+
+  NavigatorState get _navigator =>
+      widget.navigatorKey?.currentState ?? Navigator.of(context);
 
   @override
   void initState() {
@@ -100,19 +105,29 @@ class _BaseUiEventListenerState<
                   ) ??
                   TextStyle(color: AppColors.white, fontSize: 14.sp),
             ),
-            backgroundColor: theme.colorScheme.error,
+            backgroundColor: AppColors.glow,
           ),
         );
       case NavigateTo():
-        Navigator.of(
-          context,
-        ).pushNamed(event.routeName, arguments: event.arguments);
+        _navigator.pushNamed(event.routeName, arguments: event.arguments);
       case NavigateReplaceTo():
-        Navigator.of(
-          context,
-        ).pushReplacementNamed(event.routeName, arguments: event.arguments);
+        _navigator.pushReplacementNamed(
+          event.routeName,
+          arguments: event.arguments,
+        );
       case PopRoute():
-        Navigator.of(context).pop(event.result);
+        _navigator.pop(event.result);
+      case NavigateAndRemoveUntil():
+        _navigator.pushNamedAndRemoveUntil(
+          event.routeName,
+          (route) => false,
+          arguments: event.arguments,
+        );
+      // Navigator.of(context, rootNavigator: true).pushNamedAndRemoveUntil(
+      //   event.routeName,
+      //   (route) => false,
+      //   arguments: event.arguments,
+      // );
     }
   }
 

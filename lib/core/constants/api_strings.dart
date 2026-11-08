@@ -3,17 +3,21 @@ abstract class ApiStrings {
 
   static const String mealBaseUrl = 'https://www.themealdb.com/api/json/v1/1';
 
-  static String get signup => '/auth/signup';
+  // ---------------------------------------------------------------------------
+  // Auth
+  // ---------------------------------------------------------------------------
+  static const String signup = '/auth/signup'; // POST
   static const String signin = '/auth/signin';
   static String get changePassword => '/auth/change-password';
-  static String get uploadPhoto => '/auth/upload-photo';
-  static String get profileData => '/auth/profile-data';
+  static String get uploadPhoto =>
+      '/auth/upload-photo'; // PUT (Bearer, form-data: photo, max 4MB)
+  static String get profileData => '/auth/profile-data'; // GET (Bearer)
   static String get logout => '/auth/logout';
-  static String get forgotPassword => '/auth/forgotPassword';
-  static String get verifyResetCode => '/auth/verifyResetCode';
-  static String get resetPassword => '/auth/resetPassword';
-  static String get deleteMe => '/auth/deleteMe';
-  static String get editProfile => '/auth/editProfile';
+  static const String forgotPassword = '/auth/forgotPassword'; // POST
+  static const String verifyResetCode = '/auth/verifyResetCode'; // POST
+  static const String resetPassword = '/auth/resetPassword'; // PUT
+  static String get deleteMe => '/auth/deleteMe'; // DELETE
+  static String get editProfile => '/auth/editProfile'; // PUT (Bearer)
 
   static String get levels => '/levels';
 

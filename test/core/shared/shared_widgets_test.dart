@@ -49,13 +49,7 @@ void main() {
       expect(cardSize.height, 170.h);
       final decoration = card.decoration! as BoxDecoration;
       expect(decoration.borderRadius, BorderRadius.circular(16.r));
-
-      final image = tester.widget<Image>(
-        find.descendant(
-          of: find.byType(ImageTitleCard),
-          matching: find.byType(Image),
-        ),
-      );
+      final image = tester.widget<Image>(find.byType(Image));
       expect(image.color, isNotNull);
       expect(image.colorBlendMode, BlendMode.darken);
 

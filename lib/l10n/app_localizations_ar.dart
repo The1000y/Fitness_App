@@ -93,7 +93,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get register => 'إنشاء حساب';
 
   @override
-  String get registerTitle => 'أهلاً بك، أنشئ حسابك';
+  String get registerTitle1 => 'أهلاً بك';
+
+  @override
+  String get registerTitle2 => 'أنشئ حسابك';
 
   @override
   String get firstName => 'الاسم الأول';
@@ -647,4 +650,25 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get tapToStopDemo => 'اضغط لإيقاف العرض';
+
+  @override
+  String get otpRequired => 'رمز التحقق مطلوب';
+
+  @override
+  String get otpIncomplete => 'يرجى إدخال رمز التحقق كاملاً';
+
+  @override
+  String get otpInvalid => 'رمز التحقق غير صالح، يرجى المحاولة مرة أخرى';
+
+  @override
+  String get otpExpired => 'انتهت صلاحية رمز التحقق، يرجى طلب رمز جديد';
+
+  @override
+  String get otpSentSuccessfully => 'تم إرسال رمز التحقق بنجاح';
+
+  @override
+  String get otpResentSuccessfully => 'تمت إعادة إرسال رمز التحقق بنجاح';
+
+  @override
+  String get otpVerifiedSuccessfully => 'تم تأكيد الرمز بنجاح';
 }

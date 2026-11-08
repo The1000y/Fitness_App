@@ -11,6 +11,7 @@ extension PumpApp on WidgetTester {
     Widget child, {
     Locale locale = const Locale('en'),
     Size size = const Size(375, 812),
+    Map<String, WidgetBuilder>? routes,
   }) async {
     view.physicalSize = size * view.devicePixelRatio;
     addTearDown(view.reset);
@@ -30,6 +31,7 @@ extension PumpApp on WidgetTester {
           supportedLocales: AppLocalizations.supportedLocales,
           debugShowCheckedModeBanner: false,
           home: child,
+          routes: routes ?? const <String, WidgetBuilder>{},
           onGenerateRoute: GenerateRoutes.generateRoute,
         ),
       ),

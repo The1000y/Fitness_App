@@ -43,7 +43,6 @@ class CategoryTabBar extends StatelessWidget {
     );
   }
 
-
   Widget _buildCategoryItem(
     BuildContext context,
     String category, {

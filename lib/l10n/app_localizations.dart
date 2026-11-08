@@ -260,11 +260,17 @@ abstract class AppLocalizations {
   /// **'Register'**
   String get register;
 
-  /// No description provided for @registerTitle.
+  /// No description provided for @registerTitle1.
   ///
   /// In en, this message translates to:
-  /// **'Hey there, create an account'**
-  String get registerTitle;
+  /// **'Hey there'**
+  String get registerTitle1;
+
+  /// No description provided for @registerTitle2.
+  ///
+  /// In en, this message translates to:
+  /// **'create an account'**
+  String get registerTitle2;
 
   /// No description provided for @firstName.
   ///
@@ -1321,6 +1327,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Tap to stop demo'**
   String get tapToStopDemo;
+
+  /// No description provided for @otpRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Verification code is required'**
+  String get otpRequired;
+
+  /// No description provided for @otpIncomplete.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter the complete verification code'**
+  String get otpIncomplete;
+
+  /// No description provided for @otpInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid verification code. Please try again.'**
+  String get otpInvalid;
+
+  /// No description provided for @otpExpired.
+  ///
+  /// In en, this message translates to:
+  /// **'Verification code has expired. Please request a new one.'**
+  String get otpExpired;
+
+  /// No description provided for @otpSentSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Verification code sent successfully'**
+  String get otpSentSuccessfully;
+
+  /// No description provided for @otpResentSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Verification code resent successfully'**
+  String get otpResentSuccessfully;
+
+  /// No description provided for @otpVerifiedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Code verified successfully'**
+  String get otpVerifiedSuccessfully;
 }
 
 class _AppLocalizationsDelegate

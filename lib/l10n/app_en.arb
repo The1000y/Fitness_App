@@ -37,7 +37,8 @@
   "forgotPassword": "Forgot Password?",
   "dontHaveAccount": "Don't have an account yet? ",
   "register": "Register",
-  "registerTitle": "Hey there, create an account",
+  "registerTitle1": "Hey there",
+  "registerTitle2": "create an account",
   "firstName": "First name",
   "lastName": "Last name",
   "alreadyHaveAccount": "Already have an account?",
@@ -241,7 +242,6 @@
 
   "reminderSet": "Reminder set",
   "settingsSaved": "Settings saved",
-  
   "failedToLoadVideo": "Couldn't load the video. Please check your internet connection and try again.",
   "videoPlayerError": "Something went wrong while playing the video. Please try again.",
   "invalidVideo": "The video link is invalid or unavailable.",
@@ -272,6 +272,13 @@
   "targetGroup": "Target Group",
   "shortDemo": "Short Demo",
   "tapToPlayDemo": "Tap to play demo",
-  "tapToStopDemo": "Tap to stop demo"
+  "tapToStopDemo": "Tap to stop demo",
+  "otpRequired": "Verification code is required",
+  "otpIncomplete": "Please enter the complete verification code",
+  "otpInvalid": "Invalid verification code. Please try again.",
+  "otpExpired": "Verification code has expired. Please request a new one.",
+  "otpSentSuccessfully": "Verification code sent successfully",
+  "otpResentSuccessfully": "Verification code resent successfully",
+  "otpVerifiedSuccessfully": "Code verified successfully"
 
 }
