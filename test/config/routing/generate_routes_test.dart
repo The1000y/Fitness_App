@@ -2,6 +2,7 @@ import 'package:fitness_app/config/di/di.dart';
 import 'package:fitness_app/config/routing/app_routes.dart';
 import 'package:fitness_app/config/routing/generate_routes.dart';
 import 'package:fitness_app/features/auth/presentation/forget_password/manager/forget_password_cubit.dart';
+import 'package:fitness_app/features/profile/presentation/web_view/args/profile_web_view_args.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -66,6 +67,19 @@ void main() {
         RouteSettings(name: AppRoutes.createPassword, arguments: mockCubit),
       );
       expect(route, isA<PageRouteBuilder>());
+    });
+
+    test('generates route for webView with typed arguments', () {
+      const args = ProfileWebViewArgs(
+        title: 'Security',
+        url: 'https://example.com/security',
+      );
+      final route = GenerateRoutes.generateRoute(
+        const RouteSettings(name: AppRoutes.webView, arguments: args),
+      );
+
+      expect(route, isA<PageRouteBuilder>());
+      expect(route.settings.name, AppRoutes.webView);
     });
 
     test('generates default 404 route for unknown route name', () {
