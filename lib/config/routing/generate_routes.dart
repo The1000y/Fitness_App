@@ -7,7 +7,7 @@ import 'package:fitness_app/features/auth/presentation/forget_password/view/widg
 import 'package:fitness_app/features/auth/presentation/login/view/login_view.dart';
 import 'package:fitness_app/features/auth/presentation/onboarding/views/onboarding_view.dart';
 import 'package:fitness_app/features/auth/presentation/register/view/register_view.dart';
-import 'package:fitness_app/features/chat/presentation/views/chat_view.dart';
+import 'package:fitness_app/features/chat/presentation/view/chat_view.dart';
 import 'package:fitness_app/features/home/presentation/views/home_view.dart';
 import 'package:fitness_app/features/main/presentation/views/main_layout_view.dart';
 import 'package:fitness_app/features/meals/presentation/manager/meals_cubit.dart';
