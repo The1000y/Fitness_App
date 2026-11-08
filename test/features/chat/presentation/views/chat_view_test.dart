@@ -1,5 +1,5 @@
 import 'package:fitness_app/core/shared/custom_background_image.dart';
-import 'package:fitness_app/features/chat/presentation/views/chat_view.dart';
+import 'package:fitness_app/features/chat/presentation/view/chat_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

@@ -117,7 +117,7 @@ abstract final class GenerateRoutes {
         );
 
       case AppRoutes.chatHistory:
-        return _pageRoute(const _StubScreen('Chat History'), settings);
+        return _pageRoute(const ChatView(), settings);
 
       case AppRoutes.editProfile:
         return _pageRoute(const _StubScreen('Edit Profile'), settings);
