@@ -1,8 +1,7 @@
-// ignore_for_file: unused_field
-
 import 'package:dio/dio.dart';
 import 'package:fitness_app/core/constants/api_strings.dart';
 import 'package:fitness_app/features/profile/data/model/requests/change_password_request.dart';
+import 'package:fitness_app/features/profile/data/model/responses/profile_response_dto.dart';
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
 
@@ -16,4 +15,10 @@ abstract class ProfileApiClient {
 
   @PATCH(ApiStrings.changePassword)
   Future<void> changePassword(@Body() ChangePasswordRequest request);
+
+  @GET(ApiStrings.profileData)
+  Future<ProfileResponseDto> getProfile();
+
+  @GET(ApiStrings.logout)
+  Future<void> logout();
 }

@@ -64,6 +64,7 @@ dependencies:
   flutter_native_splash: ^2.4.8
   flutter_launcher_icons: ^0.14.4
   uuid: ^4.6.0
+  webview_flutter: ^4.14.1
 
 dev_dependencies:
   flutter_test:
