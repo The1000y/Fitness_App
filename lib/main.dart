@@ -1,6 +1,7 @@
 import 'package:fitness_app/config/di/di.dart';
 import 'package:fitness_app/config/routing/app_routes.dart';
 import 'package:fitness_app/config/routing/generate_routes.dart';
+import 'package:fitness_app/core/database/database_asset_installer.dart';
 import 'package:fitness_app/core/shared/base_ui_event_listener.dart';
 import 'package:fitness_app/core/theme/app_colors/app_colors.dart';
 import 'package:fitness_app/core/theme/app_themes/app_theme.dart';
@@ -8,13 +9,22 @@ import 'package:fitness_app/features/app/presentation/cubit/auth/app_auth_cubit.
 import 'package:fitness_app/features/app/presentation/cubit/auth/app_auth_state.dart';
 import 'package:fitness_app/features/app/presentation/cubit/auth/app_auth_ui_event.dart';
 import 'package:fitness_app/l10n/app_localizations.dart';
+import 'package:fitness_app/features/chat/data/datasource/local/catalog_debug_test.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  final prefs = await SharedPreferences.getInstance();
+  final databaseInstaller = DatabaseAssetInstaller(prefs);
+  await databaseInstaller.ensureDatabasesInstalled();
   configureDependencies();
+  if (kDebugMode) {
+    await debugTestCatalog();
+  }
   runApp(const FitnessApp());
 }
 
@@ -63,7 +73,7 @@ class FitnessApp extends StatelessWidget {
         supportedLocales: AppLocalizations.supportedLocales,
         debugShowCheckedModeBanner: false,
         title: 'Fitness App',
-        initialRoute: AppRoutes.chatHistory,
+        initialRoute: AppRoutes.onboarding,
         onGenerateRoute: GenerateRoutes.generateRoute,
       ),
     );

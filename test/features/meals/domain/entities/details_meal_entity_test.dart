@@ -71,7 +71,7 @@ void main() {
 
       expect(entity1, equals(entity2));
       expect(entity1 == entity3, isFalse);
-      expect(entity1.props.length, 14);
+      expect(entity1.props.length, 21);
       expect(entity1.idMeal, '52959');
       expect(entity1.strMeal, 'Baked salmon');
       expect(entity1.strCategory, 'Seafood');
