@@ -9,22 +9,14 @@ import 'package:fitness_app/features/app/presentation/cubit/auth/app_auth_cubit.
 import 'package:fitness_app/features/app/presentation/cubit/auth/app_auth_state.dart';
 import 'package:fitness_app/features/app/presentation/cubit/auth/app_auth_ui_event.dart';
 import 'package:fitness_app/l10n/app_localizations.dart';
-import 'package:fitness_app/features/chat/data/datasource/local/catalog_debug_test.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final prefs = await SharedPreferences.getInstance();
-  final databaseInstaller = DatabaseAssetInstaller(prefs);
-  await databaseInstaller.ensureDatabasesInstalled();
-  configureDependencies();
-  if (kDebugMode) {
-    await debugTestCatalog();
-  }
+  await configureDependencies();
+  await getIt<DatabaseAssetInstaller>().ensureDatabasesInstalled();
   runApp(const FitnessApp());
 }
 

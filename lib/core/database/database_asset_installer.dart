@@ -1,22 +1,24 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:crypto/crypto.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:injectable/injectable.dart';
 import 'package:path/path.dart' as p;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sqflite/sqflite.dart';
 
+import 'database_storage_service.dart';
+
+@injectable
 class DatabaseAssetInstaller {
   static const String _versionKey = 'local_db_manifest_version';
   static const String _manifestPath = 'assets/databases/manifest.json';
 
   final SharedPreferences _prefs;
   final AssetBundle _bundle;
+  final DatabaseStorageService _storage;
 
-  DatabaseAssetInstaller(this._prefs, {AssetBundle? bundle})
-    : _bundle = bundle ?? rootBundle;
+  DatabaseAssetInstaller(this._prefs, this._bundle, this._storage);
 
   Future<void> ensureDatabasesInstalled() async {
     final manifestStr = await _bundle.loadString(_manifestPath);
@@ -27,12 +29,12 @@ class DatabaseAssetInstaller {
         : int.parse(manifest['version'].toString());
     final files = manifest['files'] as Map<String, dynamic>;
 
-    final dbDirPath = await getDatabasesPath();
+    final dbDirPath = await _storage.getDatabasesPath();
     final savedVersion = _prefs.getInt(_versionKey);
 
     bool allFilesExist = true;
     for (final fileName in files.keys) {
-      if (!await File(p.join(dbDirPath, fileName)).exists()) {
+      if (!await _storage.fileExists(p.join(dbDirPath, fileName))) {
         allFilesExist = false;
         break;
       }
@@ -47,7 +49,7 @@ class DatabaseAssetInstaller {
       return;
     }
 
-    await Directory(dbDirPath).create(recursive: true);
+    await _storage.createDirectory(dbDirPath, recursive: true);
 
     for (final entry in files.entries) {
       final fileName = entry.key;
@@ -67,14 +69,14 @@ class DatabaseAssetInstaller {
       }
 
       final targetPath = p.join(dbDirPath, fileName);
-      final tmpFile = File('$targetPath.tmp');
-      await tmpFile.writeAsBytes(bytes, flush: true);
+      final tmpPath = '$targetPath.tmp';
+      await _storage.writeBytes(tmpPath, bytes, flush: true);
 
-      if (await File(targetPath).exists()) {
-        await File(targetPath).delete();
+      if (await _storage.fileExists(targetPath)) {
+        await _storage.deleteFile(targetPath);
       }
 
-      await tmpFile.rename(targetPath);
+      await _storage.renameFile(tmpPath, targetPath);
 
       if (kDebugMode) {
         debugPrint(

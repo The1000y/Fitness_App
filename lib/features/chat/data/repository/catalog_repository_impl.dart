@@ -17,34 +17,38 @@ class CatalogRepositoryImpl implements CatalogRepository {
       _localDataSource.getFilterMetadata();
 
   @override
-  Future<List<Map<String, Object?>>> getExercisesForTool({
+  Future<List<ExerciseEntity>> getExercisesForTool({
     String? muscleGroup,
     String? difficulty,
     String? equipment,
     int limit = 8,
-  }) => _localDataSource.getExercisesForTool(
-    muscleGroup: muscleGroup,
-    difficulty: difficulty,
-    equipment: equipment,
-    limit: limit,
-  );
+  }) => _localDataSource
+      .getExercisesForTool(
+        muscleGroup: muscleGroup,
+        difficulty: difficulty,
+        equipment: equipment,
+        limit: limit,
+      )
+      .then((r) => r.toEntity());
 
   @override
-  Future<List<Map<String, Object?>>> getMealsForTool({
+  Future<List<MealEntity>> getMealsForTool({
     String? category,
     String? area,
     double? minProtein,
     double? maxKcal,
     bool? vegetarian,
     int limit = 8,
-  }) => _localDataSource.getMealsForTool(
-    category: category,
-    area: area,
-    minProtein: minProtein,
-    maxKcal: maxKcal,
-    vegetarian: vegetarian,
-    limit: limit,
-  );
+  }) => _localDataSource
+      .getMealsForTool(
+        category: category,
+        area: area,
+        minProtein: minProtein,
+        maxKcal: maxKcal,
+        vegetarian: vegetarian,
+        limit: limit,
+      )
+      .then((r) => r.toEntity());
 
   @override
   Future<List<ExerciseEntity>> getExercisesByIds(List<String> ids) =>

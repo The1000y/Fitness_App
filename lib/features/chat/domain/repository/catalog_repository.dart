@@ -5,16 +5,16 @@ abstract interface class CatalogRepository {
   /// from the local SQLite databases for prompt construction.
   Future<CatalogFilterMetadata> getFilterMetadata();
 
-  /// Fast tool query returning exercise candidate maps matching filters.
-  Future<List<Map<String, Object?>>> getExercisesForTool({
+  /// Fast tool query returning exercise candidate entities matching filters.
+  Future<List<ExerciseEntity>> getExercisesForTool({
     String? muscleGroup,
     String? difficulty,
     String? equipment,
     int limit = 8,
   });
 
-  /// Fast tool query returning meal candidate maps matching filters.
-  Future<List<Map<String, Object?>>> getMealsForTool({
+  /// Fast tool query returning meal candidate entities matching filters.
+  Future<List<MealEntity>> getMealsForTool({
     String? category,
     String? area,
     double? minProtein,

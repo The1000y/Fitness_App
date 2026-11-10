@@ -3,19 +3,19 @@ import '../../models/responses/exexercises_database_response/exercises_database_
 import '../../models/responses/meals_database_response/meals_database_response.dart';
 
 abstract interface class CatalogLocalDataSource {
-  /// Extracts distinct filter values from SQLite views to populate the LLM System Prompt.
+  /// Fetches distinct filter values across both databases with in-memory caching.
   Future<CatalogFilterMetadata> getFilterMetadata();
 
-  /// Fast query against `exercise_card` for the `get_exercises` tool.
-  Future<List<Map<String, Object?>>> getExercisesForTool({
+  /// Fast tool query against `exercise_card` returning matching candidate DTOs.
+  Future<ExercisesDatabaseResponse> getExercisesForTool({
     String? muscleGroup,
     String? difficulty,
     String? equipment,
     int limit = 8,
   });
 
-  /// Fast query against `meal_card` for the `get_meals` tool.
-  Future<List<Map<String, Object?>>> getMealsForTool({
+  /// Fast tool query against `meal_card` returning matching candidate DTOs.
+  Future<MealsDatabaseResponse> getMealsForTool({
     String? category,
     String? area,
     double? minProtein,
@@ -24,9 +24,9 @@ abstract interface class CatalogLocalDataSource {
     int limit = 8,
   });
 
-  /// Fetches raw exercise database records by their IDs wrapped in [ExercisesDatabaseResponse].
+  /// Batch resolves complete exercise rows from `exercise` (or `exercise_card`) by IDs.
   Future<ExercisesDatabaseResponse> getExercisesByIds(List<String> ids);
 
-  /// Fetches raw meal database records by their IDs wrapped in [MealsDatabaseResponse].
+  /// Batch resolves complete meal rows from `meal` (or `meal_card`) by IDs.
   Future<MealsDatabaseResponse> getMealsByIds(List<String> ids);
 }

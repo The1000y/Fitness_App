@@ -39,79 +39,115 @@ void main() {
       verify(() => mockLocalDataSource.getFilterMetadata()).called(1);
     });
 
-    test('getExercisesForTool delegates to localDataSource', () async {
-      final expectedExercises = [
-        {'id': 'ex-1', 'name': 'Push Up'},
-      ];
+    test(
+      'getExercisesForTool delegates to localDataSource and maps to ExerciseEntity list',
+      () async {
+        const response = ExercisesDatabaseResponse(
+          exercises: [
+            ExerciseDatabaseDTO(
+              id: 'ex-1',
+              name: 'Push Up',
+              muscleGroupId: 'Chest',
+              difficultyId: 'Beginner',
+              primaryEquipmentId: 'Bodyweight',
+            ),
+          ],
+        );
 
-      when(
-        () => mockLocalDataSource.getExercisesForTool(
-          muscleGroup: any(named: 'muscleGroup'),
-          difficulty: any(named: 'difficulty'),
-          equipment: any(named: 'equipment'),
-          limit: any(named: 'limit'),
-        ),
-      ).thenAnswer((_) async => expectedExercises);
+        when(
+          () => mockLocalDataSource.getExercisesForTool(
+            muscleGroup: any(named: 'muscleGroup'),
+            difficulty: any(named: 'difficulty'),
+            equipment: any(named: 'equipment'),
+            limit: any(named: 'limit'),
+          ),
+        ).thenAnswer((_) async => response);
 
-      final result = await repository.getExercisesForTool(
-        muscleGroup: 'Chest',
-        difficulty: 'Beginner',
-        equipment: 'Bodyweight',
-        limit: 5,
-      );
-
-      expect(result, equals(expectedExercises));
-      verify(
-        () => mockLocalDataSource.getExercisesForTool(
+        final result = await repository.getExercisesForTool(
           muscleGroup: 'Chest',
           difficulty: 'Beginner',
           equipment: 'Bodyweight',
           limit: 5,
-        ),
-      ).called(1);
-    });
+        );
 
-    test('getMealsForTool delegates to localDataSource', () async {
-      final expectedMeals = [
-        {'id': 'meal-1', 'name': 'Chicken Salad'},
-      ];
+        expect(result.length, 1);
+        expect(result.first.id, 'ex-1');
+        expect(result.first.exercise, 'Push Up');
+        expect(result.first.targetMuscleGroup, 'Chest');
+        expect(result.first.difficultyLevel, 'Beginner');
+        expect(result.first.primaryEquipment, 'Bodyweight');
 
-      when(
-        () => mockLocalDataSource.getMealsForTool(
-          category: any(named: 'category'),
-          area: any(named: 'area'),
-          minProtein: any(named: 'minProtein'),
-          maxKcal: any(named: 'maxKcal'),
-          vegetarian: any(named: 'vegetarian'),
-          limit: any(named: 'limit'),
-        ),
-      ).thenAnswer((_) async => expectedMeals);
+        verify(
+          () => mockLocalDataSource.getExercisesForTool(
+            muscleGroup: 'Chest',
+            difficulty: 'Beginner',
+            equipment: 'Bodyweight',
+            limit: 5,
+          ),
+        ).called(1);
+      },
+    );
 
-      final result = await repository.getMealsForTool(
-        category: 'Chicken',
-        area: 'American',
-        minProtein: 30.0,
-        maxKcal: 500.0,
-        vegetarian: false,
-        limit: 8,
-      );
+    test(
+      'getMealsForTool delegates to localDataSource and maps to MealEntity list',
+      () async {
+        const response = MealsDatabaseResponse(
+          meals: [
+            MealDatabaseDTO(
+              id: 'meal-1',
+              name: 'Chicken Salad',
+              categoryId: 'Chicken',
+              areaId: 'American',
+              proteinG: 30.0,
+              kcal: 450.0,
+            ),
+          ],
+        );
 
-      expect(result, equals(expectedMeals));
-      verify(
-        () => mockLocalDataSource.getMealsForTool(
+        when(
+          () => mockLocalDataSource.getMealsForTool(
+            category: any(named: 'category'),
+            area: any(named: 'area'),
+            minProtein: any(named: 'minProtein'),
+            maxKcal: any(named: 'maxKcal'),
+            vegetarian: any(named: 'vegetarian'),
+            limit: any(named: 'limit'),
+          ),
+        ).thenAnswer((_) async => response);
+
+        final result = await repository.getMealsForTool(
           category: 'Chicken',
           area: 'American',
           minProtein: 30.0,
           maxKcal: 500.0,
           vegetarian: false,
           limit: 8,
-        ),
-      ).called(1);
-    });
+        );
+
+        expect(result.length, 1);
+        expect(result.first.id, 'meal-1');
+        expect(result.first.name, 'Chicken Salad');
+        expect(result.first.category, 'Chicken');
+        expect(result.first.area, 'American');
+        expect(result.first.proteinG, 30.0);
+        expect(result.first.kcal, 450.0);
+
+        verify(
+          () => mockLocalDataSource.getMealsForTool(
+            category: 'Chicken',
+            area: 'American',
+            minProtein: 30.0,
+            maxKcal: 500.0,
+            vegetarian: false,
+            limit: 8,
+          ),
+        ).called(1);
+      },
+    );
 
     test('getExercisesByIds maps response to ExerciseEntity list', () async {
-      final response = ExercisesDatabaseResponse(
-        exercises: const [
+      const response = ExercisesDatabaseResponse(
+        exercises: [
           ExerciseDatabaseDTO(
             id: 'ex-1',
             name: 'Bench Press',
@@ -149,8 +185,8 @@ void main() {
     });
 
     test('getMealsByIds maps response to MealEntity list', () async {
-      final response = MealsDatabaseResponse(
-        meals: const [
+      const response = MealsDatabaseResponse(
+        meals: [
           MealDatabaseDTO(
             id: 'meal-1',
             name: 'Steak',

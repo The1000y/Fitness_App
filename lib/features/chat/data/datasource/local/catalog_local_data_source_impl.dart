@@ -1,104 +1,86 @@
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
-import 'package:path/path.dart' as p;
 import 'package:sqflite/sqflite.dart';
 
+import 'package:fitness_app/core/database/exercises_database.dart';
+import 'package:fitness_app/core/database/meals_database.dart';
 import '../../../domain/entities/catalog_filter_metadata.dart';
 import '../../models/responses/exexercises_database_response/exercises_database_response.dart';
 import '../../models/responses/meals_database_response/meals_database_response.dart';
 import 'catalog_local_data_source.dart';
 
-@Injectable(as: CatalogLocalDataSource)
+@LazySingleton(as: CatalogLocalDataSource)
 class CatalogLocalDataSourceImpl implements CatalogLocalDataSource {
-  Database? _exDb;
-  Database? _mlDb;
-  CatalogFilterMetadata? _cachedMeta;
+  final ExercisesDatabase _exercisesDatabase;
+  final MealsDatabase _mealsDatabase;
 
-  CatalogLocalDataSourceImpl();
+  Future<CatalogFilterMetadata>? _metadataFuture;
+  String? _cachedExerciseTableName;
+  String? _cachedMealTableName;
 
-  @visibleForTesting
-  CatalogLocalDataSourceImpl.forTesting({
-    Database? exercisesDb,
-    Database? mealsDb,
-  }) : _exDb = exercisesDb,
-       _mlDb = mealsDb;
-
-  Future<Database> get _exercisesDb async {
-    if (_exDb != null && _exDb!.isOpen) return _exDb!;
-    final dir = await getDatabasesPath();
-    final dbPath = p.join(dir, 'exercises.db');
-    if (kDebugMode) {
-      debugPrint(
-        'CatalogLocalDataSource: Opening exercises database at $dbPath',
-      );
-    }
-    _exDb = await openDatabase(dbPath, readOnly: true);
-    return _exDb!;
-  }
-
-  Future<Database> get _mealsDb async {
-    if (_mlDb != null && _mlDb!.isOpen) return _mlDb!;
-    final dir = await getDatabasesPath();
-    final dbPath = p.join(dir, 'meals.db');
-    if (kDebugMode) {
-      debugPrint('CatalogLocalDataSource: Opening meals database at $dbPath');
-    }
-    _mlDb = await openDatabase(dbPath, readOnly: true);
-    return _mlDb!;
-  }
+  CatalogLocalDataSourceImpl(this._exercisesDatabase, this._mealsDatabase);
 
   @override
-  Future<CatalogFilterMetadata> getFilterMetadata() async {
-    if (_cachedMeta != null) {
+  Future<CatalogFilterMetadata> getFilterMetadata() {
+    _metadataFuture ??= _fetchFilterMetadata();
+    return _metadataFuture!;
+  }
+
+  Future<CatalogFilterMetadata> _fetchFilterMetadata() async {
+    try {
       if (kDebugMode) {
-        debugPrint('CatalogLocalDataSource: Returning cached filter metadata');
+        debugPrint(
+          'CatalogLocalDataSource: Fetching distinct filter metadata from SQLite',
+        );
       }
-      return _cachedMeta!;
-    }
 
-    if (kDebugMode) {
-      debugPrint(
-        'CatalogLocalDataSource: Fetching distinct filter metadata from SQLite',
+      final exDb = await _exercisesDatabase.database;
+      final mlDb = await _mealsDatabase.database;
+
+      Future<List<String>> distinct(
+        Database db,
+        String table,
+        String col,
+      ) async {
+        final rows = await db.rawQuery(
+          'SELECT DISTINCT $col FROM $table WHERE $col IS NOT NULL ORDER BY $col',
+        );
+        return rows.map((r) => r[col].toString()).toList();
+      }
+
+      final muscleGroups = await distinct(
+        exDb,
+        'exercise_card',
+        'muscle_group',
       );
-    }
+      final difficulties = await distinct(exDb, 'exercise_card', 'difficulty');
+      final equipments = await distinct(exDb, 'exercise_card', 'equipment');
+      final mealCategories = await distinct(mlDb, 'meal_card', 'category');
+      final mealAreas = await distinct(mlDb, 'meal_card', 'area');
 
-    final exDb = await _exercisesDb;
-    final mlDb = await _mealsDb;
+      if (kDebugMode) {
+        debugPrint(
+          'CatalogLocalDataSource: Loaded ${muscleGroups.length} muscles, '
+          '${difficulties.length} difficulties, ${equipments.length} equipments, '
+          '${mealCategories.length} categories, ${mealAreas.length} areas',
+        );
+      }
 
-    Future<List<String>> distinct(Database db, String table, String col) async {
-      final rows = await db.rawQuery(
-        'SELECT DISTINCT $col FROM $table WHERE $col IS NOT NULL ORDER BY $col',
+      return CatalogFilterMetadata(
+        muscleGroups: muscleGroups,
+        difficulties: difficulties,
+        equipments: equipments,
+        mealCategories: mealCategories,
+        mealAreas: mealAreas,
       );
-      return rows.map((r) => r[col].toString()).toList();
+    } catch (e) {
+      _metadataFuture = null;
+      rethrow;
     }
-
-    final muscleGroups = await distinct(exDb, 'exercise_card', 'muscle_group');
-    final difficulties = await distinct(exDb, 'exercise_card', 'difficulty');
-    final equipments = await distinct(exDb, 'exercise_card', 'equipment');
-    final mealCategories = await distinct(mlDb, 'meal_card', 'category');
-    final mealAreas = await distinct(mlDb, 'meal_card', 'area');
-
-    if (kDebugMode) {
-      debugPrint(
-        'CatalogLocalDataSource: Loaded ${muscleGroups.length} muscles, '
-        '${difficulties.length} difficulties, ${equipments.length} equipments, '
-        '${mealCategories.length} categories, ${mealAreas.length} areas',
-      );
-    }
-
-    _cachedMeta = CatalogFilterMetadata(
-      muscleGroups: muscleGroups,
-      difficulties: difficulties,
-      equipments: equipments,
-      mealCategories: mealCategories,
-      mealAreas: mealAreas,
-    );
-
-    return _cachedMeta!;
   }
 
   @override
-  Future<List<Map<String, Object?>>> getExercisesForTool({
+  Future<ExercisesDatabaseResponse> getExercisesForTool({
     String? muscleGroup,
     String? difficulty,
     String? equipment,
@@ -111,7 +93,7 @@ class CatalogLocalDataSourceImpl implements CatalogLocalDataSource {
       );
     }
 
-    final db = await _exercisesDb;
+    final db = await _exercisesDatabase.database;
     final where = <String>[];
     final args = <Object?>[];
 
@@ -134,10 +116,10 @@ class CatalogLocalDataSourceImpl implements CatalogLocalDataSource {
         'id',
         'name',
         'name_ar',
-        'muscle_group',
-        'difficulty',
-        'equipment',
-        'body_region',
+        'muscle_group AS muscle_group_id',
+        'difficulty AS difficulty_id',
+        'equipment AS primary_equipment_id',
+        'body_region AS body_region_id',
         'mechanics',
       ],
       where: where.isEmpty ? null : where.join(' AND '),
@@ -152,11 +134,11 @@ class CatalogLocalDataSourceImpl implements CatalogLocalDataSource {
       );
     }
 
-    return results;
+    return ExercisesDatabaseResponse.fromRows(results);
   }
 
   @override
-  Future<List<Map<String, Object?>>> getMealsForTool({
+  Future<MealsDatabaseResponse> getMealsForTool({
     String? category,
     String? area,
     double? minProtein,
@@ -172,7 +154,7 @@ class CatalogLocalDataSourceImpl implements CatalogLocalDataSource {
       );
     }
 
-    final db = await _mealsDb;
+    final db = await _mealsDatabase.database;
     final where = <String>[];
     final args = <Object?>[];
 
@@ -202,8 +184,8 @@ class CatalogLocalDataSourceImpl implements CatalogLocalDataSource {
         'id',
         'name',
         'name_ar',
-        'category',
-        'area',
+        'category AS category_id',
+        'area AS area_id',
         'kcal',
         'protein_g',
         'carbs_g',
@@ -221,7 +203,25 @@ class CatalogLocalDataSourceImpl implements CatalogLocalDataSource {
       );
     }
 
-    return results;
+    return MealsDatabaseResponse.fromRows(results);
+  }
+
+  Future<String> _getExerciseTableName(Database db) async {
+    if (_cachedExerciseTableName != null) return _cachedExerciseTableName!;
+    final rows = await db.rawQuery(
+      "SELECT name FROM sqlite_master WHERE type='table' AND name='exercise'",
+    );
+    _cachedExerciseTableName = rows.isNotEmpty ? 'exercise' : 'exercise_card';
+    return _cachedExerciseTableName!;
+  }
+
+  Future<String> _getMealTableName(Database db) async {
+    if (_cachedMealTableName != null) return _cachedMealTableName!;
+    final rows = await db.rawQuery(
+      "SELECT name FROM sqlite_master WHERE type='table' AND name='meal'",
+    );
+    _cachedMealTableName = rows.isNotEmpty ? 'meal' : 'meal_card';
+    return _cachedMealTableName!;
   }
 
   @override
@@ -233,23 +233,20 @@ class CatalogLocalDataSourceImpl implements CatalogLocalDataSource {
     }
 
     if (ids.isEmpty) {
-      return ExercisesDatabaseResponse(exercises: const []);
+      return const ExercisesDatabaseResponse(exercises: []);
     }
-    final db = await _exercisesDb;
+
+    final db = await _exercisesDatabase.database;
+    final tableName = await _getExerciseTableName(db);
     final ph = List.filled(ids.length, '?').join(',');
-    List<Map<String, Object?>> rows;
-    try {
-      rows = await db.rawQuery('SELECT * FROM exercise WHERE id IN ($ph)', ids);
-    } catch (_) {
-      rows = await db.rawQuery(
-        'SELECT * FROM exercise_card WHERE id IN ($ph)',
-        ids,
-      );
-    }
+    final rows = await db.rawQuery(
+      'SELECT * FROM $tableName WHERE id IN ($ph)',
+      ids,
+    );
 
     if (kDebugMode) {
       debugPrint(
-        'CatalogLocalDataSource: getExercisesByIds resolved ${rows.length} rows',
+        'CatalogLocalDataSource: getExercisesByIds resolved ${rows.length} rows from $tableName',
       );
     }
 
@@ -265,23 +262,20 @@ class CatalogLocalDataSourceImpl implements CatalogLocalDataSource {
     }
 
     if (ids.isEmpty) {
-      return MealsDatabaseResponse(meals: const []);
+      return const MealsDatabaseResponse(meals: []);
     }
-    final db = await _mealsDb;
+
+    final db = await _mealsDatabase.database;
+    final tableName = await _getMealTableName(db);
     final ph = List.filled(ids.length, '?').join(',');
-    List<Map<String, Object?>> rows;
-    try {
-      rows = await db.rawQuery('SELECT * FROM meal WHERE id IN ($ph)', ids);
-    } catch (_) {
-      rows = await db.rawQuery(
-        'SELECT * FROM meal_card WHERE id IN ($ph)',
-        ids,
-      );
-    }
+    final rows = await db.rawQuery(
+      'SELECT * FROM $tableName WHERE id IN ($ph)',
+      ids,
+    );
 
     if (kDebugMode) {
       debugPrint(
-        'CatalogLocalDataSource: getMealsByIds resolved ${rows.length} rows',
+        'CatalogLocalDataSource: getMealsByIds resolved ${rows.length} rows from $tableName',
       );
     }
 
