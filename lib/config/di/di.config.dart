@@ -10,6 +10,7 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 
+import 'package:cloud_firestore/cloud_firestore.dart' as _i974;
 import 'package:dio/dio.dart' as _i361;
 import 'package:flutter/services.dart' as _i281;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i558;
@@ -31,21 +32,35 @@ import '../../features/auth/data/repo_impl/auth_repo_impl.dart' as _i279;
 import '../../features/auth/domain/repo/auth_repo.dart' as _i170;
 import '../../features/auth/domain/use_cases/forget_password_user_case.dart'
     as _i839;
-import '../../features/auth/domain/use_cases/login_use_case.dart' as _i1038;
+import '../../features/auth/domain/use_cases/login_use_case.dart' as _i1039;
 import '../../features/auth/domain/use_cases/register_use_case.dart' as _i1010;
 import '../../features/auth/domain/use_cases/reset_password_user_case.dart'
     as _i1012;
 import '../../features/auth/domain/use_cases/verify_otp_user_case.dart'
-    as _i397;
+    as _i398;
 import '../../features/auth/presentation/forget_password/manager/forget_password_cubit.dart'
     as _i332;
 import '../../features/auth/presentation/login/manager/login_cubit.dart'
     as _i889;
 import '../../features/auth/presentation/register/manager/register_cubit.dart'
     as _i784;
+import '../../features/chat/api/chat_api_client.dart' as _i998;
+import '../../features/chat/data/datasource/firestore/chat_firestore_data_source.dart'
+    as _i1064;
+import '../../features/chat/data/datasource/firestore/chat_firestore_data_source_impl.dart'
+    as _i1038;
+import '../../features/chat/data/datasource/remote/chat_remote_data_source.dart'
+    as _i487;
+import '../../features/chat/data/datasource/remote/chat_remote_data_source_impl.dart'
+    as _i393;
+import '../../features/chat/data/repository/chat_repository_impl.dart' as _i88;
+import '../../features/chat/data/repository/message_repository_impl.dart'
+    as _i396;
+import '../../features/chat/domain/repository/chat_repository.dart' as _i477;
+import '../../features/chat/domain/repository/message_repository.dart' as _i254;
 import '../../features/meals/api/client/meals_api_client.dart' as _i293;
 import '../../features/meals/api/meals_remote_data_source_impl.dart/meals_remote_data_source_impl.dart'
-    as _i396;
+    as _i397;
 import '../../features/meals/data/data_source/remote/meals_remote_data_source.dart'
     as _i452;
 import '../../features/meals/data/repo_impl/meals_repo_impl.dart' as _i459;
@@ -61,6 +76,7 @@ import '../dio/app_interceptor.dart' as _i264;
 import '../dio/dio_module.dart' as _i977;
 import '../utils/secure_storage_module.dart' as _i327;
 import 'app_module.dart' as _i460;
+import 'firebase_module.dart' as _i616;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
@@ -70,12 +86,14 @@ extension GetItInjectableX on _i174.GetIt {
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final appModule = _$AppModule();
+    final firebaseModule = _$FirebaseModule();
     final secureStorageModule = _$SecureStorageModule();
     final dioModule = _$DioModule();
     gh.factory<_i508.AuthFakeRemoteDataSourceImpl>(
       () => _i508.AuthFakeRemoteDataSourceImpl(),
     );
     gh.lazySingleton<_i281.AssetBundle>(() => appModule.assetBundle);
+    gh.lazySingleton<_i974.FirebaseFirestore>(() => firebaseModule.firestore);
     gh.lazySingleton<_i558.FlutterSecureStorage>(
       () => secureStorageModule.secureStorage,
     );
@@ -84,11 +102,31 @@ extension GetItInjectableX on _i174.GetIt {
       () => dioModule.mealDio(),
       instanceName: 'mealDio',
     );
+    gh.lazySingleton<_i361.Dio>(
+      () => dioModule.ollamaDio,
+      instanceName: 'ollamaDio',
+    );
+    gh.singleton<_i998.ChatApiClient>(
+      () => _i998.ChatApiClient(gh<_i361.Dio>(instanceName: 'ollamaDio')),
+    );
+    gh.factory<_i773.MealsCubit>(
+      () => _i773.MealsCubit(
+        gh<dynamic>(),
+        gh<_i385.GetMealsByCategoryUseCase>(),
+        gh<_i514.GetMealDetailsUseCase>(),
+      ),
+    );
+    gh.lazySingleton<_i1064.ChatFirestoreDataSource>(
+      () => _i1038.ChatFirestoreDataSourceImpl(gh<_i974.FirebaseFirestore>()),
+    );
     gh.lazySingleton<_i264.AppInterceptors>(
       () => _i264.AppInterceptors(
         gh<_i558.FlutterSecureStorage>(),
         gh<_i760.AppAuthCubit>(),
       ),
+    );
+    gh.lazySingleton<_i254.MessageRepository>(
+      () => _i396.MessageRepositoryImpl(gh<_i1064.ChatFirestoreDataSource>()),
     );
     gh.singleton<_i293.MealsApiClient>(
       () => _i293.MealsApiClient(gh<_i361.Dio>(instanceName: 'mealDio')),
@@ -100,8 +138,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i213.AuthApiClient>(
       () => _i213.AuthApiClient(gh<_i361.Dio>(instanceName: 'fitnessDio')),
     );
+    gh.lazySingleton<_i487.ChatRemoteDataSource>(
+      () => _i393.ChatRemoteDataSourceImpl(gh<_i998.ChatApiClient>()),
+    );
     gh.factory<_i452.MealsRemoteDataSource>(
-      () => _i396.MealsRemoteDataSourceImpl(
+      () => _i397.MealsRemoteDataSourceImpl(
         apiClient: gh<_i293.MealsApiClient>(),
       ),
     );
@@ -124,15 +165,14 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i1032.GetMealsCategoriesUseCase>(
       () => _i1032.GetMealsCategoriesUseCase(gh<_i749.MealsRepo>()),
     );
+    gh.lazySingleton<_i477.ChatRepository>(
+      () => _i88.ChatRepositoryImpl(
+        gh<_i1064.ChatFirestoreDataSource>(),
+        gh<_i487.ChatRemoteDataSource>(),
+      ),
+    );
     gh.factory<_i514.GetMealDetailsUseCase>(
       () => _i514.GetMealDetailsUseCase(gh<_i749.MealsRepo>()),
-    );
-    gh.factory<_i773.MealsCubit>(
-      () => _i773.MealsCubit(
-        gh<_i1032.GetMealsCategoriesUseCase>(),
-        gh<_i385.GetMealsByCategoryUseCase>(),
-        gh<_i514.GetMealDetailsUseCase>(),
-      ),
     );
     gh.factory<_i548.AuthRemoteDataSource>(
       () => _i981.AuthDataSourceSwitcher(
@@ -146,8 +186,8 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i548.AuthRemoteDataSource>(),
       ),
     );
-    gh.factory<_i1038.LoginUseCase>(
-      () => _i1038.LoginUseCase(gh<_i170.AuthRepo>()),
+    gh.factory<_i1039.LoginUseCase>(
+      () => _i1039.LoginUseCase(gh<_i170.AuthRepo>()),
     );
     gh.factory<_i839.ForgetPasswordUserCase>(
       () => _i839.ForgetPasswordUserCase(authRepo: gh<_i170.AuthRepo>()),
@@ -158,11 +198,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i1012.ResetPasswordUserCase>(
       () => _i1012.ResetPasswordUserCase(gh<_i170.AuthRepo>()),
     );
-    gh.factory<_i397.VerifyOtpUserCase>(
-      () => _i397.VerifyOtpUserCase(gh<_i170.AuthRepo>()),
+    gh.factory<_i398.VerifyOtpUserCase>(
+      () => _i398.VerifyOtpUserCase(gh<_i170.AuthRepo>()),
     );
     gh.factory<_i889.LoginCubit>(
-      () => _i889.LoginCubit(gh<_i1038.LoginUseCase>()),
+      () => _i889.LoginCubit(gh<_i1039.LoginUseCase>()),
     );
     gh.factory<_i784.RegisterCubit>(
       () => _i784.RegisterCubit(ucase: gh<_i1010.RegisterUseCase>()),
@@ -170,7 +210,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i332.ForgetPasswordCubit>(
       () => _i332.ForgetPasswordCubit(
         gh<_i839.ForgetPasswordUserCase>(),
-        gh<_i397.VerifyOtpUserCase>(),
+        gh<_i398.VerifyOtpUserCase>(),
         gh<_i1012.ResetPasswordUserCase>(),
       ),
     );
@@ -179,6 +219,8 @@ extension GetItInjectableX on _i174.GetIt {
 }
 
 class _$AppModule extends _i460.AppModule {}
+
+class _$FirebaseModule extends _i616.FirebaseModule {}
 
 class _$SecureStorageModule extends _i327.SecureStorageModule {}
 

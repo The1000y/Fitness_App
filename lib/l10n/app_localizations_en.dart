@@ -460,6 +460,17 @@ class AppLocalizationsEn extends AppLocalizations {
   String get failureUnknown => 'Something went wrong. Please try again.';
 
   @override
+  String get chatLatestMessageMustBeUser =>
+      'The latest message must be a user message.';
+
+  @override
+  String get chatIdCannotBeEmpty => 'Chat ID cannot be empty.';
+
+  @override
+  String get chatEmptyAssistantResponse =>
+      'The assistant returned an empty response.';
+
+  @override
   String get emailRequired => 'Email is required';
 
   @override

@@ -456,6 +456,16 @@ class AppLocalizationsAr extends AppLocalizations {
   String get failureUnknown => 'حدث خطأ ما. حاول مرة أخرى.';
 
   @override
+  String get chatLatestMessageMustBeUser =>
+      'يجب أن تكون أحدث رسالة رسالة من المستخدم.';
+
+  @override
+  String get chatIdCannotBeEmpty => 'معرّف المحادثة مطلوب.';
+
+  @override
+  String get chatEmptyAssistantResponse => 'أعاد المساعد ردًا فارغًا.';
+
+  @override
   String get emailRequired => 'البريد الإلكتروني مطلوب';
 
   @override

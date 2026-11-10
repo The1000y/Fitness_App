@@ -24,6 +24,18 @@ class BadRequestFailure extends AppFailure {
   final String? serverMessage;
 }
 
+enum ChatRequestFailureReason {
+  latestMessageMustBeUser,
+  chatIdCannotBeEmpty,
+  emptyAssistantResponse,
+}
+
+class ChatRequestFailure extends AppFailure {
+  const ChatRequestFailure(this.reason);
+
+  final ChatRequestFailureReason reason;
+}
+
 class UnauthorizedFailure extends AppFailure {
   final String? serverMessage;
   const UnauthorizedFailure({this.serverMessage});
