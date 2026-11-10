@@ -1,28 +1,25 @@
+import 'package:fitness_app/core/shared/custom_blur_card.dart';
+import 'package:fitness_app/core/theme/app_colors/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 
-import '../../../../../core/shared/custom_blur_card.dart';
-import '../../../../../core/theme/app_colors/app_colors.dart';
-
-class HomeImageTitleCard extends StatelessWidget {
-  const HomeImageTitleCard({
+/// Square image with a blurred title strip at the bottom.
+/// [size] and [labelPadding] are unscaled.
+class HomeImageCard extends StatelessWidget {
+  const HomeImageCard({
     super.key,
     required this.imageUrl,
     required this.title,
     required this.size,
-    required this.labelHeight,
     required this.labelPadding,
-    this.labelBorderRadius,
-    this.onTap,
+    required this.onTap,
   });
 
   final String? imageUrl;
   final String title;
   final double size;
-  final double labelHeight;
-  final EdgeInsetsGeometry labelPadding;
-  final BorderRadius? labelBorderRadius;
-  final VoidCallback? onTap;
+  final double labelPadding;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -38,25 +35,15 @@ class HomeImageTitleCard extends StatelessWidget {
           child: Stack(
             fit: StackFit.expand,
             children: [
-              if (imageUrl != null && imageUrl!.isNotEmpty)
-                Image.network(
-                  imageUrl!,
-                  fit: BoxFit.cover,
-                  errorBuilder: (context, error, stackTrace) {
-                    return const SizedBox.expand();
-                  },
-                )
-              else
-                const _ImagePlaceholder(),
+              homeNetworkImage(imageUrl),
               Positioned(
                 left: 0,
                 right: 0,
                 bottom: 0,
-                height: labelHeight.h,
+                height: 30.h,
                 child: CustomBlurCard(
-                  borderRadius:
-                      labelBorderRadius ?? BorderRadius.circular(20.r),
-                  padding: labelPadding,
+                  borderRadius: BorderRadius.circular(20.r),
+                  padding: EdgeInsets.symmetric(horizontal: labelPadding.w),
                   backgroundColor: AppColors.neutral.withValues(alpha: 0.5),
                   sigma: 10,
                   child: Center(
@@ -83,18 +70,23 @@ class HomeImageTitleCard extends StatelessWidget {
   }
 }
 
-class _ImagePlaceholder extends StatelessWidget {
-  const _ImagePlaceholder();
+/// Network image with a placeholder when the url is empty or fails to load.
+Widget homeNetworkImage(String? url, {Widget? onError}) {
+  if (url == null || url.isEmpty) return _placeholder();
+  return Image.network(
+    url,
+    fit: BoxFit.cover,
+    errorBuilder: (_, __, ___) => onError ?? _placeholder(),
+  );
+}
 
-  @override
-  Widget build(BuildContext context) {
-    return ColoredBox(
-      color: AppColors.surfaceMuted,
-      child: Icon(
-        Icons.image_not_supported_outlined,
-        color: AppColors.textSecondary,
-        size: 24.r,
-      ),
-    );
-  }
+Widget _placeholder() {
+  return ColoredBox(
+    color: AppColors.surfaceMuted,
+    child: Icon(
+      Icons.image_not_supported_outlined,
+      color: AppColors.textSecondary,
+      size: 24.r,
+    ),
+  );
 }

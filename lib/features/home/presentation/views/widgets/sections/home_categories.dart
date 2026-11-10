@@ -1,38 +1,29 @@
+import 'package:fitness_app/core/constants/app_images.dart';
+import 'package:fitness_app/core/shared/custom_blur_card.dart';
+import 'package:fitness_app/core/theme/app_colors/app_colors.dart';
+import 'package:fitness_app/features/home/presentation/views/widgets/common/home_section_title.dart';
+import 'package:fitness_app/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
-
-import '../../../../../core/constants/app_images.dart';
-import '../../../../../core/shared/custom_blur_card.dart';
-import '../../../../../core/theme/app_colors/app_colors.dart';
-import '../../../../../l10n/app_localizations.dart';
 
 class HomeCategories extends StatelessWidget {
   const HomeCategories({super.key});
 
-  static List<({int imageIndex, String Function(AppLocalizations) title})>
-  _categories = [
-    (imageIndex: 34, title: (l10n) => l10n.categoryGym),
-    (imageIndex: 19, title: (l10n) => l10n.categoryFitness),
-    (imageIndex: 25, title: (l10n) => l10n.categoryYoga),
-    (imageIndex: 24, title: (l10n) => l10n.categoryAerobics),
-    (imageIndex: 9, title: (l10n) => l10n.categoryTrainer),
-  ];
-
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final categories = [
+      (image: 34, title: l10n.categoryGym),
+      (image: 19, title: l10n.categoryFitness),
+      (image: 25, title: l10n.categoryYoga),
+      (image: 24, title: l10n.categoryAerobics),
+      (image: 9, title: l10n.categoryTrainer),
+    ];
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          l10n.category,
-          style: Theme.of(context).textTheme.titleMedium?.copyWith(
-            fontSize: 16.sp,
-            fontWeight: FontWeight.w600,
-            height: 1.2,
-            color: AppColors.textPrimary,
-          ),
-        ),
+        HomeSectionTitle(title: l10n.category),
         SizedBox(height: 7.h),
         SizedBox(
           width: 344.w,
@@ -45,8 +36,9 @@ class HomeCategories extends StatelessWidget {
             sigma: 20,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: List.generate(5, (index) {
-                final isLast = index == 4;
+              children: List.generate(categories.length, (index) {
+                final category = categories[index];
+                final isLast = index == categories.length - 1;
                 return InkWell(
                   onTap: () {},
                   borderRadius: BorderRadius.circular(20.r),
@@ -58,34 +50,34 @@ class HomeCategories extends StatelessWidget {
                       border: isLast
                           ? null
                           : BorderDirectional(
-                              end: BorderSide(
-                                color: AppColors.borderSubtle,
-                                width: 1.w,
-                              ),
-                            ),
+                        end: BorderSide(
+                          color: AppColors.borderSubtle,
+                          width: 1.w,
+                        ),
+                      ),
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Image.asset(
-                          AppImages.avatar(_categories[index].imageIndex),
+                          AppImages.avatar(category.image),
                           width: 40.r,
                           height: 40.r,
                           fit: BoxFit.cover,
                         ),
                         SizedBox(height: 4.h),
                         Text(
-                          _categories[index].title(l10n),
+                          category.title,
                           textAlign: TextAlign.center,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: Theme.of(context).textTheme.labelSmall
                               ?.copyWith(
-                                fontSize: 12.sp,
-                                fontWeight: FontWeight.w400,
-                                height: 1.2,
-                                color: AppColors.textPrimary,
-                              ),
+                            fontSize: 12.sp,
+                            fontWeight: FontWeight.w400,
+                            height: 1.2,
+                            color: AppColors.textPrimary,
+                          ),
                         ),
                       ],
                     ),

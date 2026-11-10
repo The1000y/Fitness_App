@@ -1,20 +1,20 @@
 import 'package:fitness_app/config/di/di.dart';
 import 'package:fitness_app/core/constants/app_images.dart';
 import 'package:fitness_app/core/shared/custom_background_image.dart';
+import 'package:fitness_app/core/theme/app_colors/app_colors.dart';
+import 'package:fitness_app/features/auth/domain/entities/login_entity/user_entity.dart';
 import 'package:fitness_app/features/home/presentation/manager/home_cubit.dart';
 import 'package:fitness_app/features/home/presentation/manager/home_event.dart';
-import 'package:fitness_app/features/home/presentation/views/widgets/home_categories.dart';
-import 'package:fitness_app/features/home/presentation/views/widgets/home_food_categories.dart';
-import 'package:fitness_app/features/home/presentation/views/widgets/home_header.dart';
-import 'package:fitness_app/features/home/presentation/views/widgets/home_muscles_random_section.dart';
-import 'package:fitness_app/features/home/presentation/views/widgets/home_popular_training.dart';
-import 'package:fitness_app/features/home/presentation/views/widgets/home_upcoming_workouts_section.dart';
+import 'package:fitness_app/features/home/presentation/manager/home_state.dart';
+import 'package:fitness_app/features/home/presentation/views/widgets/sections/home_categories.dart';
+import 'package:fitness_app/features/home/presentation/views/widgets/sections/home_food_categories.dart';
+import 'package:fitness_app/features/home/presentation/views/widgets/sections/home_popular_training.dart';
+import 'package:fitness_app/features/home/presentation/views/widgets/sections/home_random_muscles.dart';
+import 'package:fitness_app/features/home/presentation/views/widgets/sections/home_upcoming_workouts.dart';
+import 'package:fitness_app/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
-
-import '../../../auth/domain/entities/login_entity/user_entity.dart';
-import '../manager/home_state.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -35,7 +35,7 @@ class HomeView extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 16.w),
                 child: BlocSelector<HomeCubit, HomeState, UserEntity?>(
                   selector: (state) => state.userState.data,
-                  builder: (context, user) => HomeHeader(
+                  builder: (context, user) => _Header(
                     firstName: user?.firstName ?? '',
                     photoUrl: user?.photo,
                   ),
@@ -52,9 +52,9 @@ class HomeView extends StatelessWidget {
                   SizedBox(height: 24.h),
                   const HomeCategories(),
                   SizedBox(height: 24.h),
-                  const HomeMusclesRandomSection(),
+                  const HomeRandomMuscles(),
                   SizedBox(height: 24.h),
-                  const HomeUpcomingWorkoutsSection(),
+                  const HomeUpcomingWorkouts(),
                   SizedBox(height: 24.h),
                   const HomeFoodCategories(),
                   SizedBox(height: 24.h),
@@ -66,6 +66,70 @@ class HomeView extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class _Header extends StatelessWidget {
+  const _Header({required this.firstName, this.photoUrl});
+
+  final String firstName;
+  final String? photoUrl;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final textTheme = Theme.of(context).textTheme;
+    final placeholder = Container(
+      color: Colors.white24,
+      alignment: Alignment.center,
+      child: Icon(Icons.person, size: 22.r, color: AppColors.textPrimary),
+    );
+
+    return Row(
+      children: [
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                l10n.homeGreeting(firstName),
+                style: textTheme.bodyMedium?.copyWith(
+                  fontFamily: 'Baloo Thambi 2',
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.w500,
+                  height: 1.4,
+                  color: AppColors.textPrimary,
+                ),
+              ),
+              Text(
+                l10n.homeSubtitle,
+                style: textTheme.bodyLarge?.copyWith(
+                  fontFamily: 'Baloo Thambi 2',
+                  fontSize: 18.sp,
+                  fontWeight: FontWeight.w700,
+                  height: 1.4,
+                  color: AppColors.textPrimary,
+                ),
+              ),
+            ],
+          ),
+        ),
+        ClipOval(
+          child: SizedBox(
+            width: 36.r,
+            height: 36.r,
+            child: photoUrl != null && photoUrl!.isNotEmpty
+                ? Image.network(
+              photoUrl!,
+              fit: BoxFit.cover,
+              errorBuilder: (_, __, ___) => placeholder,
+            )
+                : placeholder,
+          ),
+        ),
+      ],
     );
   }
 }
