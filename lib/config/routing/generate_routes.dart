@@ -8,6 +8,7 @@ import 'package:fitness_app/features/auth/presentation/login/view/login_view.dar
 import 'package:fitness_app/features/auth/presentation/onboarding/views/onboarding_view.dart';
 import 'package:fitness_app/features/auth/presentation/register/view/register_view.dart';
 import 'package:fitness_app/features/chat/presentation/view/chat_view.dart';
+import 'package:fitness_app/features/chat/presentation/view/message_view.dart';
 import 'package:fitness_app/features/home/presentation/views/home_view.dart';
 import 'package:fitness_app/features/main/presentation/views/main_layout_view.dart';
 import 'package:fitness_app/features/meals/presentation/manager/meals_cubit.dart';
@@ -118,6 +119,8 @@ abstract final class GenerateRoutes {
 
       case AppRoutes.chatHistory:
         return _pageRoute(const ChatView(), settings);
+      case AppRoutes.chatMessages:
+        return _pageRoute(const MessageView(), settings);
 
       case AppRoutes.editProfile:
         return _pageRoute(const _StubScreen('Edit Profile'), settings);

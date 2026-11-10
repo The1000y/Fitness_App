@@ -34,6 +34,7 @@ abstract final class AppRoutes {
 
   // Smart coach chat.
   static const String chatHistory = '/chat-history';
+  static const String chatMessages = '/chat-messages';
 
   // Profile.
   static const String editProfile = '/edit-profile';
