@@ -81,8 +81,6 @@ class PopularTrainingCardShimmer extends StatelessWidget {
   }
 }
 
-/// Darker block kept as-is by Skeletonizer so it stays visible on top of
-/// the shimmering card background.
 class _Block extends StatelessWidget {
   const _Block({
     required this.width,
