@@ -122,8 +122,13 @@ void main() {
       expect(await storage.read(key: StorageKeys.kRefreshToken), isNull);
     });
 
-    test('keeps session data when remote logout fails', () async {
+    test('clears session data even when remote logout fails', () async {
       await storage.write(key: StorageKeys.kUserToken, value: 'access-token');
+      await storage.write(key: StorageKeys.kUserData, value: 'user-data');
+      await storage.write(
+        key: StorageKeys.kRefreshToken,
+        value: 'refresh-token',
+      );
       const failure = ServerFailure();
       when(
         () => remote.logout(),
@@ -135,7 +140,9 @@ void main() {
         result,
         isA<Error<void>>().having((e) => e.failure, 'failure', failure),
       );
-      expect(await storage.read(key: StorageKeys.kUserToken), 'access-token');
+      expect(await storage.read(key: StorageKeys.kUserToken), isNull);
+      expect(await storage.read(key: StorageKeys.kUserData), isNull);
+      expect(await storage.read(key: StorageKeys.kRefreshToken), isNull);
     });
   });
 }

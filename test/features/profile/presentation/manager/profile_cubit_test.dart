@@ -197,7 +197,7 @@ void main() {
       await cubit.close();
     });
 
-    test('emits failure message when logout fails', () async {
+    test('navigates to login even when logout fails', () async {
       when(
         () => logoutUseCase(),
       ).thenAnswer((_) async => const Error<void>(failure));
@@ -210,10 +210,10 @@ void main() {
       expect(events, hasLength(1));
       expect(
         events.single,
-        isA<ShowFailureMessage>().having(
-          (event) => event.failure,
-          'failure',
-          failure,
+        isA<NavigateAndRemoveUntil>().having(
+          (event) => event.routeName,
+          'routeName',
+          AppRoutes.login,
         ),
       );
 
