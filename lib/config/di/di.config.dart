@@ -135,7 +135,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i170.ProfileLogoutUseCase>(
       () => _i170.ProfileLogoutUseCase(gh<_i364.ProfileRepo>()),
     );
-    gh.factory<_i735.ProfileCubit>(
+    gh.lazySingleton<_i735.ProfileCubit>(
       () => _i735.ProfileCubit(
         gh<_i424.ProfileGetUseCase>(),
         gh<_i170.ProfileLogoutUseCase>(),

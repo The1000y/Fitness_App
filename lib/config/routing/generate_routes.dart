@@ -85,18 +85,23 @@ abstract final class GenerateRoutes {
         return _pageRoute(const _StubScreen('Setup Activity'), settings);
 
       case AppRoutes.main:
+        final profileCubit = getIt<ProfileCubit>()
+          ..onEvent(const LoadProfile());
         return _pageRoute(
-          MainLayoutView(
-            tabs: [
-              HomeView(),
-              ChatView(),
-              WorkoutsView(),
-              BlocProvider(
-                create: (_) =>
-                    getIt<ProfileCubit>()..onEvent(const LoadProfile()),
-                child: const ProfileView(),
-              ),
-            ],
+          BlocProvider.value(
+            value: profileCubit,
+            child: MainLayoutView(
+              tabs: [
+                HomeView(),
+                ChatView(),
+                WorkoutsView(),
+                BlocProvider(
+                  create: (_) =>
+                      getIt<ProfileCubit>()..onEvent(const LoadProfile()),
+                  child: const ProfileView(),
+                ),
+              ],
+            ),
           ),
           settings,
         );
