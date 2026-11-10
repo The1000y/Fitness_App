@@ -43,4 +43,9 @@ class ExerciseRemoteDataSourceImpl implements ExerciseRemoteDataSource {
   Future<MuscleGroupsResponse> getMusclesGroups() {
     return _apiClient.getMuscleGroups();
   }
+
+  @override
+  Future<MusclesByGroupResponse> getRandomMuscles() {
+    return _apiClient.getRandomMuscles();
+  }
 }

@@ -242,7 +242,18 @@ class AppLocalizationsAr extends AppLocalizations {
   String get categoryTrainer => 'المدرب';
 
   @override
-  String get recommendationToday => 'توصية اليوم';
+  String get recommendationToDay => 'توصية اليوم';
+
+  @override
+  String get strengthenYour => 'تمارين تقوي ';
+
+  @override
+  String tasksCount(int count) {
+    return '$count مهمة';
+  }
+
+  @override
+  String get noPopularTraining => 'لا يوجد تمارين متاحة';
 
   @override
   String get jogging => 'الجري الخفيف';
@@ -303,11 +314,6 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get strengthenBody => 'تمارين تقوّي جسمك';
-
-  @override
-  String tasksCount(int count) {
-    return '$count مهمة';
-  }
 
   @override
   String get homeTab => 'الرئيسية';
@@ -671,4 +677,41 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get otpVerifiedSuccessfully => 'تم تأكيد الرمز بنجاح';
+
+  @override
+  String get noMealsYet => 'لا توجد وجبات بعد';
+
+  @override
+  String noCategoryMealsYet(String category) {
+    return 'لا توجد وجبات $category بعد';
+  }
+
+  @override
+  String get noMealsMessage =>
+      'لا توجد ترشيحات في الوقت الحالي. جرّب وقت وجبة آخر أو عد لاحقاً.';
+
+  @override
+  String get refresh => 'تحديث';
+
+  @override
+  String get noInternetConnection => 'لا يوجد اتصال بالإنترنت';
+
+  @override
+  String get somethingWentWrong => 'حدث خطأ ما';
+
+  @override
+  String get checkConnectionMessage =>
+      'تحقق من اتصالك بالإنترنت وحاول مرة أخرى.';
+
+  @override
+  String get couldNotLoadMeals => 'تعذر تحميل الوجبات. يرجى المحاولة مرة أخرى.';
+
+  @override
+  String get tryAgain => 'حاول مرة أخرى';
+
+  @override
+  String get couldNotLoadCategories => 'تعذر تحميل الفئات';
+
+  @override
+  String get dataNotAvailable => 'البيانات غير متوفرة حالياً.';
 }

@@ -22,4 +22,11 @@ abstract interface class ExerciseRepo {
   Future<BaseResponse<MusclesByGroupEntity>> getMusclesByGroup({
     required String id,
   });
+
+  Future<BaseResponse<MusclesByGroupEntity>> getRandomMuscles();
+
+  Future<BaseResponse<int>> getTotalExercisesByMuscleDifficulty({
+    required String muscleId,
+    required String difficultyLevelId,
+  });
 }

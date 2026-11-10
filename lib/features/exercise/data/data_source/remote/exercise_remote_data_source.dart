@@ -18,4 +18,6 @@ abstract interface class ExerciseRemoteDataSource {
   Future<MuscleGroupsResponse> getMusclesGroups();
 
   Future<MusclesByGroupResponse> getMusclesByGroup(String id);
+
+  Future<MusclesByGroupResponse> getRandomMuscles();
 }

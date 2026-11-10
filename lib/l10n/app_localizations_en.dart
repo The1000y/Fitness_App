@@ -243,7 +243,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get categoryTrainer => 'Trainer';
 
   @override
-  String get recommendationToday => 'Recommendation for today';
+  String get recommendationToDay => 'Recommendation To Day';
+
+  @override
+  String get strengthenYour => 'Exercises That Strengthen Your';
+
+  @override
+  String tasksCount(int count) {
+    return '$count tasks';
+  }
+
+  @override
+  String get noPopularTraining => 'No popular training available';
 
   @override
   String get jogging => 'Jogging';
@@ -304,11 +315,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get strengthenBody => 'Exercises that strengthen your body';
-
-  @override
-  String tasksCount(int count) {
-    return '$count tasks';
-  }
 
   @override
   String get homeTab => 'Home';
@@ -676,4 +682,41 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get otpVerifiedSuccessfully => 'Code verified successfully';
+
+  @override
+  String get noMealsYet => 'No meals yet';
+
+  @override
+  String noCategoryMealsYet(String category) {
+    return 'No $category meals yet';
+  }
+
+  @override
+  String get noMealsMessage =>
+      'There are no recommendations right now. Try another meal time or check back later.';
+
+  @override
+  String get refresh => 'Refresh';
+
+  @override
+  String get noInternetConnection => 'No internet connection';
+
+  @override
+  String get somethingWentWrong => 'Something went wrong';
+
+  @override
+  String get checkConnectionMessage => 'Check your connection and try again.';
+
+  @override
+  String get couldNotLoadMeals =>
+      'We could not load the meals. Please try again.';
+
+  @override
+  String get tryAgain => 'Try again';
+
+  @override
+  String get couldNotLoadCategories => 'Could not load categories';
+
+  @override
+  String get dataNotAvailable => 'Data is currently unavailable.';
 }

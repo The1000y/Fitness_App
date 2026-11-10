@@ -2,6 +2,8 @@ abstract class ApiStrings {
   static final String baseUrl = 'https://fitness.elevateegy.com/api/v1';
 
   static const String mealBaseUrl = 'https://www.themealdb.com/api/json/v1/1';
+  static const String namedFitnessDio = 'fitnessDio';
+  static const String namedMealDio = 'mealDio';
 
   // ---------------------------------------------------------------------------
   // Auth
@@ -25,7 +27,7 @@ abstract class ApiStrings {
       '/levels/difficulty-levels/by-prime-mover';
 
   static const String muscles = '/muscles';
-  static String get randomMuscles => '/muscles/random';
+  static const String randomMuscles = '/muscles/random';
 
   static String musclesByGroupId(String muscleGroupId) =>
       '/musclesGroup/$muscleGroupId';
@@ -41,7 +43,10 @@ abstract class ApiStrings {
 
   static String get randomExercises => '/exercises/random';
 
-  static const String mealCategories = '$mealBaseUrl/categories.php';
+  // ---------------------------------------------------------------------------
+  // Meals (TheMealDB)
+  // ---------------------------------------------------------------------------
+  static const String mealCategories = '$mealBaseUrl/categories.php'; // GET
 
   static const String mealsByCategory = '$mealBaseUrl/filter.php';
 

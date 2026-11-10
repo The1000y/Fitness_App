@@ -1,9 +1,12 @@
+// import 'package:fitness_app/core/constants/app_icons.dart';
+// import 'package:fitness_app/core/shared/helper/custom_button_click.dart';
 import 'package:fitness_app/core/shared/helper/image_thumbnail_overlay.dart';
 import 'package:fitness_app/core/shared/helper/video_error_view.dart';
 import 'package:fitness_app/core/theme/app_colors/app_colors.dart';
 import 'package:fitness_app/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
+// import 'package:flutter_svg/svg.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class VideoPlayerContent extends StatelessWidget {
@@ -17,6 +20,7 @@ class VideoPlayerContent extends StatelessWidget {
     required this.onClosed,
     this.overlayContent,
     this.onRetry,
+    this.backNavigationButton,
   });
 
   final YoutubePlayerController? controller;
@@ -27,6 +31,7 @@ class VideoPlayerContent extends StatelessWidget {
   final VoidCallback onPlayPressed;
   final VoidCallback onClosed;
   final VoidCallback? onRetry;
+  final Widget? backNavigationButton;
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +54,7 @@ class VideoPlayerContent extends StatelessWidget {
               fit: StackFit.passthrough,
               children: [
                 YoutubePlayer(controller: playerController),
+
                 if (isLoading)
                   const ColoredBox(
                     color: Colors.black,
@@ -91,6 +97,7 @@ class VideoPlayerContent extends StatelessWidget {
     }
 
     return ImageThumbnailOverlay(
+      backNavigationButton: backNavigationButton,
       onPlayPressed: onPlayPressed,
       widget: overlayContent,
       thumbnailImage: thumbnailImage,

@@ -8,6 +8,7 @@ class CategoryTabBar extends StatelessWidget {
   final String selectedCategory;
   final ValueChanged<String> onCategorySelected;
   final bool isScrollable;
+  final double height;
 
   const CategoryTabBar({
     super.key,
@@ -15,12 +16,13 @@ class CategoryTabBar extends StatelessWidget {
     required this.selectedCategory,
     required this.onCategorySelected,
     this.isScrollable = true,
+    this.height = 48,
   });
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 48.h,
+      height: height.h,
       child: isScrollable
           ? ListView.builder(
               scrollDirection: Axis.horizontal,
@@ -59,7 +61,7 @@ class CategoryTabBar extends StatelessWidget {
           width: isExpanded ? double.infinity : null,
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
           decoration: BoxDecoration(
-            color: isSelected ? AppColors.primary : Colors.transparent,
+            color: isSelected ? AppColors.primary : AppColors.surfaceMuted,
             borderRadius: BorderRadius.circular(24.r),
           ),
           alignment: Alignment.center,

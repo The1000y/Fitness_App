@@ -14,7 +14,7 @@ part 'exercise_api_client.g.dart';
 @RestApi()
 abstract class ExerciseApiClient {
   @factoryMethod
-  factory ExerciseApiClient(Dio dio) = _ExerciseApiClient;
+  factory ExerciseApiClient(@Named(ApiStrings.namedFitnessDio) Dio dio) = _ExerciseApiClient;
 
   @GET(ApiStrings.exercisesByMuscleDifficulty)
   Future<ExercisesListDto> getExercisesByMuscleDifficulty(
@@ -36,4 +36,6 @@ abstract class ExerciseApiClient {
   Future<MusclesByGroupResponse> getMusclesByGroup(
     @Query(ApiStrings.qMuscleGroupId) String muscleGroupId,
   );
+  @GET(ApiStrings.randomMuscles)
+  Future<MusclesByGroupResponse> getRandomMuscles();
 }

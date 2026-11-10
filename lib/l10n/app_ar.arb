@@ -93,7 +93,10 @@
   "categoryYoga": "اليوغا",
   "categoryAerobics": "الأيروبكس",
   "categoryTrainer": "المدرب",
-  "recommendationToday": "توصية اليوم",
+  "recommendationToDay": "توصية اليوم",
+  "strengthenYour": "تمارين تقوي ",
+  "tasksCount": "{count} تمرين",
+  "noPopularTraining": "لا يوجد تمارين متاحة",
   "jogging": "الجري الخفيف",
   "pushUp": "تمرين الضغط",
   "squat": "تمرين القرفصاء",
@@ -272,5 +275,24 @@
   "targetGroup": "المجموعة المستهدفة",
   "shortDemo": "عرض مختصر",
   "tapToPlayDemo": "اضغط لتشغيل العرض",
-  "tapToStopDemo": "اضغط لإيقاف العرض"
+  "tapToStopDemo": "اضغط لإيقاف العرض",
+  "noMealsYet": "لا توجد وجبات بعد",
+  "noCategoryMealsYet": "لا توجد وجبات {category} بعد",
+  "@noCategoryMealsYet": {
+    "placeholders": {
+      "category": {
+        "type": "String"
+      }
+    }
+  },
+  "noMealsMessage": "لا توجد ترشيحات في الوقت الحالي. جرّب وقت وجبة آخر أو عد لاحقاً.",
+  "refresh": "تحديث",
+  "noInternetConnection": "لا يوجد اتصال بالإنترنت",
+  "somethingWentWrong": "حدث خطأ ما",
+  "checkConnectionMessage": "تحقق من اتصالك بالإنترنت وحاول مرة أخرى.",
+  "couldNotLoadMeals": "تعذر تحميل الوجبات. يرجى المحاولة مرة أخرى.",
+  "tryAgain": "حاول مرة أخرى",
+  "noCategoriesAvailable": "لا توجد فئات متاحة",
+  "couldNotLoadCategories": "تعذر تحميل الفئات",
+  "dataNotAvailable": "البيانات غير متوفرة حالياً."
 }

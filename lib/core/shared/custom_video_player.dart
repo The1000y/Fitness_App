@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:fitness_app/config/localization/map_youtube_error.dart';
-import 'package:fitness_app/features/meals/presentation/widgets/video_player_content.dart';
+import 'package:fitness_app/core/shared/video_player_content.dart';
 import 'package:fitness_app/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
@@ -13,36 +13,24 @@ class CustomVideoPlayer extends StatefulWidget {
     required this.videoUrl,
     this.overlayContent,
     this.aspectRatio = 4 / 3,
-    this.autoPlay = false,
+    this.backNavigationButton,
   });
 
   final String thumbnailImage;
   final String videoUrl;
   final Widget? overlayContent;
   final double? aspectRatio;
-  final bool autoPlay;
+  final Widget? backNavigationButton;
 
   @override
   State<CustomVideoPlayer> createState() => _CustomVideoPlayerState();
 }
 
 class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
-  static _CustomVideoPlayerState? _active;
-
   bool _isLoading = true;
   YoutubeError? _error;
   YoutubePlayerController? _controller;
   StreamSubscription<YoutubePlayerValue>? _subscription;
-
-  @override
-  void initState() {
-    super.initState();
-    if (widget.autoPlay) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (mounted) _onPlayPressed();
-      });
-    }
-  }
 
   void _onPlayPressed() {
     if (_controller != null) return;
@@ -53,15 +41,6 @@ class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
       setState(() => _error = YoutubeError.invalidParam);
       return;
     }
-
-    final previous = _active;
-    if (previous != null && previous != this && previous.mounted) {
-      final previousController = previous._controller;
-      if (previousController != null) {
-        unawaited(previousController.pauseVideo());
-      }
-    }
-    _active = this;
 
     final controller = YoutubePlayerController.fromVideoId(
       videoId: videoId,
@@ -95,19 +74,6 @@ class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
     }
   }
 
-  @override
-  void didUpdateWidget(covariant CustomVideoPlayer oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (oldWidget.videoUrl != widget.videoUrl) {
-      _subscription?.cancel();
-      _subscription = null;
-      _controller?.close();
-      _controller = null;
-      _isLoading = true;
-      _error = null;
-    }
-  }
-
   void _onClosed() {
     _subscription?.cancel();
     _subscription = null;
@@ -126,7 +92,6 @@ class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
 
   @override
   void dispose() {
-    if (_active == this) _active = null;
     _subscription?.cancel();
     _controller?.close();
     super.dispose();
@@ -142,6 +107,7 @@ class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
         clipBehavior: Clip.antiAlias,
         borderRadius: BorderRadius.vertical(bottom: Radius.circular(20.r)),
         child: VideoPlayerContent(
+          backNavigationButton: widget.backNavigationButton,
           controller: _controller,
           errorMessage: errorMessage,
           isLoading: _isLoading,

@@ -16,33 +16,27 @@ class InformationDataAboutMeals extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    var theme = Theme.of(context);
     return Container(
       width: 54.w,
       height: 44.w,
       decoration: BoxDecoration(
-        color: (AppColors.neutral[500] ?? AppColors.black).withValues(
-          alpha: 0.7,
-        ),
+        color: AppColors.neutral[500]!.withValues(alpha: 0.7),
         borderRadius: BorderRadius.circular(20),
         border: Border.all(width: 0.5.w, color: AppColors.white),
       ),
-      child: FittedBox(
-        fit: BoxFit.scaleDown,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(number, style: theme.textTheme.labelSmall),
-            Text(
-              title,
-              style: theme.textTheme.labelSmall!.copyWith(
-                fontWeight: FontWeight(700),
-                color: AppColors.primary,
-              ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(number, style: theme.textTheme.labelSmall),
+          Text(
+            title,
+            style: theme.textTheme.labelSmall!.copyWith(
+              fontWeight: FontWeight(700),
+              color: AppColors.primary,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

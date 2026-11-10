@@ -16,12 +16,16 @@ import 'package:fitness_app/features/auth/domain/entities/register_entity/regist
 import 'package:fitness_app/features/auth/domain/repo/auth_repo.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../domain/entities/login_entity/user_entity.dart';
+import '../data_source/current_user_holder.dart';
+
 @Injectable(as: AuthRepo)
 class AuthRepoImpl implements AuthRepo {
   final RemoteDataSource _remote;
   final AuthRemoteDataSource _remoteDataSource;
+  final CurrentUserHolder _userHolder;
 
-  AuthRepoImpl(this._remote, this._remoteDataSource);
+  AuthRepoImpl(this._remote, this._remoteDataSource, this._userHolder);
 
   @override
   Future<BaseResponse<LoginEntity>> login({
@@ -34,6 +38,9 @@ class AuthRepoImpl implements AuthRepo {
       );
       return response.toEntity();
     });
+    if (result case Success(:final data) when data.token.isNotEmpty) {
+      _userHolder.user = data.user;
+    }
 
     return switch (result) {
       Success(:final data) when data.token.isEmpty => const Error<LoginEntity>(
@@ -41,6 +48,13 @@ class AuthRepoImpl implements AuthRepo {
       ),
       _ => result,
     };
+  }
+
+  @override
+  Future<BaseResponse<UserEntity>> getCurrentUser() async {
+    final user = _userHolder.user;
+    if (user == null) return const Error<UserEntity>(UnauthorizedFailure());
+    return Success<UserEntity>(user);
   }
 
   @override

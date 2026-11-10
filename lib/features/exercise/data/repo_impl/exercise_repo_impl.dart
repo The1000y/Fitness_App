@@ -62,4 +62,32 @@ class ExerciseRepoImpl implements ExerciseRepo {
       return response.toEntity();
     });
   }
+
+  @override
+  Future<BaseResponse<MusclesByGroupEntity>> getRandomMuscles() async {
+    return await excecuteApiCall(() async {
+      final response = await _remote.getRandomMuscles();
+      return response.toEntity();
+    });
+  }
+
+  @override
+  Future<BaseResponse<int>> getTotalExercisesByMuscleDifficulty({
+    required String muscleId,
+    required String difficultyLevelId,
+  }) {
+    return excecuteApiCall(() async {
+      final response = await _remote.getExercisesByMuscleDifficulty(
+        primeMoverMuscleId: muscleId,
+        difficultyLevelId: difficultyLevelId,
+        page: 1,
+        limit: 1,
+      );
+      final total = response.totalExercises;
+      if (total == null) {
+        throw const FormatException('totalExercises is missing in response');
+      }
+      return total;
+    });
+  }
 }
