@@ -181,6 +181,8 @@
   "yourGoalTapToEdit": "Your goal (tap to edit)",
   "yourActivityTapToEdit": "Your activity level (tap to edit)",
   "closeAppConfirm": "Are you sure you want to close the application?",
+  "logoutConfirm": "Are you sure you want to log out?",
+  "webViewLoadFailed": "Couldn't load the page",
   "accepted": "Order accepted successfully",
   "orderStatusUpdatedSuccessfully": "Order status updated successfully",
   "failureInternetConnection": "No internet connection. Please check your network and try again.",

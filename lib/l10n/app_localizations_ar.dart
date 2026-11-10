@@ -402,6 +402,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get closeAppConfirm => 'هل أنت متأكد أنك تريد إغلاق التطبيق؟';
 
   @override
+  String get logoutConfirm => 'هل أنت متأكد أن تريد تسجيل الخروج؟';
+
+  @override
+  String get webViewLoadFailed => 'تعذّر تحميل الصفحة';
+
+  @override
   String get accepted => 'تم قبول الطلب بنجاح';
 
   @override

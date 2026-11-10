@@ -181,6 +181,8 @@
   "yourGoalTapToEdit": "هدفك (اضغط للتعديل)",
   "yourActivityTapToEdit": "مستوى نشاطك (اضغط للتعديل)",
   "closeAppConfirm": "هل أنت متأكد أنك تريد إغلاق التطبيق؟",
+  "logoutConfirm": "هل أنت متأكد أن تريد تسجيل الخروج؟",
+  "webViewLoadFailed": "تعذّر تحميل الصفحة",
   "accepted": "تم قبول الطلب بنجاح",
   "orderStatusUpdatedSuccessfully": "تم تحديث حالة الطلب بنجاح",
   "failureInternetConnection": "لا يوجد اتصال بالإنترنت. تحقق من الشبكة وحاول مرة أخرى.",

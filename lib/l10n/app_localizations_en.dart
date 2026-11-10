@@ -404,6 +404,12 @@ class AppLocalizationsEn extends AppLocalizations {
       'Are you sure you want to close the application?';
 
   @override
+  String get logoutConfirm => 'Are you sure you want to log out?';
+
+  @override
+  String get webViewLoadFailed => 'Couldn\'t load the page';
+
+  @override
   String get accepted => 'Order accepted successfully';
 
   @override

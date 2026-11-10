@@ -854,6 +854,18 @@ abstract class AppLocalizations {
   /// **'Are you sure you want to close the application?'**
   String get closeAppConfirm;
 
+  /// No description provided for @logoutConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to log out?'**
+  String get logoutConfirm;
+
+  /// No description provided for @webViewLoadFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load the page'**
+  String get webViewLoadFailed;
+
   /// No description provided for @accepted.
   ///
   /// In en, this message translates to:
