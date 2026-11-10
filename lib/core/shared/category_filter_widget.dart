@@ -59,7 +59,7 @@ class CategoryTabBar extends StatelessWidget {
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 200),
           width: isExpanded ? double.infinity : null,
-          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
+          padding: EdgeInsets.symmetric(horizontal: 20.w),
           decoration: BoxDecoration(
             color: isSelected ? AppColors.primary : AppColors.surfaceMuted,
             borderRadius: BorderRadius.circular(24.r),

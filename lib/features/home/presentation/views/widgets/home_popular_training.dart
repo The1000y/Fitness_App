@@ -9,8 +9,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 
+import '../../../../../config/routing/app_routes.dart';
 import '../../../../../core/theme/app_colors/app_colors.dart';
 import '../../../../../l10n/app_localizations.dart';
+import '../../../../exercise/presentation/exercise_details/args/exercise_details_args.dart';
 import 'home_section_state_view.dart';
 
 class HomePopularTraining extends StatelessWidget {
@@ -98,12 +100,25 @@ class _PopularTrainingCard extends StatelessWidget {
     final l10n = AppLocalizations.of(context)!;
     final image = training.muscleImage;
 
-    return ClipRRect(
+    return Material(
+      color: Colors.transparent,
       borderRadius: BorderRadius.circular(20.r),
-      child: SizedBox(
-        width: 200.w,
-        height: 176.h,
-        child: Stack(
+      clipBehavior: Clip.antiAlias,
+      child: InkWell(
+        onTap: () {
+          Navigator.pushNamed(
+            context,
+            AppRoutes.exerciseDetails,
+            arguments: ExerciseDetailsArgs(
+              primeMoverMuscleId: training.muscleId,
+              muscleName: training.muscleName,
+            ),
+          );
+        },
+        child: SizedBox(
+          width: 200.w,
+          height: 176.h,
+          child: Stack(
           fit: StackFit.expand,
           children: [
             // Background: this muscle's own image.
@@ -173,7 +188,7 @@ class _PopularTrainingCard extends StatelessWidget {
           ],
         ),
       ),
-    );
+      ),);
   }
 }
 

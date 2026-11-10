@@ -13,6 +13,7 @@ import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 import '../../../../../config/routing/app_routes.dart';
 import '../../../../../core/shared/category_filter_widget.dart';
 import '../../../../../l10n/app_localizations.dart';
+import '../../../../exercise/presentation/exercise_details/args/exercise_details_args.dart';
 import 'home_header.dart';
 import 'home_image_title_card.dart';
 import 'home_section_state_view.dart';
@@ -58,13 +59,14 @@ class HomeUpcomingWorkoutsSection extends StatelessWidget {
                         .firstOrNull;
 
                     return CategoryTabBar(
-                      height: 30.h,
+                      height: 38,
                       categories: groups.map((group) => group.name).toList(),
                       selectedCategory: selected?.name ?? '',
                       onCategorySelected: (name) {
                         final group = groups
                             .where((group) => group.name == name)
                             .firstOrNull;
+
                         if (group != null) {
                           cubit.onEvent(HomeMuscleGroupSelected(group.id));
                         }
@@ -97,7 +99,14 @@ class HomeUpcomingWorkoutsSection extends StatelessWidget {
                             labelHeight: 30.h,
                             labelPadding: EdgeInsets.symmetric(horizontal: 4.w),
                             onTap: () {
-                              // Navigation action
+                              Navigator.pushNamed(
+                                context,
+                                AppRoutes.exerciseDetails,
+                                arguments: ExerciseDetailsArgs(
+                                  primeMoverMuscleId: muscle.id,
+                                  muscleName: muscle.name,
+                                ),
+                              );
                             },
                           );
                         },

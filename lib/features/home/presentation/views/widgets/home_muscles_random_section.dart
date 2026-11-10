@@ -8,8 +8,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 
+import '../../../../../config/routing/app_routes.dart';
 import '../../../../../core/theme/app_colors/app_colors.dart';
 import '../../../../../l10n/app_localizations.dart';
+import '../../../../exercise/presentation/exercise_details/args/exercise_details_args.dart';
 import 'home_image_title_card.dart';
 import 'home_section_state_view.dart';
 
@@ -59,7 +61,14 @@ class HomeMusclesRandomSection extends StatelessWidget {
                         labelHeight: 30.h,
                         labelPadding: EdgeInsets.symmetric(horizontal: 8.w),
                         onTap: () {
-                          // Navigation action
+                          Navigator.pushNamed(
+                            context,
+                            AppRoutes.exerciseDetails,
+                            arguments: ExerciseDetailsArgs(
+                              primeMoverMuscleId: muscle.id,
+                              muscleName: muscle.name,
+                            ),
+                          );
                         },
                       );
                     },
