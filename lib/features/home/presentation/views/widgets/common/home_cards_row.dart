@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 
-/// Horizontal scrolling row with a 12 gap between items. [height] is unscaled.
 class HomeCardsRow extends StatelessWidget {
   const HomeCardsRow({
     super.key,

@@ -3,8 +3,6 @@ import 'package:fitness_app/core/theme/app_colors/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 
-/// Square image with a blurred title strip at the bottom.
-/// [size] and [labelPadding] are unscaled.
 class HomeImageCard extends StatelessWidget {
   const HomeImageCard({
     super.key,
@@ -70,7 +68,6 @@ class HomeImageCard extends StatelessWidget {
   }
 }
 
-/// Network image with a placeholder when the url is empty or fails to load.
 Widget homeNetworkImage(String? url, {Widget? onError}) {
   if (url == null || url.isEmpty) return _placeholder();
   return Image.network(

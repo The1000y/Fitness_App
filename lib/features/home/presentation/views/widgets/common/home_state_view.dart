@@ -5,8 +5,6 @@ import 'package:fitness_app/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 
-/// Shows data when loaded, an error + retry button on failure,
-/// otherwise [loading]. [height] is the error row height (unscaled).
 class HomeStateView<T> extends StatelessWidget {
   const HomeStateView({
     super.key,
