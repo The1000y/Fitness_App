@@ -82,7 +82,7 @@ abstract final class GenerateRoutes {
       case AppRoutes.main:
         return _pageRoute(
           MainLayoutView(
-            tabs: [HomeView(), ChatView(), WorkoutsView(), ProfileView()],
+            tabs: [HomeView(), SizedBox(), WorkoutsView(), ProfileView()],
           ),
           settings,
         );

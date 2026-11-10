@@ -1,3 +1,4 @@
+import 'package:fitness_app/config/routing/app_routes.dart';
 import 'package:fitness_app/core/constants/app_test_keys.dart';
 import 'package:fitness_app/core/shared/custom_button.dart';
 import 'package:fitness_app/core/theme/app_colors/app_colors.dart';
@@ -109,6 +110,10 @@ class _MainLayoutViewState extends State<MainLayoutView> {
           key: const Key(AppTestKeys.mainLayoutBottomNav),
           currentIndex: _currentTap,
           onTap: (index) {
+            if(index == 1){
+              Navigator.of(context).pushNamed(AppRoutes.chatHistory);
+              return;
+            }
             setState(() => _currentTap = index);
           },
         ),
