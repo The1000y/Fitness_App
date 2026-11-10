@@ -1,6 +1,7 @@
 import 'package:fitness_app/config/di/di.dart';
 import 'package:fitness_app/config/routing/app_routes.dart';
 import 'package:fitness_app/config/routing/generate_routes.dart';
+import 'package:fitness_app/core/database/database_asset_installer.dart';
 import 'package:fitness_app/core/shared/base_ui_event_listener.dart';
 import 'package:fitness_app/core/theme/app_colors/app_colors.dart';
 import 'package:fitness_app/core/theme/app_themes/app_theme.dart';
@@ -12,9 +13,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  configureDependencies();
+  await configureDependencies();
+  await getIt<DatabaseAssetInstaller>().ensureDatabasesInstalled();
   runApp(const FitnessApp());
 }
 
@@ -63,7 +65,7 @@ class FitnessApp extends StatelessWidget {
         supportedLocales: AppLocalizations.supportedLocales,
         debugShowCheckedModeBanner: false,
         title: 'Fitness App',
-        initialRoute: AppRoutes.chatHistory,
+        initialRoute: AppRoutes.onboarding,
         onGenerateRoute: GenerateRoutes.generateRoute,
       ),
     );

@@ -76,24 +76,24 @@ void main() {
       },
     );
 
-   test(
-  'getMealDetails returns Error when apiClient throws DioException',
-  () async {
-    final dioException = DioException(
-      requestOptions: RequestOptions(path: '/lookup.php'),
-      response: Response(
-        requestOptions: RequestOptions(path: '/lookup.php'),
-        statusCode: 500,
-      ),
-      type: DioExceptionType.badResponse,
+    test(
+      'getMealDetails returns Error when apiClient throws DioException',
+      () async {
+        final dioException = DioException(
+          requestOptions: RequestOptions(path: '/lookup.php'),
+          response: Response(
+            requestOptions: RequestOptions(path: '/lookup.php'),
+            statusCode: 500,
+          ),
+          type: DioExceptionType.badResponse,
+        );
+        fakeApiClient.nextError = dioException;
+
+        final result = await dataSource.getMealDetails(TestData.mealId);
+
+        expect(result, isA<Error<List<DetailsMealDto>>>());
+        expect(fakeApiClient.callCount, 1);
+      },
     );
-    fakeApiClient.nextError = dioException;
-
-    final result = await dataSource.getMealDetails(TestData.mealId);
-
-    expect(result, isA<Error<List<DetailsMealDto>>>());
-    expect(fakeApiClient.callCount, 1);
-  },
-);
   });
 }
