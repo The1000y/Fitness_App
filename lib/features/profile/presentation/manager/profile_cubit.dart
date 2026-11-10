@@ -12,7 +12,7 @@ import 'package:fitness_app/features/profile/presentation/manager/profile_event.
 import 'package:fitness_app/features/profile/presentation/manager/profile_state.dart';
 import 'package:injectable/injectable.dart';
 
-@injectable
+@lazySingleton
 class ProfileCubit extends BaseCubit<ProfileState, CommonUiEvent> {
   final ProfileGetUseCase _getProfileUseCase;
   final ProfileLogoutUseCase _logoutUseCase;
@@ -60,19 +60,13 @@ class ProfileCubit extends BaseCubit<ProfileState, CommonUiEvent> {
   }
 
   Future<void> _logout() async {
-    if (state.isLoggingOut) return;
-    emit(state.copyWith(isLoggingOut: true));
+  if (state.isLoggingOut) return;
+  emit(state.copyWith(isLoggingOut: true));
 
-    final result = await _logoutUseCase();
-    if (isClosed) return;
+  await _logoutUseCase();
+  if (isClosed) return;
 
-    switch (result) {
-      case Success<void>():
-        emit(state.copyWith(isLoggingOut: false));
-        emitEvent(const NavigateAndRemoveUntil(AppRoutes.login));
-      case Error<void>():
-        emit(state.copyWith(isLoggingOut: false));
-        emitEvent(ShowFailureMessage(result.failure));
-    }
-  }
+  emit(state.copyWith(isLoggingOut: false));
+  emitEvent(const NavigateAndRemoveUntil(AppRoutes.login));
+}
 }
