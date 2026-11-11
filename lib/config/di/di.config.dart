@@ -84,6 +84,13 @@ extension GetItInjectableX on _i174.GetIt {
       () => dioModule.mealDio(),
       instanceName: 'mealDio',
     );
+    gh.factory<_i773.MealsCubit>(
+      () => _i773.MealsCubit(
+        gh<_i1032.GetMealsCategoriesUseCase>(),
+        gh<_i385.GetMealsByCategoryUseCase>(),
+        gh<_i514.GetMealDetailsUseCase>(),
+      ),
+    );
     gh.lazySingleton<_i264.AppInterceptors>(
       () => _i264.AppInterceptors(
         gh<_i558.FlutterSecureStorage>(),
@@ -126,13 +133,6 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i514.GetMealDetailsUseCase>(
       () => _i514.GetMealDetailsUseCase(gh<_i749.MealsRepo>()),
-    );
-    gh.factory<_i773.MealsCubit>(
-      () => _i773.MealsCubit(
-        gh<_i1032.GetMealsCategoriesUseCase>(),
-        gh<_i385.GetMealsByCategoryUseCase>(),
-        gh<_i514.GetMealDetailsUseCase>(),
-      ),
     );
     gh.factory<_i548.AuthRemoteDataSource>(
       () => _i981.AuthDataSourceSwitcher(
