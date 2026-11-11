@@ -15,7 +15,13 @@ import 'package:flutter/services.dart' as _i281;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i558;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
+import 'package:shared_preferences/shared_preferences.dart' as _i460;
 
+import '../../core/database/database_asset_installer.dart' as _i851;
+import '../../core/database/database_storage_service.dart' as _i145;
+import '../../core/database/database_storage_service_impl.dart' as _i8;
+import '../../core/database/exercises_database.dart' as _i427;
+import '../../core/database/meals_database.dart' as _i994;
 import '../../features/app/presentation/cubit/auth/app_auth_cubit.dart'
     as _i760;
 import '../../features/app/presentation/cubit/locale/app_locale_cubit.dart'
@@ -41,6 +47,13 @@ import '../../features/auth/presentation/login/manager/login_cubit.dart'
     as _i889;
 import '../../features/auth/presentation/register/manager/register_cubit.dart'
     as _i784;
+import '../../features/chat/data/datasource/local/catalog_local_data_source.dart'
+    as _i872;
+import '../../features/chat/data/datasource/local/catalog_local_data_source_impl.dart'
+    as _i157;
+import '../../features/chat/data/repository/catalog_repository_impl.dart'
+    as _i204;
+import '../../features/chat/domain/repository/catalog_repository.dart' as _i139;
 import '../../features/exercise/api/client/exercise_api_client.dart' as _i248;
 import '../../features/exercise/api/remote/exercise_remote_data_source_impl.dart'
     as _i670;
@@ -97,29 +110,48 @@ import '../../features/profile/presentation/manager/profile_cubit.dart'
 import '../dio/app_interceptor.dart' as _i264;
 import '../dio/dio_module.dart' as _i977;
 import '../utils/secure_storage_module.dart' as _i327;
-import 'app_module.dart' as _i460;
+import 'app_module.dart' as _i461;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
-  _i174.GetIt init({
+  Future<_i174.GetIt> init({
     String? environment,
     _i526.EnvironmentFilter? environmentFilter,
-  }) {
+  }) async {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final appModule = _$AppModule();
     final secureStorageModule = _$SecureStorageModule();
     final dioModule = _$DioModule();
+    await gh.factoryAsync<_i460.SharedPreferences>(
+      () => appModule.prefs,
+      preResolve: true,
+    );
     gh.lazySingleton<_i281.AssetBundle>(() => appModule.assetBundle);
     gh.lazySingleton<_i558.FlutterSecureStorage>(
       () => secureStorageModule.secureStorage,
     );
     gh.lazySingleton<_i760.AppAuthCubit>(() => _i760.AppAuthCubit());
+    gh.lazySingleton<_i145.DatabaseStorageService>(
+      () => _i8.DatabaseStorageServiceImpl(),
+    );
     gh.lazySingleton<_i450.AppLocaleCubit>(
       () => _i450.AppLocaleCubit(gh<_i558.FlutterSecureStorage>()),
+    );
+    gh.lazySingleton<_i427.ExercisesDatabase>(
+      () => _i427.ExercisesDatabase(gh<_i145.DatabaseStorageService>()),
+    );
+    gh.lazySingleton<_i994.MealsDatabase>(
+      () => _i994.MealsDatabase(gh<_i145.DatabaseStorageService>()),
     );
     gh.lazySingleton<_i361.Dio>(
       () => dioModule.mealDio(),
       instanceName: 'mealDio',
+    );
+    gh.lazySingleton<_i872.CatalogLocalDataSource>(
+      () => _i157.CatalogLocalDataSourceImpl(
+        gh<_i427.ExercisesDatabase>(),
+        gh<_i994.MealsDatabase>(),
+      ),
     );
     gh.lazySingleton<_i264.AppInterceptors>(
       () => _i264.AppInterceptors(
@@ -127,11 +159,14 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i760.AppAuthCubit>(),
       ),
     );
-    gh.factory<_i773.MealsCubit>(
-      () => _i773.MealsCubit(
-        gh<_i1032.GetMealsCategoriesUseCase>(),
-        gh<_i385.GetMealsByCategoryUseCase>(),
-        gh<_i514.GetMealDetailsUseCase>(),
+    gh.factory<_i139.CatalogRepository>(
+      () => _i204.CatalogRepositoryImpl(gh<_i872.CatalogLocalDataSource>()),
+    );
+    gh.factory<_i851.DatabaseAssetInstaller>(
+      () => _i851.DatabaseAssetInstaller(
+        gh<_i460.SharedPreferences>(),
+        gh<_i281.AssetBundle>(),
+        gh<_i145.DatabaseStorageService>(),
       ),
     );
     gh.singleton<_i293.MealsApiClient>(
@@ -216,6 +251,13 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i397.VerifyOtpUserCase>(
       () => _i397.VerifyOtpUserCase(gh<_i171.AuthRepo>()),
     );
+    gh.factory<_i773.MealsCubit>(
+      () => _i773.MealsCubit.create(
+        gh<_i1032.GetMealsCategoriesUseCase>(),
+        gh<_i385.GetMealsByCategoryUseCase>(),
+        gh<_i514.GetMealDetailsUseCase>(),
+      ),
+    );
     gh.factory<_i615.GetDifficultyLevelsUseCase>(
       () => _i615.GetDifficultyLevelsUseCase(gh<_i628.ExerciseRepo>()),
     );
@@ -269,7 +311,7 @@ extension GetItInjectableX on _i174.GetIt {
   }
 }
 
-class _$AppModule extends _i460.AppModule {}
+class _$AppModule extends _i461.AppModule {}
 
 class _$SecureStorageModule extends _i327.SecureStorageModule {}
 
