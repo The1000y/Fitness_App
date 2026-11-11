@@ -4,7 +4,8 @@ sealed class ExerciseDetailsEvent {
 
 final class LoadLevels extends ExerciseDetailsEvent {
   final String primeMoverMuscleId;
-  const LoadLevels({required this.primeMoverMuscleId});
+  final String? difficultyLevelId;
+  const LoadLevels({required this.primeMoverMuscleId, this.difficultyLevelId});
 }
 
 final class SelectLevel extends ExerciseDetailsEvent {

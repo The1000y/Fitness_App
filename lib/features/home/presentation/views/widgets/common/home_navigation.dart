@@ -6,6 +6,7 @@ void openExerciseDetails(
     BuildContext context, {
       required String muscleId,
       required String muscleName,
+      String? difficultyLevelId,
     }) {
   Navigator.pushNamed(
     context,
@@ -13,6 +14,7 @@ void openExerciseDetails(
     arguments: ExerciseDetailsArgs(
       primeMoverMuscleId: muscleId,
       muscleName: muscleName,
+      difficultyLevelId: difficultyLevelId,
     ),
   );
 }

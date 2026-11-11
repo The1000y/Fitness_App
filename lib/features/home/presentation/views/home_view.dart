@@ -37,7 +37,7 @@ class HomeView extends StatelessWidget {
         child: Scaffold(
           backgroundColor: Colors.transparent,
           appBar: PreferredSize(
-            preferredSize: Size.fromHeight(50.h),
+            preferredSize: Size.fromHeight(65.h),
             child: SafeArea(
               bottom: false,
               child: Padding(
@@ -131,10 +131,10 @@ class _Header extends StatelessWidget {
             height: 36.r,
             child: photoUrl != null && photoUrl!.isNotEmpty
                 ? Image.network(
-              photoUrl!,
-              fit: BoxFit.cover,
-              errorBuilder: (_, __, ___) => placeholder,
-            )
+                    photoUrl!,
+                    fit: BoxFit.cover,
+                    errorBuilder: (_, __, ___) => placeholder,
+                  )
                 : placeholder,
           ),
         ),

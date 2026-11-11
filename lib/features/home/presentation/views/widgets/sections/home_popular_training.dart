@@ -79,6 +79,7 @@ class HomePopularTraining extends StatelessWidget {
           context,
           muscleId: training.muscleId,
           muscleName: training.muscleName,
+          difficultyLevelId: training.difficultyLevelId,
         ),
         child: SizedBox(
           width: 200.w,

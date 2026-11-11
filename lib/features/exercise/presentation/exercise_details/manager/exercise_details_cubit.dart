@@ -70,14 +70,21 @@ class ExerciseDetailsCubit
     switch (result) {
       case Success():
         final levels = result.data;
+        int initialIndex = 0;
+        if (event.difficultyLevelId != null) {
+          final foundIndex = levels.indexWhere((l) => l.id == event.difficultyLevelId);
+          if (foundIndex != -1) {
+            initialIndex = foundIndex;
+          }
+        }
         emit(
           state.copyWith(
             levelsState: BaseState(data: levels),
-            selectedLevelIndex: 0,
+            selectedLevelIndex: initialIndex,
             selectedIndex: 0,
           ),
         );
-        if (levels.isNotEmpty) await _loadExercises(levels.first.id);
+        if (levels.isNotEmpty) await _loadExercises(levels[initialIndex].id);
       case Error():
         emit(
           state.copyWith(levelsState: BaseState(errorMessage: result.failure)),

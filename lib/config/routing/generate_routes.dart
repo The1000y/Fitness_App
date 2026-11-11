@@ -125,7 +125,10 @@ abstract final class GenerateRoutes {
           BlocProvider(
             create: (_) => getIt<ExerciseDetailsCubit>()
               ..onEvent(
-                LoadLevels(primeMoverMuscleId: args.primeMoverMuscleId),
+                LoadLevels(
+                  primeMoverMuscleId: args.primeMoverMuscleId,
+                  difficultyLevelId: args.difficultyLevelId,
+                ),
               ),
             child: ExerciseDetailsView(muscleName: args.muscleName),
           ),
