@@ -411,6 +411,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get closeAppConfirm => 'هل أنت متأكد أنك تريد إغلاق التطبيق؟';
 
   @override
+  String get logoutConfirm => 'هل أنت متأكد أن تريد تسجيل الخروج؟';
+
+  @override
+  String get webViewLoadFailed => 'تعذّر تحميل الصفحة';
+
+  @override
   String get accepted => 'تم قبول الطلب بنجاح';
 
   @override
@@ -485,6 +491,10 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get confirmPasswordMismatch => 'كلمتا المرور غير متطابقتين';
+
+  @override
+  String get newPasswordSameAsOld =>
+      'يجب أن تختلف كلمة المرور الجديدة عن القديمة';
 
   @override
   String get usernameRequired => 'اسم المستخدم مطلوب';

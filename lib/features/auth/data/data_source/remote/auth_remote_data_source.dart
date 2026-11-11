@@ -7,11 +7,8 @@ import 'package:fitness_app/features/auth/data/model/requests/verify_otp_request
 import 'package:fitness_app/features/auth/data/model/responses/register_request/register_response.dart';
 import 'package:fitness_app/features/auth/data/model/responses/login_response/login_response.dart';
 
-abstract interface class RemoteDataSource {
-  Future<LoginResponse> login(LoginRequest login);
-}
-
 abstract interface class AuthRemoteDataSource {
+  Future<LoginResponse> login(LoginRequest login);
   Future<BaseResponse<RegisterResponseDto>> register(RegisterRequestDto req);
   Future<BaseResponse<void>> forgetPassword(
     ForgetPasswordRequest forgetPasswordRequest,

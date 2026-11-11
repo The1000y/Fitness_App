@@ -21,7 +21,13 @@ import 'package:fitness_app/features/meals/presentation/manager/meals_cubit.dart
 import 'package:fitness_app/features/meals/presentation/manager/meals_event.dart';
 import 'package:fitness_app/features/meals/presentation/view/details_food_view.dart';
 import 'package:fitness_app/features/meals/presentation/view/meals_view.dart';
-import 'package:fitness_app/features/profile/presentation/views/profile_view.dart';
+import 'package:fitness_app/features/profile/presentation/change_password/manager/change_password_cubit.dart';
+import 'package:fitness_app/features/profile/presentation/change_password/view/change_password_view.dart';
+import 'package:fitness_app/features/profile/presentation/manager/profile_cubit.dart';
+import 'package:fitness_app/features/profile/presentation/manager/profile_event.dart';
+import 'package:fitness_app/features/profile/presentation/view/profile_view.dart';
+import 'package:fitness_app/features/profile/presentation/web_view/args/profile_web_view_args.dart';
+import 'package:fitness_app/features/profile/presentation/web_view/view/profile_web_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -62,7 +68,13 @@ abstract final class GenerateRoutes {
         );
 
       case AppRoutes.changePassword:
-        return _pageRoute(const _StubScreen('Change Password'), settings);
+        return _pageRoute(
+          BlocProvider(
+            create: (_) => getIt<ChangePasswordCubit>(),
+            child: const ChangePasswordView(),
+          ),
+          settings,
+        );
 
       case AppRoutes.setupGender:
         return _pageRoute(const _StubScreen('Setup Gender'), settings);
@@ -83,14 +95,23 @@ abstract final class GenerateRoutes {
         return _pageRoute(const _StubScreen('Setup Activity'), settings);
 
       case AppRoutes.main:
+        final profileCubit = getIt<ProfileCubit>()
+          ..onEvent(const LoadProfile());
         return _pageRoute(
-          MainLayoutView(
-            tabs: [
-              HomeView(),
-              ChatView(),
-              WorkoutCategoriesView(),
-              ProfileView(),
-            ],
+          BlocProvider.value(
+            value: profileCubit,
+            child: MainLayoutView(
+              tabs: [
+                HomeView(),
+                ChatView(),
+                WorkoutCategoriesView(),
+                BlocProvider(
+                  create: (_) =>
+                      getIt<ProfileCubit>()..onEvent(const LoadProfile()),
+                  child: const ProfileView(),
+                ),
+              ],
+            ),
           ),
           settings,
         );
@@ -157,6 +178,10 @@ abstract final class GenerateRoutes {
 
       case AppRoutes.editActivity:
         return _pageRoute(const _StubScreen('Edit Activity'), settings);
+
+      case AppRoutes.webView:
+        final args = settings.arguments as ProfileWebViewArgs;
+        return _pageRoute(ProfileWebView(args: args), settings);
 
       default:
         return _pageRoute(const _StubScreen('404'), settings);
