@@ -1,10 +1,12 @@
 import 'package:fitness_app/config/base/base_ui_event.dart';
+import 'package:fitness_app/config/routing/app_routes.dart';
 import 'package:fitness_app/core/shared/base_ui_event_listener.dart';
 import 'package:fitness_app/core/shared/category_filter_widget.dart';
 import 'package:fitness_app/core/shared/custom_app_bar.dart';
 import 'package:fitness_app/core/shared/custom_background_image.dart';
 import 'package:fitness_app/core/shared/image_title_card.dart';
 import 'package:fitness_app/features/exercise/domain/entities/muscle_entity.dart';
+import 'package:fitness_app/features/exercise/presentation/exercise_details/args/exercise_details_args.dart';
 import 'package:fitness_app/features/exercise/presentation/workout_categories/manager/workout_categories_cubit.dart';
 import 'package:fitness_app/features/exercise/presentation/workout_categories/manager/workout_categories_state.dart';
 import 'package:fitness_app/l10n/app_localizations.dart';
@@ -130,7 +132,16 @@ class WorkoutMusclesGrid extends StatelessWidget {
             return ImageTitleCard(
               imagePath: muscle.image,
               title: muscle.name,
-              onTap: () {},
+              
+                onTap: () => Navigator.pushNamed(
+  context,
+  AppRoutes.exerciseDetails,
+  arguments: ExerciseDetailsArgs(
+    primeMoverMuscleId: muscle.id,   // ID العضلة اللي دوست عليها
+    muscleName: muscle.name,         // اسمها للعنوان
+  ),
+),
+              
             );
           },
         );
