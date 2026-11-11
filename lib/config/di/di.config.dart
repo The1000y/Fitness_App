@@ -41,9 +41,11 @@ import '../../features/auth/presentation/forget_password/manager/forget_password
     as _i332;
 import '../../features/auth/presentation/login/manager/login_cubit.dart'
     as _i889;
+import '../../features/auth/presentation/register/manager/register_cubit.dart'
+    as _i784;
 import '../../features/exercise/api/client/exercise_api_client.dart' as _i248;
 import '../../features/exercise/api/remote/exercise_remote_data_source_impl.dart'
-    as _i669;
+    as _i670;
 import '../../features/exercise/data/data_source/remote/exercise_remote_data_source.dart'
     as _i27;
 import '../../features/exercise/data/repo_impl/exercise_repo_impl.dart'
@@ -61,11 +63,9 @@ import '../../features/exercise/presentation/exercise_details/manager/exercise_d
     as _i944;
 import '../../features/exercise/presentation/workout_categories/manager/workout_categories_cubit.dart'
     as _i355;
-import '../../features/auth/presentation/register/manager/register_cubit.dart'
-    as _i784;
 import '../../features/meals/api/client/meals_api_client.dart' as _i293;
-import '../../features/meals/api/meals_remote_data_source_impl.dart/meals_remote_data_source_impl.dart'
-    as _i396;
+import '../../features/meals/api/remote/meals_remote_data_source_impl.dart'
+    as _i669;
 import '../../features/meals/data/data_source/remote/meals_remote_data_source.dart'
     as _i452;
 import '../../features/meals/data/repo_impl/meals_repo_impl.dart' as _i459;
@@ -104,17 +104,17 @@ extension GetItInjectableX on _i174.GetIt {
       () => dioModule.mealDio(),
       instanceName: 'mealDio',
     );
+    gh.lazySingleton<_i264.AppInterceptors>(
+      () => _i264.AppInterceptors(
+        gh<_i558.FlutterSecureStorage>(),
+        gh<_i760.AppAuthCubit>(),
+      ),
+    );
     gh.factory<_i773.MealsCubit>(
       () => _i773.MealsCubit(
         gh<_i1032.GetMealsCategoriesUseCase>(),
         gh<_i385.GetMealsByCategoryUseCase>(),
         gh<_i514.GetMealDetailsUseCase>(),
-      ),
-    );
-    gh.lazySingleton<_i264.AppInterceptors>(
-      () => _i264.AppInterceptors(
-        gh<_i558.FlutterSecureStorage>(),
-        gh<_i760.AppAuthCubit>(),
       ),
     );
     gh.singleton<_i293.MealsApiClient>(
@@ -127,21 +127,21 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i213.AuthApiClient>(
       () => _i213.AuthApiClient(gh<_i361.Dio>(instanceName: 'fitnessDio')),
     );
+    gh.singleton<_i248.ExerciseApiClient>(
+      () => _i248.ExerciseApiClient(gh<_i361.Dio>(instanceName: 'fitnessDio')),
+    );
     gh.factory<_i452.MealsRemoteDataSource>(
-      () => _i396.MealsRemoteDataSourceImpl(
+      () => _i669.MealsRemoteDataSourceImpl(
         apiClient: gh<_i293.MealsApiClient>(),
       ),
+    );
+    gh.factory<_i27.ExerciseRemoteDataSource>(
+      () => _i670.ExerciseRemoteDataSourceImpl(gh<_i248.ExerciseApiClient>()),
     );
     gh.factory<_i749.MealsRepo>(
       () => _i459.MealsRepoImpl(
         mealsRemoteDataSource: gh<_i452.MealsRemoteDataSource>(),
       ),
-    );
-    gh.singleton<_i248.ExerciseApiClient>(
-      () => _i248.ExerciseApiClient(gh<_i361.Dio>()),
-    );
-    gh.factory<_i27.ExerciseRemoteDataSource>(
-      () => _i669.ExerciseRemoteDataSourceImpl(gh<_i248.ExerciseApiClient>()),
     );
     gh.factory<_i548.RemoteDataSource>(
       () => _i192.RemoteDataSourceImpl(gh<_i213.AuthApiClient>()),
@@ -163,21 +163,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i514.GetMealDetailsUseCase>(
       () => _i514.GetMealDetailsUseCase(gh<_i749.MealsRepo>()),
     );
-    gh.factory<_i548.AuthRemoteDataSource>(
-      () => _i981.AuthDataSourceSwitcher(
-        authRemoteDataSourceImpl: gh<_i192.AuthRemoteDataSourceImpl>(),
-        authFackDataSourceImpl: gh<_i508.AuthFakeRemoteDataSourceImpl>(),
-      ),
-    );
-    gh.factory<_i170.AuthRepo>(
-      () => _i279.AuthRepoImpl(
-        gh<_i548.RemoteDataSource>(),
-        gh<_i548.AuthRemoteDataSource>(),
-      ),
-    );
-    gh.factory<_i1038.LoginUseCase>(
-      () => _i1038.LoginUseCase(gh<_i170.AuthRepo>()),
-    );
     gh.factory<_i615.GetDifficultyLevelsUseCase>(
       () => _i615.GetDifficultyLevelsUseCase(gh<_i628.ExerciseRepo>()),
     );
@@ -196,11 +181,26 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i559.GetMusclesByGroupUseCase>(),
       ),
     );
+    gh.factory<_i548.AuthRemoteDataSource>(
+      () => _i981.AuthDataSourceSwitcher(
+        authRemoteDataSourceImpl: gh<_i192.AuthRemoteDataSourceImpl>(),
+        authFackDataSourceImpl: gh<_i508.AuthFakeRemoteDataSourceImpl>(),
+      ),
+    );
     gh.factory<_i944.ExerciseDetailsCubit>(
       () => _i944.ExerciseDetailsCubit(
         gh<_i615.GetDifficultyLevelsUseCase>(),
         gh<_i685.GetExercisesUseCase>(),
       ),
+    );
+    gh.factory<_i170.AuthRepo>(
+      () => _i279.AuthRepoImpl(
+        gh<_i548.RemoteDataSource>(),
+        gh<_i548.AuthRemoteDataSource>(),
+      ),
+    );
+    gh.factory<_i1038.LoginUseCase>(
+      () => _i1038.LoginUseCase(gh<_i170.AuthRepo>()),
     );
     gh.factory<_i839.ForgetPasswordUserCase>(
       () => _i839.ForgetPasswordUserCase(authRepo: gh<_i170.AuthRepo>()),

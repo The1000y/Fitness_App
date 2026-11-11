@@ -3,10 +3,10 @@ import 'package:fitness_app/core/constants/api_strings.dart';
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
 
-import '../../data/model/responses/difficulty_levels_dto.dart';
-import '../../data/model/responses/exercises_list_dto.dart';
-import '../../data/model/responses/muscle_groups_response.dart';
-import '../../data/model/responses/muscles_by_group_response.dart';
+import 'package:fitness_app/features/exercise/data/model/responses/difficulty_levels_dto.dart';
+import 'package:fitness_app/features/exercise/data/model/responses/exercises_list_dto.dart';
+import 'package:fitness_app/features/exercise/data/model/responses/muscle_groups_response.dart';
+import 'package:fitness_app/features/exercise/data/model/responses/muscles_by_group_response.dart';
 
 part 'exercise_api_client.g.dart';
 
@@ -14,7 +14,8 @@ part 'exercise_api_client.g.dart';
 @RestApi()
 abstract class ExerciseApiClient {
   @factoryMethod
-  factory ExerciseApiClient(Dio dio) = _ExerciseApiClient;
+  factory ExerciseApiClient(@Named(ApiStrings.namedFitnessDio) Dio dio) =
+      _ExerciseApiClient;
 
   @GET(ApiStrings.exercisesByMuscleDifficulty)
   Future<ExercisesListDto> getExercisesByMuscleDifficulty(

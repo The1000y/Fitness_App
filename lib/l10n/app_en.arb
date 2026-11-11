@@ -249,9 +249,9 @@
   "videoNotFound": "This video isn't available. It may have been removed or set to private.",
   "notFound": "Unable to find the requested resource.",
   "retry": "Retry",
-  "back": "Back",
   "unableToPlayVideo": "Unable to play video",
-  "cancel": "cancel the video",
+  "closeVideo": "Close video",
+  "cancel": "Cancel",
   "exerciseNoExercisesFound": "No exercises found",
   "exerciseLoadFailed": "Failed to load exercises",
   "goBack": "Go Back",
@@ -296,7 +296,6 @@
   "checkConnectionMessage": "Check your connection and try again.",
   "couldNotLoadMeals": "We could not load the meals. Please try again.",
   "tryAgain": "Try again",
-  "noCategoriesAvailable": "No categories available",
   "couldNotLoadCategories": "Could not load categories",
   "dataNotAvailable": "Data is currently unavailable."
 

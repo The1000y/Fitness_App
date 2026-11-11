@@ -1,8 +1,8 @@
 import 'package:injectable/injectable.dart';
 
-import '../../../../config/base/base_response.dart';
-import '../entities/difficulty_level_entity.dart';
-import '../repo/exercise_repo.dart';
+import 'package:fitness_app/config/base/base_response.dart';
+import 'package:fitness_app/features/exercise/domain/entities/difficulty_level_entity.dart';
+import 'package:fitness_app/features/exercise/domain/repo/exercise_repo.dart';
 
 @injectable
 class GetDifficultyLevelsUseCase {

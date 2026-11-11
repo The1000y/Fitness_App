@@ -11,6 +11,17 @@ import 'package:fitness_app/features/auth/data/model/responses/login_response/lo
 import 'package:fitness_app/features/auth/domain/entities/login_entity/login_entity.dart';
 import 'package:fitness_app/features/auth/domain/entities/login_entity/user_entity.dart';
 import 'package:fitness_app/features/auth/domain/repo/auth_repo.dart';
+import 'package:fitness_app/features/exercise/api/client/exercise_api_client.dart';
+import 'package:fitness_app/features/exercise/data/data_source/remote/exercise_remote_data_source.dart';
+import 'package:fitness_app/features/exercise/data/model/responses/difficulty_levels_dto.dart';
+import 'package:fitness_app/features/exercise/data/model/responses/exercises_list_dto.dart';
+import 'package:fitness_app/features/exercise/data/model/responses/muscle_groups_response.dart';
+import 'package:fitness_app/features/exercise/data/model/responses/muscles_by_group_response.dart';
+import 'package:fitness_app/features/exercise/domain/entities/difficulty_level_entity.dart';
+import 'package:fitness_app/features/exercise/domain/entities/exercises_list_entity.dart';
+import 'package:fitness_app/features/exercise/domain/entities/muscle_groups_entity.dart';
+import 'package:fitness_app/features/exercise/domain/entities/muscles_by_group_entity.dart';
+import 'package:fitness_app/features/exercise/domain/repo/exercise_repo.dart';
 import 'package:fitness_app/features/meals/api/client/meals_api_client.dart';
 import 'package:fitness_app/features/meals/data/data_source/remote/meals_remote_data_source.dart';
 import 'package:fitness_app/features/meals/data/model/details_meal_dto.dart';

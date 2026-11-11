@@ -1,4 +1,4 @@
-import 'package:fitness_app/features/auth/domain/entities/register_entity/user_enity.dart';
+import 'package:fitness_app/features/auth/domain/entities/register_entity/registered_user_entity.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'user_dto.g.dart';
@@ -45,8 +45,8 @@ class UserDto {
     this.createdAt,
   });
 
-  UserEntity toEntity(UserDto? user) {
-    return UserEntity(
+  RegisteredUserEntity toEntity(UserDto? user) {
+    return RegisteredUserEntity(
       firstName: firstName ?? '',
       lastName: lastName ?? '',
       email: email ?? '',

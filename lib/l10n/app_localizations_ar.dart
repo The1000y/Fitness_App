@@ -605,7 +605,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get unableToPlayVideo => 'تعذر تشغيل الفيديو';
 
   @override
-  String get cancel => 'إغلاق الفيديو';
+  String get closeVideo => 'إغلاق الفيديو';
+
+  @override
+  String get cancel => 'إلغاء';
 
   @override
   String get exerciseNoExercisesFound => 'لا توجد تمارين';
@@ -702,9 +705,6 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get tryAgain => 'حاول مرة أخرى';
-
-  @override
-  String get noCategoriesAvailable => 'لا توجد فئات متاحة';
 
   @override
   String get couldNotLoadCategories => 'تعذر تحميل الفئات';

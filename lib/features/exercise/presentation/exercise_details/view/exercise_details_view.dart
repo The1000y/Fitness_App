@@ -2,8 +2,8 @@ import 'package:fitness_app/config/base/base_ui_event.dart';
 import 'package:fitness_app/core/shared/base_ui_event_listener.dart';
 import 'package:flutter/material.dart';
 
-import '../manager/exercise_details_cubit.dart';
-import '../manager/exercise_details_state.dart';
+import 'package:fitness_app/features/exercise/presentation/exercise_details/manager/exercise_details_cubit.dart';
+import 'package:fitness_app/features/exercise/presentation/exercise_details/manager/exercise_details_state.dart';
 import 'exercise_details_body.dart';
 
 class ExerciseDetailsView extends StatelessWidget {

@@ -7,6 +7,9 @@ import 'package:fitness_app/features/exercise/data/model/responses/exercises_lis
 import 'package:fitness_app/features/exercise/domain/entities/difficulty_level_entity.dart';
 import 'package:fitness_app/features/exercise/domain/entities/exercise_entity.dart';
 import 'package:fitness_app/features/exercise/domain/entities/exercises_list_entity.dart';
+import 'package:fitness_app/features/meals/data/model/details_meal_dto.dart';
+import 'package:fitness_app/features/meals/data/model/details_meal_response.dart';
+import 'package:fitness_app/features/meals/domain/entities/details_meal_entity.dart';
 
 class TestData {
   static const String validEmail = 'test@example.com';
@@ -117,4 +120,45 @@ class TestData {
     bodyRegion: 'Core',
     mechanics: 'Isolation',
   );
+
+  static const String mealId = '52772';
+  static const String mealName = 'Teriyaki Chicken Casserole';
+  static const String mealCategory = 'Chicken';
+  static const String mealArea = 'Japanese';
+  static const String mealInstructions =
+      'Preheat oven to 350 degrees F. Combine soy sauce and water.';
+  static const String mealThumb =
+      'https://www.themealdb.com/images/media/meals/wvpsxx1468256321.jpg';
+  static const String mealYoutube =
+      'https://www.youtube.com/watch?v=4aZr5hZXP_s';
+  static const String mealTags = 'Meat,Casserole';
+  static const String mealSource = 'https://www.themealdb.com/meal/52772';
+
+  static const Map<String, dynamic> detailsMealDtoJson = {
+    'idMeal': mealId,
+    'strMeal': mealName,
+    'strCategory': mealCategory,
+    'strArea': mealArea,
+    'strInstructions': mealInstructions,
+    'strMealThumb': mealThumb,
+    'strTags': mealTags,
+    'strYoutube': mealYoutube,
+    'strSource': mealSource,
+    'strIngredient1': 'Salmon',
+    'strMeasure1': '2 fillets',
+    'strIngredient2': 'Fennel',
+    'strMeasure2': '1 bulb',
+    'strIngredient3': 'Olive Oil',
+    'strMeasure3': '2 tbsp',
+  };
+
+  static const Map<String, dynamic> detailsMealResponseJson = {
+    'meals': [detailsMealDtoJson],
+  };
+
+  static DetailsMealDto get detailsMealDto =>
+      DetailsMealDto.fromJson(detailsMealDtoJson);
+  static DetailsMealResponse get detailsMealResponse =>
+      DetailsMealResponse.fromJson(detailsMealResponseJson);
+  static DetailsMealEntity get detailsMealEntity => detailsMealDto.toEntity();
 }

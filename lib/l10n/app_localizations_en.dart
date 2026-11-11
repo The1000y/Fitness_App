@@ -609,7 +609,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get unableToPlayVideo => 'Unable to play video';
 
   @override
-  String get cancel => 'cancel the video';
+  String get closeVideo => 'Close video';
+
+  @override
+  String get cancel => 'Cancel';
 
   @override
   String get exerciseNoExercisesFound => 'No exercises found';
@@ -707,9 +710,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tryAgain => 'Try again';
-
-  @override
-  String get noCategoriesAvailable => 'No categories available';
 
   @override
   String get couldNotLoadCategories => 'Could not load categories';

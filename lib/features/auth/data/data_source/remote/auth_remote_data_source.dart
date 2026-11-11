@@ -4,7 +4,7 @@ import 'package:fitness_app/features/auth/data/model/requests/login_request/logi
 import 'package:fitness_app/features/auth/data/model/requests/register_request/register_request.dart';
 import 'package:fitness_app/features/auth/data/model/requests/reset_password_request/reset_password_request.dart';
 import 'package:fitness_app/features/auth/data/model/requests/verify_otp_request/verify_otp_request.dart';
-import 'package:fitness_app/features/auth/data/model/responces/register_request/register_response.dart';
+import 'package:fitness_app/features/auth/data/model/responses/register_request/register_response.dart';
 import 'package:fitness_app/features/auth/data/model/responses/login_response/login_response.dart';
 
 abstract interface class RemoteDataSource {

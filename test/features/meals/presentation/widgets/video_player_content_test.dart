@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:fitness_app/core/shared/helper/custom_button_click.dart';
 import 'package:fitness_app/core/shared/helper/image_thumbnail_overlay.dart';
 import 'package:fitness_app/core/shared/helper/video_error_view.dart';
-import 'package:fitness_app/features/meals/presentation/widgets/video_player_content.dart';
+import 'package:fitness_app/core/shared/video_player_content.dart';
 import 'package:fitness_app/l10n/app_localizations.dart';
 import '../../../../helpers/pump_app.dart';
 

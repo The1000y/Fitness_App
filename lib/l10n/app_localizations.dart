@@ -1238,10 +1238,16 @@ abstract class AppLocalizations {
   /// **'Unable to play video'**
   String get unableToPlayVideo;
 
+  /// No description provided for @closeVideo.
+  ///
+  /// In en, this message translates to:
+  /// **'Close video'**
+  String get closeVideo;
+
   /// No description provided for @cancel.
   ///
   /// In en, this message translates to:
-  /// **'cancel the video'**
+  /// **'Cancel'**
   String get cancel;
 
   /// No description provided for @exerciseNoExercisesFound.
@@ -1423,12 +1429,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Try again'**
   String get tryAgain;
-
-  /// No description provided for @noCategoriesAvailable.
-  ///
-  /// In en, this message translates to:
-  /// **'No categories available'**
-  String get noCategoriesAvailable;
 
   /// No description provided for @couldNotLoadCategories.
   ///

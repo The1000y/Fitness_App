@@ -57,7 +57,7 @@ class TestView extends StatelessWidget {
                         iconWidget: SvgPicture.asset(
                           fit: BoxFit.scaleDown,
                           AppIcons.arrowBack,
-                        ), hightBackground:24,
+                        ),
                       ),
                     ),
                   ),
