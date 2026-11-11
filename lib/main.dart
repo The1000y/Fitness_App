@@ -1,6 +1,7 @@
 import 'package:fitness_app/config/di/di.dart';
 import 'package:fitness_app/config/routing/app_routes.dart';
 import 'package:fitness_app/config/routing/generate_routes.dart';
+import 'package:fitness_app/core/database/database_asset_installer.dart';
 import 'package:fitness_app/core/shared/base_ui_event_listener.dart';
 import 'package:fitness_app/core/theme/app_colors/app_colors.dart';
 import 'package:fitness_app/core/theme/app_themes/app_theme.dart';
@@ -14,7 +15,8 @@ import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 
 Future<void> main() async{
   WidgetsFlutterBinding.ensureInitialized();
- await configureDependencies();
+  await configureDependencies();
+  await getIt<DatabaseAssetInstaller>().ensureDatabasesInstalled();
   runApp(const FitnessApp());
 }
 

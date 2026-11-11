@@ -17,6 +17,11 @@ import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:shared_preferences/shared_preferences.dart' as _i460;
 
+import '../../core/database/database_asset_installer.dart' as _i851;
+import '../../core/database/database_storage_service.dart' as _i145;
+import '../../core/database/database_storage_service_impl.dart' as _i8;
+import '../../core/database/exercises_database.dart' as _i427;
+import '../../core/database/meals_database.dart' as _i994;
 import '../../features/app/presentation/cubit/auth/app_auth_cubit.dart'
     as _i760;
 import '../../features/auth/api/auth_data_source_impl.dart/auth_data_source_switcher.dart'
@@ -44,6 +49,13 @@ import '../../features/auth/presentation/login/manager/login_cubit.dart'
     as _i889;
 import '../../features/auth/presentation/register/manager/register_cubit.dart'
     as _i784;
+import '../../features/chat/data/datasource/local/catalog_local_data_source.dart'
+    as _i872;
+import '../../features/chat/data/datasource/local/catalog_local_data_source_impl.dart'
+    as _i157;
+import '../../features/chat/data/repository/catalog_repository_impl.dart'
+    as _i204;
+import '../../features/chat/domain/repository/catalog_repository.dart' as _i139;
 import '../../features/chat/presentation/view/widget/prefrence_borading_chat.dart'
     as _i982;
 import '../../features/meals/api/client/meals_api_client.dart' as _i293;
@@ -63,7 +75,6 @@ import '../../features/meals/presentation/manager/meals_cubit.dart' as _i773;
 import '../dio/app_interceptor.dart' as _i264;
 import '../dio/dio_module.dart' as _i977;
 import '../utils/secure_storage_module.dart' as _i327;
-import '../utils/shared_prefrence_module.dart' as _i59;
 import 'app_module.dart' as _i461;
 
 extension GetItInjectableX on _i174.GetIt {
@@ -73,12 +84,11 @@ extension GetItInjectableX on _i174.GetIt {
     _i526.EnvironmentFilter? environmentFilter,
   }) async {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
-    final sharedPrefrenceModule = _$SharedPrefrenceModule();
     final appModule = _$AppModule();
     final secureStorageModule = _$SecureStorageModule();
     final dioModule = _$DioModule();
     await gh.factoryAsync<_i460.SharedPreferences>(
-      () => sharedPrefrenceModule.sharedPreferences,
+      () => appModule.prefs,
       preResolve: true,
     );
     gh.factory<_i508.AuthFakeRemoteDataSourceImpl>(
@@ -89,24 +99,42 @@ extension GetItInjectableX on _i174.GetIt {
       () => secureStorageModule.secureStorage,
     );
     gh.lazySingleton<_i760.AppAuthCubit>(() => _i760.AppAuthCubit());
+    gh.lazySingleton<_i145.DatabaseStorageService>(
+      () => _i8.DatabaseStorageServiceImpl(),
+    );
     gh.lazySingleton<_i982.PrefrenceBoradingChat>(
       () => _i982.PrefrenceBoradingChat(gh<_i460.SharedPreferences>()),
+    );
+    gh.lazySingleton<_i427.ExercisesDatabase>(
+      () => _i427.ExercisesDatabase(gh<_i145.DatabaseStorageService>()),
+    );
+    gh.lazySingleton<_i994.MealsDatabase>(
+      () => _i994.MealsDatabase(gh<_i145.DatabaseStorageService>()),
     );
     gh.lazySingleton<_i361.Dio>(
       () => dioModule.mealDio(),
       instanceName: 'mealDio',
     );
-    gh.factory<_i773.MealsCubit>(
-      () => _i773.MealsCubit(
-        gh<_i1032.GetMealsCategoriesUseCase>(),
-        gh<_i385.GetMealsByCategoryUseCase>(),
-        gh<_i514.GetMealDetailsUseCase>(),
+    gh.lazySingleton<_i872.CatalogLocalDataSource>(
+      () => _i157.CatalogLocalDataSourceImpl(
+        gh<_i427.ExercisesDatabase>(),
+        gh<_i994.MealsDatabase>(),
       ),
     );
     gh.lazySingleton<_i264.AppInterceptors>(
       () => _i264.AppInterceptors(
         gh<_i558.FlutterSecureStorage>(),
         gh<_i760.AppAuthCubit>(),
+      ),
+    );
+    gh.factory<_i139.CatalogRepository>(
+      () => _i204.CatalogRepositoryImpl(gh<_i872.CatalogLocalDataSource>()),
+    );
+    gh.factory<_i851.DatabaseAssetInstaller>(
+      () => _i851.DatabaseAssetInstaller(
+        gh<_i460.SharedPreferences>(),
+        gh<_i281.AssetBundle>(),
+        gh<_i145.DatabaseStorageService>(),
       ),
     );
     gh.singleton<_i293.MealsApiClient>(
@@ -145,6 +173,13 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i514.GetMealDetailsUseCase>(
       () => _i514.GetMealDetailsUseCase(gh<_i749.MealsRepo>()),
+    );
+    gh.factory<_i773.MealsCubit>(
+      () => _i773.MealsCubit.create(
+        gh<_i1032.GetMealsCategoriesUseCase>(),
+        gh<_i385.GetMealsByCategoryUseCase>(),
+        gh<_i514.GetMealDetailsUseCase>(),
+      ),
     );
     gh.factory<_i548.AuthRemoteDataSource>(
       () => _i981.AuthDataSourceSwitcher(
@@ -189,8 +224,6 @@ extension GetItInjectableX on _i174.GetIt {
     return this;
   }
 }
-
-class _$SharedPrefrenceModule extends _i59.SharedPrefrenceModule {}
 
 class _$AppModule extends _i461.AppModule {}
 

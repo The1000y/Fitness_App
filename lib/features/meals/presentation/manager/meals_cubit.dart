@@ -20,6 +20,17 @@ class MealsCubit extends BaseCubit<MealsState, BaseUiEvent> {
   final GetMealsByCategoryUseCase? _getMealsByCategoryUseCase;
   final GetMealDetailsUseCase? _getMealDetailsUseCase;
 
+  @factoryMethod
+  factory MealsCubit.create(
+    GetMealsCategoriesUseCase getMealsCategoriesUseCase,
+    GetMealsByCategoryUseCase getMealsByCategoryUseCase,
+    GetMealDetailsUseCase getMealDetailsUseCase,
+  ) => MealsCubit(
+    getMealsCategoriesUseCase,
+    getMealsByCategoryUseCase,
+    getMealDetailsUseCase,
+  );
+
   MealsCubit(
     dynamic param1, [
     GetMealsByCategoryUseCase? getMealsByCategoryUseCase,
