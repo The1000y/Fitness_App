@@ -1,9 +1,4 @@
-/// All user-facing text of the Fitness app, collected from the Figma design.
-///
-/// Strings are grouped by screen. Texts shared by several screens live in
-/// the "Common" group so they are only defined once.
 abstract final class AppStrings {
-  // ───────────────────────────── Common ─────────────────────────────
   static const String skip = 'Skip';
   static const String next = 'Next';
   static const String back = 'Back';
@@ -19,7 +14,6 @@ abstract final class AppStrings {
   static const String comingSoon = 'Coming Soon';
   static const String appFont = 'BalooThambi2';
 
-  // ──────────────────────── Onboarding & Splash ────────────────────────
   static const String onboarding1Title =
       'The price of excellence\nis discipline';
   static const String onboarding2Title = 'Fitness has never been\nso much fun';
@@ -28,11 +22,11 @@ abstract final class AppStrings {
       'Lorem ipsum dolor sit amet consectetur. Eu urna ut gravida quis id pretium purus. Mauris massa';
   static const String doIt = 'Do It';
 
-  // ───────────────────────── Login & Register ─────────────────────────
   static const String loginTitleOne = 'Hey There';
   static const String loginTitleTwo = 'Welcome Back';
 
   static const String login = 'Login';
+  static const String home = 'Home';
   static const String forgotPassword = 'Forgot Password?';
   static const String dontHaveAccount = "Don't have an account yet? ";
   static const String register = 'Register';
@@ -42,7 +36,6 @@ abstract final class AppStrings {
   static const String lastName = 'Last Name';
   static const String alreadyHaveAccount = 'Already have an account? ';
 
-  // ─────────────────── OTP, Forgot & Change password ───────────────────
   static const String forgotPasswordTitle = 'Enter Your Email\nForgot Password';
   static const String sendOtp = 'Send OTP';
 
@@ -58,7 +51,6 @@ abstract final class AppStrings {
   static const String newPassword = 'New Password';
   static const String confirmPassword = 'Confirm Password';
 
-  // ──────────────────── Profile setup (steps 1–6) ────────────────────
   static const String genderTitle =
       'Tell us about yourself!\nWe need to know your gender';
   static const String male = 'Male';
@@ -91,7 +83,6 @@ abstract final class AppStrings {
   static const String activityAdvanced = 'Advanced';
   static const String activityTrueBeast = 'True Beast';
 
-  // ───────────────────────────── Home ─────────────────────────────
   static const String category = 'Category';
   static const String gym = 'Gym';
   static const String fitness = 'Fitness';
@@ -112,7 +103,6 @@ abstract final class AppStrings {
   static const String strengthenBack = 'Exercises that\nstrengthen your back';
   static const String strengthenBody = 'Exercises that\nstrengthen your body';
 
-  // ─────────────────── Workouts & Exercise details ───────────────────
   static const String workouts = 'Workouts';
   static const String muscleFullBody = 'Full Body';
   static const String muscleChest = 'Chest';
@@ -129,7 +119,6 @@ abstract final class AppStrings {
   static const String minutesUnit = 'MIN';
   static const String caloriesUnit = 'Cal';
 
-  // ───────────────────────── Food & Details ─────────────────────────
   static const String foodRecommendation = 'Food Recommendation';
   static const String breakfast = 'Breakfast';
   static const String lunch = 'Lunch';
@@ -142,14 +131,12 @@ abstract final class AppStrings {
   static const String fat = 'Fat';
   static const String recommendation = 'Recommendation';
 
-  // ───────────────────────── Chat (Smart coach) ─────────────────────────
   static const String smartCoach = 'Smart Coach';
   static const String chatWelcome = 'How Can I Assist You\nToday?';
   static const String getStarted = 'Get Started';
   static const String chatHello = 'Hello, how can I assist you\ntoday?';
   static const String previousConversations = 'Previous conversations';
 
-  // ───────────────────────── Profile & Edit ─────────────────────────
   static const String profile = 'Profile';
   static const String editProfile = 'Edit Profile';
   static const String changePassword = 'Change Password';
@@ -160,16 +147,21 @@ abstract final class AppStrings {
   static const String help = 'Help';
   static const String logout = 'Logout';
 
+  static const String securityUrl =
+      'https://elevate-flutter-team.github.io/fitness-app-webviews/security.html';
+  static const String privacyPolicyUrl =
+      'https://elevate-flutter-team.github.io/fitness-app-webviews/privacy-policy.html';
+  static const String helpUrl =
+      'https://elevate-flutter-team.github.io/fitness-app-webviews/help.html';
+
   static const String yourWeightTapToEdit = 'Your Weight (Tap To Edit)';
   static const String yourGoalTapToEdit = 'Your Goal (Tap To Edit)';
   static const String yourActivityLevelTapToEdit =
       'Your Activity Level (Tap To Edit)';
 
-  // ───────────────────────── Close dialog ─────────────────────────
   static const String closeAppConfirmation =
       'Are you sure you want\nto close the application?';
 
-  // ───────────────────── Dynamic (need a value) ─────────────────────
   static String homeGreeting(String name) => "Hi $name,\nLet's start your day";
   static String chatGreeting(String name) => 'Hi $name, I am your smart coach';
   static String stepCounter(int current, int total) => '$current/$total';

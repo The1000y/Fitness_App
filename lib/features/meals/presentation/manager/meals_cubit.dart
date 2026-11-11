@@ -32,16 +32,12 @@ class MealsCubit extends BaseCubit<MealsState, BaseUiEvent> {
   );
 
   MealsCubit(
-    dynamic param1, [
+    GetMealsCategoriesUseCase? getMealsCategoriesUseCase, [
     GetMealsByCategoryUseCase? getMealsByCategoryUseCase,
     GetMealDetailsUseCase? getMealDetailsUseCase,
-  ]) : _getMealsCategoriesUseCase = param1 is GetMealsCategoriesUseCase
-           ? param1
-           : null,
+  ]) : _getMealsCategoriesUseCase = getMealsCategoriesUseCase,
        _getMealsByCategoryUseCase = getMealsByCategoryUseCase,
-       _getMealDetailsUseCase = param1 is GetMealDetailsUseCase
-           ? param1
-           : getMealDetailsUseCase,
+       _getMealDetailsUseCase = getMealDetailsUseCase,
        super(const MealsState());
 
   Future<void> doEvent(MealsEvent event) async {

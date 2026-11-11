@@ -354,50 +354,41 @@ void main() {
       );
     });
 
-    // testWidgets('RTL and LTR layout alignments and directions', (tester) async {
-    //   final englishL10n = await AppLocalizations.delegate.load(
-    //     const Locale('en'),
-    //   );
-    //   final arabicL10n = await AppLocalizations.delegate.load(
-    //     const Locale('ar'),
-    //   );
-    //
-    //   final logicalWidth =
-    //       tester.view.physicalSize.width / tester.view.devicePixelRatio;
-    //
-    //   // LTR: English
-    //   await tester.pumpApp(
-    //     const LoginView(),
-    //     locale: const Locale('en'),
-    //   );
-    //
-    //   final ltrForgotPassword = find.text(englishL10n.forgotPassword);
-    //   expect(ltrForgotPassword, findsOneWidget);
-    //
-    //   expect(
-    //     Directionality.of(tester.element(ltrForgotPassword)),
-    //     TextDirection.ltr,
-    //   );
-    //
-    //   final ltrForgotBox = tester.getRect(ltrForgotPassword);
-    //   expect(ltrForgotBox.center.dx, greaterThan(logicalWidth / 2));
-    //
-    //   // RTL: Arabic
-    //   await tester.pumpApp(
-    //     const LoginView(),
-    //     locale: const Locale('ar'),
-    //   );
-    //
-    //   final rtlForgotPassword = find.text(arabicL10n.forgotPassword);
-    //   expect(rtlForgotPassword, findsOneWidget);
-    //
-    //   expect(
-    //     Directionality.of(tester.element(rtlForgotPassword)),
-    //     TextDirection.rtl,
-    //   );
-    //
-    //   final rtlForgotBox = tester.getRect(rtlForgotPassword);
-    //   expect(rtlForgotBox.center.dx, lessThan(logicalWidth / 2));
-    // });
+    testWidgets('RTL and LTR layout alignments and directions', (tester) async {
+      final englishL10n = await AppLocalizations.delegate.load(
+        const Locale('en'),
+      );
+      final arabicL10n = await AppLocalizations.delegate.load(
+        const Locale('ar'),
+      );
+
+      await tester.pumpApp(const LoginView(), locale: const Locale('en'));
+
+      final logicalWidth =
+          tester.view.physicalSize.width / tester.view.devicePixelRatio;
+      final ltrForgotPassword = find.text(englishL10n.forgotPassword);
+      expect(ltrForgotPassword, findsOneWidget);
+      expect(
+        Directionality.of(tester.element(ltrForgotPassword)),
+        TextDirection.ltr,
+      );
+      expect(
+        tester.getRect(ltrForgotPassword).center.dx,
+        greaterThan(logicalWidth / 2),
+      );
+
+      await tester.pumpApp(const LoginView(), locale: const Locale('ar'));
+
+      final rtlForgotPassword = find.text(arabicL10n.forgotPassword);
+      expect(rtlForgotPassword, findsOneWidget);
+      expect(
+        Directionality.of(tester.element(rtlForgotPassword)),
+        TextDirection.rtl,
+      );
+      expect(
+        tester.getRect(rtlForgotPassword).center.dx,
+        lessThan(logicalWidth / 2),
+      );
+    });
   });
 }

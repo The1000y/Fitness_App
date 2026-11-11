@@ -18,10 +18,9 @@ import 'package:injectable/injectable.dart';
 
 @Injectable(as: AuthRepo)
 class AuthRepoImpl implements AuthRepo {
-  final RemoteDataSource _remote;
   final AuthRemoteDataSource _remoteDataSource;
 
-  AuthRepoImpl(this._remote, this._remoteDataSource);
+  AuthRepoImpl(this._remoteDataSource);
 
   @override
   Future<BaseResponse<LoginEntity>> login({
@@ -29,7 +28,7 @@ class AuthRepoImpl implements AuthRepo {
     required String password,
   }) async {
     final result = await excecuteApiCall(() async {
-      final response = await _remote.login(
+      final response = await _remoteDataSource.login(
         LoginRequest(email: email, password: password),
       );
       return response.toEntity();

@@ -33,7 +33,7 @@ void main() {
   setUp(() {
     fakeMealsRepo = FakeMealsRepo();
     useCase = GetMealDetailsUseCase(fakeMealsRepo);
-    cubit = MealsCubit(useCase);
+    cubit = MealsCubit(null, null, useCase);
   });
 
   tearDown(() async {

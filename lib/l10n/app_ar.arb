@@ -27,7 +27,7 @@
   "onboardingTitle3": "لا مزيد من الأعذار. ابدأ الآن",
   "onboardingDescription": "Lorem ipsum dolor sit amet consectetur. Eu urna ut gravida quis id pretium purus. Mauris massa",
   "loginTitleOne": "أهلاً بك",
-  "loginTitleTwo": "مرحباً عودتك" ,
+  "loginTitleTwo": "مرحباً عودتك",
   "login": "تسجيل الدخول",
   "email": "البريد الإلكتروني",
   "password": "كلمة المرور",
@@ -85,6 +85,9 @@
   "homeSubtitle": "هيا نبدأ يومك",
   "explore": "استكشف",
   "category": "الفئة",
+  "noCategoriesAvailable": "لا توجد فئات متاحة",
+  "selectCategory": "اختر فئة",
+  "noMusclesAvailable": "لا توجد عضلات متاحة",
   "categoryGym": "الجيم",
   "categoryFitness": "اللياقة",
   "categoryYoga": "اليوغا",
@@ -181,6 +184,8 @@
   "yourGoalTapToEdit": "هدفك (اضغط للتعديل)",
   "yourActivityTapToEdit": "مستوى نشاطك (اضغط للتعديل)",
   "closeAppConfirm": "هل أنت متأكد أنك تريد إغلاق التطبيق؟",
+  "logoutConfirm": "هل أنت متأكد أن تريد تسجيل الخروج؟",
+  "webViewLoadFailed": "تعذّر تحميل الصفحة",
   "accepted": "تم قبول الطلب بنجاح",
   "orderStatusUpdatedSuccessfully": "تم تحديث حالة الطلب بنجاح",
   "failureInternetConnection": "لا يوجد اتصال بالإنترنت. تحقق من الشبكة وحاول مرة أخرى.",
@@ -204,6 +209,7 @@
   "passwordStrongRules": "يجب أن تحتوي كلمة المرور على حرف كبير وحرف صغير ورقم ورمز خاص",
   "confirmPasswordRequired": "يرجى تأكيد كلمة المرور",
   "confirmPasswordMismatch": "كلمتا المرور غير متطابقتين",
+  "newPasswordSameAsOld": "يجب أن تختلف كلمة المرور الجديدة عن القديمة",
   "usernameRequired": "اسم المستخدم مطلوب",
   "usernameMinLength": "اسم المستخدم قصير جداً",
   "firstNameRequired": "الاسم الأول مطلوب",
@@ -253,9 +259,30 @@
   "videoNotFound": "هذا الفيديو غير متاح. ربما تمت إزالته أو تم تعيينه كخاص.",
   "notFound": "تعذر العثور على المطلوب.",
   "retry": "إعادة المحاولة",
-  "back": "رجوع",
   "unableToPlayVideo": "تعذر تشغيل الفيديو",
-  "cancel": "إغلاق الفيديو",
+  "closeVideo": "إغلاق الفيديو",
+  "cancel": "إلغاء",
+  "exerciseNoExercisesFound": "لا توجد تمارين",
+  "exerciseLoadFailed": "فشل تحميل التمارين",
+  "goBack": "رجوع",
+  "exercisesOfMuscle": "تمارين {muscleName}",
+  "@exercisesOfMuscle": {
+    "placeholders": {
+      "muscleName": {
+        "type": "String"
+      }
+    }
+  },
+  "targetMuscles": "العضلات المستهدفة",
+  "primeMover": "العضلة الرئيسية",
+  "secondaryMuscle": "ثانوية",
+  "tertiaryMuscle": "ثالثية",
+  "exerciseDetailsTitle": "التفاصيل",
+  "bodyRegion": "منطقة الجسم",
+  "targetGroup": "المجموعة المستهدفة",
+  "shortDemo": "عرض مختصر",
+  "tapToPlayDemo": "اضغط لتشغيل العرض",
+  "tapToStopDemo": "اضغط لإيقاف العرض",
   "noMealsYet": "لا توجد وجبات بعد",
   "noCategoryMealsYet": "لا توجد وجبات {category} بعد",
   "@noCategoryMealsYet": {
@@ -272,7 +299,6 @@
   "checkConnectionMessage": "تحقق من اتصالك بالإنترنت وحاول مرة أخرى.",
   "couldNotLoadMeals": "تعذر تحميل الوجبات. يرجى المحاولة مرة أخرى.",
   "tryAgain": "حاول مرة أخرى",
-  "noCategoriesAvailable": "لا توجد فئات متاحة",
   "couldNotLoadCategories": "تعذر تحميل الفئات",
   "dataNotAvailable": "البيانات غير متوفرة حالياً."
 }

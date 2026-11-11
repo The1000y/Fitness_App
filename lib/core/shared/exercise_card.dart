@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 
-import '../theme/app_colors/app_colors.dart';
+import 'package:fitness_app/core/theme/app_colors/app_colors.dart';
 import 'custom_blur_card.dart';
 
 class ExerciseCard extends StatelessWidget {

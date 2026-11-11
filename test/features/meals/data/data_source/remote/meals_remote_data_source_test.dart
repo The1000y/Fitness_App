@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:fitness_app/config/base/base_response.dart';
-import 'package:fitness_app/features/meals/api/meals_remote_data_source_impl.dart/meals_remote_data_source_impl.dart';
+import 'package:fitness_app/features/meals/api/remote/meals_remote_data_source_impl.dart';
 import 'package:fitness_app/features/meals/data/model/details_meal_dto.dart';
 import 'package:fitness_app/features/meals/data/model/details_meal_response.dart';
 import 'package:flutter_test/flutter_test.dart';
