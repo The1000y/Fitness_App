@@ -8,6 +8,13 @@ import 'package:fitness_app/features/auth/presentation/login/view/login_view.dar
 import 'package:fitness_app/features/auth/presentation/onboarding/views/onboarding_view.dart';
 import 'package:fitness_app/features/auth/presentation/register/view/register_view.dart';
 import 'package:fitness_app/features/chat/presentation/views/chat_view.dart';
+import 'package:fitness_app/features/exercise/domain/entities/exercise_entity.dart';
+import 'package:fitness_app/features/exercise/presentation/exercise_details/args/exercise_details_args.dart';
+import 'package:fitness_app/features/exercise/presentation/exercise_details/manager/exercise_details_cubit.dart';
+import 'package:fitness_app/features/exercise/presentation/exercise_details/manager/exercise_details_event.dart';
+import 'package:fitness_app/features/exercise/presentation/exercise_details/view/exercise_details_view.dart';
+import 'package:fitness_app/features/exercise/presentation/exercise_details/view/exercise_video_player_view.dart';
+import 'package:fitness_app/features/exercise/presentation/workout_categories/view/workout_categories_view.dart';
 import 'package:fitness_app/features/home/presentation/views/home_view.dart';
 import 'package:fitness_app/features/main/presentation/views/main_layout_view.dart';
 import 'package:fitness_app/features/meals/presentation/manager/meals_cubit.dart';
@@ -15,7 +22,6 @@ import 'package:fitness_app/features/meals/presentation/manager/meals_event.dart
 import 'package:fitness_app/features/meals/presentation/view/details_food_view.dart';
 import 'package:fitness_app/features/meals/presentation/view/meals_view.dart';
 import 'package:fitness_app/features/profile/presentation/views/profile_view.dart';
-import 'package:fitness_app/features/workouts/presentation/views/workouts_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -28,7 +34,6 @@ abstract final class GenerateRoutes {
       case AppRoutes.onboarding:
         return _pageRoute(const OnboardingView(), settings);
 
-      // Auth
       case AppRoutes.login:
         return _pageRoute(const LoginView(), settings);
 
@@ -59,7 +64,6 @@ abstract final class GenerateRoutes {
       case AppRoutes.changePassword:
         return _pageRoute(const _StubScreen('Change Password'), settings);
 
-      // Setup
       case AppRoutes.setupGender:
         return _pageRoute(const _StubScreen('Setup Gender'), settings);
 
@@ -78,19 +82,42 @@ abstract final class GenerateRoutes {
       case AppRoutes.setupActivity:
         return _pageRoute(const _StubScreen('Setup Activity'), settings);
 
-      // Main
       case AppRoutes.main:
         return _pageRoute(
           MainLayoutView(
-            tabs: [HomeView(), ChatView(), WorkoutsView(), ProfileView()],
+            tabs: [
+              HomeView(),
+              ChatView(),
+              WorkoutCategoriesView(),
+              ProfileView(),
+            ],
           ),
           settings,
         );
 
-      case AppRoutes.exerciseDetails:
-        return _pageRoute(const _StubScreen('Exercise Details'), settings);
+      case AppRoutes.workoutCategories:
+        return _pageRoute(const WorkoutCategoriesView(), settings);
 
-      // meals
+      case AppRoutes.exerciseDetails:
+        final args = settings.arguments as ExerciseDetailsArgs;
+        return _pageRoute(
+          BlocProvider(
+            create: (_) => getIt<ExerciseDetailsCubit>()
+              ..onEvent(
+                LoadLevels(primeMoverMuscleId: args.primeMoverMuscleId),
+              ),
+            child: ExerciseDetailsView(muscleName: args.muscleName),
+          ),
+          settings,
+        );
+
+      case AppRoutes.exerciseVideoPlayer:
+        final exercise = settings.arguments as ExerciseEntity;
+        return _pageRoute(
+          ExerciseVideoPlayerView(exercise: exercise),
+          settings,
+        );
+
       case AppRoutes.meals:
         final args = settings.arguments;
         final category = args is String ? args : null;

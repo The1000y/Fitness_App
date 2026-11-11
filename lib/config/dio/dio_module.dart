@@ -13,8 +13,8 @@ abstract class DioModule {
     final dio = Dio(
       BaseOptions(
         baseUrl: ApiStrings.baseUrl,
-        connectTimeout: const Duration(seconds: 10),
-        receiveTimeout: const Duration(seconds: 10),
+        connectTimeout: const Duration(seconds: 20),
+        receiveTimeout: const Duration(seconds: 20),
       ),
     );
     dio.interceptors.add(appInterceptors);

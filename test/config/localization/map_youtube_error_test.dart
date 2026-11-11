@@ -1,7 +1,7 @@
-import 'package:fitness_app/config/localization/map_youtube_error.dart';
-import 'package:fitness_app/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:fitness_app/config/localization/map_youtube_error.dart';
+import 'package:fitness_app/l10n/app_localizations.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 void main() {
@@ -12,7 +12,7 @@ void main() {
   });
 
   group('mapYoutubeError', () {
-    test('maps videoNotFound and cannotFindVideo to videoNotFound', () {
+    test('maps missing video errors to videoNotFound', () {
       expect(
         mapYoutubeError(YoutubeError.videoNotFound, l10n),
         l10n.videoNotFound,
@@ -23,7 +23,7 @@ void main() {
       );
     });
 
-    test('maps notEmbeddable errors to videoPlayerError', () {
+    test('maps embedding errors to videoPlayerError', () {
       expect(
         mapYoutubeError(YoutubeError.notEmbeddable, l10n),
         l10n.videoPlayerError,
@@ -38,21 +38,19 @@ void main() {
       );
     });
 
-    test('maps invalidParam to invalidVideo', () {
+    test('maps invalid params and html5 errors', () {
       expect(
         mapYoutubeError(YoutubeError.invalidParam, l10n),
         l10n.invalidVideo,
       );
-    });
-
-    test('maps html5Error to embeddingDisabled', () {
       expect(
         mapYoutubeError(YoutubeError.html5Error, l10n),
         l10n.embeddingDisabled,
       );
     });
 
-    test('maps unknown/default to failedToLoadVideo', () {
+    test('falls back for none and unknown errors', () {
+      expect(mapYoutubeError(YoutubeError.none, l10n), l10n.failedToLoadVideo);
       expect(
         mapYoutubeError(YoutubeError.unknown, l10n),
         l10n.failedToLoadVideo,

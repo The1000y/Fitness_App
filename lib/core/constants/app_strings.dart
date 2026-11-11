@@ -33,6 +33,7 @@ abstract final class AppStrings {
   static const String loginTitleTwo = 'Welcome Back';
 
   static const String login = 'Login';
+  static const String home = 'Home';
   static const String forgotPassword = 'Forgot Password?';
   static const String dontHaveAccount = "Don't have an account yet? ";
   static const String register = 'Register';

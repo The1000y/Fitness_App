@@ -41,6 +41,26 @@ import '../../features/auth/presentation/forget_password/manager/forget_password
     as _i332;
 import '../../features/auth/presentation/login/manager/login_cubit.dart'
     as _i889;
+import '../../features/exercise/api/client/exercise_api_client.dart' as _i248;
+import '../../features/exercise/api/remote/exercise_remote_data_source_impl.dart'
+    as _i669;
+import '../../features/exercise/data/data_source/remote/exercise_remote_data_source.dart'
+    as _i27;
+import '../../features/exercise/data/repo_impl/exercise_repo_impl.dart'
+    as _i824;
+import '../../features/exercise/domain/repo/exercise_repo.dart' as _i628;
+import '../../features/exercise/domain/use_cases/get_difficulty_levels_use_case.dart'
+    as _i615;
+import '../../features/exercise/domain/use_cases/get_exercises_use_case.dart'
+    as _i685;
+import '../../features/exercise/domain/use_cases/get_muscle_groups_use_case.dart'
+    as _i593;
+import '../../features/exercise/domain/use_cases/get_muscles_by_group_use_case.dart'
+    as _i559;
+import '../../features/exercise/presentation/exercise_details/manager/exercise_details_cubit.dart'
+    as _i944;
+import '../../features/exercise/presentation/workout_categories/manager/workout_categories_cubit.dart'
+    as _i355;
 import '../../features/auth/presentation/register/manager/register_cubit.dart'
     as _i784;
 import '../../features/meals/api/client/meals_api_client.dart' as _i293;
@@ -117,8 +137,17 @@ extension GetItInjectableX on _i174.GetIt {
         mealsRemoteDataSource: gh<_i452.MealsRemoteDataSource>(),
       ),
     );
+    gh.singleton<_i248.ExerciseApiClient>(
+      () => _i248.ExerciseApiClient(gh<_i361.Dio>()),
+    );
+    gh.factory<_i27.ExerciseRemoteDataSource>(
+      () => _i669.ExerciseRemoteDataSourceImpl(gh<_i248.ExerciseApiClient>()),
+    );
     gh.factory<_i548.RemoteDataSource>(
       () => _i192.RemoteDataSourceImpl(gh<_i213.AuthApiClient>()),
+    );
+    gh.factory<_i628.ExerciseRepo>(
+      () => _i824.ExerciseRepoImpl(gh<_i27.ExerciseRemoteDataSource>()),
     );
     gh.factory<_i192.AuthRemoteDataSourceImpl>(
       () => _i192.AuthRemoteDataSourceImpl(
@@ -148,6 +177,30 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i1038.LoginUseCase>(
       () => _i1038.LoginUseCase(gh<_i170.AuthRepo>()),
+    );
+    gh.factory<_i615.GetDifficultyLevelsUseCase>(
+      () => _i615.GetDifficultyLevelsUseCase(gh<_i628.ExerciseRepo>()),
+    );
+    gh.factory<_i685.GetExercisesUseCase>(
+      () => _i685.GetExercisesUseCase(gh<_i628.ExerciseRepo>()),
+    );
+    gh.factory<_i593.GetMuscleGroupsUseCase>(
+      () => _i593.GetMuscleGroupsUseCase(gh<_i628.ExerciseRepo>()),
+    );
+    gh.factory<_i559.GetMusclesByGroupUseCase>(
+      () => _i559.GetMusclesByGroupUseCase(gh<_i628.ExerciseRepo>()),
+    );
+    gh.factory<_i355.WorkoutCategoriesCubit>(
+      () => _i355.WorkoutCategoriesCubit(
+        gh<_i593.GetMuscleGroupsUseCase>(),
+        gh<_i559.GetMusclesByGroupUseCase>(),
+      ),
+    );
+    gh.factory<_i944.ExerciseDetailsCubit>(
+      () => _i944.ExerciseDetailsCubit(
+        gh<_i615.GetDifficultyLevelsUseCase>(),
+        gh<_i685.GetExercisesUseCase>(),
+      ),
     );
     gh.factory<_i839.ForgetPasswordUserCase>(
       () => _i839.ForgetPasswordUserCase(authRepo: gh<_i170.AuthRepo>()),

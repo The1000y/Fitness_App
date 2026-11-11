@@ -34,8 +34,8 @@
   "oldPassword": "Old password",
   "newPassword": "New password",
   "confirmPassword": "Confirm password",
-  "forgotPassword": "Forgot password?",
-  "dontHaveAccount": "Don't have an account yet?",
+  "forgotPassword": "Forgot Password?",
+  "dontHaveAccount": "Don't have an account yet? ",
   "register": "Register",
   "registerTitle1": "Hey there",
   "registerTitle2": "create an account",
@@ -85,6 +85,9 @@
   "homeSubtitle": "Let's start your day",
   "explore": "Explore",
   "category": "Category",
+  "noCategoriesAvailable": "No categories available",
+  "selectCategory": "Select a category",
+  "noMusclesAvailable": "No muscles available",
   "categoryGym": "Gym",
   "categoryFitness": "Fitness",
   "categoryYoga": "Yoga",
@@ -249,6 +252,27 @@
   "back": "Back",
   "unableToPlayVideo": "Unable to play video",
   "cancel": "cancel the video",
+  "exerciseNoExercisesFound": "No exercises found",
+  "exerciseLoadFailed": "Failed to load exercises",
+  "goBack": "Go Back",
+  "exercisesOfMuscle": "{muscleName} Exercises",
+  "@exercisesOfMuscle": {
+    "placeholders": {
+      "muscleName": {
+        "type": "String"
+      }
+    }
+  },
+  "targetMuscles": "Target Muscles",
+  "primeMover": "Prime Mover",
+  "secondaryMuscle": "Secondary",
+  "tertiaryMuscle": "Tertiary",
+  "exerciseDetailsTitle": "Details",
+  "bodyRegion": "Body Region",
+  "targetGroup": "Target Group",
+  "shortDemo": "Short Demo",
+  "tapToPlayDemo": "Tap to play demo",
+  "tapToStopDemo": "Tap to stop demo",
   "otpRequired": "Verification code is required",
   "otpIncomplete": "Please enter the complete verification code",
   "otpInvalid": "Invalid verification code. Please try again.",

@@ -85,10 +85,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get confirmPassword => 'Confirm password';
 
   @override
-  String get forgotPassword => 'Forgot password?';
+  String get forgotPassword => 'Forgot Password?';
 
   @override
-  String get dontHaveAccount => 'Don\'t have an account yet?';
+  String get dontHaveAccount => 'Don\'t have an account yet? ';
 
   @override
   String get register => 'Register';
@@ -217,6 +217,15 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get category => 'Category';
+
+  @override
+  String get noCategoriesAvailable => 'No categories available';
+
+  @override
+  String get selectCategory => 'Select a category';
+
+  @override
+  String get noMusclesAvailable => 'No muscles available';
 
   @override
   String get categoryGym => 'Gym';
@@ -601,6 +610,50 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get cancel => 'cancel the video';
+
+  @override
+  String get exerciseNoExercisesFound => 'No exercises found';
+
+  @override
+  String get exerciseLoadFailed => 'Failed to load exercises';
+
+  @override
+  String get goBack => 'Go Back';
+
+  @override
+  String exercisesOfMuscle(String muscleName) {
+    return '$muscleName Exercises';
+  }
+
+  @override
+  String get targetMuscles => 'Target Muscles';
+
+  @override
+  String get primeMover => 'Prime Mover';
+
+  @override
+  String get secondaryMuscle => 'Secondary';
+
+  @override
+  String get tertiaryMuscle => 'Tertiary';
+
+  @override
+  String get exerciseDetailsTitle => 'Details';
+
+  @override
+  String get bodyRegion => 'Body Region';
+
+  @override
+  String get targetGroup => 'Target Group';
+
+  @override
+  String get shortDemo => 'Short Demo';
+
+  @override
+  String get tapToPlayDemo => 'Tap to play demo';
+
+  @override
+  String get tapToStopDemo => 'Tap to stop demo';
 
   @override
   String get otpRequired => 'Verification code is required';
