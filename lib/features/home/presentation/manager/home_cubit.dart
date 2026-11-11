@@ -22,11 +22,11 @@ class HomeCubit extends BaseCubit<HomeState, CommonUiEvent> {
   final GetMuscleGroupsUseCase _getMuscleGroups;
   final GetMusclesByGroupUseCase _getMusclesByGroup;
   final GetMealsCategoriesUseCase _getMealCategories;
- // final GetCurrentUserUseCase _getCurrentUser;
+  // final GetCurrentUserUseCase _getCurrentUser;
   final GetPopularTrainingUseCase _getPopularTraining;
 
   HomeCubit(
-   // this._getCurrentUser,
+    // this._getCurrentUser,
     this._getRandomMuscles,
     this._getMuscleGroups,
     this._getMusclesByGroup,
@@ -40,7 +40,7 @@ class HomeCubit extends BaseCubit<HomeState, CommonUiEvent> {
         unawaited(_loadRandomMuscles());
         unawaited(_loadMuscleGroups());
         unawaited(_loadMealCategories());
-       // unawaited(_loadUser());
+      // unawaited(_loadUser());
       case HomeRandomMusclesRetried():
         unawaited(_loadRandomMuscles());
       case HomeMuscleGroupsRetried():

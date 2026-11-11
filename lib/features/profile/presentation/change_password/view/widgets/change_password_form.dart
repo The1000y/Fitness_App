@@ -47,10 +47,7 @@ class _ChangePasswordFormState extends State<ChangePasswordForm> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final prefixConstraints = BoxConstraints(
-      minWidth: 48.w,
-      minHeight: 24.h,
-    );
+    final prefixConstraints = BoxConstraints(minWidth: 48.w, minHeight: 24.h);
 
     return Form(
       key: _formKey,

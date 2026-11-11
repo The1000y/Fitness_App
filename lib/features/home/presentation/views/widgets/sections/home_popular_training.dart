@@ -28,8 +28,11 @@ class HomePopularTraining extends StatelessWidget {
       children: [
         HomeSectionTitle(title: l10n.popularTraining),
         SizedBox(height: 7.h),
-        BlocSelector<HomeCubit, HomeState,
-            BaseState<List<PopularTrainingEntity>>>(
+        BlocSelector<
+          HomeCubit,
+          HomeState,
+          BaseState<List<PopularTrainingEntity>>
+        >(
           selector: (state) => state.popularTrainingState,
           builder: (context, state) =>
               HomeStateView<List<PopularTrainingEntity>>(
@@ -46,10 +49,11 @@ class HomePopularTraining extends StatelessWidget {
                       child: Center(
                         child: Text(
                           l10n.noPopularTraining,
-                          style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                            fontSize: 14.sp,
-                            color: AppColors.textSecondary,
-                          ),
+                          style: Theme.of(context).textTheme.titleSmall
+                              ?.copyWith(
+                                fontSize: 14.sp,
+                                color: AppColors.textSecondary,
+                              ),
                         ),
                       ),
                     );
@@ -147,11 +151,11 @@ class HomePopularTraining extends StatelessWidget {
   }
 
   Widget _pill(
-      BuildContext context,
-      String text,
-      FontWeight weight,
-      Color color,
-      ) {
+    BuildContext context,
+    String text,
+    FontWeight weight,
+    Color color,
+  ) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(20.r),
       child: CustomBlurEffect(

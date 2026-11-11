@@ -72,7 +72,9 @@ class ExerciseDetailsCubit
         final levels = result.data;
         int initialIndex = 0;
         if (event.difficultyLevelId != null) {
-          final foundIndex = levels.indexWhere((l) => l.id == event.difficultyLevelId);
+          final foundIndex = levels.indexWhere(
+            (l) => l.id == event.difficultyLevelId,
+          );
           if (foundIndex != -1) {
             initialIndex = foundIndex;
           }

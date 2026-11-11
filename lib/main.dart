@@ -33,7 +33,7 @@ class FitnessApp extends StatelessWidget {
         minTextAdapt: true,
         splitScreenMode: true,
         ensureScreenSize: true,
-        child:BlocBuilder<AppLocaleCubit, Locale>(
+        child: BlocBuilder<AppLocaleCubit, Locale>(
           builder: (context, state) {
             return MaterialApp(
               builder: (context, child) {

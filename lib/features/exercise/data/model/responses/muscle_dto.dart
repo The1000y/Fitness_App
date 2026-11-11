@@ -1,4 +1,3 @@
-
 import 'package:fitness_app/features/exercise/domain/entities/muscle_entity.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -12,11 +11,7 @@ class MuscleDto {
   final String? name;
   final String? image;
 
-  MuscleDto({
-    this.id,
-    this.name,
-    this.image,
-  });
+  MuscleDto({this.id, this.name, this.image});
 
   factory MuscleDto.fromJson(Map<String, dynamic> json) =>
       _$MuscleDtoFromJson(json);
@@ -24,10 +19,6 @@ class MuscleDto {
   Map<String, dynamic> toJson() => _$MuscleDtoToJson(this);
 
   MuscleEntity toEntity() {
-    return MuscleEntity(
-      id: id ?? '',
-      name: name ?? '',
-      image: image ?? '',
-    );
+    return MuscleEntity(id: id ?? '', name: name ?? '', image: image ?? '');
   }
 }

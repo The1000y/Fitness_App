@@ -19,10 +19,7 @@ class MuscleGroupsResponse {
   @JsonKey(name: 'musclesGroup')
   final List<MuscleGroupDto>? musclesGroup;
 
-  MuscleGroupsResponse({
-    this.message,
-    this.musclesGroup,
-  });
+  MuscleGroupsResponse({this.message, this.musclesGroup});
 
   factory MuscleGroupsResponse.fromJson(Map<String, dynamic> json) =>
       _$MuscleGroupsResponseFromJson(json);

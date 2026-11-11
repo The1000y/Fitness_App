@@ -1,4 +1,3 @@
-
 import 'package:equatable/equatable.dart';
 import 'package:fitness_app/features/exercise/domain/entities/muscle_entity.dart';
 

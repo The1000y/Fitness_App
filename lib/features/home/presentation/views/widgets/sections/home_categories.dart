@@ -50,11 +50,11 @@ class HomeCategories extends StatelessWidget {
                       border: isLast
                           ? null
                           : BorderDirectional(
-                        end: BorderSide(
-                          color: AppColors.borderSubtle,
-                          width: 1.w,
-                        ),
-                      ),
+                              end: BorderSide(
+                                color: AppColors.borderSubtle,
+                                width: 1.w,
+                              ),
+                            ),
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -73,11 +73,11 @@ class HomeCategories extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           style: Theme.of(context).textTheme.labelSmall
                               ?.copyWith(
-                            fontSize: 12.sp,
-                            fontWeight: FontWeight.w400,
-                            height: 1.2,
-                            color: AppColors.textPrimary,
-                          ),
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.w400,
+                                height: 1.2,
+                                color: AppColors.textPrimary,
+                              ),
                         ),
                       ],
                     ),

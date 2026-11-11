@@ -14,7 +14,7 @@ class CustomVideoPlayer extends StatefulWidget {
     this.overlayContent,
     this.aspectRatio = 4 / 3,
     this.backNavigationButton,
-     this.autoPlay=false,
+    this.autoPlay = false,
   });
 
   final String thumbnailImage;

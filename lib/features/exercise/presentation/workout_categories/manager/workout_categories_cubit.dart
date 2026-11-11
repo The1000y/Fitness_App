@@ -101,10 +101,7 @@ class WorkoutCategoriesCubit
 
     emit(
       state.copyWith(
-        musclesState: BaseState(
-          data: state.musclesState.data,
-          isLoading: true,
-        ),
+        musclesState: BaseState(data: state.musclesState.data, isLoading: true),
       ),
     );
 
@@ -116,10 +113,7 @@ class WorkoutCategoriesCubit
       case Success():
         emit(
           state.copyWith(
-            musclesState: BaseState(
-              data: result.data,
-              isLoading: false,
-            ),
+            musclesState: BaseState(data: result.data, isLoading: false),
           ),
         );
 
@@ -137,13 +131,12 @@ class WorkoutCategoriesCubit
         emitEvent(ShowFailureMessage(result.failure));
     }
   }
+
   void onCategorySelected(String name) {
-  final groups = state.workoutCategoriesState.data?.musclesGroup ?? [];
+    final groups = state.workoutCategoriesState.data?.musclesGroup ?? [];
 
-  final selectedGroup = groups.firstWhere(
-    (group) => group.name == name,
-  );
+    final selectedGroup = groups.firstWhere((group) => group.name == name);
 
-  onEvent(MuscleGroupSelected(id: selectedGroup.id));
-}
+    onEvent(MuscleGroupSelected(id: selectedGroup.id));
+  }
 }

@@ -12,8 +12,9 @@ class WorkoutCategoriesView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => getIt<WorkoutCategoriesCubit>()
-        ..onEvent(const WorkoutCategoriesRequested()),
+      create: (_) =>
+          getIt<WorkoutCategoriesCubit>()
+            ..onEvent(const WorkoutCategoriesRequested()),
       child: const WorkoutCategoriesBody(),
     );
   }

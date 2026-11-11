@@ -10,8 +10,7 @@ import 'package:fitness_app/features/profile/presentation/change_password/manage
 import 'package:injectable/injectable.dart';
 
 @injectable
-class ChangePasswordCubit
-    extends BaseCubit<ChangePasswordState, BaseUiEvent> {
+class ChangePasswordCubit extends BaseCubit<ChangePasswordState, BaseUiEvent> {
   final ProfileChangePasswordUseCase _changePasswordUseCase;
 
   ChangePasswordCubit(this._changePasswordUseCase)

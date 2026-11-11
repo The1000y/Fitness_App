@@ -73,7 +73,7 @@ Widget homeNetworkImage(String? url, {Widget? onError}) {
   return Image.network(
     url,
     fit: BoxFit.cover,
-    errorBuilder: (_, __, ___) => onError ?? _placeholder(),
+    errorBuilder: (_, _, _) => onError ?? _placeholder(),
   );
 }
 

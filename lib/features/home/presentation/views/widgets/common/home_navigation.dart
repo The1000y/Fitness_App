@@ -3,11 +3,11 @@ import 'package:fitness_app/features/exercise/presentation/exercise_details/args
 import 'package:flutter/material.dart';
 
 void openExerciseDetails(
-    BuildContext context, {
-      required String muscleId,
-      required String muscleName,
-      String? difficultyLevelId,
-    }) {
+  BuildContext context, {
+  required String muscleId,
+  required String muscleName,
+  String? difficultyLevelId,
+}) {
   Navigator.pushNamed(
     context,
     AppRoutes.exerciseDetails,

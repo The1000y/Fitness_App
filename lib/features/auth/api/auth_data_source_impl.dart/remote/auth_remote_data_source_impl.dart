@@ -11,7 +11,7 @@ import 'package:fitness_app/features/auth/data/model/responses/login_response/lo
 import 'package:fitness_app/features/auth/data/model/responses/register_request/register_response.dart';
 import 'package:injectable/injectable.dart';
 
-@Injectable(as:AuthRemoteDataSource)
+@Injectable(as: AuthRemoteDataSource)
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   final AuthApiClient authApiClient;
   AuthRemoteDataSourceImpl({required this.authApiClient});

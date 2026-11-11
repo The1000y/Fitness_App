@@ -11,9 +11,8 @@ part 'profile_api_client.g.dart';
 @RestApi()
 abstract class ProfileApiClient {
   @factoryMethod
-  factory ProfileApiClient(
-    @Named(ApiStrings.namedFitnessDio) Dio dio,
-  ) = _ProfileApiClient;
+  factory ProfileApiClient(@Named(ApiStrings.namedFitnessDio) Dio dio) =
+      _ProfileApiClient;
 
   @PATCH(ApiStrings.changePassword)
   Future<void> changePassword(@Body() ChangePasswordRequest request);

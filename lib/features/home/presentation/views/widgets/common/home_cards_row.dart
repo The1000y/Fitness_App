@@ -20,7 +20,7 @@ class HomeCardsRow extends StatelessWidget {
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         itemCount: itemCount,
-        separatorBuilder: (_, __) => SizedBox(width: 12.w),
+        separatorBuilder: (_, _) => SizedBox(width: 12.w),
         itemBuilder: itemBuilder,
       ),
     );

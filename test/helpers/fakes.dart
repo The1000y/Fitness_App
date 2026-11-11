@@ -5,7 +5,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:fitness_app/config/base/base_response.dart';
 import 'package:fitness_app/features/auth/api/client/auth_api_client.dart';
-import 'package:fitness_app/features/auth/data/data_source/remote/auth_remote_data_source.dart';
 import 'package:fitness_app/features/auth/data/model/requests/login_request/login_request.dart';
 import 'package:fitness_app/features/auth/data/model/responses/login_response/login_response.dart';
 import 'package:fitness_app/features/auth/domain/entities/login_entity/login_entity.dart';
@@ -55,13 +54,13 @@ class FakeAuthRepo implements AuthRepo {
   dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }
 
-class FakeRemoteDataSource implements RemoteDataSource {
+class FakeRemoteDataSource {
   int callCount = 0;
   LoginRequest? lastRequest;
   LoginResponse? nextResponse;
   Object? nextError;
 
-  @override
+//  @override
   Future<LoginResponse> login(LoginRequest login) async {
     callCount++;
     lastRequest = login;
@@ -238,6 +237,9 @@ class FakeExerciseApiClient implements ExerciseApiClient {
     return nextMusclesByGroupResponse ??
         MusclesByGroupResponse(totalMuscles: 0, muscles: const []);
   }
+
+  @override
+  noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }
 
 class FakeExerciseRemoteDataSource implements ExerciseRemoteDataSource {
@@ -292,6 +294,9 @@ class FakeExerciseRemoteDataSource implements ExerciseRemoteDataSource {
     return nextMusclesByGroupResponse ??
         MusclesByGroupResponse(totalMuscles: 0, muscles: const []);
   }
+
+  @override
+  noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }
 
 class FakeExerciseRepo implements ExerciseRepo {
@@ -305,6 +310,7 @@ class FakeExerciseRepo implements ExerciseRepo {
   BaseResponse<List<DifficultyLevelEntity>>? nextLevelsResult;
   BaseResponse<MuscleGroupsEntity>? nextMuscleGroupsResult;
   BaseResponse<MusclesByGroupEntity>? nextMusclesByGroupResult;
+  BaseResponse<int>? nextTotalExercisesResult;
   String? lastMuscleGroupId;
   Completer<BaseResponse<ExercisesListEntity>>? completer;
 
@@ -366,6 +372,17 @@ class FakeExerciseRepo implements ExerciseRepo {
           MusclesByGroupEntity(message: '', totalMuscles: 0, muscles: []),
         );
   }
+
+  @override
+  Future<BaseResponse<int>> getTotalExercisesByMuscleDifficulty({
+    required String muscleId,
+    required String difficultyLevelId,
+  }) async {
+    return nextTotalExercisesResult ?? const Success(10);
+  }
+
+  @override
+  noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }
 
 class FakeHttpClientAdapter implements HttpClientAdapter {

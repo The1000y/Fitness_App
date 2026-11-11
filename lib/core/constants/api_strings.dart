@@ -8,7 +8,8 @@ abstract class ApiStrings {
   static const String signup = '/auth/signup';
   static const String signin = '/auth/signin';
   static const String changePassword = '/auth/change-password';
-  static const String  uploadPhoto = '/auth/upload-photo'; // PUT (Bearer, form-data: photo, max 4MB)
+  static const String uploadPhoto =
+      '/auth/upload-photo'; // PUT (Bearer, form-data: photo, max 4MB)
   static const String profileData = '/auth/profile-data';
   static const String logout = '/auth/logout';
   static const String forgotPassword = '/auth/forgotPassword'; // POST
@@ -17,20 +18,21 @@ abstract class ApiStrings {
   static String get deleteMe => '/auth/deleteMe'; // DELETE
   static String get editProfile => '/auth/editProfile'; // PUT (Bearer)
 
-  static const String  levels = '/levels';
+  static const String levels = '/levels';
 
   static const String difficultyLevelsByPrimeMover =
       '/levels/difficulty-levels/by-prime-mover';
 
   static const String muscles = '/muscles';
-  static const String  randomMuscles = '/muscles/random';
+  static const String randomMuscles = '/muscles/random';
 
   static String musclesByGroupId(String muscleGroupId) =>
       '/musclesGroup/$muscleGroupId';
 
   static const String musclesByGroup = '/musclesGroup/by-muscle-group';
 
-  static const String primeMoversByMuscleGroup = '/musclesGroup/by-muscle-group';
+  static const String primeMoversByMuscleGroup =
+      '/musclesGroup/by-muscle-group';
 
   static const String exercises = '/exercises';
 

@@ -73,10 +73,7 @@ class _ProfileWebViewState extends State<ProfileWebView> {
                     ),
                   ),
                   Gap(12.h),
-                  TextButton(
-                    onPressed: _retry,
-                    child: Text(l10n.retry),
-                  ),
+                  TextButton(onPressed: _retry, child: Text(l10n.retry)),
                 ],
               ),
             )

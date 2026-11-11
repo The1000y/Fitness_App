@@ -51,9 +51,7 @@ void main() {
     });
 
     test('handles a response with no muscles', () {
-      final response = MusclesByGroupResponse.fromJson({
-        'message': 'success',
-      });
+      final response = MusclesByGroupResponse.fromJson({'message': 'success'});
       final entity = response.toEntity();
 
       expect(response.totalMuscles, isNull);
