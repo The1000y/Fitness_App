@@ -27,8 +27,8 @@ class HomeImageCardsShimmer extends StatelessWidget {
           scrollDirection: Axis.horizontal,
           physics: const NeverScrollableScrollPhysics(),
           itemCount: itemCount,
-          separatorBuilder: (_, __) => SizedBox(width: 12.w),
-          itemBuilder: (_, __) => Bone(
+          separatorBuilder: (_, _) => SizedBox(width: 12.w),
+          itemBuilder: (_, _) => Bone(
             width: size.w,
             height: size.h,
             borderRadius: BorderRadius.circular(20.r),
