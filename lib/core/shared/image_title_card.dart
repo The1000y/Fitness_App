@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 
-import '../theme/app_colors/app_colors.dart';
+import 'package:fitness_app/core/theme/app_colors/app_colors.dart';
 
 class ImageTitleCard extends StatelessWidget {
   final String imagePath;

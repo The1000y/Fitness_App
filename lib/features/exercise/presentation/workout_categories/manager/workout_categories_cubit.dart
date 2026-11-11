@@ -2,12 +2,12 @@ import 'dart:async';
 
 import 'package:injectable/injectable.dart';
 
-import '../../../../../config/base/base_cubit.dart';
-import '../../../../../config/base/base_response.dart';
-import '../../../../../config/base/base_state.dart';
-import '../../../../../config/base/base_ui_event.dart';
-import '../../../domain/use_cases/get_muscle_groups_use_case.dart';
-import '../../../domain/use_cases/get_muscles_by_group_use_case.dart';
+import 'package:fitness_app/config/base/base_cubit.dart';
+import 'package:fitness_app/config/base/base_response.dart';
+import 'package:fitness_app/config/base/base_state.dart';
+import 'package:fitness_app/config/base/base_ui_event.dart';
+import 'package:fitness_app/features/exercise/domain/use_cases/get_muscle_groups_use_case.dart';
+import 'package:fitness_app/features/exercise/domain/use_cases/get_muscles_by_group_use_case.dart';
 import 'workout_categories_event.dart';
 import 'workout_categories_state.dart';
 

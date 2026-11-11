@@ -2,15 +2,17 @@ import 'package:fitness_app/config/di/di.dart';
 import 'package:fitness_app/core/constants/app_images.dart';
 import 'package:fitness_app/core/shared/custom_background_image.dart';
 import 'package:fitness_app/core/theme/app_colors/app_colors.dart';
-import 'package:fitness_app/features/auth/domain/entities/login_entity/user_entity.dart';
 import 'package:fitness_app/features/home/presentation/manager/home_cubit.dart';
 import 'package:fitness_app/features/home/presentation/manager/home_event.dart';
-import 'package:fitness_app/features/home/presentation/manager/home_state.dart';
 import 'package:fitness_app/features/home/presentation/views/widgets/sections/home_categories.dart';
 import 'package:fitness_app/features/home/presentation/views/widgets/sections/home_food_categories.dart';
 import 'package:fitness_app/features/home/presentation/views/widgets/sections/home_popular_training.dart';
 import 'package:fitness_app/features/home/presentation/views/widgets/sections/home_random_muscles.dart';
 import 'package:fitness_app/features/home/presentation/views/widgets/sections/home_upcoming_workouts.dart';
+import 'package:fitness_app/features/profile/domain/entities/profile_entity.dart';
+import 'package:fitness_app/features/profile/presentation/manager/profile_cubit.dart';
+import 'package:fitness_app/features/profile/presentation/manager/profile_event.dart';
+import 'package:fitness_app/features/profile/presentation/manager/profile_state.dart';
 import 'package:fitness_app/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,8 +23,15 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => getIt<HomeCubit>()..onEvent(const HomeStarted()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (_) => getIt<HomeCubit>()..onEvent(const HomeStarted()),
+        ),
+        BlocProvider.value(
+          value: getIt<ProfileCubit>()..onEvent(const LoadProfile()),
+        ),
+      ],
       child: CustomBackgroundImage(
         backgroundImage: AppImages.layoutBackground,
         child: Scaffold(
@@ -33,11 +42,11 @@ class HomeView extends StatelessWidget {
               bottom: false,
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.w),
-                child: BlocSelector<HomeCubit, HomeState, UserEntity?>(
-                  selector: (state) => state.userState.data,
-                  builder: (context, user) => _Header(
-                    firstName: user?.firstName ?? '',
-                    photoUrl: user?.photo,
+                child: BlocSelector<ProfileCubit, ProfileState, ProfileEntity?>(
+                  selector: (state) => state.profileState.data,
+                  builder: (context, profile) => _Header(
+                    firstName: profile?.firstName ?? '',
+                    photoUrl: profile?.photo,
                   ),
                 ),
               ),

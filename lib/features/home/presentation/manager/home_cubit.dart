@@ -8,7 +8,7 @@ import 'package:fitness_app/features/exercise/domain/use_cases/get_muscle_groups
 import 'package:fitness_app/features/exercise/domain/use_cases/get_muscles_by_group_use_case.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../../auth/domain/use_cases/get_current_user_use_case.dart';
+//import '../../../auth/domain/use_cases/get_current_user_use_case.dart';
 import '../../../exercise/domain/entities/muscle_entity.dart';
 import '../../../exercise/domain/use_cases/get_random_muscles_use_case.dart';
 import '../../../meals/domain/use_cases/get_meals_categories_use_case.dart';
@@ -22,11 +22,11 @@ class HomeCubit extends BaseCubit<HomeState, CommonUiEvent> {
   final GetMuscleGroupsUseCase _getMuscleGroups;
   final GetMusclesByGroupUseCase _getMusclesByGroup;
   final GetMealsCategoriesUseCase _getMealCategories;
-  final GetCurrentUserUseCase _getCurrentUser;
+ // final GetCurrentUserUseCase _getCurrentUser;
   final GetPopularTrainingUseCase _getPopularTraining;
 
   HomeCubit(
-    this._getCurrentUser,
+   // this._getCurrentUser,
     this._getRandomMuscles,
     this._getMuscleGroups,
     this._getMusclesByGroup,
@@ -40,7 +40,7 @@ class HomeCubit extends BaseCubit<HomeState, CommonUiEvent> {
         unawaited(_loadRandomMuscles());
         unawaited(_loadMuscleGroups());
         unawaited(_loadMealCategories());
-        unawaited(_loadUser());
+       // unawaited(_loadUser());
       case HomeRandomMusclesRetried():
         unawaited(_loadRandomMuscles());
       case HomeMuscleGroupsRetried():
@@ -59,19 +59,19 @@ class HomeCubit extends BaseCubit<HomeState, CommonUiEvent> {
     }
   }
 
-  Future<void> _loadUser() async {
-    final result = await _getCurrentUser();
-    if (isClosed) return;
-
-    switch (result) {
-      case Success():
-        emit(state.copyWith(userState: BaseState(data: result.data)));
-      case Error():
-        emit(
-          state.copyWith(userState: BaseState(errorMessage: result.failure)),
-        );
-    }
-  }
+  // Future<void> _loadUser() async {
+  //   final result = await _getCurrentUser();
+  //   if (isClosed) return;
+  //
+  //   switch (result) {
+  //     case Success():
+  //       emit(state.copyWith(userState: BaseState(data: result.data)));
+  //     case Error():
+  //       emit(
+  //         state.copyWith(userState: BaseState(errorMessage: result.failure)),
+  //       );
+  //   }
+  // }
 
   Future<void> _loadRandomMuscles() async {
     if (state.randomMusclesState.isLoading) return;

@@ -4,11 +4,11 @@ import 'package:fitness_app/features/exercise/domain/entities/exercises_list_ent
 import 'package:fitness_app/features/exercise/domain/use_cases/get_difficulty_levels_use_case.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../../../../config/base/base_cubit.dart';
-import '../../../../../config/base/base_response.dart';
-import '../../../../../config/base/base_state.dart';
-import '../../../../../config/base/base_ui_event.dart';
-import '../../../domain/use_cases/get_exercises_use_case.dart';
+import 'package:fitness_app/config/base/base_cubit.dart';
+import 'package:fitness_app/config/base/base_response.dart';
+import 'package:fitness_app/config/base/base_state.dart';
+import 'package:fitness_app/config/base/base_ui_event.dart';
+import 'package:fitness_app/features/exercise/domain/use_cases/get_exercises_use_case.dart';
 import 'exercise_details_event.dart';
 import 'exercise_details_state.dart';
 

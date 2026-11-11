@@ -6,14 +6,12 @@ import 'package:fitness_app/features/auth/domain/entities/params/reset_password_
 import 'package:fitness_app/features/auth/domain/entities/params/verify_otp_param.dart';
 import 'package:fitness_app/features/auth/domain/entities/register_entity/register_response_entity.dart';
 
-import '../entities/login_entity/user_entity.dart';
-
 abstract interface class AuthRepo {
   Future<BaseResponse<LoginEntity>> login({
     required String email,
     required String password,
   });
-  Future<BaseResponse<UserEntity>> getCurrentUser();
+
   Future<BaseResponse<RegisterResponeEntity>> register(RegisterParams params);
   Future<BaseResponse<void>> forgetPassword(ForgetPasswordParam email);
   Future<BaseResponse<void>> resetPassword(ResetPasswordParam restPassword);

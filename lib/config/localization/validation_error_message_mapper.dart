@@ -15,6 +15,7 @@ String? mapValidationErrorToMessage(
     ValidationError.passwordStrongRules => l10n.passwordStrongRules,
     ValidationError.confirmPasswordRequired => l10n.confirmPasswordRequired,
     ValidationError.confirmPasswordMismatch => l10n.confirmPasswordMismatch,
+    ValidationError.newPasswordSameAsOld => l10n.newPasswordSameAsOld,
     ValidationError.usernameRequired => l10n.usernameRequired,
     ValidationError.usernameMinLength => l10n.usernameMinLength,
     ValidationError.firstNameRequired => l10n.firstNameRequired,

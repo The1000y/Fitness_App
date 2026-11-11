@@ -47,6 +47,7 @@ class ExerciseVideoHeaderDelegate extends SliverPersistentHeaderDelegate {
           videoUrl: exercise.shortYoutubeDemonstrationLink,
           thumbnailImage:
               exercise.shortYoutubeDemonstrationLink.youtubeThumbnail,
+          autoPlay: autoPlay,
           overlayContent: Opacity(
             opacity: 1 - progress,
             child: ExerciseHeroInfo(muscleName: muscleName),

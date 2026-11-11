@@ -83,7 +83,7 @@ class VideoPlayerContent extends StatelessWidget {
                     color: AppColors.primary,
                   ),
                   label: Text(
-                    AppLocalizations.of(context)!.cancel,
+                    AppLocalizations.of(context)!.closeVideo,
                     style: theme.textTheme.bodyMedium!.copyWith(
                       color: AppColors.primary,
                     ),

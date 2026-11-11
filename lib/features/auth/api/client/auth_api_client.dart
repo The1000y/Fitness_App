@@ -5,7 +5,7 @@ import 'package:fitness_app/features/auth/data/model/requests/login_request/logi
 import 'package:fitness_app/features/auth/data/model/requests/register_request/register_request.dart';
 import 'package:fitness_app/features/auth/data/model/requests/reset_password_request/reset_password_request.dart';
 import 'package:fitness_app/features/auth/data/model/requests/verify_otp_request/verify_otp_request.dart';
-import 'package:fitness_app/features/auth/data/model/responces/register_request/register_response.dart';
+import 'package:fitness_app/features/auth/data/model/responses/register_request/register_response.dart';
 import 'package:fitness_app/features/auth/data/model/responses/login_response/login_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
@@ -16,7 +16,8 @@ part 'auth_api_client.g.dart';
 @RestApi()
 abstract class AuthApiClient {
   @factoryMethod
-  factory AuthApiClient(@Named(ApiStrings.namedFitnessDio) Dio dio) = _AuthApiClient;
+  factory AuthApiClient(@Named(ApiStrings.namedFitnessDio) Dio dio) =
+      _AuthApiClient;
 
   @POST(ApiStrings.signin)
   Future<LoginResponse> login(@Body() LoginRequest request);

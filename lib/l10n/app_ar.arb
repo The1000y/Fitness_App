@@ -27,7 +27,7 @@
   "onboardingTitle3": "لا مزيد من الأعذار. ابدأ الآن",
   "onboardingDescription": "Lorem ipsum dolor sit amet consectetur. Eu urna ut gravida quis id pretium purus. Mauris massa",
   "loginTitleOne": "أهلاً بك",
-  "loginTitleTwo": "مرحباً عودتك" ,
+  "loginTitleTwo": "مرحباً عودتك",
   "login": "تسجيل الدخول",
   "email": "البريد الإلكتروني",
   "password": "كلمة المرور",
@@ -187,6 +187,8 @@
   "yourGoalTapToEdit": "هدفك (اضغط للتعديل)",
   "yourActivityTapToEdit": "مستوى نشاطك (اضغط للتعديل)",
   "closeAppConfirm": "هل أنت متأكد أنك تريد إغلاق التطبيق؟",
+  "logoutConfirm": "هل أنت متأكد أن تريد تسجيل الخروج؟",
+  "webViewLoadFailed": "تعذّر تحميل الصفحة",
   "accepted": "تم قبول الطلب بنجاح",
   "orderStatusUpdatedSuccessfully": "تم تحديث حالة الطلب بنجاح",
   "failureInternetConnection": "لا يوجد اتصال بالإنترنت. تحقق من الشبكة وحاول مرة أخرى.",
@@ -210,6 +212,7 @@
   "passwordStrongRules": "يجب أن تحتوي كلمة المرور على حرف كبير وحرف صغير ورقم ورمز خاص",
   "confirmPasswordRequired": "يرجى تأكيد كلمة المرور",
   "confirmPasswordMismatch": "كلمتا المرور غير متطابقتين",
+  "newPasswordSameAsOld": "يجب أن تختلف كلمة المرور الجديدة عن القديمة",
   "usernameRequired": "اسم المستخدم مطلوب",
   "usernameMinLength": "اسم المستخدم قصير جداً",
   "firstNameRequired": "الاسم الأول مطلوب",
@@ -261,11 +264,19 @@
   "retry": "إعادة المحاولة",
   "back": "رجوع",
   "unableToPlayVideo": "تعذر تشغيل الفيديو",
-  "cancel": "إغلاق الفيديو",
+  "closeVideo": "إغلاق الفيديو",
+  "cancel": "إلغاء",
   "exerciseNoExercisesFound": "لا توجد تمارين",
   "exerciseLoadFailed": "فشل تحميل التمارين",
   "goBack": "رجوع",
   "exercisesOfMuscle": "تمارين {muscleName}",
+  "@exercisesOfMuscle": {
+    "placeholders": {
+      "muscleName": {
+        "type": "String"
+      }
+    }
+  },
   "targetMuscles": "العضلات المستهدفة",
   "primeMover": "العضلة الرئيسية",
   "secondaryMuscle": "ثانوية",

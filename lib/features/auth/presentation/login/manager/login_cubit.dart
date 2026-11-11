@@ -2,12 +2,12 @@ import 'dart:async';
 
 import 'package:injectable/injectable.dart';
 
-import '../../../../../config/base/base_cubit.dart';
-import '../../../../../config/base/base_response.dart';
-import '../../../../../config/base/base_state.dart';
-import '../../../../../config/base/base_ui_event.dart';
-import '../../../../../config/routing/app_routes.dart';
-import '../../../domain/use_cases/login_use_case.dart';
+import 'package:fitness_app/config/base/base_cubit.dart';
+import 'package:fitness_app/config/base/base_response.dart';
+import 'package:fitness_app/config/base/base_state.dart';
+import 'package:fitness_app/config/base/base_ui_event.dart';
+import 'package:fitness_app/config/routing/app_routes.dart';
+import 'package:fitness_app/features/auth/domain/use_cases/login_use_case.dart';
 import 'login_event.dart';
 import 'login_state.dart';
 

@@ -7,7 +7,7 @@ import 'package:fitness_app/features/exercise/domain/entities/muscles_by_group_e
 import 'package:fitness_app/features/exercise/domain/repo/exercise_repo.dart';
 import 'package:injectable/injectable.dart';
 
-import '../data_source/remote/exercise_remote_data_source.dart';
+import 'package:fitness_app/features/exercise/data/data_source/remote/exercise_remote_data_source.dart';
 
 @Injectable(as: ExerciseRepo)
 class ExerciseRepoImpl implements ExerciseRepo {

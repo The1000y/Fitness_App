@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../constants/app_icons.dart';
-import '../theme/app_colors/app_colors.dart';
+import 'package:fitness_app/core/constants/app_icons.dart';
+import 'package:fitness_app/core/theme/app_colors/app_colors.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar({

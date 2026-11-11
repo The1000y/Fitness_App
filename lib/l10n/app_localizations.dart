@@ -884,6 +884,18 @@ abstract class AppLocalizations {
   /// **'Are you sure you want to close the application?'**
   String get closeAppConfirm;
 
+  /// No description provided for @logoutConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to log out?'**
+  String get logoutConfirm;
+
+  /// No description provided for @webViewLoadFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load the page'**
+  String get webViewLoadFailed;
+
   /// No description provided for @accepted.
   ///
   /// In en, this message translates to:
@@ -1021,6 +1033,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Passwords do not match'**
   String get confirmPasswordMismatch;
+
+  /// No description provided for @newPasswordSameAsOld.
+  ///
+  /// In en, this message translates to:
+  /// **'New password must be different from the old password'**
+  String get newPasswordSameAsOld;
 
   /// No description provided for @usernameRequired.
   ///
@@ -1250,10 +1268,16 @@ abstract class AppLocalizations {
   /// **'Unable to play video'**
   String get unableToPlayVideo;
 
+  /// No description provided for @closeVideo.
+  ///
+  /// In en, this message translates to:
+  /// **'Close video'**
+  String get closeVideo;
+
   /// No description provided for @cancel.
   ///
   /// In en, this message translates to:
-  /// **'cancel the video'**
+  /// **'Cancel'**
   String get cancel;
 
   /// No description provided for @exerciseNoExercisesFound.

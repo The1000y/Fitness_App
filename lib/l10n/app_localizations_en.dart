@@ -419,6 +419,12 @@ class AppLocalizationsEn extends AppLocalizations {
       'Are you sure you want to close the application?';
 
   @override
+  String get logoutConfirm => 'Are you sure you want to log out?';
+
+  @override
+  String get webViewLoadFailed => 'Couldn\'t load the page';
+
+  @override
   String get accepted => 'Order accepted successfully';
 
   @override
@@ -495,6 +501,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get confirmPasswordMismatch => 'Passwords do not match';
+
+  @override
+  String get newPasswordSameAsOld =>
+      'New password must be different from the old password';
 
   @override
   String get usernameRequired => 'Username is required';
@@ -615,7 +625,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get unableToPlayVideo => 'Unable to play video';
 
   @override
-  String get cancel => 'cancel the video';
+  String get closeVideo => 'Close video';
+
+  @override
+  String get cancel => 'Cancel';
 
   @override
   String get exerciseNoExercisesFound => 'No exercises found';

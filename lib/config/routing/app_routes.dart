@@ -42,4 +42,5 @@ abstract final class AppRoutes {
   static const String editWeight = '/edit-weight';
   static const String editGoal = '/edit-goal';
   static const String editActivity = '/edit-activity';
+  static const String webView = '/web-view';
 }

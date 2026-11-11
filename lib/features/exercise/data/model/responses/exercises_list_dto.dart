@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
-import '../../../domain/entities/exercises_list_entity.dart';
+import 'package:fitness_app/features/exercise/domain/entities/exercises_list_entity.dart';
 import 'exercise_dto.dart';
 
 part 'exercises_list_dto.g.dart';
