@@ -274,5 +274,6 @@
   "tryAgain": "حاول مرة أخرى",
   "noCategoriesAvailable": "لا توجد فئات متاحة",
   "couldNotLoadCategories": "تعذر تحميل الفئات",
-  "dataNotAvailable": "البيانات غير متوفرة حالياً."
+  "dataNotAvailable": "البيانات غير متوفرة حالياً.",
+    "typeYourMessage": "أكتب رسالتك"
 }

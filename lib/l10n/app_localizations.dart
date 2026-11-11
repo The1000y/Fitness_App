@@ -1339,6 +1339,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Data is currently unavailable.'**
   String get dataNotAvailable;
+
+  /// No description provided for @typeYourMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter Your Message'**
+  String get typeYourMessage;
 }
 
 class _AppLocalizationsDelegate

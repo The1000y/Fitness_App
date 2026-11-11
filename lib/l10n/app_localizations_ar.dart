@@ -658,4 +658,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get dataNotAvailable => 'البيانات غير متوفرة حالياً.';
+
+  @override
+  String get typeYourMessage => 'أكتب رسالتك';
 }

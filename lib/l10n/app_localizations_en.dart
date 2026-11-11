@@ -663,4 +663,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get dataNotAvailable => 'Data is currently unavailable.';
+
+  @override
+  String get typeYourMessage => 'Enter Your Message';
 }

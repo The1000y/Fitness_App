@@ -19,6 +19,9 @@ abstract final class AppImages {
       '$_basePath/backgrounds/layout_background.png';
   static const String onboardingBackground =
       '$_basePath/backgrounds/onboarding_background.png';
+  static const String senderBackground =
+      '$_basePath/1.png';
+   
 
   // Avatars (O15_1 to O15_36)
   static String avatar(int index) => '$_basePath/avatars/O15_$index.png';
