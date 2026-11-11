@@ -137,8 +137,8 @@ class WorkoutMusclesGrid extends StatelessWidget {
   context,
   AppRoutes.exerciseDetails,
   arguments: ExerciseDetailsArgs(
-    primeMoverMuscleId: muscle.id,   // ID العضلة اللي دوست عليها
-    muscleName: muscle.name,         // اسمها للعنوان
+    primeMoverMuscleId: muscle.id, 
+    muscleName: muscle.name,       
   ),
 ),
               
