@@ -22,8 +22,8 @@ class PopularTrainingShimmer extends StatelessWidget {
           scrollDirection: Axis.horizontal,
           physics: const NeverScrollableScrollPhysics(),
           itemCount: itemCount,
-          separatorBuilder: (_, __) => SizedBox(width: 12.w),
-          itemBuilder: (_, __) => const PopularTrainingCardShimmer(),
+          separatorBuilder: (_, _) => SizedBox(width: 12.w),
+          itemBuilder: (_, _) => const PopularTrainingCardShimmer(),
         ),
       ),
     );
