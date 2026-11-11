@@ -218,6 +218,15 @@ class AppLocalizationsAr extends AppLocalizations {
   String get category => 'الفئة';
 
   @override
+  String get noCategoriesAvailable => 'لا توجد فئات متاحة';
+
+  @override
+  String get selectCategory => 'اختر فئة';
+
+  @override
+  String get noMusclesAvailable => 'لا توجد عضلات متاحة';
+
+  @override
   String get categoryGym => 'الجيم';
 
   @override
@@ -354,6 +363,9 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
+  String get iamYourSmartCoach => 'أنا مدربك الذكي';
+
+  @override
   String get chatHelpPrompt => 'كيف يمكنني مساعدتك اليوم؟';
 
   @override
@@ -400,6 +412,12 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get closeAppConfirm => 'هل أنت متأكد أنك تريد إغلاق التطبيق؟';
+
+  @override
+  String get logoutConfirm => 'هل أنت متأكد أن تريد تسجيل الخروج؟';
+
+  @override
+  String get webViewLoadFailed => 'تعذّر تحميل الصفحة';
 
   @override
   String get accepted => 'تم قبول الطلب بنجاح';
@@ -476,6 +494,10 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get confirmPasswordMismatch => 'كلمتا المرور غير متطابقتين';
+
+  @override
+  String get newPasswordSameAsOld =>
+      'يجب أن تختلف كلمة المرور الجديدة عن القديمة';
 
   @override
   String get usernameRequired => 'اسم المستخدم مطلوب';
@@ -596,7 +618,54 @@ class AppLocalizationsAr extends AppLocalizations {
   String get unableToPlayVideo => 'تعذر تشغيل الفيديو';
 
   @override
-  String get cancel => 'إغلاق الفيديو';
+  String get closeVideo => 'إغلاق الفيديو';
+
+  @override
+  String get cancel => 'إلغاء';
+
+  @override
+  String get exerciseNoExercisesFound => 'لا توجد تمارين';
+
+  @override
+  String get exerciseLoadFailed => 'فشل تحميل التمارين';
+
+  @override
+  String get goBack => 'رجوع';
+
+  @override
+  String exercisesOfMuscle(String muscleName) {
+    return 'تمارين $muscleName';
+  }
+
+  @override
+  String get targetMuscles => 'العضلات المستهدفة';
+
+  @override
+  String get primeMover => 'العضلة الرئيسية';
+
+  @override
+  String get secondaryMuscle => 'ثانوية';
+
+  @override
+  String get tertiaryMuscle => 'ثالثية';
+
+  @override
+  String get exerciseDetailsTitle => 'التفاصيل';
+
+  @override
+  String get bodyRegion => 'منطقة الجسم';
+
+  @override
+  String get targetGroup => 'المجموعة المستهدفة';
+
+  @override
+  String get shortDemo => 'عرض مختصر';
+
+  @override
+  String get tapToPlayDemo => 'اضغط لتشغيل العرض';
+
+  @override
+  String get tapToStopDemo => 'اضغط لإيقاف العرض';
 
   @override
   String get otpRequired => 'رمز التحقق مطلوب';
@@ -651,9 +720,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get tryAgain => 'حاول مرة أخرى';
 
   @override
-  String get noCategoriesAvailable => 'لا توجد فئات متاحة';
-
-  @override
   String get couldNotLoadCategories => 'تعذر تحميل الفئات';
 
   @override
@@ -661,4 +727,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get typeYourMessage => 'أكتب رسالتك';
+
+  @override
+  String get hi => 'أهلاً بك';
 }

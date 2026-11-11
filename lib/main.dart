@@ -8,15 +8,18 @@ import 'package:fitness_app/core/theme/app_themes/app_theme.dart';
 import 'package:fitness_app/features/app/presentation/cubit/auth/app_auth_cubit.dart';
 import 'package:fitness_app/features/app/presentation/cubit/auth/app_auth_state.dart';
 import 'package:fitness_app/features/app/presentation/cubit/auth/app_auth_ui_event.dart';
+import 'package:fitness_app/features/app/presentation/cubit/locale/app_locale_cubit.dart';
 import 'package:fitness_app/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 
-Future<void> main() async{
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await configureDependencies();
   await getIt<DatabaseAssetInstaller>().ensureDatabasesInstalled();
+  await getIt<AppLocaleCubit>().load();
   runApp(const FitnessApp());
 }
 
@@ -30,43 +33,52 @@ class FitnessApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       ensureScreenSize: true,
-      child: MaterialApp(
-        builder: (context, child) {
-          return BaseUiEventListener<
-            AppAuthCubit,
-            AppAuthState,
-            AppAuthUiEvent
-          >(
-            cubit: getIt<AppAuthCubit>(),
-            onCustomEvent: (context, event) {
-              if (event is SessionExpiredUiEvent) {
-                final local = AppLocalizations.of(context)!;
+      child: BlocProvider.value(
+        value: getIt<AppLocaleCubit>(),
+        child: BlocBuilder<AppLocaleCubit, Locale>(
+          builder: (context, locale) {
+            return MaterialApp(
+              locale: locale,
+              builder: (context, child) {
+                return BaseUiEventListener<
+                  AppAuthCubit,
+                  AppAuthState,
+                  AppAuthUiEvent
+                >(
+                  cubit: getIt<AppAuthCubit>(),
+                  onCustomEvent: (context, event) {
+                    if (event is SessionExpiredUiEvent) {
+                      final local = AppLocalizations.of(context)!;
 
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    backgroundColor: AppColors.accent,
-                    content: Text(local.failureUnauthorized),
-                  ),
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          backgroundColor: AppColors.accent,
+                          content: Text(local.failureUnauthorized),
+                        ),
+                      );
+
+                      Navigator.of(context).pushNamedAndRemoveUntil(
+                        AppRoutes.login,
+                        (route) => false,
+                      );
+                    }
+                  },
+                  child: child!,
                 );
-
-                Navigator.of(
-                  context,
-                ).pushNamedAndRemoveUntil(AppRoutes.login, (route) => false);
-              }
-            },
-            child: child!,
-          );
-        },
-        theme: AppTheme.lightTheme,
-        localizationsDelegates: [
-          AppLocalizations.delegate,
-          ...GlobalMaterialLocalizations.delegates,
-        ],
-        supportedLocales: AppLocalizations.supportedLocales,
-        debugShowCheckedModeBanner: false,
-        title: 'Fitness App',
-        initialRoute: AppRoutes.main,
-        onGenerateRoute: GenerateRoutes.generateRoute,
+              },
+              theme: AppTheme.lightTheme,
+              localizationsDelegates: [
+                AppLocalizations.delegate,
+                ...GlobalMaterialLocalizations.delegates,
+              ],
+              supportedLocales: AppLocalizations.supportedLocales,
+              debugShowCheckedModeBanner: false,
+              title: 'Fitness App',
+              initialRoute: AppRoutes.main,
+              onGenerateRoute: GenerateRoutes.generateRoute,
+            );
+          },
+        ),
       ),
     );
   }

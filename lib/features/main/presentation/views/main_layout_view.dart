@@ -1,14 +1,11 @@
 import 'package:fitness_app/config/routing/app_routes.dart';
 import 'package:fitness_app/core/constants/app_test_keys.dart';
-import 'package:fitness_app/core/shared/custom_button.dart';
-import 'package:fitness_app/core/theme/app_colors/app_colors.dart';
+import 'package:fitness_app/core/shared/confirmation_dialog.dart';
 import 'package:fitness_app/features/main/presentation/views/widgets/custom_floating_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
-import 'package:gap/gap.dart';
 
-import '../../../../l10n/app_localizations.dart';
+import 'package:fitness_app/l10n/app_localizations.dart';
 
 class MainLayoutView extends StatefulWidget {
   final List<Widget> tabs;
@@ -34,63 +31,15 @@ class _MainLayoutViewState extends State<MainLayoutView> {
     if (Theme.of(context).platform != TargetPlatform.android) return;
     final l10n = AppLocalizations.of(context)!;
 
-    final shouldClose = await showDialog<bool>(
-      context: context,
-      barrierColor: AppColors.black.withValues(alpha: 0.50),
-      builder: (dialogContext) {
-        return Dialog(
-          key: const Key(AppTestKeys.closeAppDialog),
-          backgroundColor: AppColors.surface,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(24.r),
-          ),
-          insetPadding: EdgeInsets.symmetric(horizontal: 28.w),
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 26.h),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  l10n.closeAppConfirm,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: AppColors.textPrimary,
-                    fontSize: 20.sp,
-                    fontWeight: FontWeight.w800,
-                    height: 1.35,
-                  ),
-                ),
-                const Gap(24),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    CustomButton(
-                      key: const Key(AppTestKeys.closeAppDialogNoButton),
-                      label: l10n.no,
-                      onPressed: () => Navigator.of(dialogContext).pop(false),
-                      variant: ButtonVariant.outlined,
-                      width: 80.w,
-                      height: 38.h,
-                    ),
-                    CustomButton(
-                      key: const Key(AppTestKeys.closeAppDialogYesButton),
-                      label: l10n.yes,
-                      onPressed: () => Navigator.of(dialogContext).pop(true),
-                      variant: ButtonVariant.filled,
-                      enabled: true,
-                      width: 80.w,
-                      height: 38.h,
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        );
-      },
+    final shouldClose = await showConfirmationDialog(
+      context,
+      message: l10n.closeAppConfirm,
+      dialogKey: const Key(AppTestKeys.closeAppDialog),
+      noButtonKey: const Key(AppTestKeys.closeAppDialogNoButton),
+      yesButtonKey: const Key(AppTestKeys.closeAppDialogYesButton),
     );
 
-    if (shouldClose == true) {
+    if (shouldClose) {
       await SystemNavigator.pop();
     }
   }

@@ -1,6 +1,12 @@
 import 'package:fitness_app/features/auth/data/model/responses/login_response/login_response.dart';
 import 'package:fitness_app/features/auth/domain/entities/login_entity/login_entity.dart';
 import 'package:fitness_app/features/auth/domain/entities/login_entity/user_entity.dart';
+import 'package:fitness_app/features/exercise/data/model/responses/difficulty_levels_dto.dart';
+import 'package:fitness_app/features/exercise/data/model/responses/exercise_dto.dart';
+import 'package:fitness_app/features/exercise/data/model/responses/exercises_list_dto.dart';
+import 'package:fitness_app/features/exercise/domain/entities/difficulty_level_entity.dart';
+import 'package:fitness_app/features/exercise/domain/entities/exercise_entity.dart';
+import 'package:fitness_app/features/exercise/domain/entities/exercises_list_entity.dart';
 import 'package:fitness_app/features/meals/data/model/details_meal_dto.dart';
 import 'package:fitness_app/features/meals/data/model/details_meal_response.dart';
 import 'package:fitness_app/features/meals/domain/entities/details_meal_entity.dart';
@@ -34,75 +40,116 @@ class TestData {
   static LoginEntity get loginEntity => loginResponse.toEntity();
   static UserEntity get userEntity => loginEntity.user;
 
-  // Meal test data
-  static const String mealId = '52959';
-  static const String mealName = 'Baked salmon with fennel & tomatoes';
-  static const String mealCategory = 'Seafood';
-  static const String mealArea = 'British';
-  static const String mealInstructions = 'Heat oven to 180C/160C fan/gas 4...';
+  static const String primeMoverMuscleId = 'muscle_chest';
+  static const String difficultyLevelId = 'difficulty_intermediate';
+
+  static const Map<String, dynamic> difficultyLevelsResponseJson = {
+    'message': 'Success',
+    'totalLevels': 2,
+    'difficulty_levels': [
+      {'id': 'difficulty_beginner', 'name': 'Beginner'},
+      {'id': 'difficulty_intermediate', 'name': 'Intermediate'},
+    ],
+  };
+
+  static DifficultyLevelsDto get difficultyLevelsResponse =>
+      DifficultyLevelsDto.fromJson(difficultyLevelsResponseJson);
+
+  static List<DifficultyLevelEntity> get difficultyLevelsEntity =>
+      difficultyLevelsResponse.toEntity();
+
+  static const Map<String, dynamic> exerciseResponseJson = {
+    '_id': 'exercise_1',
+    'exercise': 'Push Up',
+    'difficulty_level': 'Intermediate',
+    'target_muscle_group': 'Chest',
+    'prime_mover_muscle': 'Pectoralis Major',
+    'secondary_muscle': 'Triceps',
+    'tertiary_muscle': 'Anterior Deltoid',
+    'primary_equipment': 'Bodyweight',
+    'secondary_equipment': 'None',
+    'short_youtube_demonstration_link':
+        'https://www.youtube.com/watch?v=abc123',
+    'in_depth_youtube_explanation_link':
+        'https://www.youtube.com/watch?v=xyz789',
+    'body_region': 'Upper Body',
+    'mechanics': 'Compound',
+  };
+
+  static const Map<String, dynamic> exercisesListResponseJson = {
+    'message': 'Success',
+    'totalExercises': 2,
+    'totalPages': 1,
+    'currentPage': 1,
+    'exercises': [
+      exerciseResponseJson,
+      {
+        '_id': 'exercise_2',
+        'exercise': 'Dumbbell Fly',
+        'difficulty_level': 'Beginner',
+        'target_muscle_group': 'Chest',
+        'prime_mover_muscle': 'Pectoralis Major',
+        'secondary_muscle': 'Anterior Deltoid',
+        'tertiary_muscle': null,
+        'primary_equipment': 'Dumbbell',
+        'secondary_equipment': 'Bench',
+        'short_youtube_demonstration_link':
+            'https://www.youtube.com/watch?v=def456',
+        'in_depth_youtube_explanation_link': null,
+        'body_region': 'Upper Body',
+        'mechanics': 'Isolation',
+      },
+    ],
+  };
+
+  static ExerciseDto get exerciseResponse =>
+      ExerciseDto.fromJson(exerciseResponseJson);
+  static ExerciseEntity get exerciseEntity => exerciseResponse.toEntity();
+  static ExercisesListDto get exercisesListResponse =>
+      ExercisesListDto.fromJson(exercisesListResponseJson);
+  static ExercisesListEntity get exercisesListEntity =>
+      exercisesListResponse.toEntity();
+  static ExerciseEntity get emptyLinkExerciseEntity => const ExerciseEntity(
+    id: 'exercise_3',
+    exercise: 'Plank',
+    difficultyLevel: 'Beginner',
+    targetMuscleGroup: 'Core',
+    primeMoverMuscle: 'Rectus Abdominis',
+    primaryEquipment: 'Bodyweight',
+    shortYoutubeDemonstrationLink: '',
+    bodyRegion: 'Core',
+    mechanics: 'Isolation',
+  );
+
+  static const String mealId = '52772';
+  static const String mealName = 'Teriyaki Chicken Casserole';
+  static const String mealCategory = 'Chicken';
+  static const String mealArea = 'Japanese';
+  static const String mealInstructions =
+      'Preheat oven to 350 degrees F. Combine soy sauce and water.';
   static const String mealThumb =
-      'https://www.themealdb.com/images/media/meals/1548772327.jpg';
+      'https://www.themealdb.com/images/media/meals/wvpsxx1468256321.jpg';
   static const String mealYoutube =
       'https://www.youtube.com/watch?v=4aZr5hZXP_s';
-  static const String mealTags = 'Fish,Keto';
-  static const String mealSource =
-      'https://www.bbcgoodfood.com/recipes/baked-salmon-fennel-tomatoes';
+  static const String mealTags = 'Meat,Casserole';
+  static const String mealSource = 'https://www.themealdb.com/meal/52772';
 
   static const Map<String, dynamic> detailsMealDtoJson = {
     'idMeal': mealId,
     'strMeal': mealName,
-    'strMealAlternate': null,
     'strCategory': mealCategory,
     'strArea': mealArea,
-    'strCountry': null,
     'strInstructions': mealInstructions,
     'strMealThumb': mealThumb,
     'strTags': mealTags,
     'strYoutube': mealYoutube,
-    'strIngredient1': 'Salmon',
-    'strIngredient2': 'Fennel',
-    'strIngredient3': 'Cherry Tomatoes',
-    'strIngredient4': '',
-    'strIngredient5': null,
-    'strIngredient6': null,
-    'strIngredient7': null,
-    'strIngredient8': null,
-    'strIngredient9': null,
-    'strIngredient10': null,
-    'strIngredient11': null,
-    'strIngredient12': null,
-    'strIngredient13': null,
-    'strIngredient14': null,
-    'strIngredient15': null,
-    'strIngredient16': null,
-    'strIngredient17': null,
-    'strIngredient18': null,
-    'strIngredient19': null,
-    'strIngredient20': null,
-    'strMeasure1': '2 fillets',
-    'strMeasure2': '1 bulb',
-    'strMeasure3': '150g',
-    'strMeasure4': '',
-    'strMeasure5': null,
-    'strMeasure6': null,
-    'strMeasure7': null,
-    'strMeasure8': null,
-    'strMeasure9': null,
-    'strMeasure10': null,
-    'strMeasure11': null,
-    'strMeasure12': null,
-    'strMeasure13': null,
-    'strMeasure14': null,
-    'strMeasure15': null,
-    'strMeasure16': null,
-    'strMeasure17': null,
-    'strMeasure18': null,
-    'strMeasure19': null,
-    'strMeasure20': null,
     'strSource': mealSource,
-    'strImageSource': null,
-    'strCreativeCommonsConfirmed': null,
-    'dateModified': null,
+    'strIngredient1': 'Salmon',
+    'strMeasure1': '2 fillets',
+    'strIngredient2': 'Fennel',
+    'strMeasure2': '1 bulb',
+    'strIngredient3': 'Olive Oil',
+    'strMeasure3': '2 tbsp',
   };
 
   static const Map<String, dynamic> detailsMealResponseJson = {
@@ -114,9 +161,4 @@ class TestData {
   static DetailsMealResponse get detailsMealResponse =>
       DetailsMealResponse.fromJson(detailsMealResponseJson);
   static DetailsMealEntity get detailsMealEntity => detailsMealDto.toEntity();
-  static List<IngredientEntity> get sampleIngredients => [
-    const IngredientEntity(name: 'Salmon', measure: '2 fillets'),
-    const IngredientEntity(name: 'Fennel', measure: '1 bulb'),
-    const IngredientEntity(name: 'Cherry Tomatoes', measure: '150g'),
-  ];
 }

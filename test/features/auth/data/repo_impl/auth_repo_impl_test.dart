@@ -36,7 +36,7 @@ void main() {
   setUp(() {
     fakeRemote = FakeRemoteDataSource();
     mockRemoteDataSource = MockAuthRemoteDataSource();
-    repo = AuthRepoImpl(fakeRemote, mockRemoteDataSource);
+    repo = AuthRepoImpl(mockRemoteDataSource);
     repository = repo;
   });
 

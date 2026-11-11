@@ -5,15 +5,18 @@ import 'package:fitness_app/core/shared/custom_app_bar.dart';
 import 'package:fitness_app/core/shared/custom_blur_card.dart';
 import 'package:fitness_app/core/shared/custom_button.dart';
 import 'package:fitness_app/features/chat/presentation/view/widget/prefrence_borading_chat.dart';
+import 'package:fitness_app/features/profile/presentation/manager/profile_cubit.dart';
+import 'package:fitness_app/features/profile/presentation/manager/profile_state.dart';
 // import 'package:fitness_app/features/chat/presentation/view/widget/previous_conversations_drawer.dart';
 import 'package:fitness_app/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 
-import '../../../../core/constants/app_images.dart';
-import '../../../../core/shared/custom_background_image.dart';
+import 'package:fitness_app/core/constants/app_images.dart';
+import 'package:fitness_app/core/shared/custom_background_image.dart';
 
 class ChatView extends StatelessWidget {
   const ChatView({super.key});
@@ -42,17 +45,22 @@ class ChatView extends StatelessWidget {
               },
             ),
           ],
-          titleWidget: Column(
-            children: [
-              Text('Hi $name , ', style: theme.textTheme.titleMedium),
-              Text(
-                'I am your smart coach',
-                style: theme.textTheme.bodyLarge!.copyWith(
-                  fontWeight: FontWeight.w800,
-                  fontSize: 20,
-                ),
-              ),
-            ],
+          titleWidget: BlocBuilder<ProfileCubit, ProfileState>(
+            bloc: getIt<ProfileCubit>(),
+            builder: (context, state) {
+              return Column(
+                      children: [
+                        Text('${l10n.hi} , ${state.profileState.data?.firstName} ${state.profileState.data?.lastName}', style: theme.textTheme.titleMedium),
+                        Text(
+                          l10n.iamYourSmartCoach,
+                          style: theme.textTheme.bodyLarge!.copyWith(
+                            fontWeight: FontWeight.w800,
+                            fontSize: 20,
+                          ),
+                        ),
+                      ],
+                    );
+            },
           ),
         ),
         body: Column(

@@ -9,7 +9,7 @@ import 'package:fitness_app/features/meals/domain/entities/meal_category_entity.
 import 'package:fitness_app/features/meals/domain/entities/meal_entity.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../domain/repo/meals_repo.dart';
+import 'package:fitness_app/features/meals/domain/repo/meals_repo.dart';
 
 @Injectable(as: MealsRepo)
 class MealsRepoImpl implements MealsRepo {

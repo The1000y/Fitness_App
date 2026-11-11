@@ -1,3 +1,4 @@
+import 'package:fitness_app/config/di/di.dart';
 import 'package:fitness_app/core/constants/app_icons.dart';
 import 'package:fitness_app/core/constants/app_images.dart';
 import 'package:fitness_app/core/shared/custom_app_bar.dart';
@@ -5,8 +6,11 @@ import 'package:fitness_app/core/shared/custom_background_image.dart';
 import 'package:fitness_app/core/theme/app_colors/app_colors.dart';
 import 'package:fitness_app/features/chat/presentation/view/widget/custom_chat_message.dart';
 import 'package:fitness_app/features/chat/presentation/view/widget/previous_conversations_drawer.dart';
+import 'package:fitness_app/features/profile/presentation/manager/profile_cubit.dart';
+import 'package:fitness_app/features/profile/presentation/manager/profile_state.dart';
 import 'package:fitness_app/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 class MessageModel {
@@ -65,12 +69,13 @@ class _MessageViewState extends State<MessageView> {
     return CustomBackgroundImage(
       backgroundImage: AppImages.chatBackground,
       child: Scaffold(
-        endDrawer: PreviousConversationsDrawer(onNewChat: () {
-          setState(() {
-            messages.clear();
-          });
-          
-        }),
+        endDrawer: PreviousConversationsDrawer(
+          onNewChat: () {
+            setState(() {
+              messages.clear();
+            });
+          },
+        ),
         backgroundColor: Colors.transparent,
         appBar: CustomAppBar(
           actions: [
@@ -94,15 +99,22 @@ class _MessageViewState extends State<MessageView> {
         ),
         body: messages.isEmpty
             ? Center(child: Image.asset(AppImages.robotSkippingWithARope))
-            : ListView.builder(
-                itemCount: messages.length,
-                itemBuilder: (context, index) {
-                  var message = messages[index];
-                  return CustomChatMessage(
-                    text: message.text,
-                    isSender: message.isUser,
-                    senderAvatar: AssetImage(AppImages.senderBackground),
-                    receiverAvatar: AssetImage(AppImages.robotChat),
+            : BlocBuilder<ProfileCubit, ProfileState>(
+                bloc: getIt<ProfileCubit>(),
+                builder: (context, state) {
+                  return ListView.builder(
+                    itemCount: messages.length,
+                    itemBuilder: (context, index) {
+                      var message = messages[index];
+                      return CustomChatMessage(
+                        text: message.text,
+                        isSender: message.isUser,
+                        senderAvatar: NetworkImage(
+                          state.profileState.data!.photo,
+                        ),
+                        receiverAvatar: AssetImage(AppImages.robotChat),
+                      );
+                    },
                   );
                 },
               ),
