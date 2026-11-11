@@ -3,14 +3,61 @@ import 'package:fitness_app/core/constants/app_images.dart';
 import 'package:fitness_app/core/shared/custom_app_bar.dart';
 import 'package:fitness_app/core/shared/custom_background_image.dart';
 import 'package:fitness_app/core/theme/app_colors/app_colors.dart';
+import 'package:fitness_app/features/chat/presentation/view/widget/custom_chat_message.dart';
 import 'package:fitness_app/features/chat/presentation/view/widget/previous_conversations_drawer.dart';
 import 'package:fitness_app/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-class MessageView extends StatelessWidget {
+class MessageModel {
+  final bool isUser;
+  final String text;
+
+  const MessageModel({required this.isUser, required this.text});
+}
+
+final messages = [
+  MessageModel(isUser: true, text: 'Hello'),
+  MessageModel(isUser: false, text: 'Hi! How can I help you today?'),
+  MessageModel(
+    isUser: true,
+    text: 'I\'m learning Flutter and building a chat app.',
+  ),
+  MessageModel(
+    isUser: false,
+    text:
+        'That\'s awesome! Are you using Bloc, Provider, or another state management solution?',
+  ),
+  MessageModel(isUser: true, text: 'I\'m using Bloc with Clean Architecture.'),
+  MessageModel(
+    isUser: false,
+    text:
+        'Great choice. It keeps your presentation, domain, and data layers well organized.',
+  ),
+  MessageModel(
+    isUser: true,
+    text: 'How can I keep the text field above the keyboard?',
+  ),
+  MessageModel(
+    isUser: false,
+    text:
+        'You can place it inside the Scaffold\'s bottomNavigationBar or use SafeArea with viewInsets to move it above the keyboard.',
+  ),
+  MessageModel(isUser: true, text: 'Thanks! That solved my problem.'),
+  MessageModel(
+    isUser: false,
+    text: 'You\'re welcome! Let me know if you need help with anything else.',
+  ),
+];
+
+class MessageView extends StatefulWidget {
   const MessageView({super.key});
 
+  @override
+  State<MessageView> createState() => _MessageViewState();
+}
+
+class _MessageViewState extends State<MessageView> {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
@@ -18,7 +65,12 @@ class MessageView extends StatelessWidget {
     return CustomBackgroundImage(
       backgroundImage: AppImages.chatBackground,
       child: Scaffold(
-        endDrawer: PreviousConversationsDrawer(),
+        endDrawer: PreviousConversationsDrawer(onNewChat: () {
+          setState(() {
+            messages.clear();
+          });
+          
+        }),
         backgroundColor: Colors.transparent,
         appBar: CustomAppBar(
           actions: [
@@ -40,18 +92,20 @@ class MessageView extends StatelessWidget {
             ],
           ),
         ),
-        body: ListView.builder(
-          itemCount: 22,
-          itemBuilder: (context, index) {
-            return ChatMessage(
-              text:
-                  'Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello ',
-              isSender: true,
-              senderAvatar: AssetImage(AppImages.senderBackground ),
-              receiverAvatar: AssetImage(AppImages.robotChat),
-            );
-          },
-        ),
+        body: messages.isEmpty
+            ? Center(child: Image.asset(AppImages.robotSkippingWithARope))
+            : ListView.builder(
+                itemCount: messages.length,
+                itemBuilder: (context, index) {
+                  var message = messages[index];
+                  return CustomChatMessage(
+                    text: message.text,
+                    isSender: message.isUser,
+                    senderAvatar: AssetImage(AppImages.senderBackground),
+                    receiverAvatar: AssetImage(AppImages.robotChat),
+                  );
+                },
+              ),
 
         bottomNavigationBar: Padding(
           padding: EdgeInsets.only(
@@ -76,84 +130,16 @@ class MessageView extends StatelessWidget {
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
-                suffixIcon: const Icon(Icons.send, color: AppColors.primary),
+                suffixIcon: IconButton(
+                  icon: Icon(Icons.send),
+                  color: AppColors.primary,
+                  onPressed: () {},
+                ),
               ),
             ),
           ),
         ),
       ),
-    );
-  }
-}
-
-class ChatMessage extends StatelessWidget {
-  const ChatMessage({
-    super.key,
-    required this.text,
-    required this.isSender,
-    required this.senderAvatar,
-    required this.receiverAvatar,
-  });
-
-  final String text;
-  final bool isSender;
-  final ImageProvider senderAvatar;
-  final ImageProvider receiverAvatar;
-
-  @override
-  Widget build(BuildContext context) {
-    final avatar = Container(
-      padding:  EdgeInsets.only(left: isSender? 0 : 16, right: isSender? 16 : 0),
-  decoration: BoxDecoration(
-    shape: BoxShape.circle,
-    boxShadow: [
-      BoxShadow(
-        color: AppColors.primary.withValues(alpha: 0.2),
-        blurRadius: 10,
-        spreadRadius: 1,
-      ),
-    ],
-  ),
-  child: CircleAvatar(
-    radius: 22,
-    backgroundColor: Colors.black,
-    backgroundImage: isSender ? senderAvatar : receiverAvatar,
-  ),
-);
-
-    final bubble = Flexible(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Container(
-          padding: const EdgeInsets.all(12),
-          decoration: BoxDecoration(
-            color: isSender
-                ? AppColors.accent.withValues(alpha: 0.5)
-                : AppColors.neutral[500],
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(isSender ? 20 : 0),
-              topRight: Radius.circular(isSender ? 0 : 20),
-              bottomLeft: Radius.circular(20),
-              bottomRight: Radius.circular(20),
-            ),
-          ),
-          child: Text(text, style: Theme.of(context).textTheme.bodyMedium),
-        ),
-      ),
-    );
-
-    return Row(
-      mainAxisAlignment: isSender
-          ? MainAxisAlignment.end
-          : MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        if (!isSender) avatar,
-        const SizedBox(width: 8),
-        bubble,
-        const SizedBox(width: 8),
-        if (isSender) avatar,
-      ],
     );
   }
 }

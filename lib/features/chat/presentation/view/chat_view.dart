@@ -5,7 +5,7 @@ import 'package:fitness_app/core/shared/custom_app_bar.dart';
 import 'package:fitness_app/core/shared/custom_blur_card.dart';
 import 'package:fitness_app/core/shared/custom_button.dart';
 import 'package:fitness_app/features/chat/presentation/view/widget/prefrence_borading_chat.dart';
-import 'package:fitness_app/features/chat/presentation/view/widget/previous_conversations_drawer.dart';
+// import 'package:fitness_app/features/chat/presentation/view/widget/previous_conversations_drawer.dart';
 import 'package:fitness_app/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
@@ -26,7 +26,7 @@ class ChatView extends StatelessWidget {
     return CustomBackgroundImage(
       backgroundImage: AppImages.chatBackground,
       child: Scaffold(
-        endDrawer: PreviousConversationsDrawer(),
+        // endDrawer: PreviousConversationsDrawer(),
         backgroundColor: Colors.transparent,
         appBar: CustomAppBar(
           actions: [

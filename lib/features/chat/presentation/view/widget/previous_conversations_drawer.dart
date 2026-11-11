@@ -6,7 +6,9 @@ import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 import 'package:gap/gap.dart';
 
 class PreviousConversationsDrawer extends StatelessWidget {
-  const PreviousConversationsDrawer({super.key});
+  const PreviousConversationsDrawer({super.key, required this.onNewChat});
+
+  final VoidCallback onNewChat;
 
   // بيانات تجريبية لحد ما تربطها بالـ Cubit
   static const _conversations = [
@@ -20,7 +22,7 @@ class PreviousConversationsDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final radius = BorderRadius.horizontal(left: Radius.circular(24.r),);
+    final radius = BorderRadius.horizontal(left: Radius.circular(24.r));
     final l10n = AppLocalizations.of(context)!;
 
     return Drawer(
@@ -36,13 +38,27 @@ class PreviousConversationsDrawer extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Align(
-                alignment: AlignmentDirectional.topStart,
-                child: Text(
-                  l10n.previousConversations,
-                  style: theme.textTheme.bodyLarge!.copyWith(
-                    fontWeight: FontWeight.w800,)
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    l10n.previousConversations,
+                    style: theme.textTheme.bodyLarge!.copyWith(
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      onNewChat();
+
+                    },
+                    icon: Icon(
+                      Icons.add_circle_sharp,
+                      color: AppColors.primary,
+                    ),
+                  ),
+                ],
               ),
               const Gap(16),
               Expanded(
