@@ -22,7 +22,7 @@ class HomeTabBarShimmer extends StatelessWidget {
           scrollDirection: Axis.horizontal,
           physics: const NeverScrollableScrollPhysics(),
           itemCount: widths.length,
-          separatorBuilder: (_, __) => SizedBox(width: 10.w),
+          separatorBuilder: (_, _) => SizedBox(width: 10.w),
           itemBuilder: (_, index) => Bone(
             width: widths[index],
             height: 30.h,
