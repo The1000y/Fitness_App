@@ -1,8 +1,10 @@
+import 'package:fitness_app/config/di/di.dart';
 import 'package:fitness_app/config/routing/app_routes.dart';
 import 'package:fitness_app/core/constants/app_icons.dart';
 import 'package:fitness_app/core/shared/custom_app_bar.dart';
 import 'package:fitness_app/core/shared/custom_blur_card.dart';
 import 'package:fitness_app/core/shared/custom_button.dart';
+import 'package:fitness_app/features/chat/presentation/view/widget/prefrence_borading_chat.dart';
 import 'package:fitness_app/features/chat/presentation/view/widget/previous_conversations_drawer.dart';
 import 'package:fitness_app/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
@@ -78,8 +80,13 @@ class ChatView extends StatelessWidget {
                         width: 311.w,
                         height: 38.h,
                         enabled: true,
-                        onPressed: () {
-                       Navigator.of(context).pushNamed(AppRoutes.chatMessages);
+                        onPressed: () async {
+                          await getIt<PrefrenceBoradingChat>()
+                              .setBoardingChat();
+                          if (!context.mounted) return;
+                          Navigator.of(
+                            context,
+                          ).pushNamed(AppRoutes.chatMessages);
                         },
                         variant: ButtonVariant.filled,
                       ),
@@ -94,5 +101,4 @@ class ChatView extends StatelessWidget {
       ),
     );
   }
-
 }

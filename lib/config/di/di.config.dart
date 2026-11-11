@@ -15,6 +15,7 @@ import 'package:flutter/services.dart' as _i281;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i558;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
+import 'package:shared_preferences/shared_preferences.dart' as _i460;
 
 import '../../features/app/presentation/cubit/auth/app_auth_cubit.dart'
     as _i760;
@@ -43,6 +44,8 @@ import '../../features/auth/presentation/login/manager/login_cubit.dart'
     as _i889;
 import '../../features/auth/presentation/register/manager/register_cubit.dart'
     as _i784;
+import '../../features/chat/presentation/view/widget/prefrence_borading_chat.dart'
+    as _i982;
 import '../../features/meals/api/client/meals_api_client.dart' as _i293;
 import '../../features/meals/api/meals_remote_data_source_impl.dart/meals_remote_data_source_impl.dart'
     as _i396;
@@ -60,18 +63,24 @@ import '../../features/meals/presentation/manager/meals_cubit.dart' as _i773;
 import '../dio/app_interceptor.dart' as _i264;
 import '../dio/dio_module.dart' as _i977;
 import '../utils/secure_storage_module.dart' as _i327;
-import 'app_module.dart' as _i460;
+import '../utils/shared_prefrence_module.dart' as _i59;
+import 'app_module.dart' as _i461;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
-  _i174.GetIt init({
+  Future<_i174.GetIt> init({
     String? environment,
     _i526.EnvironmentFilter? environmentFilter,
-  }) {
+  }) async {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
+    final sharedPrefrenceModule = _$SharedPrefrenceModule();
     final appModule = _$AppModule();
     final secureStorageModule = _$SecureStorageModule();
     final dioModule = _$DioModule();
+    await gh.factoryAsync<_i460.SharedPreferences>(
+      () => sharedPrefrenceModule.sharedPreferences,
+      preResolve: true,
+    );
     gh.factory<_i508.AuthFakeRemoteDataSourceImpl>(
       () => _i508.AuthFakeRemoteDataSourceImpl(),
     );
@@ -80,9 +89,19 @@ extension GetItInjectableX on _i174.GetIt {
       () => secureStorageModule.secureStorage,
     );
     gh.lazySingleton<_i760.AppAuthCubit>(() => _i760.AppAuthCubit());
+    gh.lazySingleton<_i982.PrefrenceBoradingChat>(
+      () => _i982.PrefrenceBoradingChat(gh<_i460.SharedPreferences>()),
+    );
     gh.lazySingleton<_i361.Dio>(
       () => dioModule.mealDio(),
       instanceName: 'mealDio',
+    );
+    gh.factory<_i773.MealsCubit>(
+      () => _i773.MealsCubit(
+        gh<_i1032.GetMealsCategoriesUseCase>(),
+        gh<_i385.GetMealsByCategoryUseCase>(),
+        gh<_i514.GetMealDetailsUseCase>(),
+      ),
     );
     gh.lazySingleton<_i264.AppInterceptors>(
       () => _i264.AppInterceptors(
@@ -126,13 +145,6 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i514.GetMealDetailsUseCase>(
       () => _i514.GetMealDetailsUseCase(gh<_i749.MealsRepo>()),
-    );
-    gh.factory<_i773.MealsCubit>(
-      () => _i773.MealsCubit(
-        gh<_i1032.GetMealsCategoriesUseCase>(),
-        gh<_i385.GetMealsByCategoryUseCase>(),
-        gh<_i514.GetMealDetailsUseCase>(),
-      ),
     );
     gh.factory<_i548.AuthRemoteDataSource>(
       () => _i981.AuthDataSourceSwitcher(
@@ -178,7 +190,9 @@ extension GetItInjectableX on _i174.GetIt {
   }
 }
 
-class _$AppModule extends _i460.AppModule {}
+class _$SharedPrefrenceModule extends _i59.SharedPrefrenceModule {}
+
+class _$AppModule extends _i461.AppModule {}
 
 class _$SecureStorageModule extends _i327.SecureStorageModule {}
 

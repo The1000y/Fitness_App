@@ -9,6 +9,7 @@ import 'package:fitness_app/features/auth/presentation/onboarding/views/onboardi
 import 'package:fitness_app/features/auth/presentation/register/view/register_view.dart';
 import 'package:fitness_app/features/chat/presentation/view/chat_view.dart';
 import 'package:fitness_app/features/chat/presentation/view/message_view.dart';
+import 'package:fitness_app/features/chat/presentation/view/widget/prefrence_borading_chat.dart';
 import 'package:fitness_app/features/home/presentation/views/home_view.dart';
 import 'package:fitness_app/features/main/presentation/views/main_layout_view.dart';
 import 'package:fitness_app/features/meals/presentation/manager/meals_cubit.dart';
@@ -118,7 +119,8 @@ abstract final class GenerateRoutes {
         );
 
       case AppRoutes.chatHistory:
-        return _pageRoute(const ChatView(), settings);
+        var route = getIt<PrefrenceBoradingChat>().getBoardingChat;
+        return _pageRoute(route == true ? MessageView() : ChatView(), settings);
       case AppRoutes.chatMessages:
         return _pageRoute(const MessageView(), settings);
 

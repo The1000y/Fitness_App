@@ -19,7 +19,6 @@ class MessageView extends StatelessWidget {
       backgroundImage: AppImages.chatBackground,
       child: Scaffold(
         endDrawer: PreviousConversationsDrawer(),
-        resizeToAvoidBottomInset: true,
         backgroundColor: Colors.transparent,
         appBar: CustomAppBar(
           actions: [
@@ -70,3 +69,5 @@ class MessageView extends StatelessWidget {
     );
   }
 }
+
+
