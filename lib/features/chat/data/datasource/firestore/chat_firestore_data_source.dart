@@ -5,6 +5,8 @@ import 'package:fitness_app/features/chat/data/models/firestore/message_model.da
 abstract interface class ChatFirestoreDataSource {
   Future<ChatModel> createChat({
     required String title,
+    required String userId,
+
   });
 
   Future<List<ChatModel>> getChats();

@@ -1,6 +1,8 @@
+
 import 'dart:async';
 
 import 'package:injectable/injectable.dart';
+import 'package:fitness_app/features/app/presentation/cubit/auth/app_auth_cubit.dart';
 
 import '../../../../../config/base/base_cubit.dart';
 import '../../../../../config/base/base_response.dart';
@@ -14,8 +16,10 @@ import 'login_state.dart';
 @injectable
 class LoginCubit extends BaseCubit<LoginState, CommonUiEvent> {
   final LoginUseCase _loginUseCase;
+  final AppAuthCubit _appAuthCubit;
 
-  LoginCubit(this._loginUseCase) : super(const LoginState());
+  LoginCubit(this._loginUseCase, this._appAuthCubit)
+      : super(const LoginState());
 
   void onEvent(LoginEvent event) {
     switch (event) {
@@ -38,6 +42,12 @@ class LoginCubit extends BaseCubit<LoginState, CommonUiEvent> {
 
     switch (result) {
       case Success():
+        final userId = result.data.user.id;
+
+        if (userId != null && userId.trim().isNotEmpty) {
+          _appAuthCubit.setUserId(userId);
+        }
+
         emit(
           state.copyWith(
             loginState: BaseState(data: result.data, isLoading: false),

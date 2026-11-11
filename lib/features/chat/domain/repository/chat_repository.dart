@@ -11,6 +11,8 @@ abstract interface class ChatRepository {
 
   Future<BaseResponse<ChatEntity>> createChat({
     required String title,
+      required String userId,
+
   });
 
   Future<BaseResponse<List<ChatEntity>>> getChats();

@@ -29,6 +29,8 @@ class ChatFirestoreDataSourceImpl implements ChatFirestoreDataSource {
   @override
   Future<ChatModel> createChat({
     required String title,
+    required String userId,
+
   }) async {
     final now = DateTime.now();
     final chatDocument = _chatsCollection.doc();
@@ -36,6 +38,7 @@ class ChatFirestoreDataSourceImpl implements ChatFirestoreDataSource {
     final chat = ChatModel(
       id: chatDocument.id,
       title: title,
+      userId: userId,
       createdAt: now,
       updatedAt: now,
     );

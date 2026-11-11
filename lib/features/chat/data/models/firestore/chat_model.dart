@@ -5,6 +5,7 @@ import 'package:fitness_app/features/chat/domain/entities/chat_entity.dart';
 class ChatModel {
   final String id;
   final String title;
+  final String userId;
   final DateTime createdAt;
   final DateTime updatedAt;
   final String? lastMessage;
@@ -12,6 +13,7 @@ class ChatModel {
   const ChatModel({
     required this.id,
     required this.title,
+    required this.userId,
     required this.createdAt,
     required this.updatedAt,
     this.lastMessage,
@@ -26,6 +28,7 @@ class ChatModel {
     return ChatModel(
       id: snapshot.id,
       title: data['title'] as String,
+      userId: data['userId'] as String? ?? '',
       createdAt: (data['createdAt'] as Timestamp).toDate(),
       updatedAt: (data['updatedAt'] as Timestamp).toDate(),
       lastMessage: data['lastMessage'] as String?,
@@ -35,6 +38,7 @@ class ChatModel {
   Map<String, dynamic> toFirestore() {
     return {
       'title': title,
+      'userId': userId,
       'createdAt': Timestamp.fromDate(createdAt),
       'updatedAt': Timestamp.fromDate(updatedAt),
       'lastMessage': lastMessage,
@@ -45,6 +49,7 @@ class ChatModel {
     return ChatEntity(
       id: id,
       title: title,
+      userId: userId,
       createdAt: createdAt,
       updatedAt: updatedAt,
       lastMessage: lastMessage,

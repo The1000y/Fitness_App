@@ -29,9 +29,15 @@ class ChatRepositoryImpl implements ChatRepository {
   ChatRepositoryImpl(this._firestoreDataSource, this._remoteDataSource);
 
   @override
-  Future<BaseResponse<ChatEntity>> createChat({required String title}) async {
+  Future<BaseResponse<ChatEntity>> createChat({
+    required String title,
+    required String userId,
+  }) async {
     return executeFirestoreCall(() async {
-      final chatModel = await _firestoreDataSource.createChat(title: title);
+      final chatModel = await _firestoreDataSource.createChat(
+        title: title,
+        userId: userId,
+      );
 
       return chatModel.toEntity();
     });

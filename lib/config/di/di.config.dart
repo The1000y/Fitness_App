@@ -109,13 +109,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i998.ChatApiClient>(
       () => _i998.ChatApiClient(gh<_i361.Dio>(instanceName: 'ollamaDio')),
     );
-    gh.factory<_i773.MealsCubit>(
-      () => _i773.MealsCubit(
-        gh<dynamic>(),
-        gh<_i385.GetMealsByCategoryUseCase>(),
-        gh<_i514.GetMealDetailsUseCase>(),
-      ),
-    );
     gh.lazySingleton<_i1064.ChatFirestoreDataSource>(
       () => _i1038.ChatFirestoreDataSourceImpl(gh<_i974.FirebaseFirestore>()),
     );
@@ -173,6 +166,13 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i514.GetMealDetailsUseCase>(
       () => _i514.GetMealDetailsUseCase(gh<_i749.MealsRepo>()),
+    );
+    gh.factory<_i773.MealsCubit>(
+      () => _i773.MealsCubit(
+        gh<_i1032.GetMealsCategoriesUseCase>(),
+        gh<_i385.GetMealsByCategoryUseCase>(),
+        gh<_i514.GetMealDetailsUseCase>(),
+      ),
     );
     gh.factory<_i548.AuthRemoteDataSource>(
       () => _i981.AuthDataSourceSwitcher(
