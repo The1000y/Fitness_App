@@ -1,8 +1,8 @@
-import 'package:fitness_app/features/chat/data/models/ollama/chat_request_dto.dart';
-import 'package:fitness_app/features/chat/data/models/ollama/chat_response_dto.dart';
+import 'package:fitness_app/features/chat/data/models/ollama/ollama_chat_request_dto.dart';
+import 'package:fitness_app/features/chat/data/models/ollama/ollama_chat_response_dto.dart';
 
 abstract interface class ChatRemoteDataSource {
-  Future<ChatResponseDto> sendMessage({
-    required ChatRequestDto request,
+  Future<OllamaChatResponseDto> requestChatResponse({
+    required OllamaChatRequestDto request,
   });
 }

@@ -58,7 +58,7 @@ class AppInterceptors extends QueuedInterceptor {
     // التوكين خلص أو مش صالح -> امسحه
     if (err.response?.statusCode == 401 && !_isPublic(err.requestOptions)) {
       await clearToken();
-      _authCubit.sessionExpired();
+      await _authCubit.sessionExpired();
     }
     handler.next(err);
   }

@@ -45,7 +45,7 @@ class LoginCubit extends BaseCubit<LoginState, CommonUiEvent> {
         final userId = result.data.user.id;
 
         if (userId != null && userId.trim().isNotEmpty) {
-          _appAuthCubit.setUserId(userId);
+          await _appAuthCubit.setUserId(userId);
         }
 
         emit(

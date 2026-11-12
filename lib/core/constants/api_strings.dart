@@ -86,6 +86,7 @@ abstract class ApiStrings {
   static const String qMealCategory = 'c';
   static const String qMealId = 'i';
   static const String ollamaBaseUrl = 'http://10.0.2.2:11434';
+  static const String ollamaChat = '/api/chat';
   static const String ollamaModel = 'qwen3.5:4b';
   static const String namedOllamaDio = 'ollamaDio';
 }

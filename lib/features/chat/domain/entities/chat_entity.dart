@@ -8,6 +8,8 @@ class ChatEntity extends Equatable {
   final DateTime createdAt;
   final DateTime updatedAt;
   final String? lastMessage;
+  final int totalTokens;
+  final bool isDeleted;
 
   const ChatEntity({
     required this.id,
@@ -16,6 +18,8 @@ class ChatEntity extends Equatable {
     required this.createdAt,
     required this.updatedAt,
     this.lastMessage,
+    this.totalTokens = 0,
+    this.isDeleted = false,
   });
 
   @override
@@ -26,5 +30,7 @@ class ChatEntity extends Equatable {
         createdAt,
         updatedAt,
         lastMessage,
+        totalTokens,
+        isDeleted,
       ];
 }

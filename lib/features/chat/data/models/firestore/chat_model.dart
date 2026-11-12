@@ -9,6 +9,9 @@ class ChatModel {
   final DateTime createdAt;
   final DateTime updatedAt;
   final String? lastMessage;
+  final int totalTokens;
+  final bool isDeleted;
+  final DateTime? deletedAt;
 
   const ChatModel({
     required this.id,
@@ -17,6 +20,9 @@ class ChatModel {
     required this.createdAt,
     required this.updatedAt,
     this.lastMessage,
+    this.totalTokens = 0,
+    this.isDeleted = false,
+    this.deletedAt,
   });
 
   factory ChatModel.fromFirestore(
@@ -32,6 +38,9 @@ class ChatModel {
       createdAt: (data['createdAt'] as Timestamp).toDate(),
       updatedAt: (data['updatedAt'] as Timestamp).toDate(),
       lastMessage: data['lastMessage'] as String?,
+      totalTokens: (data['totalTokens'] as num?)?.toInt() ?? 0,
+      isDeleted: data['isDeleted'] as bool? ?? false,
+      deletedAt: (data['deletedAt'] as Timestamp?)?.toDate(),
     );
   }
 
@@ -42,6 +51,9 @@ class ChatModel {
       'createdAt': Timestamp.fromDate(createdAt),
       'updatedAt': Timestamp.fromDate(updatedAt),
       'lastMessage': lastMessage,
+      'totalTokens': totalTokens,
+      'isDeleted': isDeleted,
+      'deletedAt': deletedAt == null ? null : Timestamp.fromDate(deletedAt!),
     };
   }
 
@@ -53,6 +65,8 @@ class ChatModel {
       createdAt: createdAt,
       updatedAt: updatedAt,
       lastMessage: lastMessage,
+      totalTokens: totalTokens,
+      isDeleted: isDeleted,
     );
   }
 }

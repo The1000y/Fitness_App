@@ -1,8 +1,6 @@
-import 'package:fitness_app/features/chat/data/models/firestore/message_model.dart';
 import 'package:injectable/injectable.dart';
 
 import 'package:fitness_app/config/base/base_response.dart';
-import 'package:fitness_app/config/errors/app_failure.dart';
 import 'package:fitness_app/config/utils/excecute_api_call.dart';
 import 'package:fitness_app/config/utils/execute_firestore_call.dart';
 
@@ -11,17 +9,18 @@ import 'package:fitness_app/core/constants/api_strings.dart';
 import 'package:fitness_app/features/chat/data/datasource/firestore/chat_firestore_data_source.dart';
 import 'package:fitness_app/features/chat/data/datasource/remote/chat_remote_data_source.dart';
 
-import 'package:fitness_app/features/chat/data/models/ollama/chat_request_dto.dart';
-import 'package:fitness_app/features/chat/data/models/ollama/chat_response_dto.dart';
-import 'package:fitness_app/features/chat/data/models/ollama/message_dto.dart';
+import 'package:fitness_app/features/chat/data/models/ollama/ollama_chat_request_dto.dart';
+import 'package:fitness_app/features/chat/data/models/ollama/ollama_message_dto.dart';
+import 'package:fitness_app/features/chat/data/models/ollama/ollama_tool_dto.dart';
 
 import 'package:fitness_app/features/chat/domain/entities/chat_entity.dart';
 import 'package:fitness_app/features/chat/domain/entities/chat_response_entity.dart';
+import 'package:fitness_app/features/chat/domain/entities/chat_tool_definition_entity.dart';
 import 'package:fitness_app/features/chat/domain/entities/message_entity.dart';
 
 import 'package:fitness_app/features/chat/domain/repository/chat_repository.dart';
 
-@LazySingleton(as: ChatRepository)
+@Injectable(as: ChatRepository)
 class ChatRepositoryImpl implements ChatRepository {
   final ChatFirestoreDataSource _firestoreDataSource;
   final ChatRemoteDataSource _remoteDataSource;
@@ -44,9 +43,11 @@ class ChatRepositoryImpl implements ChatRepository {
   }
 
   @override
-  Future<BaseResponse<List<ChatEntity>>> getChats() async {
+  Future<BaseResponse<List<ChatEntity>>> getChats({
+    required String userId,
+  }) async {
     return executeFirestoreCall(() async {
-      final chatModels = await _firestoreDataSource.getChats();
+      final chatModels = await _firestoreDataSource.getChats(userId: userId);
 
       return chatModels.map((model) => model.toEntity()).toList();
     });
@@ -60,87 +61,105 @@ class ChatRepositoryImpl implements ChatRepository {
   }
 
   @override
-  Future<BaseResponse<ChatResponseEntity>> sendMessage({
-    required List<MessageEntity> conversationHistory,
+  Future<BaseResponse<MessageEntity>> saveMessage({
+    required MessageEntity message,
   }) async {
-    // 1. Validate conversation history.
-    if (conversationHistory.isEmpty ||
-        conversationHistory.last.role != 'user') {
-      return const Error<ChatResponseEntity>(
-        ChatRequestFailure(ChatRequestFailureReason.latestMessageMustBeUser),
+    return executeFirestoreCall(() async {
+      final messageModel = await _firestoreDataSource.saveMessage(
+        chatId: message.chatId,
+        messageId: message.id,
+        content: message.content,
+        role: message.role,
+        toolName: message.toolName,
+        toolCallId: message.toolCallId,
+        toolCalls: message.toolCalls,
+        exerciseIds: message.exerciseIds,
+        mealIds: message.mealIds,
+        tokensUsed: message.tokensUsed,
       );
-    }
 
-    final userMessage = conversationHistory.last;
-    final chatId = userMessage.chatId;
-
-    if (chatId.isEmpty) {
-      return const Error<ChatResponseEntity>(
-        ChatRequestFailure(ChatRequestFailureReason.chatIdCannotBeEmpty),
-      );
-    }
-
-    final saveUserMessageResult = await executeFirestoreCall<MessageModel>(
-      () async {
-        return _firestoreDataSource.saveMessage(
-          chatId: chatId,
-          messageId: userMessage.id,
-          content: userMessage.content,
-          role: userMessage.role,
-        );
-      },
-    );
-
-    if (saveUserMessageResult is Error<MessageModel>) {
-      return Error<ChatResponseEntity>(saveUserMessageResult.failure);
-    }
-
-    if (saveUserMessageResult is! Success<MessageModel>) {
-      return const Error<ChatResponseEntity>(UnknownFailure());
-    }
-
-    final request = ChatRequestDto(
-      model: ApiStrings.ollamaModel,
-      messages: conversationHistory.map((message) {
-        return MessageDto(role: message.role, content: message.content);
-      }).toList(),
-      stream: false,
-    );
-
-    final apiResult = await excecuteApiCall(
-      () => _remoteDataSource.sendMessage(request: request),
-    );
-
-    if (apiResult is Error<ChatResponseDto>) {
-      return Error<ChatResponseEntity>(apiResult.failure);
-    }
-
-    if (apiResult is! Success<ChatResponseDto>) {
-      return const Error<ChatResponseEntity>(UnknownFailure());
-    }
-
-    final responseDto = apiResult.data;
-
-    final assistantContent = responseDto.message?.content;
-
-    if (assistantContent == null || assistantContent.trim().isEmpty) {
-      return const Error<ChatResponseEntity>(
-        ChatRequestFailure(ChatRequestFailureReason.emptyAssistantResponse),
-      );
-    }
-
-    final saveAssistantResult = await executeFirestoreCall<void>(() async {
-      await _firestoreDataSource.saveMessage(
-        chatId: chatId,
-        content: assistantContent,
-        role: 'assistant',
-      );
+      return messageModel.toEntity(chatId: message.chatId);
     });
+  }
 
-    if (saveAssistantResult is Error<void>) {
-      return Error<ChatResponseEntity>(saveAssistantResult.failure);
-    }
+  @override
+  Future<BaseResponse<List<MessageEntity>>> getChatHistory({
+    required String chatId,
+    int limit = 50,
+    DateTime? startAfter,
+  }) async {
+    return executeFirestoreCall(() async {
+      final messageModels = await _firestoreDataSource.getChatHistory(
+        chatId: chatId,
+        limit: limit,
+        startAfter: startAfter,
+      );
 
-    return Success<ChatResponseEntity>(responseDto.toEntity());
+      return messageModels
+          .map((model) => model.toEntity(chatId: chatId))
+          .toList();
+    });
+  }
+
+  @override
+  Future<BaseResponse<ChatResponseEntity>> requestCoachResponseWithTools({
+    required List<MessageEntity> conversationHistory,
+    required String systemPrompt,
+    required List<ChatToolDefinitionEntity> availableTools,
+  }) async {
+    final request = OllamaChatRequestDto.forTools(
+      model: ApiStrings.ollamaModel,
+      messages: _buildMessages(
+        systemPrompt: systemPrompt,
+        conversationHistory: conversationHistory,
+      ),
+      tools: availableTools.map(OllamaToolDto.fromEntity).toList(),
+    );
+
+    return _requestChatResponse(request);
+  }
+
+  @override
+  Future<BaseResponse<ChatResponseEntity>> requestStructuredCoachResponse({
+    required List<MessageEntity> conversationHistory,
+    required String systemPrompt,
+    required Map<String, dynamic> responseFormat,
+  }) async {
+    final request = OllamaChatRequestDto.forStructuredResponse(
+      model: ApiStrings.ollamaModel,
+      messages: _buildMessages(
+        systemPrompt: systemPrompt,
+        conversationHistory: conversationHistory,
+      ),
+      format: responseFormat,
+    );
+
+    return _requestChatResponse(request);
+  }
+
+  Future<BaseResponse<ChatResponseEntity>> _requestChatResponse(
+    OllamaChatRequestDto request,
+  ) async {
+    final apiResult = await excecuteApiCall(
+      () => _remoteDataSource.requestChatResponse(request: request),
+    );
+
+    return switch (apiResult) {
+      Success(data: final response) => Success(response.toEntity()),
+      Error(failure: final failure) => Error(failure),
+      _ => throw StateError('Unexpected chat response state.'),
+    };
+  }
+
+  List<OllamaMessageDto> _buildMessages({
+    required String systemPrompt,
+    required List<MessageEntity> conversationHistory,
+  }) {
+    return [
+      OllamaMessageDto.system(systemPrompt),
+      ...conversationHistory
+          .where((message) => message.role != 'system')
+          .map(OllamaMessageDto.fromEntity),
+    ];
   }
 }

@@ -23,6 +23,7 @@ Future<void> main() async {
   );
 
   configureDependencies();
+  await getIt<AppAuthCubit>().restoreUserId();
 
   runApp(const FitnessApp());
 }
