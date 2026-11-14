@@ -1,3 +1,5 @@
+
+import 'package:firebase_core/firebase_core.dart';
 import 'package:fitness_app/config/di/di.dart';
 import 'package:fitness_app/config/routing/app_routes.dart';
 import 'package:fitness_app/config/routing/generate_routes.dart';
@@ -8,7 +10,11 @@ import 'package:fitness_app/core/theme/app_themes/app_theme.dart';
 import 'package:fitness_app/features/app/presentation/cubit/auth/app_auth_cubit.dart';
 import 'package:fitness_app/features/app/presentation/cubit/auth/app_auth_state.dart';
 import 'package:fitness_app/features/app/presentation/cubit/auth/app_auth_ui_event.dart';
+<<<<<<< HEAD
 import 'package:fitness_app/features/app/presentation/cubit/locale/app_locale_cubit.dart';
+=======
+import 'package:fitness_app/firebase_options.dart';
+>>>>>>> feature/chat-chatrepo
 import 'package:fitness_app/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,9 +23,20 @@ import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+<<<<<<< HEAD
   await configureDependencies();
   await getIt<DatabaseAssetInstaller>().ensureDatabasesInstalled();
   await getIt<AppLocaleCubit>().load();
+=======
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  configureDependencies();
+  await getIt<AppAuthCubit>().restoreUserId();
+
+>>>>>>> feature/chat-chatrepo
   runApp(const FitnessApp());
 }
 

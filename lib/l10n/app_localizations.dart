@@ -980,6 +980,24 @@ abstract class AppLocalizations {
   /// **'Something went wrong. Please try again.'**
   String get failureUnknown;
 
+  /// No description provided for @chatLatestMessageMustBeUser.
+  ///
+  /// In en, this message translates to:
+  /// **'The latest message must be a user message.'**
+  String get chatLatestMessageMustBeUser;
+
+  /// No description provided for @chatIdCannotBeEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Chat ID cannot be empty.'**
+  String get chatIdCannotBeEmpty;
+
+  /// No description provided for @chatEmptyAssistantResponse.
+  ///
+  /// In en, this message translates to:
+  /// **'The assistant returned an empty response.'**
+  String get chatEmptyAssistantResponse;
+
   /// No description provided for @emailRequired.
   ///
   /// In en, this message translates to:
