@@ -1,31 +1,32 @@
 
 import 'package:fitness_app/config/base/base_response.dart';
 import 'package:fitness_app/features/chat/domain/entities/chat_entity.dart';
+import 'package:fitness_app/features/chat/domain/entities/chat_page_entity.dart';
 import 'package:fitness_app/features/chat/domain/entities/chat_response_entity.dart';
-import 'package:fitness_app/features/chat/domain/entities/chat_tool_definition_entity.dart';
 import 'package:fitness_app/features/chat/domain/entities/message_entity.dart';
 
 abstract interface class ChatRepository {
   Future<BaseResponse<ChatResponseEntity>> requestCoachResponseWithTools({
     required List<MessageEntity> conversationHistory,
-    required String systemPrompt,
-    required List<ChatToolDefinitionEntity> availableTools,
+    required List<String> muscleGroups,
+    required List<String> difficulties,
+    required List<String> equipment,
+    required List<String> mealCategories,
+    required List<String> mealAreas,
   });
 
   Future<BaseResponse<ChatResponseEntity>> requestStructuredCoachResponse({
     required List<MessageEntity> conversationHistory,
-    required String systemPrompt,
-    required Map<String, dynamic> responseFormat,
   });
-
   Future<BaseResponse<ChatEntity>> createChat({
     required String title,
-      required String userId,
-
+    required String userId,
   });
 
-  Future<BaseResponse<List<ChatEntity>>> getChats({
+  Future<BaseResponse<ChatPageEntity>> getChats({
     required String userId,
+    int limit = 20,
+    ChatEntity? lastChat,
   });
 
   Future<BaseResponse<void>> deleteChat({

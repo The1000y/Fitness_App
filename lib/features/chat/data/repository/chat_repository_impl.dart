@@ -1,3 +1,4 @@
+import 'package:fitness_app/features/chat/domain/entities/chat_page_entity.dart';
 import 'package:injectable/injectable.dart';
 
 import 'package:fitness_app/config/base/base_response.dart';
@@ -15,10 +16,11 @@ import 'package:fitness_app/features/chat/data/models/ollama/ollama_tool_dto.dar
 
 import 'package:fitness_app/features/chat/domain/entities/chat_entity.dart';
 import 'package:fitness_app/features/chat/domain/entities/chat_response_entity.dart';
-import 'package:fitness_app/features/chat/domain/entities/chat_tool_definition_entity.dart';
 import 'package:fitness_app/features/chat/domain/entities/message_entity.dart';
 
 import 'package:fitness_app/features/chat/domain/repository/chat_repository.dart';
+
+import '../../domain/coach/coach_prompt_and_schemas.dart';
 
 @Injectable(as: ChatRepository)
 class ChatRepositoryImpl implements ChatRepository {
@@ -42,16 +44,25 @@ class ChatRepositoryImpl implements ChatRepository {
     });
   }
 
-  @override
-  Future<BaseResponse<List<ChatEntity>>> getChats({
-    required String userId,
-  }) async {
-    return executeFirestoreCall(() async {
-      final chatModels = await _firestoreDataSource.getChats(userId: userId);
 
-      return chatModels.map((model) => model.toEntity()).toList();
-    });
-  }
+@override
+Future<BaseResponse<ChatPageEntity>> getChats({
+  required String userId,
+  int limit = 20,
+  ChatEntity? lastChat,
+}) async {
+  return executeFirestoreCall(() async {
+    final chatPage = await _firestoreDataSource.getChats(
+      userId: userId,
+      limit: limit,
+      startAfterUpdatedAt: lastChat?.updatedAt,
+      startAfterId: lastChat?.id,
+    );
+
+    return chatPage.toEntity();
+  });
+}
+
 
   @override
   Future<BaseResponse<void>> deleteChat({required String chatId}) async {
@@ -101,41 +112,70 @@ class ChatRepositoryImpl implements ChatRepository {
     });
   }
 
-  @override
-  Future<BaseResponse<ChatResponseEntity>> requestCoachResponseWithTools({
-    required List<MessageEntity> conversationHistory,
-    required String systemPrompt,
-    required List<ChatToolDefinitionEntity> availableTools,
-  }) async {
-    final request = OllamaChatRequestDto.forTools(
-      model: ApiStrings.ollamaModel,
-      messages: _buildMessages(
-        systemPrompt: systemPrompt,
-        conversationHistory: conversationHistory,
-      ),
-      tools: availableTools.map(OllamaToolDto.fromEntity).toList(),
-    );
+  
+@override
+Future<BaseResponse<ChatResponseEntity>> requestCoachResponseWithTools({
+  required List<MessageEntity> conversationHistory,
+  required List<String> muscleGroups,
+  required List<String> difficulties,
+  required List<String> equipment,
+  required List<String> mealCategories,
+  required List<String> mealAreas,
+}) async {
+  final systemPrompt = CoachPromptAndSchemas.buildSystemPrompt(
+    muscleGroups: muscleGroups,
+    difficulties: difficulties,
+    equipment: equipment,
+    mealCategories: mealCategories,
+    mealAreas: mealAreas,
+  );
 
-    return _requestChatResponse(request);
-  }
+  final availableTools = CoachPromptAndSchemas.buildAvailableTools(
+    muscleGroups: muscleGroups,
+    difficulties: difficulties,
+    equipment: equipment,
+    mealCategories: mealCategories,
+    mealAreas: mealAreas,
+  );
 
-  @override
-  Future<BaseResponse<ChatResponseEntity>> requestStructuredCoachResponse({
-    required List<MessageEntity> conversationHistory,
-    required String systemPrompt,
-    required Map<String, dynamic> responseFormat,
-  }) async {
-    final request = OllamaChatRequestDto.forStructuredResponse(
-      model: ApiStrings.ollamaModel,
-      messages: _buildMessages(
-        systemPrompt: systemPrompt,
-        conversationHistory: conversationHistory,
-      ),
-      format: responseFormat,
-    );
+  final request = OllamaChatRequestDto.forTools(
+    model: ApiStrings.ollamaModel,
+    messages: _buildMessages(
+      systemPrompt: systemPrompt,
+      conversationHistory: conversationHistory,
+    ),
+    tools: availableTools.map(OllamaToolDto.fromEntity).toList(),
+  );
 
-    return _requestChatResponse(request);
-  }
+  return _requestChatResponse(request);
+}
+
+
+ 
+@override
+Future<BaseResponse<ChatResponseEntity>> requestStructuredCoachResponse({
+  required List<MessageEntity> conversationHistory,
+}) async {
+  final systemPrompt = CoachPromptAndSchemas.buildSystemPrompt(
+    muscleGroups: [],
+    difficulties: [],
+    equipment: [],
+    mealCategories: [],
+    mealAreas: [],
+  );
+
+  final request = OllamaChatRequestDto.forStructuredResponse(
+    model: ApiStrings.ollamaModel,
+    messages: _buildMessages(
+      systemPrompt: systemPrompt,
+      conversationHistory: conversationHistory,
+    ),
+    format: CoachPromptAndSchemas.answerSchema,
+  );
+
+  return _requestChatResponse(request);
+}
+
 
   Future<BaseResponse<ChatResponseEntity>> _requestChatResponse(
     OllamaChatRequestDto request,

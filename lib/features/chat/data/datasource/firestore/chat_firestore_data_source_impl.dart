@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fitness_app/features/chat/data/datasource/firestore/chat_firestore_data_source.dart';
 import 'package:fitness_app/features/chat/data/models/firestore/chat_message_model.dart';
 import 'package:fitness_app/features/chat/data/models/firestore/chat_model.dart';
+import 'package:fitness_app/features/chat/data/models/firestore/chat_page_model.dart';
 import 'package:fitness_app/features/chat/domain/entities/chat_tool_definition_entity.dart';
 import 'package:injectable/injectable.dart';
 
@@ -51,16 +52,44 @@ class ChatFirestoreDataSourceImpl implements ChatFirestoreDataSource {
     return chat;
   }
 
-  @override
-  Future<List<ChatModel>> getChats({required String userId}) async {
-    final snapshot = await _chatsCollection
-        .where('userId', isEqualTo: userId)
-        .where('isDeleted', isEqualTo: false)
-        .orderBy('updatedAt', descending: true)
-        .get();
+ 
+@override
+Future<ChatPageModel> getChats({
+  required String userId,
+  int limit = 20,
+  DateTime? startAfterUpdatedAt,
+  String? startAfterId,
+}) async {
+  Query<ChatModel> query = _chatsCollection
+      .where('userId', isEqualTo: userId)
+      .where('isDeleted', isEqualTo: false)
+      .orderBy('updatedAt', descending: true)
+      .orderBy(FieldPath.documentId)
+      .limit(limit + 1);
 
-    return snapshot.docs.map((doc) => doc.data()).toList();
+  if (startAfterUpdatedAt != null && startAfterId != null) {
+    query = query.startAfter([
+      Timestamp.fromDate(startAfterUpdatedAt),
+      startAfterId,
+    ]);
   }
+
+  final snapshot = await query.get();
+
+  final hasMore = snapshot.docs.length > limit;
+
+  final pageDocs = hasMore
+      ? snapshot.docs.take(limit).toList()
+      : snapshot.docs;
+
+  final chats = pageDocs.map((doc) => doc.data()).toList();
+
+  return ChatPageModel(
+    chats: chats,
+    hasMore: hasMore,
+  );
+}
+
 
   @override
   Future<void> deleteChat({
