@@ -3,31 +3,20 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:fitness_app/config/di/di.dart';
 import 'package:fitness_app/config/routing/app_routes.dart';
 import 'package:fitness_app/config/routing/generate_routes.dart';
-import 'package:fitness_app/core/database/database_asset_installer.dart';
 import 'package:fitness_app/core/shared/base_ui_event_listener.dart';
 import 'package:fitness_app/core/theme/app_colors/app_colors.dart';
 import 'package:fitness_app/core/theme/app_themes/app_theme.dart';
 import 'package:fitness_app/features/app/presentation/cubit/auth/app_auth_cubit.dart';
 import 'package:fitness_app/features/app/presentation/cubit/auth/app_auth_state.dart';
 import 'package:fitness_app/features/app/presentation/cubit/auth/app_auth_ui_event.dart';
-<<<<<<< HEAD
-import 'package:fitness_app/features/app/presentation/cubit/locale/app_locale_cubit.dart';
-=======
 import 'package:fitness_app/firebase_options.dart';
->>>>>>> feature/chat-chatrepo
 import 'package:fitness_app/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-<<<<<<< HEAD
-  await configureDependencies();
-  await getIt<DatabaseAssetInstaller>().ensureDatabasesInstalled();
-  await getIt<AppLocaleCubit>().load();
-=======
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -36,7 +25,6 @@ Future<void> main() async {
   configureDependencies();
   await getIt<AppAuthCubit>().restoreUserId();
 
->>>>>>> feature/chat-chatrepo
   runApp(const FitnessApp());
 }
 
@@ -50,52 +38,43 @@ class FitnessApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       ensureScreenSize: true,
-      child: BlocProvider.value(
-        value: getIt<AppLocaleCubit>(),
-        child: BlocBuilder<AppLocaleCubit, Locale>(
-          builder: (context, locale) {
-            return MaterialApp(
-              locale: locale,
-              builder: (context, child) {
-                return BaseUiEventListener<
-                  AppAuthCubit,
-                  AppAuthState,
-                  AppAuthUiEvent
-                >(
-                  cubit: getIt<AppAuthCubit>(),
-                  onCustomEvent: (context, event) {
-                    if (event is SessionExpiredUiEvent) {
-                      final local = AppLocalizations.of(context)!;
+      child: MaterialApp(
+        builder: (context, child) {
+          return BaseUiEventListener<
+            AppAuthCubit,
+            AppAuthState,
+            AppAuthUiEvent
+          >(
+            cubit: getIt<AppAuthCubit>(),
+            onCustomEvent: (context, event) {
+              if (event is SessionExpiredUiEvent) {
+                final local = AppLocalizations.of(context)!;
 
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          backgroundColor: AppColors.accent,
-                          content: Text(local.failureUnauthorized),
-                        ),
-                      );
-
-                      Navigator.of(context).pushNamedAndRemoveUntil(
-                        AppRoutes.login,
-                        (route) => false,
-                      );
-                    }
-                  },
-                  child: child!,
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    backgroundColor: AppColors.accent,
+                    content: Text(local.failureUnauthorized),
+                  ),
                 );
-              },
-              theme: AppTheme.lightTheme,
-              localizationsDelegates: [
-                AppLocalizations.delegate,
-                ...GlobalMaterialLocalizations.delegates,
-              ],
-              supportedLocales: AppLocalizations.supportedLocales,
-              debugShowCheckedModeBanner: false,
-              title: 'Fitness App',
-              initialRoute: AppRoutes.onboarding,
-              onGenerateRoute: GenerateRoutes.generateRoute,
-            );
-          },
-        ),
+
+                Navigator.of(
+                  context,
+                ).pushNamedAndRemoveUntil(AppRoutes.login, (route) => false);
+              }
+            },
+            child: child!,
+          );
+        },
+        theme: AppTheme.lightTheme,
+        localizationsDelegates: [
+          AppLocalizations.delegate,
+          ...GlobalMaterialLocalizations.delegates,
+        ],
+        supportedLocales: AppLocalizations.supportedLocales,
+        debugShowCheckedModeBanner: false,
+        title: 'Fitness App',
+        initialRoute: AppRoutes.chatHistory,
+        onGenerateRoute: GenerateRoutes.generateRoute,
       ),
     );
   }
