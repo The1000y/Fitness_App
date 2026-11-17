@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 
-import '../theme/app_colors/app_colors.dart';
+import 'package:fitness_app/core/theme/app_colors/app_colors.dart';
 
 class CategoryTabBar extends StatelessWidget {
   final List<String> categories;
   final String selectedCategory;
   final ValueChanged<String> onCategorySelected;
   final bool isScrollable;
+  final double height;
 
   const CategoryTabBar({
     super.key,
@@ -15,16 +16,18 @@ class CategoryTabBar extends StatelessWidget {
     required this.selectedCategory,
     required this.onCategorySelected,
     this.isScrollable = true,
+    this.height = 48,
   });
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 48.h,
+      height: height.h,
       child: isScrollable
           ? ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: categories.length,
+              padding: EdgeInsets.symmetric(horizontal: 16.w),
               itemBuilder: (context, index) {
                 return _buildCategoryItem(context, categories[index]);
               },
@@ -57,9 +60,9 @@ class CategoryTabBar extends StatelessWidget {
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 200),
           width: isExpanded ? double.infinity : null,
-          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
+          padding: EdgeInsets.symmetric(horizontal: 20.w),
           decoration: BoxDecoration(
-            color: isSelected ? AppColors.primary : Colors.transparent,
+            color: isSelected ? AppColors.primary : AppColors.surfaceMuted,
             borderRadius: BorderRadius.circular(24.r),
           ),
           alignment: Alignment.center,

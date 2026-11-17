@@ -30,6 +30,31 @@ void main() {
       );
     });
 
+    testWidgets('renders background image and child with overlay', (
+      tester,
+    ) async {
+      await tester.pumpWidget(
+        const MaterialApp(
+          home: Scaffold(
+            body: CustomBackgroundImage(
+              backgroundImage: 'assets/images/robot_chat.png',
+              showOverlay: true,
+              child: Text('Foreground Content'),
+            ),
+          ),
+        ),
+      );
+
+      expect(find.text('Foreground Content'), findsOneWidget);
+      expect(find.byType(Image), findsOneWidget);
+      expect(
+        find.byWidgetPredicate(
+          (w) => w is ColoredBox && w.color == AppColors.overlay,
+        ),
+        findsOneWidget,
+      );
+    });
+
     testWidgets('does not render overlay when showOverlay is false', (
       tester,
     ) async {

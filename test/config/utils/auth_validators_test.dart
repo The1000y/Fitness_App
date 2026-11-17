@@ -143,6 +143,7 @@ void main() {
       test('returns null when strong password meets all criteria', () {
         expect(AppValidators.strongPassword('P@ssword1'), isNull);
         expect(AppValidators.strongPassword('Strong123?'), isNull);
+        expect(AppValidators.strongPassword('Password123!'), isNull);
       });
     });
 
@@ -167,6 +168,10 @@ void main() {
 
       test('returns null when matching original password', () {
         expect(AppValidators.confirmPassword('secret', 'secret'), isNull);
+        expect(
+          AppValidators.confirmPassword('Password123!', 'Password123!'),
+          isNull,
+        );
       });
     });
 
@@ -196,6 +201,7 @@ void main() {
       test('returns null when valid length', () {
         expect(AppValidators.username('abc'), isNull);
         expect(AppValidators.username('john_doe'), isNull);
+        expect(AppValidators.username('  validUser  '), isNull);
       });
     });
 
@@ -209,11 +215,19 @@ void main() {
           AppValidators.addressFields(''),
           equals(ValidationError.fieldRequired),
         );
+        expect(
+          AppValidators.addressFields('  '),
+          equals(ValidationError.fieldRequired),
+        );
       });
 
       test('returns fieldMinLength when < 3 chars', () {
         expect(
           AppValidators.addressFields('st'),
+          equals(ValidationError.fieldMinLength),
+        );
+        expect(
+          AppValidators.addressFields('12'),
           equals(ValidationError.fieldMinLength),
         );
       });
@@ -233,6 +247,10 @@ void main() {
           AppValidators.firstName(''),
           equals(ValidationError.firstNameRequired),
         );
+        expect(
+          AppValidators.firstName('   '),
+          equals(ValidationError.firstNameRequired),
+        );
       });
 
       test(
@@ -244,6 +262,14 @@ void main() {
           );
           expect(
             AppValidators.firstName('John1'),
+            equals(ValidationError.firstNameOnlyLetters),
+          );
+          expect(
+            AppValidators.firstName('John123'),
+            equals(ValidationError.firstNameOnlyLetters),
+          );
+          expect(
+            AppValidators.firstName('John!'),
             equals(ValidationError.firstNameOnlyLetters),
           );
           expect(
@@ -269,6 +295,10 @@ void main() {
           AppValidators.lastName(''),
           equals(ValidationError.lastNameRequired),
         );
+        expect(
+          AppValidators.lastName('   '),
+          equals(ValidationError.lastNameRequired),
+        );
       });
 
       test(
@@ -280,6 +310,10 @@ void main() {
           );
           expect(
             AppValidators.lastName('Doe2'),
+            equals(ValidationError.lastNameOnlyLetters),
+          );
+          expect(
+            AppValidators.lastName('Doe1'),
             equals(ValidationError.lastNameOnlyLetters),
           );
           expect(
@@ -321,6 +355,10 @@ void main() {
           AppValidators.phone('010123456789'),
           equals(ValidationError.phoneInvalid),
         ); // 12 digits
+        expect(
+          AppValidators.phone('0101234567a'),
+          equals(ValidationError.phoneInvalid),
+        ); // non-digit
       });
 
       test('returns null when valid Egyptian mobile number', () {

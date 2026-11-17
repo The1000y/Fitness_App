@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 
-import '../../../../../core/constants/app_icons.dart';
-import '../../../../../core/constants/app_test_keys.dart';
-import '../../../../../core/shared/custom_blur_card.dart';
-import '../../../../../core/theme/app_colors/app_colors.dart';
-import '../../../../../l10n/app_localizations.dart';
+import 'package:fitness_app/core/constants/app_icons.dart';
+import 'package:fitness_app/core/constants/app_test_keys.dart';
+import 'package:fitness_app/core/shared/custom_blur_card.dart';
+import 'package:fitness_app/core/theme/app_colors/app_colors.dart';
+import 'package:fitness_app/l10n/app_localizations.dart';
 import 'custom_tap_item.dart';
 
 class CustomFloatingNavigationBar extends StatelessWidget {

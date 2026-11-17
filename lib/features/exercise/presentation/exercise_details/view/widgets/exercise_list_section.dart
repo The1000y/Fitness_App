@@ -1,0 +1,73 @@
+import 'package:fitness_app/config/routing/app_routes.dart';
+import 'package:fitness_app/core/theme/app_colors/app_colors.dart';
+import 'package:fitness_app/features/exercise/domain/entities/exercise_entity.dart';
+import 'package:fitness_app/features/exercise/presentation/exercise_details/manager/exercise_details_cubit.dart';
+import 'package:fitness_app/features/exercise/presentation/exercise_details/manager/exercise_details_event.dart';
+import 'package:fitness_app/l10n/app_localizations.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
+import 'package:gap/gap.dart';
+
+import 'exercise_list_item.dart';
+
+class ExerciseListSection extends StatelessWidget {
+  const ExerciseListSection({
+    super.key,
+    required this.muscleName,
+    required this.exercises,
+  });
+
+  final String muscleName;
+  final List<ExerciseEntity> exercises;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    return SliverMainAxisGroup(
+      slivers: [
+        SliverToBoxAdapter(
+          child: Padding(
+            padding: EdgeInsets.fromLTRB(16.w, 20.h, 16.w, 12.h),
+            child: Text(
+              l10n.exercisesOfMuscle(muscleName),
+              style: TextStyle(
+                color: AppColors.textPrimary,
+                fontSize: 18.sp,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          ),
+        ),
+        SliverPadding(
+          padding: EdgeInsets.symmetric(horizontal: 16.w),
+          sliver: SliverList.separated(
+            itemCount: exercises.length,
+            separatorBuilder: (context, index) => Gap(12.h),
+            itemBuilder: (context, index) {
+              return ExerciseListItem(
+                exercise: exercises[index],
+                onTap: () {
+                  context.read<ExerciseDetailsCubit>().onEvent(
+                    SelectExercise(index),
+                  );
+                  Navigator.pushNamed(
+                    context,
+                    AppRoutes.exerciseVideoPlayer,
+                    arguments: exercises[index],
+                  );
+                },
+                onPlayTap: () {
+                  context.read<ExerciseDetailsCubit>().onEvent(
+                    SelectExercise(index, autoPlay: true),
+                  );
+                },
+              );
+            },
+          ),
+        ),
+        SliverToBoxAdapter(child: Gap(24.h)),
+      ],
+    );
+  }
+}

@@ -4,6 +4,7 @@ import 'package:fitness_app/config/di/di.dart';
 import 'package:fitness_app/features/app/presentation/cubit/auth/app_auth_cubit.dart';
 import 'package:fitness_app/features/app/presentation/cubit/auth/app_auth_state.dart';
 import 'package:fitness_app/features/app/presentation/cubit/auth/app_auth_ui_event.dart';
+import 'package:fitness_app/features/app/presentation/cubit/locale/app_locale_cubit.dart';
 import 'package:fitness_app/features/auth/presentation/forget_password/manager/forget_password_cubit.dart';
 import 'package:fitness_app/features/auth/presentation/forget_password/manager/forget_password_state.dart';
 import 'package:fitness_app/features/auth/presentation/onboarding/views/onboarding_view.dart';
@@ -14,10 +15,13 @@ import 'package:mocktail/mocktail.dart';
 
 class MockAppAuthCubit extends Mock implements AppAuthCubit {}
 
+class MockAppLocaleCubit extends Mock implements AppLocaleCubit {}
+
 class MockForgetPasswordCubit extends Mock implements ForgetPasswordCubit {}
 
 void main() {
   late MockAppAuthCubit mockAppAuthCubit;
+  late MockAppLocaleCubit mockAppLocaleCubit;
   late MockForgetPasswordCubit mockForgetPasswordCubit;
   late StreamController<AppAuthUiEvent> authUiEventController;
   late StreamController<BaseUiEvent> forgetPasswordUiEventController;
@@ -25,6 +29,7 @@ void main() {
 
   setUp(() {
     mockAppAuthCubit = MockAppAuthCubit();
+    mockAppLocaleCubit = MockAppLocaleCubit();
     mockForgetPasswordCubit = MockForgetPasswordCubit();
     authUiEventController = StreamController<AppAuthUiEvent>.broadcast();
     forgetPasswordUiEventController = StreamController<BaseUiEvent>.broadcast();
@@ -49,6 +54,13 @@ void main() {
     ).thenAnswer((_) => forgetPasswordUiEventController.stream);
     when(() => mockForgetPasswordCubit.close()).thenAnswer((_) async {});
 
+    when(() => mockAppLocaleCubit.state).thenReturn(const Locale('en'));
+    when(
+      () => mockAppLocaleCubit.stream,
+    ).thenAnswer((_) => const Stream.empty());
+    when(() => mockAppLocaleCubit.close()).thenAnswer((_) async {});
+    when(() => mockAppLocaleCubit.load()).thenAnswer((_) async {});
+
     if (getIt.isRegistered<AppAuthCubit>()) {
       getIt.unregister<AppAuthCubit>();
     }
@@ -58,6 +70,11 @@ void main() {
       getIt.unregister<ForgetPasswordCubit>();
     }
     getIt.registerSingleton<ForgetPasswordCubit>(mockForgetPasswordCubit);
+
+    if (getIt.isRegistered<AppLocaleCubit>()) {
+      getIt.unregister<AppLocaleCubit>();
+    }
+    getIt.registerSingleton<AppLocaleCubit>(mockAppLocaleCubit);
   });
 
   tearDown(() {
@@ -70,19 +87,21 @@ void main() {
     if (getIt.isRegistered<ForgetPasswordCubit>()) {
       getIt.unregister<ForgetPasswordCubit>();
     }
+    if (getIt.isRegistered<AppLocaleCubit>()) {
+      getIt.unregister<AppLocaleCubit>();
+    }
   });
 
   group('FitnessApp', () {
-    testWidgets(
-      'pumps successfully and displays initial onboarding route',
-      (tester) async {
-        await tester.pumpWidget(const FitnessApp());
-        await tester.pumpAndSettle();
+    testWidgets('pumps successfully and displays initial onboarding route', (
+      tester,
+    ) async {
+      await tester.pumpWidget(const FitnessApp());
+      await tester.pumpAndSettle();
 
-        expect(find.byType(FitnessApp), findsOneWidget);
-        expect(find.byType(MaterialApp), findsOneWidget);
-        expect(find.byType(OnboardingView), findsOneWidget);
-      },
-    );
+      expect(find.byType(FitnessApp), findsOneWidget);
+      expect(find.byType(MaterialApp), findsOneWidget);
+      expect(find.byType(OnboardingView), findsOneWidget);
+    });
   });
 }

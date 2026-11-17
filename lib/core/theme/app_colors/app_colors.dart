@@ -37,6 +37,8 @@ abstract final class AppColors {
   static const Color background = neutral;
   static const Color textPrimary = white;
   static const Color textSecondary = Color(0xFFD3D3D3);
+  static const Color textMuted = Color(0xFFA7A7A7);
+  static const Color iconBubble = Color(0x22FF4100);
 
   // ───── Accent & Borders ─────
   static const Color accent = Color(0xFFFF6A00);

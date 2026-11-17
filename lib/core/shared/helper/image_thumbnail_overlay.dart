@@ -10,11 +10,13 @@ class ImageThumbnailOverlay extends StatelessWidget {
     required this.widget,
     required this.onPlayPressed,
     required this.thumbnailImage,
+    this.backNavigationButton,
   });
 
   final Widget? widget;
   final String thumbnailImage;
   final VoidCallback onPlayPressed;
+  final Widget? backNavigationButton;
 
   @override
   Widget build(BuildContext context) {
@@ -56,6 +58,7 @@ class ImageThumbnailOverlay extends StatelessWidget {
             ),
           ),
         ),
+        ?backNavigationButton,
       ],
     );
   }

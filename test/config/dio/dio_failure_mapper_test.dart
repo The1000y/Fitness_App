@@ -5,83 +5,76 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('mapDioExceptionToAppFailure', () {
-    final tRequestOptions = RequestOptions(path: '/test');
+    DioException createDioException({
+      required DioExceptionType type,
+      int? statusCode,
+      dynamic responseData,
+    }) {
+      final requestOptions = RequestOptions(path: '/test');
+      return DioException(
+        requestOptions: requestOptions,
+        type: type,
+        response: statusCode != null
+            ? Response(
+                requestOptions: requestOptions,
+                statusCode: statusCode,
+                data: responseData,
+              )
+            : null,
+      );
+    }
 
     test('maps badCertificate to BadCertificateFailure', () {
-      final dioException = DioException(
-        requestOptions: tRequestOptions,
-        type: DioExceptionType.badCertificate,
+      final failure = mapDioExceptionToAppFailure(
+        createDioException(type: DioExceptionType.badCertificate),
       );
-      expect(
-        mapDioExceptionToAppFailure(dioException),
-        isA<BadCertificateFailure>(),
-      );
+      expect(failure, isA<BadCertificateFailure>());
     });
 
     test('maps timeout exceptions to TimeoutFailure', () {
-      final types = [
+      for (final type in [
         DioExceptionType.connectionTimeout,
         DioExceptionType.sendTimeout,
         DioExceptionType.receiveTimeout,
         DioExceptionType.transformTimeout,
-      ];
-      for (final type in types) {
-        final dioException = DioException(
-          requestOptions: tRequestOptions,
-          type: type,
+      ]) {
+        final failure = mapDioExceptionToAppFailure(
+          createDioException(type: type),
         );
-        expect(
-          mapDioExceptionToAppFailure(dioException),
-          isA<TimeoutFailure>(),
-        );
+        expect(failure, isA<TimeoutFailure>());
       }
     });
 
     test('maps cancel to CancelFailure', () {
-      final dioException = DioException(
-        requestOptions: tRequestOptions,
-        type: DioExceptionType.cancel,
+      final failure = mapDioExceptionToAppFailure(
+        createDioException(type: DioExceptionType.cancel),
       );
-      expect(mapDioExceptionToAppFailure(dioException), isA<CancelFailure>());
+      expect(failure, isA<CancelFailure>());
     });
 
     test('maps connectionError to InternetConnectionFailure', () {
-      final dioException = DioException(
-        requestOptions: tRequestOptions,
-        type: DioExceptionType.connectionError,
+      final failure = mapDioExceptionToAppFailure(
+        createDioException(type: DioExceptionType.connectionError),
       );
-      expect(
-        mapDioExceptionToAppFailure(dioException),
-        isA<InternetConnectionFailure>(),
-      );
+      expect(failure, isA<InternetConnectionFailure>());
     });
 
     test('maps unknown to UnknownFailure', () {
-      final dioException = DioException(
-        requestOptions: tRequestOptions,
-        type: DioExceptionType.unknown,
+      final failure = mapDioExceptionToAppFailure(
+        createDioException(type: DioExceptionType.unknown),
       );
-      expect(mapDioExceptionToAppFailure(dioException), isA<UnknownFailure>());
+      expect(failure, isA<UnknownFailure>());
     });
 
     group('badResponse status codes and server message extraction', () {
-      DioException createBadResponseException(int statusCode, dynamic data) {
-        return DioException(
-          requestOptions: tRequestOptions,
-          type: DioExceptionType.badResponse,
-          response: Response(
-            requestOptions: tRequestOptions,
-            statusCode: statusCode,
-            data: data,
+      test('status 400 maps to BadRequestFailure with extracted message', () {
+        final failure = mapDioExceptionToAppFailure(
+          createDioException(
+            type: DioExceptionType.badResponse,
+            statusCode: 400,
+            responseData: {'message': 'Bad request input'},
           ),
         );
-      }
-
-      test('status 400 maps to BadRequestFailure with extracted message', () {
-        final ex = createBadResponseException(400, {
-          'message': 'Bad request input',
-        });
-        final failure = mapDioExceptionToAppFailure(ex);
         expect(failure, isA<BadRequestFailure>());
         expect(
           (failure as BadRequestFailure).serverMessage,
@@ -92,10 +85,13 @@ void main() {
       test(
         'status 401 maps to UnauthorizedFailure with extracted error field',
         () {
-          final ex = createBadResponseException(401, {
-            'error': 'Invalid token',
-          });
-          final failure = mapDioExceptionToAppFailure(ex);
+          final failure = mapDioExceptionToAppFailure(
+            createDioException(
+              type: DioExceptionType.badResponse,
+              statusCode: 401,
+              responseData: {'error': 'Invalid token'},
+            ),
+          );
           expect(failure, isA<UnauthorizedFailure>());
           expect(
             (failure as UnauthorizedFailure).serverMessage,
@@ -107,10 +103,13 @@ void main() {
       test(
         'status 403 maps to ForbiddenFailure with extracted detail field',
         () {
-          final ex = createBadResponseException(403, {
-            'detail': 'Access denied',
-          });
-          final failure = mapDioExceptionToAppFailure(ex);
+          final failure = mapDioExceptionToAppFailure(
+            createDioException(
+              type: DioExceptionType.badResponse,
+              statusCode: 403,
+              responseData: {'detail': 'Access denied'},
+            ),
+          );
           expect(failure, isA<ForbiddenFailure>());
           expect(
             (failure as ForbiddenFailure).serverMessage,
@@ -120,20 +119,33 @@ void main() {
       );
 
       test('status 404 maps to NotFoundFailure', () {
-        final ex = createBadResponseException(404, null);
-        expect(mapDioExceptionToAppFailure(ex), isA<NotFoundFailure>());
+        final failure = mapDioExceptionToAppFailure(
+          createDioException(
+            type: DioExceptionType.badResponse,
+            statusCode: 404,
+          ),
+        );
+        expect(failure, isA<NotFoundFailure>());
       });
 
       test('status 405 maps to MethodNotAllowedFailure', () {
-        final ex = createBadResponseException(405, null);
-        expect(mapDioExceptionToAppFailure(ex), isA<MethodNotAllowedFailure>());
+        final failure = mapDioExceptionToAppFailure(
+          createDioException(
+            type: DioExceptionType.badResponse,
+            statusCode: 405,
+          ),
+        );
+        expect(failure, isA<MethodNotAllowedFailure>());
       });
 
       test('status 409 maps to ConflictFailure', () {
-        final ex = createBadResponseException(409, {
-          'message': 'User already exists',
-        });
-        final failure = mapDioExceptionToAppFailure(ex);
+        final failure = mapDioExceptionToAppFailure(
+          createDioException(
+            type: DioExceptionType.badResponse,
+            statusCode: 409,
+            responseData: {'message': 'User already exists'},
+          ),
+        );
         expect(failure, isA<ConflictFailure>());
         expect(
           (failure as ConflictFailure).serverMessage,
@@ -142,10 +154,13 @@ void main() {
       });
 
       test('status 422 maps to UnprocessableEntityFailure', () {
-        final ex = createBadResponseException(422, {
-          'message': 'Validation failed',
-        });
-        final failure = mapDioExceptionToAppFailure(ex);
+        final failure = mapDioExceptionToAppFailure(
+          createDioException(
+            type: DioExceptionType.badResponse,
+            statusCode: 422,
+            responseData: {'message': 'Validation failed'},
+          ),
+        );
         expect(failure, isA<UnprocessableEntityFailure>());
         expect(
           (failure as UnprocessableEntityFailure).serverMessage,
@@ -154,13 +169,22 @@ void main() {
       });
 
       test('status 429 maps to TooManyRequestsFailure', () {
-        final ex = createBadResponseException(429, null);
-        expect(mapDioExceptionToAppFailure(ex), isA<TooManyRequestsFailure>());
+        final failure = mapDioExceptionToAppFailure(
+          createDioException(
+            type: DioExceptionType.badResponse,
+            statusCode: 429,
+          ),
+        );
+        expect(failure, isA<TooManyRequestsFailure>());
       });
 
       test('status 500 maps to ServerFailure with statusCode', () {
-        final ex = createBadResponseException(500, null);
-        final failure = mapDioExceptionToAppFailure(ex);
+        final failure = mapDioExceptionToAppFailure(
+          createDioException(
+            type: DioExceptionType.badResponse,
+            statusCode: 500,
+          ),
+        );
         expect(failure, isA<ServerFailure>());
         expect((failure as ServerFailure).statusCode, equals(500));
       });
@@ -168,12 +192,22 @@ void main() {
       test(
         'extracts null serverMessage when data is not a Map or message is empty',
         () {
-          final ex = createBadResponseException(400, 'Plain string error');
-          final failure = mapDioExceptionToAppFailure(ex);
-          expect((failure as BadRequestFailure).serverMessage, isNull);
+          final failurePlain = mapDioExceptionToAppFailure(
+            createDioException(
+              type: DioExceptionType.badResponse,
+              statusCode: 400,
+              responseData: 'Plain string error',
+            ),
+          );
+          expect((failurePlain as BadRequestFailure).serverMessage, isNull);
 
-          final exEmpty = createBadResponseException(400, {'message': ''});
-          final failureEmpty = mapDioExceptionToAppFailure(exEmpty);
+          final failureEmpty = mapDioExceptionToAppFailure(
+            createDioException(
+              type: DioExceptionType.badResponse,
+              statusCode: 400,
+              responseData: {'message': ''},
+            ),
+          );
           expect((failureEmpty as BadRequestFailure).serverMessage, isNull);
         },
       );

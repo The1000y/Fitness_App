@@ -6,14 +6,14 @@ import '../../../../../helpers/test_data.dart';
 
 void main() {
   late FakeAuthApiClient fakeApiClient;
-  late RemoteDataSourceImpl dataSource;
+  late AuthRemoteDataSourceImpl dataSource;
 
   setUp(() {
     fakeApiClient = FakeAuthApiClient();
-    dataSource = RemoteDataSourceImpl(fakeApiClient);
+    dataSource = AuthRemoteDataSourceImpl(authApiClient: fakeApiClient);
   });
 
-  group('RemoteDataSourceImpl', () {
+  group('AuthRemoteDataSourceImpl', () {
     test(
       'delegates login call to AuthApiClient with the correct request',
       () async {

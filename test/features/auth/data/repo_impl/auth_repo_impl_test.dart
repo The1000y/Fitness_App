@@ -36,12 +36,15 @@ void main() {
   setUp(() {
     fakeRemote = FakeRemoteDataSource();
     mockRemoteDataSource = MockAuthRemoteDataSource();
-    repo = AuthRepoImpl(fakeRemote, mockRemoteDataSource);
+    repo = AuthRepoImpl(mockRemoteDataSource);
     repository = repo;
   });
 
   group('AuthRepoImpl', () {
     group('login', () {
+      setUp(() {
+        repo = AuthRepoImpl(fakeRemote);
+      });
       test(
         'builds LoginRequest and returns Success when remote succeeds',
         () async {

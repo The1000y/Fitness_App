@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../theme/app_colors/app_colors.dart';
+import 'package:fitness_app/core/theme/app_colors/app_colors.dart';
 
 class CustomBackgroundImage extends StatelessWidget {
   const CustomBackgroundImage({

@@ -7,11 +7,37 @@ import 'package:fitness_app/features/auth/presentation/forget_password/view/widg
 import 'package:fitness_app/features/auth/presentation/login/view/login_view.dart';
 import 'package:fitness_app/features/auth/presentation/onboarding/views/onboarding_view.dart';
 import 'package:fitness_app/features/auth/presentation/register/view/register_view.dart';
-import 'package:fitness_app/features/chat/presentation/views/chat_view.dart';
+import 'package:fitness_app/features/chat/presentation/manager/chat_cubit.dart';
+import 'package:fitness_app/features/chat/presentation/manager/chat_event.dart';
+import 'package:fitness_app/features/chat/presentation/view/chat_view.dart';
+import 'package:fitness_app/features/exercise/domain/entities/exercise_entity.dart';
+import 'package:fitness_app/features/exercise/presentation/exercise_details/args/exercise_details_args.dart';
+import 'package:fitness_app/features/exercise/presentation/exercise_details/manager/exercise_details_cubit.dart';
+import 'package:fitness_app/features/exercise/presentation/exercise_details/manager/exercise_details_event.dart';
+import 'package:fitness_app/features/exercise/presentation/exercise_details/view/exercise_details_view.dart';
+import 'package:fitness_app/features/exercise/presentation/exercise_details/view/exercise_video_player_view.dart';
+import 'package:fitness_app/features/exercise/presentation/workout_categories/view/workout_categories_view.dart';
+import 'package:fitness_app/features/chat/presentation/view/message_view.dart';
+import 'package:fitness_app/features/chat/presentation/view/widget/prefrence_borading_chat.dart';
 import 'package:fitness_app/features/home/presentation/views/home_view.dart';
 import 'package:fitness_app/features/main/presentation/views/main_layout_view.dart';
-import 'package:fitness_app/features/profile/presentation/views/profile_view.dart';
-import 'package:fitness_app/features/workouts/presentation/views/workouts_view.dart';
+import 'package:fitness_app/features/meals/presentation/manager/meals_cubit.dart';
+import 'package:fitness_app/features/meals/presentation/manager/meals_event.dart';
+import 'package:fitness_app/features/meals/presentation/view/details_food_view.dart';
+import 'package:fitness_app/features/meals/presentation/view/meals_view.dart';
+import 'package:fitness_app/features/profile/presentation/change_password/manager/change_password_cubit.dart';
+import 'package:fitness_app/features/profile/presentation/change_password/view/change_password_view.dart';
+import 'package:fitness_app/features/profile/presentation/edit_profile/manager/edit_profile_cubit.dart';
+import 'package:fitness_app/features/profile/presentation/edit_profile/manager/edit_profile_event.dart';
+import 'package:fitness_app/features/profile/presentation/edit_profile/view/edit_activity_view.dart';
+import 'package:fitness_app/features/profile/presentation/edit_profile/view/edit_goal_view.dart';
+import 'package:fitness_app/features/profile/presentation/edit_profile/view/edit_profile_view.dart';
+import 'package:fitness_app/features/profile/presentation/edit_profile/view/edit_weight_view.dart';
+import 'package:fitness_app/features/profile/presentation/manager/profile_cubit.dart';
+import 'package:fitness_app/features/profile/presentation/manager/profile_event.dart';
+import 'package:fitness_app/features/profile/presentation/view/profile_view.dart';
+import 'package:fitness_app/features/profile/presentation/web_view/args/profile_web_view_args.dart';
+import 'package:fitness_app/features/profile/presentation/web_view/view/profile_web_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -24,7 +50,6 @@ abstract final class GenerateRoutes {
       case AppRoutes.onboarding:
         return _pageRoute(const OnboardingView(), settings);
 
-      // Auth
       case AppRoutes.login:
         return _pageRoute(const LoginView(), settings);
 
@@ -53,9 +78,14 @@ abstract final class GenerateRoutes {
         );
 
       case AppRoutes.changePassword:
-        return _pageRoute(const _StubScreen('Change Password'), settings);
+        return _pageRoute(
+          BlocProvider(
+            create: (_) => getIt<ChangePasswordCubit>(),
+            child: const ChangePasswordView(),
+          ),
+          settings,
+        );
 
-      // Setup
       case AppRoutes.setupGender:
         return _pageRoute(const _StubScreen('Setup Gender'), settings);
 
@@ -74,39 +104,134 @@ abstract final class GenerateRoutes {
       case AppRoutes.setupActivity:
         return _pageRoute(const _StubScreen('Setup Activity'), settings);
 
-      // Main
       case AppRoutes.main:
         return _pageRoute(
           MainLayoutView(
-            tabs: [HomeView(), ChatView(), WorkoutsView(), ProfileView()],
+            tabs: [
+              HomeView(),
+              SizedBox(),
+              WorkoutCategoriesView(),
+              BlocProvider.value(
+                value: getIt<ProfileCubit>()..onEvent(const LoadProfile()),
+                child: const ProfileView(),
+              ),
+            ],
           ),
           settings,
         );
 
+      case AppRoutes.workoutCategories:
+        return _pageRoute(const WorkoutCategoriesView(), settings);
+
       case AppRoutes.exerciseDetails:
-        return _pageRoute(const _StubScreen('Exercise Details'), settings);
+        final args = settings.arguments as ExerciseDetailsArgs;
+        return _pageRoute(
+          BlocProvider(
+            create: (_) => getIt<ExerciseDetailsCubit>()
+              ..onEvent(
+                LoadLevels(
+                  primeMoverMuscleId: args.primeMoverMuscleId,
+                  difficultyLevelId: args.difficultyLevelId,
+                ),
+              ),
+            child: ExerciseDetailsView(muscleName: args.muscleName),
+          ),
+          settings,
+        );
 
-      // Food
-      case AppRoutes.food:
-        return _pageRoute(const _StubScreen('Food'), settings);
+      case AppRoutes.exerciseVideoPlayer:
+        final exercise = settings.arguments as ExerciseEntity;
+        return _pageRoute(
+          ExerciseVideoPlayerView(exercise: exercise),
+          settings,
+        );
 
-      case AppRoutes.foodDetails:
-        return _pageRoute(const _StubScreen('Food Details'), settings);
+      case AppRoutes.meals:
+        final args = settings.arguments;
+        final category = args is String ? args : null;
+
+        return _pageRoute(
+          BlocProvider(
+            create: (context) =>
+                getIt.get<MealsCubit>()
+                  ..doEvent(GetMealsCategoriesEvent(category)),
+            child: const MealsView(),
+          ),
+          settings,
+        );
+
+      case AppRoutes.mealDetails:
+        var mealId = settings.arguments as String;
+        return _pageRoute(
+          BlocProvider<MealsCubit>(
+            create: (context) =>
+                getIt<MealsCubit>()..onEvent(GetMealDetailsEvent(mealId)),
+            child: DetailsFoodView(mealId: mealId),
+          ),
+          settings,
+        );
 
       case AppRoutes.chatHistory:
-        return _pageRoute(const _StubScreen('Chat History'), settings);
+        var route = getIt<PrefrenceBoradingChat>().getBoardingChat;
+        return _pageRoute(
+          route == true
+              ? BlocProvider<ChatCubit>(
+                  create: (_) =>
+                      getIt<ChatCubit>()
+                        ..onEvent(const LoadPreviousChatsEvent()),
+                  child: const MessageView(),
+                )
+              : const ChatView(),
+          settings,
+        );
+
+      case AppRoutes.chatMessages:
+        return _pageRoute(
+          BlocProvider<ChatCubit>(
+            create: (_) =>
+                getIt<ChatCubit>()..onEvent(const LoadPreviousChatsEvent()),
+            child: const MessageView(),
+          ),
+          settings,
+        );
 
       case AppRoutes.editProfile:
-        return _pageRoute(const _StubScreen('Edit Profile'), settings);
+        final profileCubit = settings.arguments as ProfileCubit;
+        final profile = profileCubit.state.profileState.data;
+        if (profile == null) return _pageRoute(const _StubScreen('404'), settings);
+        return _pageRoute(
+          BlocProvider(
+            create: (_) => getIt<EditProfileCubit>()
+              ..doEvent(InitEditProfileEvent(profile)),
+            child: const EditProfileView(),
+          ),
+          settings,
+        );
 
       case AppRoutes.editWeight:
-        return _pageRoute(const _StubScreen('Edit Weight'), settings);
+        final initialWeight = (settings.arguments as int?) ?? 70;
+        return _pageRoute(
+          EditWeightView(initialWeight: initialWeight),
+          settings,
+        );
 
       case AppRoutes.editGoal:
-        return _pageRoute(const _StubScreen('Edit Goal'), settings);
+        final initialGoal = settings.arguments as String?;
+        return _pageRoute(
+          EditGoalView(initialGoal: initialGoal),
+          settings,
+        );
 
       case AppRoutes.editActivity:
-        return _pageRoute(const _StubScreen('Edit Activity'), settings);
+        final initialLevel = settings.arguments as String?;
+        return _pageRoute(
+          EditActivityView(initialLevel: initialLevel),
+          settings,
+        );
+
+      case AppRoutes.webView:
+        final args = settings.arguments as ProfileWebViewArgs;
+        return _pageRoute(ProfileWebView(args: args), settings);
 
       default:
         return _pageRoute(const _StubScreen('404'), settings);

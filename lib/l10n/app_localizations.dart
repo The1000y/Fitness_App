@@ -245,13 +245,13 @@ abstract class AppLocalizations {
   /// No description provided for @forgotPassword.
   ///
   /// In en, this message translates to:
-  /// **'Forgot password?'**
+  /// **'Forgot Password?'**
   String get forgotPassword;
 
   /// No description provided for @dontHaveAccount.
   ///
   /// In en, this message translates to:
-  /// **'Don\'t have an account yet?'**
+  /// **'Don\'t have an account yet? '**
   String get dontHaveAccount;
 
   /// No description provided for @register.
@@ -506,6 +506,24 @@ abstract class AppLocalizations {
   /// **'Category'**
   String get category;
 
+  /// No description provided for @noCategoriesAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'No categories available'**
+  String get noCategoriesAvailable;
+
+  /// No description provided for @selectCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a category'**
+  String get selectCategory;
+
+  /// No description provided for @noMusclesAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'No muscles available'**
+  String get noMusclesAvailable;
+
   /// No description provided for @categoryGym.
   ///
   /// In en, this message translates to:
@@ -536,11 +554,29 @@ abstract class AppLocalizations {
   /// **'Trainer'**
   String get categoryTrainer;
 
-  /// No description provided for @recommendationToday.
+  /// No description provided for @recommendationToDay.
   ///
   /// In en, this message translates to:
-  /// **'Recommendation for today'**
-  String get recommendationToday;
+  /// **'Recommendation To Day'**
+  String get recommendationToDay;
+
+  /// No description provided for @strengthenYour.
+  ///
+  /// In en, this message translates to:
+  /// **'Exercises That Strengthen Your'**
+  String get strengthenYour;
+
+  /// No description provided for @tasksCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} tasks'**
+  String tasksCount(int count);
+
+  /// No description provided for @noPopularTraining.
+  ///
+  /// In en, this message translates to:
+  /// **'No popular training available'**
+  String get noPopularTraining;
 
   /// No description provided for @jogging.
   ///
@@ -662,12 +698,6 @@ abstract class AppLocalizations {
   /// **'Exercises that strengthen your body'**
   String get strengthenBody;
 
-  /// No description provided for @tasksCount.
-  ///
-  /// In en, this message translates to:
-  /// **'{count} tasks'**
-  String tasksCount(int count);
-
   /// No description provided for @homeTab.
   ///
   /// In en, this message translates to:
@@ -758,6 +788,12 @@ abstract class AppLocalizations {
   /// **'Hi {name}, I am your smart coach'**
   String chatGreeting(String name);
 
+  /// No description provided for @iamYourSmartCoach.
+  ///
+  /// In en, this message translates to:
+  /// **'I am your smart coach'**
+  String get iamYourSmartCoach;
+
   /// No description provided for @chatHelpPrompt.
   ///
   /// In en, this message translates to:
@@ -830,29 +866,47 @@ abstract class AppLocalizations {
   /// **'Logout'**
   String get logout;
 
-  /// No description provided for @yourWeightTapToEdit.
+  /// No description provided for @yourWeight.
   ///
   /// In en, this message translates to:
-  /// **'Your weight (tap to edit)'**
-  String get yourWeightTapToEdit;
+  /// **'Your weight'**
+  String get yourWeight;
 
-  /// No description provided for @yourGoalTapToEdit.
+  /// No description provided for @yourGoal.
   ///
   /// In en, this message translates to:
-  /// **'Your goal (tap to edit)'**
-  String get yourGoalTapToEdit;
+  /// **'Your goal'**
+  String get yourGoal;
 
-  /// No description provided for @yourActivityTapToEdit.
+  /// No description provided for @yourActivityLevel.
   ///
   /// In en, this message translates to:
-  /// **'Your activity level (tap to edit)'**
-  String get yourActivityTapToEdit;
+  /// **'Your activity level'**
+  String get yourActivityLevel;
+
+  /// No description provided for @tapToEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'(tap to edit)'**
+  String get tapToEdit;
 
   /// No description provided for @closeAppConfirm.
   ///
   /// In en, this message translates to:
   /// **'Are you sure you want to close the application?'**
   String get closeAppConfirm;
+
+  /// No description provided for @logoutConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to log out?'**
+  String get logoutConfirm;
+
+  /// No description provided for @webViewLoadFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load the page'**
+  String get webViewLoadFailed;
 
   /// No description provided for @accepted.
   ///
@@ -950,6 +1004,24 @@ abstract class AppLocalizations {
   /// **'Something went wrong. Please try again.'**
   String get failureUnknown;
 
+  /// No description provided for @chatLatestMessageMustBeUser.
+  ///
+  /// In en, this message translates to:
+  /// **'The latest message must be a user message.'**
+  String get chatLatestMessageMustBeUser;
+
+  /// No description provided for @chatIdCannotBeEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Chat ID cannot be empty.'**
+  String get chatIdCannotBeEmpty;
+
+  /// No description provided for @chatEmptyAssistantResponse.
+  ///
+  /// In en, this message translates to:
+  /// **'The assistant returned an empty response.'**
+  String get chatEmptyAssistantResponse;
+
   /// No description provided for @emailRequired.
   ///
   /// In en, this message translates to:
@@ -991,6 +1063,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Passwords do not match'**
   String get confirmPasswordMismatch;
+
+  /// No description provided for @newPasswordSameAsOld.
+  ///
+  /// In en, this message translates to:
+  /// **'New password must be different from the old password'**
+  String get newPasswordSameAsOld;
 
   /// No description provided for @usernameRequired.
   ///
@@ -1220,11 +1298,101 @@ abstract class AppLocalizations {
   /// **'Unable to play video'**
   String get unableToPlayVideo;
 
+  /// No description provided for @closeVideo.
+  ///
+  /// In en, this message translates to:
+  /// **'Close video'**
+  String get closeVideo;
+
   /// No description provided for @cancel.
   ///
   /// In en, this message translates to:
-  /// **'cancel the video'**
+  /// **'Cancel'**
   String get cancel;
+
+  /// No description provided for @exerciseNoExercisesFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No exercises found'**
+  String get exerciseNoExercisesFound;
+
+  /// No description provided for @exerciseLoadFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load exercises'**
+  String get exerciseLoadFailed;
+
+  /// No description provided for @goBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Go Back'**
+  String get goBack;
+
+  /// No description provided for @exercisesOfMuscle.
+  ///
+  /// In en, this message translates to:
+  /// **'{muscleName} Exercises'**
+  String exercisesOfMuscle(String muscleName);
+
+  /// No description provided for @targetMuscles.
+  ///
+  /// In en, this message translates to:
+  /// **'Target Muscles'**
+  String get targetMuscles;
+
+  /// No description provided for @primeMover.
+  ///
+  /// In en, this message translates to:
+  /// **'Prime Mover'**
+  String get primeMover;
+
+  /// No description provided for @secondaryMuscle.
+  ///
+  /// In en, this message translates to:
+  /// **'Secondary'**
+  String get secondaryMuscle;
+
+  /// No description provided for @tertiaryMuscle.
+  ///
+  /// In en, this message translates to:
+  /// **'Tertiary'**
+  String get tertiaryMuscle;
+
+  /// No description provided for @exerciseDetailsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Details'**
+  String get exerciseDetailsTitle;
+
+  /// No description provided for @bodyRegion.
+  ///
+  /// In en, this message translates to:
+  /// **'Body Region'**
+  String get bodyRegion;
+
+  /// No description provided for @targetGroup.
+  ///
+  /// In en, this message translates to:
+  /// **'Target Group'**
+  String get targetGroup;
+
+  /// No description provided for @shortDemo.
+  ///
+  /// In en, this message translates to:
+  /// **'Short Demo'**
+  String get shortDemo;
+
+  /// No description provided for @tapToPlayDemo.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to play demo'**
+  String get tapToPlayDemo;
+
+  /// No description provided for @tapToStopDemo.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to stop demo'**
+  String get tapToStopDemo;
 
   /// No description provided for @otpRequired.
   ///
@@ -1267,6 +1435,108 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Code verified successfully'**
   String get otpVerifiedSuccessfully;
+
+  /// No description provided for @noMealsYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No meals yet'**
+  String get noMealsYet;
+
+  /// No description provided for @noCategoryMealsYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No {category} meals yet'**
+  String noCategoryMealsYet(String category);
+
+  /// No description provided for @noMealsMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'There are no recommendations right now. Try another meal time or check back later.'**
+  String get noMealsMessage;
+
+  /// No description provided for @refresh.
+  ///
+  /// In en, this message translates to:
+  /// **'Refresh'**
+  String get refresh;
+
+  /// No description provided for @noInternetConnection.
+  ///
+  /// In en, this message translates to:
+  /// **'No internet connection'**
+  String get noInternetConnection;
+
+  /// No description provided for @somethingWentWrong.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong'**
+  String get somethingWentWrong;
+
+  /// No description provided for @checkConnectionMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Check your connection and try again.'**
+  String get checkConnectionMessage;
+
+  /// No description provided for @couldNotLoadMeals.
+  ///
+  /// In en, this message translates to:
+  /// **'We could not load the meals. Please try again.'**
+  String get couldNotLoadMeals;
+
+  /// No description provided for @tryAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get tryAgain;
+
+  /// No description provided for @couldNotLoadCategories.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not load categories'**
+  String get couldNotLoadCategories;
+
+  /// No description provided for @dataNotAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Data is currently unavailable.'**
+  String get dataNotAvailable;
+
+  /// No description provided for @failedToBuildPopularTraining.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to build popular training for {muscleName}'**
+  String failedToBuildPopularTraining(String muscleName);
+
+  /// No description provided for @typeYourMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter Your Message'**
+  String get typeYourMessage;
+
+  /// No description provided for @hi.
+  ///
+  /// In en, this message translates to:
+  /// **'Hi'**
+  String get hi;
+
+  /// No description provided for @noChatYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No previous conversations yet'**
+  String get noChatYet;
+
+  /// No description provided for @chatLimitReached.
+  ///
+  /// In en, this message translates to:
+  /// **'This conversation has reached the maximum length. Please start a new conversation.'**
+  String get chatLimitReached;
+
+  /// No description provided for @newConversation.
+  ///
+  /// In en, this message translates to:
+  /// **'New Conversation'**
+  String get newConversation;
 }
 
 class _AppLocalizationsDelegate

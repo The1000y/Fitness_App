@@ -16,7 +16,7 @@ class VideoErrorView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var l10n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context)!;
     return ColoredBox(
       color: Colors.black,
       child: Center(

@@ -1,8 +1,8 @@
 import 'package:injectable/injectable.dart';
 
-import '../../../../config/base/base_response.dart';
-import '../entities/login_entity/login_entity.dart';
-import '../repo/auth_repo.dart';
+import 'package:fitness_app/config/base/base_response.dart';
+import 'package:fitness_app/features/auth/domain/entities/login_entity/login_entity.dart';
+import 'package:fitness_app/features/auth/domain/repo/auth_repo.dart';
 
 @injectable
 class LoginUseCase {

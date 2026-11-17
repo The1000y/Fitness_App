@@ -39,5 +39,26 @@ void main() {
 
       expect(tapped, isTrue);
     });
+
+    testWidgets('renders title and responds to user tap on text', (
+      tester,
+    ) async {
+      bool tapped = false;
+
+      await tester.pumpWidget(
+        wrapWithScreenUtil(
+          ExerciseCard(
+            image: 'assets/images/robot_chat.png',
+            title: 'Bench Press',
+            onTap: () => tapped = true,
+          ),
+        ),
+      );
+
+      expect(find.text('Bench Press'), findsOneWidget);
+
+      await tester.tap(find.text('Bench Press'));
+      expect(tapped, isTrue);
+    });
   });
 }

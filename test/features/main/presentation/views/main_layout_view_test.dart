@@ -1,11 +1,6 @@
 import 'package:fitness_app/config/routing/app_routes.dart';
-import 'package:fitness_app/config/routing/generate_routes.dart';
 import 'package:fitness_app/core/constants/app_test_keys.dart';
-import 'package:fitness_app/features/chat/presentation/views/chat_view.dart';
-import 'package:fitness_app/features/home/presentation/views/home_view.dart';
 import 'package:fitness_app/features/main/presentation/views/main_layout_view.dart';
-import 'package:fitness_app/features/profile/presentation/views/profile_view.dart';
-import 'package:fitness_app/features/workouts/presentation/views/workouts_view.dart';
 import 'package:fitness_app/l10n/app_localizations.dart';
 import 'package:fitness_app/l10n/app_localizations_en.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +16,6 @@ void main() {
     WidgetTester tester, {
     List<Widget>? tabs,
     TargetPlatform platform = TargetPlatform.android,
-    bool useGenerateRoutes = true,
   }) async {
     tester.view.physicalSize = const Size(375, 812);
     tester.view.devicePixelRatio = 1.0;
@@ -30,7 +24,14 @@ void main() {
       tester.view.resetDevicePixelRatio();
     });
 
-    final shouldUseRoutes = useGenerateRoutes && tabs == null;
+    final actualTabs =
+        tabs ??
+        const [
+          SizedBox(key: Key('tab_explore')),
+          SizedBox(key: Key('tab_coach')),
+          SizedBox(key: Key('tab_workouts')),
+          SizedBox(key: Key('tab_profile')),
+        ];
 
     await tester.pumpWidget(
       ScreenUtilPlusInit(
@@ -44,22 +45,11 @@ void main() {
             ...GlobalMaterialLocalizations.delegates,
           ],
           supportedLocales: AppLocalizations.supportedLocales,
-          initialRoute: shouldUseRoutes ? AppRoutes.main : null,
-          onGenerateRoute: shouldUseRoutes
-              ? GenerateRoutes.generateRoute
-              : null,
-          home: shouldUseRoutes
-              ? null
-              : MainLayoutView(
-                  tabs:
-                      tabs ??
-                      const [
-                        HomeView(),
-                        ChatView(),
-                        WorkoutsView(),
-                        ProfileView(),
-                      ],
-                ),
+          routes: {
+            AppRoutes.chatHistory: (_) =>
+                const Scaffold(body: Text('Chat History Screen')),
+          },
+          home: MainLayoutView(tabs: actualTabs),
         ),
       ),
     );
@@ -98,7 +88,7 @@ void main() {
         expect(indexedStackFinder, findsOneWidget);
         final indexedStack = tester.widget<IndexedStack>(indexedStackFinder);
         expect(indexedStack.index, 0);
-        expect(find.byType(HomeView), findsOneWidget);
+        expect(find.byKey(const Key('tab_explore')), findsOneWidget);
 
         // Verify only selected tab (Explore) displays its label
         expect(find.text(l10n.explore), findsOneWidget);
@@ -110,7 +100,7 @@ void main() {
   });
 
   group('MainLayoutView Tab Navigation Flows', () {
-    testWidgets('switches to Smart Coach tab when coach tab is tapped', (
+    testWidgets('navigates to chat history when coach tab is tapped', (
       WidgetTester tester,
     ) async {
       await pumpMainLayoutView(tester);
@@ -119,16 +109,8 @@ void main() {
       await tester.tap(find.byKey(const Key(AppTestKeys.mainTabCoach)));
       await tester.pumpAndSettle();
 
-      // Verify active tab index updated to 1
-      final indexedStack = tester.widget<IndexedStack>(
-        find.byType(IndexedStack),
-      );
-      expect(indexedStack.index, 1);
-      expect(find.byType(ChatView), findsOneWidget);
-
-      // Verify label visibility updated
-      expect(find.text(l10n.smartCoach), findsOneWidget);
-      expect(find.text(l10n.explore), findsNothing);
+      // Verify navigation to chatHistory occurred
+      expect(find.text('Chat History Screen'), findsOneWidget);
     });
 
     testWidgets('switches to Workouts tab when workouts tab is tapped', (
@@ -145,7 +127,7 @@ void main() {
         find.byType(IndexedStack),
       );
       expect(indexedStack.index, 2);
-      expect(find.byType(WorkoutsView), findsOneWidget);
+      expect(find.byKey(const Key('tab_workouts')), findsOneWidget);
 
       // Verify label visibility updated
       expect(find.text(l10n.workouts), findsOneWidget);
@@ -166,7 +148,7 @@ void main() {
         find.byType(IndexedStack),
       );
       expect(indexedStack.index, 3);
-      expect(find.byType(ProfileView), findsOneWidget);
+      expect(find.byKey(const Key('tab_profile')), findsOneWidget);
 
       // Verify label visibility updated
       expect(find.text(l10n.profile), findsOneWidget);
@@ -192,7 +174,7 @@ void main() {
 
         // 3. Verify user returned to Home tab (index 0) and dialog is not shown
         expect(tester.widget<IndexedStack>(find.byType(IndexedStack)).index, 0);
-        expect(find.byType(HomeView), findsOneWidget);
+        expect(find.byKey(const Key('tab_explore')), findsOneWidget);
         expect(find.byKey(const Key(AppTestKeys.closeAppDialog)), findsNothing);
       },
     );
@@ -308,14 +290,14 @@ void main() {
 
       // Verify custom home widget is displayed
       expect(find.text('Custom Home'), findsOneWidget);
-      expect(find.byType(HomeView), findsNothing);
+      expect(find.byKey(const Key('tab_explore')), findsNothing);
 
-      // Navigate to second tab
-      await tester.tap(find.byKey(const Key(AppTestKeys.mainTabCoach)));
+      // Navigate to workouts tab
+      await tester.tap(find.byKey(const Key(AppTestKeys.mainTabWorkouts)));
       await tester.pumpAndSettle();
 
-      expect(find.text('Custom Chat'), findsOneWidget);
-      expect(find.byType(ChatView), findsNothing);
+      expect(find.text('Custom Workouts'), findsOneWidget);
+      expect(find.byKey(const Key('tab_explore')), findsNothing);
     });
   });
 }

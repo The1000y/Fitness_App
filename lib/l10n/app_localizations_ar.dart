@@ -218,6 +218,15 @@ class AppLocalizationsAr extends AppLocalizations {
   String get category => 'الفئة';
 
   @override
+  String get noCategoriesAvailable => 'لا توجد فئات متاحة';
+
+  @override
+  String get selectCategory => 'اختر فئة';
+
+  @override
+  String get noMusclesAvailable => 'لا توجد عضلات متاحة';
+
+  @override
   String get categoryGym => 'الجيم';
 
   @override
@@ -233,7 +242,18 @@ class AppLocalizationsAr extends AppLocalizations {
   String get categoryTrainer => 'المدرب';
 
   @override
-  String get recommendationToday => 'توصية اليوم';
+  String get recommendationToDay => 'Recommendation To Day';
+
+  @override
+  String get strengthenYour => 'Exercises That Strengthen Your';
+
+  @override
+  String tasksCount(int count) {
+    return '$count مهمة';
+  }
+
+  @override
+  String get noPopularTraining => 'No popular training available';
 
   @override
   String get jogging => 'الجري الخفيف';
@@ -296,11 +316,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get strengthenBody => 'تمارين تقوّي جسمك';
 
   @override
-  String tasksCount(int count) {
-    return '$count مهمة';
-  }
-
-  @override
   String get homeTab => 'الرئيسية';
 
   @override
@@ -354,6 +369,9 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
+  String get iamYourSmartCoach => 'أنا مدربك الذكي';
+
+  @override
   String get chatHelpPrompt => 'كيف يمكنني مساعدتك اليوم؟';
 
   @override
@@ -390,16 +408,25 @@ class AppLocalizationsAr extends AppLocalizations {
   String get logout => 'تسجيل الخروج';
 
   @override
-  String get yourWeightTapToEdit => 'وزنك (اضغط للتعديل)';
+  String get yourWeight => 'وزنك';
 
   @override
-  String get yourGoalTapToEdit => 'هدفك (اضغط للتعديل)';
+  String get yourGoal => 'هدفك';
 
   @override
-  String get yourActivityTapToEdit => 'مستوى نشاطك (اضغط للتعديل)';
+  String get yourActivityLevel => 'Your activity level';
+
+  @override
+  String get tapToEdit => '(اضغط للتعديل)';
 
   @override
   String get closeAppConfirm => 'هل أنت متأكد أنك تريد إغلاق التطبيق؟';
+
+  @override
+  String get logoutConfirm => 'هل أنت متأكد أن تريد تسجيل الخروج؟';
+
+  @override
+  String get webViewLoadFailed => 'تعذّر تحميل الصفحة';
 
   @override
   String get accepted => 'تم قبول الطلب بنجاح';
@@ -456,6 +483,16 @@ class AppLocalizationsAr extends AppLocalizations {
   String get failureUnknown => 'حدث خطأ ما. حاول مرة أخرى.';
 
   @override
+  String get chatLatestMessageMustBeUser =>
+      'يجب أن تكون أحدث رسالة رسالة من المستخدم.';
+
+  @override
+  String get chatIdCannotBeEmpty => 'معرّف المحادثة مطلوب.';
+
+  @override
+  String get chatEmptyAssistantResponse => 'أعاد المساعد ردًا فارغًا.';
+
+  @override
   String get emailRequired => 'البريد الإلكتروني مطلوب';
 
   @override
@@ -476,6 +513,10 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get confirmPasswordMismatch => 'كلمتا المرور غير متطابقتين';
+
+  @override
+  String get newPasswordSameAsOld =>
+      'يجب أن تختلف كلمة المرور الجديدة عن القديمة';
 
   @override
   String get usernameRequired => 'اسم المستخدم مطلوب';
@@ -596,7 +637,54 @@ class AppLocalizationsAr extends AppLocalizations {
   String get unableToPlayVideo => 'تعذر تشغيل الفيديو';
 
   @override
-  String get cancel => 'إغلاق الفيديو';
+  String get closeVideo => 'إغلاق الفيديو';
+
+  @override
+  String get cancel => 'إلغاء';
+
+  @override
+  String get exerciseNoExercisesFound => 'لا توجد تمارين';
+
+  @override
+  String get exerciseLoadFailed => 'فشل تحميل التمارين';
+
+  @override
+  String get goBack => 'رجوع';
+
+  @override
+  String exercisesOfMuscle(String muscleName) {
+    return 'تمارين $muscleName';
+  }
+
+  @override
+  String get targetMuscles => 'العضلات المستهدفة';
+
+  @override
+  String get primeMover => 'العضلة الرئيسية';
+
+  @override
+  String get secondaryMuscle => 'ثانوية';
+
+  @override
+  String get tertiaryMuscle => 'ثالثية';
+
+  @override
+  String get exerciseDetailsTitle => 'التفاصيل';
+
+  @override
+  String get bodyRegion => 'منطقة الجسم';
+
+  @override
+  String get targetGroup => 'المجموعة المستهدفة';
+
+  @override
+  String get shortDemo => 'عرض مختصر';
+
+  @override
+  String get tapToPlayDemo => 'اضغط لتشغيل العرض';
+
+  @override
+  String get tapToStopDemo => 'اضغط لإيقاف العرض';
 
   @override
   String get otpRequired => 'رمز التحقق مطلوب';
@@ -618,4 +706,62 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get otpVerifiedSuccessfully => 'تم تأكيد الرمز بنجاح';
+
+  @override
+  String get noMealsYet => 'لا توجد وجبات بعد';
+
+  @override
+  String noCategoryMealsYet(String category) {
+    return 'لا توجد وجبات $category بعد';
+  }
+
+  @override
+  String get noMealsMessage =>
+      'لا توجد ترشيحات في الوقت الحالي. جرّب وقت وجبة آخر أو عد لاحقاً.';
+
+  @override
+  String get refresh => 'تحديث';
+
+  @override
+  String get noInternetConnection => 'لا يوجد اتصال بالإنترنت';
+
+  @override
+  String get somethingWentWrong => 'حدث خطأ ما';
+
+  @override
+  String get checkConnectionMessage =>
+      'تحقق من اتصالك بالإنترنت وحاول مرة أخرى.';
+
+  @override
+  String get couldNotLoadMeals => 'تعذر تحميل الوجبات. يرجى المحاولة مرة أخرى.';
+
+  @override
+  String get tryAgain => 'حاول مرة أخرى';
+
+  @override
+  String get couldNotLoadCategories => 'تعذر تحميل الفئات';
+
+  @override
+  String get dataNotAvailable => 'البيانات غير متوفرة حالياً.';
+
+  @override
+  String failedToBuildPopularTraining(String muscleName) {
+    return 'فشل بناء التدريب الشائع لـ $muscleName';
+  }
+
+  @override
+  String get typeYourMessage => 'أكتب رسالتك';
+
+  @override
+  String get hi => 'أهلاً بك';
+
+  @override
+  String get noChatYet => 'لا توجد محادثات سابقة بعد';
+
+  @override
+  String get chatLimitReached =>
+      'اقتربت هذه المحادثة من الحد الأقصى. يُرجى بدء محادثة جديدة.';
+
+  @override
+  String get newConversation => 'محادثة جديدة';
 }

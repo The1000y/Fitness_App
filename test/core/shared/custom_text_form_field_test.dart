@@ -102,6 +102,30 @@ void main() {
       expect(find.text('Field cannot be empty'), findsOneWidget);
     });
 
+    testWidgets('displays validation error message when validator fails', (
+      tester,
+    ) async {
+      final formKey = GlobalKey<FormState>();
+
+      await tester.pumpWidget(
+        wrapWithScreenUtil(
+          Form(
+            key: formKey,
+            child: CustomTextFormField(
+              hintText: 'Required field',
+              validator: (value) =>
+                  (value == null || value.isEmpty) ? 'Field is required' : null,
+            ),
+          ),
+        ),
+      );
+
+      formKey.currentState!.validate();
+      await tester.pumpAndSettle();
+
+      expect(find.text('Field is required'), findsOneWidget);
+    });
+
     testWidgets(
       'toggles obscureText when isPassword is true and eye icon tapped',
       (tester) async {
@@ -133,6 +157,13 @@ void main() {
         expect(find.byIcon(Icons.visibility_outlined), findsOneWidget);
         textField = tester.widget(textFieldFinder);
         expect(textField.obscureText, isFalse);
+
+        // Tap again to hide
+        await tester.tap(find.byType(IconButton));
+        await tester.pumpAndSettle();
+
+        textField = tester.widget(textFieldFinder);
+        expect(textField.obscureText, isTrue);
       },
     );
   });

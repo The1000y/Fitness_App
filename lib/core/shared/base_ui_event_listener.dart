@@ -1,14 +1,13 @@
 import 'dart:async';
+import 'package:fitness_app/config/base/base_cubit.dart';
+import 'package:fitness_app/config/base/base_ui_event.dart';
 import 'package:fitness_app/config/localization/app_failure_message_mapper.dart';
 import 'package:fitness_app/config/localization/success_message_enum_mapper.dart';
+import 'package:fitness_app/core/theme/app_colors/app_colors.dart';
 import 'package:fitness_app/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
-
-import '../../../config/base/base_cubit.dart';
-import '../../../config/base/base_ui_event.dart';
-import '../theme/app_colors/app_colors.dart';
 
 class BaseUiEventListener<C extends BaseCubit<S, E>, S, E extends BaseUiEvent>
     extends StatefulWidget {

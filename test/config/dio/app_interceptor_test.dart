@@ -136,6 +136,7 @@ void main() {
           when(
             () => mockStorage.delete(key: StorageKeys.kUserToken),
           ).thenAnswer((_) async {});
+          when(() => mockAuthCubit.sessionExpired()).thenAnswer((_) async {});
 
           await interceptor.onError(error, handler);
 

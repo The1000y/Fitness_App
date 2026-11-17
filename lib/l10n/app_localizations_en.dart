@@ -85,10 +85,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get confirmPassword => 'Confirm password';
 
   @override
-  String get forgotPassword => 'Forgot password?';
+  String get forgotPassword => 'Forgot Password?';
 
   @override
-  String get dontHaveAccount => 'Don\'t have an account yet?';
+  String get dontHaveAccount => 'Don\'t have an account yet? ';
 
   @override
   String get register => 'Register';
@@ -219,6 +219,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get category => 'Category';
 
   @override
+  String get noCategoriesAvailable => 'No categories available';
+
+  @override
+  String get selectCategory => 'Select a category';
+
+  @override
+  String get noMusclesAvailable => 'No muscles available';
+
+  @override
   String get categoryGym => 'Gym';
 
   @override
@@ -234,7 +243,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get categoryTrainer => 'Trainer';
 
   @override
-  String get recommendationToday => 'Recommendation for today';
+  String get recommendationToDay => 'Recommendation To Day';
+
+  @override
+  String get strengthenYour => 'Exercises That Strengthen Your';
+
+  @override
+  String tasksCount(int count) {
+    return '$count tasks';
+  }
+
+  @override
+  String get noPopularTraining => 'No popular training available';
 
   @override
   String get jogging => 'Jogging';
@@ -297,11 +317,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get strengthenBody => 'Exercises that strengthen your body';
 
   @override
-  String tasksCount(int count) {
-    return '$count tasks';
-  }
-
-  @override
   String get homeTab => 'Home';
 
   @override
@@ -355,6 +370,9 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get iamYourSmartCoach => 'I am your smart coach';
+
+  @override
   String get chatHelpPrompt => 'How can I assist you today?';
 
   @override
@@ -391,17 +409,26 @@ class AppLocalizationsEn extends AppLocalizations {
   String get logout => 'Logout';
 
   @override
-  String get yourWeightTapToEdit => 'Your weight (tap to edit)';
+  String get yourWeight => 'Your weight';
 
   @override
-  String get yourGoalTapToEdit => 'Your goal (tap to edit)';
+  String get yourGoal => 'Your goal';
 
   @override
-  String get yourActivityTapToEdit => 'Your activity level (tap to edit)';
+  String get yourActivityLevel => 'Your activity level';
+
+  @override
+  String get tapToEdit => '(tap to edit)';
 
   @override
   String get closeAppConfirm =>
       'Are you sure you want to close the application?';
+
+  @override
+  String get logoutConfirm => 'Are you sure you want to log out?';
+
+  @override
+  String get webViewLoadFailed => 'Couldn\'t load the page';
 
   @override
   String get accepted => 'Order accepted successfully';
@@ -460,6 +487,17 @@ class AppLocalizationsEn extends AppLocalizations {
   String get failureUnknown => 'Something went wrong. Please try again.';
 
   @override
+  String get chatLatestMessageMustBeUser =>
+      'The latest message must be a user message.';
+
+  @override
+  String get chatIdCannotBeEmpty => 'Chat ID cannot be empty.';
+
+  @override
+  String get chatEmptyAssistantResponse =>
+      'The assistant returned an empty response.';
+
+  @override
   String get emailRequired => 'Email is required';
 
   @override
@@ -480,6 +518,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get confirmPasswordMismatch => 'Passwords do not match';
+
+  @override
+  String get newPasswordSameAsOld =>
+      'New password must be different from the old password';
 
   @override
   String get usernameRequired => 'Username is required';
@@ -600,7 +642,54 @@ class AppLocalizationsEn extends AppLocalizations {
   String get unableToPlayVideo => 'Unable to play video';
 
   @override
-  String get cancel => 'cancel the video';
+  String get closeVideo => 'Close video';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get exerciseNoExercisesFound => 'No exercises found';
+
+  @override
+  String get exerciseLoadFailed => 'Failed to load exercises';
+
+  @override
+  String get goBack => 'Go Back';
+
+  @override
+  String exercisesOfMuscle(String muscleName) {
+    return '$muscleName Exercises';
+  }
+
+  @override
+  String get targetMuscles => 'Target Muscles';
+
+  @override
+  String get primeMover => 'Prime Mover';
+
+  @override
+  String get secondaryMuscle => 'Secondary';
+
+  @override
+  String get tertiaryMuscle => 'Tertiary';
+
+  @override
+  String get exerciseDetailsTitle => 'Details';
+
+  @override
+  String get bodyRegion => 'Body Region';
+
+  @override
+  String get targetGroup => 'Target Group';
+
+  @override
+  String get shortDemo => 'Short Demo';
+
+  @override
+  String get tapToPlayDemo => 'Tap to play demo';
+
+  @override
+  String get tapToStopDemo => 'Tap to stop demo';
 
   @override
   String get otpRequired => 'Verification code is required';
@@ -623,4 +712,62 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get otpVerifiedSuccessfully => 'Code verified successfully';
+
+  @override
+  String get noMealsYet => 'No meals yet';
+
+  @override
+  String noCategoryMealsYet(String category) {
+    return 'No $category meals yet';
+  }
+
+  @override
+  String get noMealsMessage =>
+      'There are no recommendations right now. Try another meal time or check back later.';
+
+  @override
+  String get refresh => 'Refresh';
+
+  @override
+  String get noInternetConnection => 'No internet connection';
+
+  @override
+  String get somethingWentWrong => 'Something went wrong';
+
+  @override
+  String get checkConnectionMessage => 'Check your connection and try again.';
+
+  @override
+  String get couldNotLoadMeals =>
+      'We could not load the meals. Please try again.';
+
+  @override
+  String get tryAgain => 'Try again';
+
+  @override
+  String get couldNotLoadCategories => 'Could not load categories';
+
+  @override
+  String get dataNotAvailable => 'Data is currently unavailable.';
+
+  @override
+  String failedToBuildPopularTraining(String muscleName) {
+    return 'Failed to build popular training for $muscleName';
+  }
+
+  @override
+  String get typeYourMessage => 'Enter Your Message';
+
+  @override
+  String get hi => 'Hi';
+
+  @override
+  String get noChatYet => 'No previous conversations yet';
+
+  @override
+  String get chatLimitReached =>
+      'This conversation has reached the maximum length. Please start a new conversation.';
+
+  @override
+  String get newConversation => 'New Conversation';
 }

@@ -12,8 +12,8 @@ import 'package:gap/gap.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:uuid/uuid.dart';
 
-import '../../../../../config/routing/app_routes.dart';
-import '../../../../../core/theme/app_colors/app_colors.dart';
+import 'package:fitness_app/config/routing/app_routes.dart';
+import 'package:fitness_app/core/theme/app_colors/app_colors.dart';
 
 class OnboardingView extends StatefulWidget {
   const OnboardingView({super.key});

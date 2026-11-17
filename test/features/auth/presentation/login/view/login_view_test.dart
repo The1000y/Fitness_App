@@ -7,6 +7,7 @@ import 'package:fitness_app/config/di/di.dart';
 import 'package:fitness_app/config/errors/app_failure.dart';
 import 'package:fitness_app/core/shared/custom_button.dart';
 import 'package:fitness_app/core/shared/custom_text_form_field.dart';
+import 'package:fitness_app/features/app/presentation/cubit/auth/app_auth_cubit.dart';
 import 'package:fitness_app/features/auth/domain/entities/login_entity/login_entity.dart';
 import 'package:fitness_app/features/auth/domain/use_cases/login_use_case.dart';
 import 'package:fitness_app/features/auth/presentation/login/manager/login_cubit.dart';
@@ -18,6 +19,8 @@ import '../../../../../helpers/test_data.dart';
 
 void main() {
   late FakeAuthRepo fakeAuthRepo;
+  late InMemorySecureStorage storage;
+  late AppAuthCubit appAuthCubit;
   late AppLocalizations l10n;
 
   setUpAll(() async {
@@ -25,9 +28,11 @@ void main() {
   });
 
   setUp(() {
+    storage = InMemorySecureStorage();
+    appAuthCubit = AppAuthCubit(storage);
     fakeAuthRepo = FakeAuthRepo();
     getIt.registerFactory<LoginCubit>(
-      () => LoginCubit(LoginUseCase(fakeAuthRepo)),
+      () => LoginCubit(LoginUseCase(fakeAuthRepo), appAuthCubit),
     );
   });
 
@@ -35,9 +40,30 @@ void main() {
     await getIt.reset();
   });
 
+  Future<void> pumpLogin(
+    WidgetTester tester, {
+    Locale locale = const Locale('en'),
+    Size size = const Size(375, 812),
+    Map<String, WidgetBuilder>? routes,
+  }) {
+    return tester.pumpApp(
+      const LoginView(),
+      locale: locale,
+      size: size,
+      routes: {
+        AppRoutes.main: (_) => Scaffold(body: Text(l10n.explore)),
+        AppRoutes.forgotPassword: (_) =>
+            Scaffold(appBar: AppBar(title: const Text('Forgot Password'))),
+        AppRoutes.register: (_) =>
+            Scaffold(appBar: AppBar(title: const Text('Register'))),
+        ...?routes,
+      },
+    );
+  }
+
   group('LoginView Widget Tests', () {
     testWidgets('renders all UI components correctly', (tester) async {
-      await tester.pumpApp(const LoginView());
+      await pumpLogin(tester);
 
       expect(find.text(l10n.loginTitleOne), findsOneWidget);
       expect(find.text(l10n.loginTitleTwo), findsOneWidget);
@@ -55,7 +81,7 @@ void main() {
     testWidgets('empty submit shows validation errors and repo is not called', (
       tester,
     ) async {
-      await tester.pumpApp(const LoginView());
+      await pumpLogin(tester);
 
       final loginButton = find.widgetWithText(CustomButton, l10n.login);
       await tester.tap(loginButton);
@@ -69,7 +95,7 @@ void main() {
     testWidgets('invalid email and short password show validation messages', (
       tester,
     ) async {
-      await tester.pumpApp(const LoginView());
+      await pumpLogin(tester);
 
       final emailField = find.byType(CustomTextFormField).at(0);
       final passwordField = find.byType(CustomTextFormField).at(1);
@@ -89,8 +115,9 @@ void main() {
     testWidgets('valid submit calls repo once with typed values', (
       tester,
     ) async {
-      fakeAuthRepo.nextResult = Success(TestData.loginEntity);
-      await tester.pumpApp(const LoginView());
+      final completer = Completer<BaseResponse<LoginEntity>>();
+      fakeAuthRepo.completer = completer;
+      await pumpLogin(tester);
 
       final emailField = find.byType(CustomTextFormField).at(0);
       final passwordField = find.byType(CustomTextFormField).at(1);
@@ -105,6 +132,9 @@ void main() {
       expect(fakeAuthRepo.callCount, 1);
       expect(fakeAuthRepo.lastEmail, TestData.validEmail);
       expect(fakeAuthRepo.lastPassword, TestData.validPassword);
+
+      completer.complete(Success(TestData.loginEntity));
+      await tester.pumpAndSettle();
     });
 
     testWidgets(
@@ -113,7 +143,7 @@ void main() {
         final completer = Completer<BaseResponse<LoginEntity>>();
         fakeAuthRepo.completer = completer;
 
-        await tester.pumpApp(const LoginView());
+        await pumpLogin(tester);
 
         final emailField = find.byType(CustomTextFormField).at(0);
         final passwordField = find.byType(CustomTextFormField).at(1);
@@ -149,7 +179,7 @@ void main() {
 
     testWidgets('success navigates to AppRoutes.home', (tester) async {
       fakeAuthRepo.nextResult = Success(TestData.loginEntity);
-      await tester.pumpApp(const LoginView());
+      await pumpLogin(tester);
 
       await tester.enterText(
         find.byType(CustomTextFormField).at(0),
@@ -170,7 +200,7 @@ void main() {
       'failure shows SnackBar with InternetConnectionFailure message',
       (tester) async {
         fakeAuthRepo.nextResult = const Error(InternetConnectionFailure());
-        await tester.pumpApp(const LoginView());
+        await pumpLogin(tester);
 
         await tester.enterText(
           find.byType(CustomTextFormField).at(0),
@@ -199,7 +229,7 @@ void main() {
       tester,
     ) async {
       fakeAuthRepo.nextResult = const Error(UnauthorizedFailure());
-      await tester.pumpApp(const LoginView());
+      await pumpLogin(tester);
 
       await tester.enterText(
         find.byType(CustomTextFormField).at(0),
@@ -229,7 +259,7 @@ void main() {
         fakeAuthRepo.nextResult = const Error(
           BadRequestFailure(serverMessage: 'Custom server message'),
         );
-        await tester.pumpApp(const LoginView());
+        await pumpLogin(tester);
 
         await tester.enterText(
           find.byType(CustomTextFormField).at(0),
@@ -257,17 +287,7 @@ void main() {
     testWidgets('tapping forgot password and register navigates correctly', (
       tester,
     ) async {
-      await tester.pumpApp(
-        const LoginView(),
-        routes: {
-          AppRoutes.forgotPassword: (_) => Scaffold(
-            appBar: AppBar(title: const Text('Forgot Password')),
-          ),
-          AppRoutes.register: (_) => Scaffold(
-            appBar: AppBar(title: const Text('Register')),
-          ),
-        },
-      );
+      await pumpLogin(tester);
 
       await tester.tap(find.text(l10n.forgotPassword));
       await tester.pumpAndSettle();
@@ -285,7 +305,7 @@ void main() {
     testWidgets('password visibility toggle obscures password field only', (
       tester,
     ) async {
-      await tester.pumpApp(const LoginView());
+      await pumpLogin(tester);
 
       final emailEditableText = tester.widget<EditableText>(
         find.byType(EditableText).at(0),
@@ -330,18 +350,19 @@ void main() {
         const Size(360, 640),
         const Size(412, 915),
       ]) {
-        await tester.pumpApp(const LoginView(), size: size);
+        await pumpLogin(tester, size: size);
         expect(find.byType(LoginView), findsOneWidget);
       }
 
       // With keyboard inset
-      await tester.pumpApp(const LoginView());
+      await pumpLogin(tester);
 
       // viewInsets are in PHYSICAL pixels, so scale the 300 logical px.
       const keyboardHeight = 300.0;
       tester.view.viewInsets = FakeViewPadding(
         bottom: keyboardHeight * tester.view.devicePixelRatio,
       );
+      addTearDown(tester.view.resetViewInsets);
       await tester.pump();
 
       final loginButton = find.widgetWithText(CustomButton, l10n.login);
@@ -356,50 +377,41 @@ void main() {
       );
     });
 
-    // testWidgets('RTL and LTR layout alignments and directions', (tester) async {
-    //   final englishL10n = await AppLocalizations.delegate.load(
-    //     const Locale('en'),
-    //   );
-    //   final arabicL10n = await AppLocalizations.delegate.load(
-    //     const Locale('ar'),
-    //   );
-    //
-    //   final logicalWidth =
-    //       tester.view.physicalSize.width / tester.view.devicePixelRatio;
-    //
-    //   // LTR: English
-    //   await tester.pumpApp(
-    //     const LoginView(),
-    //     locale: const Locale('en'),
-    //   );
-    //
-    //   final ltrForgotPassword = find.text(englishL10n.forgotPassword);
-    //   expect(ltrForgotPassword, findsOneWidget);
-    //
-    //   expect(
-    //     Directionality.of(tester.element(ltrForgotPassword)),
-    //     TextDirection.ltr,
-    //   );
-    //
-    //   final ltrForgotBox = tester.getRect(ltrForgotPassword);
-    //   expect(ltrForgotBox.center.dx, greaterThan(logicalWidth / 2));
-    //
-    //   // RTL: Arabic
-    //   await tester.pumpApp(
-    //     const LoginView(),
-    //     locale: const Locale('ar'),
-    //   );
-    //
-    //   final rtlForgotPassword = find.text(arabicL10n.forgotPassword);
-    //   expect(rtlForgotPassword, findsOneWidget);
-    //
-    //   expect(
-    //     Directionality.of(tester.element(rtlForgotPassword)),
-    //     TextDirection.rtl,
-    //   );
-    //
-    //   final rtlForgotBox = tester.getRect(rtlForgotPassword);
-    //   expect(rtlForgotBox.center.dx, lessThan(logicalWidth / 2));
-    // });
+    testWidgets('RTL and LTR layout alignments and directions', (tester) async {
+      final englishL10n = await AppLocalizations.delegate.load(
+        const Locale('en'),
+      );
+      final arabicL10n = await AppLocalizations.delegate.load(
+        const Locale('ar'),
+      );
+
+      await pumpLogin(tester, locale: const Locale('en'));
+
+      final logicalWidth =
+          tester.view.physicalSize.width / tester.view.devicePixelRatio;
+      final ltrForgotPassword = find.text(englishL10n.forgotPassword);
+      expect(ltrForgotPassword, findsOneWidget);
+      expect(
+        Directionality.of(tester.element(ltrForgotPassword)),
+        TextDirection.ltr,
+      );
+      expect(
+        tester.getRect(ltrForgotPassword).center.dx,
+        greaterThan(logicalWidth / 2),
+      );
+
+      await pumpLogin(tester, locale: const Locale('ar'));
+
+      final rtlForgotPassword = find.text(arabicL10n.forgotPassword);
+      expect(rtlForgotPassword, findsOneWidget);
+      expect(
+        Directionality.of(tester.element(rtlForgotPassword)),
+        TextDirection.rtl,
+      );
+      expect(
+        tester.getRect(rtlForgotPassword).center.dx,
+        lessThan(logicalWidth / 2),
+      );
+    });
   });
 }
