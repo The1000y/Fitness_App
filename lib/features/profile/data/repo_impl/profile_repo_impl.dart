@@ -8,6 +8,9 @@ import 'package:fitness_app/features/profile/domain/repo/profile_repo.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../domain/entities/params/update_profile_param.dart';
+import '../model/requests/profile_update_request.dart';
+
 @Injectable(as: ProfileRepo)
 class ProfileRepoImpl implements ProfileRepo {
   final ProfileRemoteDataSource _remoteDataSource;
@@ -44,5 +47,36 @@ class ProfileRepoImpl implements ProfileRepo {
       _storage.delete(key: StorageKeys.kRefreshToken),
     ]);
     return response;
+  }
+
+  @override
+  Future<BaseResponse<ProfileEntity>> updateProfile(
+      UpdateProfileParam param,
+      ) async {
+    final response = await _remoteDataSource.updateProfile(
+      ProfileUpdateRequest(
+        firstName: param.firstName,
+        lastName: param.lastName,
+        gender: param.gender,
+        age: param.age,
+        weight: param.weight,
+        height: param.height,
+        activityLevel: param.activityLevel,
+        goal: param.goal,
+      ),
+    );
+    return switch (response) {
+      Success(:final data) => Success<ProfileEntity>(data.toEntity()),
+      Error(:final failure) => Error<ProfileEntity>(failure),
+    };
+  }
+
+  @override
+  Future<BaseResponse<ProfileEntity>> uploadPhoto(String photoPath) async {
+    final response = await _remoteDataSource.uploadPhoto(photoPath);
+    return switch (response) {
+      Success() => await getProfile(),
+      Error(:final failure) => Error<ProfileEntity>(failure),
+    };
   }
 }

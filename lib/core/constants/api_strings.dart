@@ -16,7 +16,7 @@ abstract class ApiStrings {
   static const String verifyResetCode = '/auth/verifyResetCode';
   static const String resetPassword = '/auth/resetPassword';
   static String get deleteMe => '/auth/deleteMe';
-  static String get editProfile => '/auth/editProfile';
+  static const String  editProfile = '/auth/editProfile';
 
   static const String levels = '/levels';
 

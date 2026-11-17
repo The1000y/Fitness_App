@@ -15,6 +15,7 @@ class CustomTextFormField extends StatefulWidget {
     this.onChanged,
     this.textInputAction,
     this.prefixIconConstraints,
+    this.readOnly = false,
 
     super.key,
   });
@@ -28,6 +29,7 @@ class CustomTextFormField extends StatefulWidget {
   final void Function(String)? onChanged;
   final TextInputAction? textInputAction;
   final BoxConstraints? prefixIconConstraints;
+  final bool readOnly;
 
   @override
   State<CustomTextFormField> createState() => _CustomTextFormFieldState();
@@ -43,6 +45,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
     return SizedBox(
       height: widget.validator != null ? null : 48.h,
       child: TextFormField(
+        readOnly: widget.readOnly,
         keyboardAppearance: Brightness.dark,
         onTapUpOutside: (event) {
           FocusManager.instance.primaryFocus?.unfocus();

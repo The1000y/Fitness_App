@@ -409,13 +409,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get logout => 'Logout';
 
   @override
-  String get yourWeightTapToEdit => 'Your weight (tap to edit)';
+  String get yourWeight => 'Your weight';
 
   @override
-  String get yourGoalTapToEdit => 'Your goal (tap to edit)';
+  String get yourGoal => 'Your goal';
 
   @override
-  String get yourActivityTapToEdit => 'Your activity level (tap to edit)';
+  String get yourActivityLevel => 'Your activity level';
+
+  @override
+  String get tapToEdit => '(tap to edit)';
 
   @override
   String get closeAppConfirm =>

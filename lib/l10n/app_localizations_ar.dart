@@ -408,13 +408,16 @@ class AppLocalizationsAr extends AppLocalizations {
   String get logout => 'تسجيل الخروج';
 
   @override
-  String get yourWeightTapToEdit => 'وزنك (اضغط للتعديل)';
+  String get yourWeight => 'وزنك';
 
   @override
-  String get yourGoalTapToEdit => 'هدفك (اضغط للتعديل)';
+  String get yourGoal => 'هدفك';
 
   @override
-  String get yourActivityTapToEdit => 'مستوى نشاطك (اضغط للتعديل)';
+  String get yourActivityLevel => 'Your activity level';
+
+  @override
+  String get tapToEdit => '(اضغط للتعديل)';
 
   @override
   String get closeAppConfirm => 'هل أنت متأكد أنك تريد إغلاق التطبيق؟';

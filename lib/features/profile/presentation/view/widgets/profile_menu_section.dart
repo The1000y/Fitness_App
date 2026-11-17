@@ -40,7 +40,11 @@ class ProfileMenuSection extends StatelessWidget {
             title: l10n.editProfile,
             onTap: () async {
               final cubit = context.read<ProfileCubit>();
-              await Navigator.pushNamed(context, AppRoutes.editProfile);
+              await Navigator.pushNamed(
+                context,
+                AppRoutes.editProfile,
+                arguments: cubit,
+              );
               cubit.onEvent(const LoadProfile());
             },
           ),

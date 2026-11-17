@@ -5,6 +5,8 @@ import 'package:fitness_app/features/profile/data/model/responses/profile_respon
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
 
+import '../../data/model/requests/profile_update_request.dart';
+
 part 'profile_api_client.g.dart';
 
 @singleton
@@ -22,4 +24,11 @@ abstract class ProfileApiClient {
 
   @GET(ApiStrings.logout)
   Future<void> logout();
+
+  @PUT(ApiStrings.editProfile)
+  Future<ProfileResponseDto> updateProfile(@Body() ProfileUpdateRequest request);
+
+  @PUT(ApiStrings.uploadPhoto)
+  @MultiPart()
+  Future<void> uploadPhoto(@Part(name: 'photo') MultipartFile photo);
 }
