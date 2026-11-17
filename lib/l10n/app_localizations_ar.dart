@@ -369,6 +369,9 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
+  String get iamYourSmartCoach => 'أنا مدربك الذكي';
+
+  @override
   String get chatHelpPrompt => 'كيف يمكنني مساعدتك اليوم؟';
 
   @override
@@ -475,6 +478,16 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get failureUnknown => 'حدث خطأ ما. حاول مرة أخرى.';
+
+  @override
+  String get chatLatestMessageMustBeUser =>
+      'يجب أن تكون أحدث رسالة رسالة من المستخدم.';
+
+  @override
+  String get chatIdCannotBeEmpty => 'معرّف المحادثة مطلوب.';
+
+  @override
+  String get chatEmptyAssistantResponse => 'أعاد المساعد ردًا فارغًا.';
 
   @override
   String get emailRequired => 'البريد الإلكتروني مطلوب';
@@ -732,4 +745,20 @@ class AppLocalizationsAr extends AppLocalizations {
   String failedToBuildPopularTraining(String muscleName) {
     return 'فشل بناء التدريب الشائع لـ $muscleName';
   }
+
+  @override
+  String get typeYourMessage => 'أكتب رسالتك';
+
+  @override
+  String get hi => 'أهلاً بك';
+
+  @override
+  String get noChatYet => 'لا توجد محادثات سابقة بعد';
+
+  @override
+  String get chatLimitReached =>
+      'اقتربت هذه المحادثة من الحد الأقصى. يُرجى بدء محادثة جديدة.';
+
+  @override
+  String get newConversation => 'محادثة جديدة';
 }

@@ -7,6 +7,7 @@ import 'package:fitness_app/config/di/di.dart';
 import 'package:fitness_app/config/errors/app_failure.dart';
 import 'package:fitness_app/core/shared/custom_button.dart';
 import 'package:fitness_app/core/shared/custom_text_form_field.dart';
+import 'package:fitness_app/features/app/presentation/cubit/auth/app_auth_cubit.dart';
 import 'package:fitness_app/features/auth/domain/entities/login_entity/login_entity.dart';
 import 'package:fitness_app/features/auth/domain/use_cases/login_use_case.dart';
 import 'package:fitness_app/features/auth/presentation/login/manager/login_cubit.dart';
@@ -18,6 +19,8 @@ import '../../../../../helpers/test_data.dart';
 
 void main() {
   late FakeAuthRepo fakeAuthRepo;
+  late InMemorySecureStorage storage;
+  late AppAuthCubit appAuthCubit;
   late AppLocalizations l10n;
 
   setUpAll(() async {
@@ -25,9 +28,11 @@ void main() {
   });
 
   setUp(() {
+    storage = InMemorySecureStorage();
+    appAuthCubit = AppAuthCubit(storage);
     fakeAuthRepo = FakeAuthRepo();
     getIt.registerFactory<LoginCubit>(
-      () => LoginCubit(LoginUseCase(fakeAuthRepo)),
+      () => LoginCubit(LoginUseCase(fakeAuthRepo), appAuthCubit),
     );
   });
 
@@ -35,9 +40,30 @@ void main() {
     await getIt.reset();
   });
 
+  Future<void> pumpLogin(
+    WidgetTester tester, {
+    Locale locale = const Locale('en'),
+    Size size = const Size(375, 812),
+    Map<String, WidgetBuilder>? routes,
+  }) {
+    return tester.pumpApp(
+      const LoginView(),
+      locale: locale,
+      size: size,
+      routes: {
+        AppRoutes.main: (_) => Scaffold(body: Text(l10n.explore)),
+        AppRoutes.forgotPassword: (_) =>
+            Scaffold(appBar: AppBar(title: const Text('Forgot Password'))),
+        AppRoutes.register: (_) =>
+            Scaffold(appBar: AppBar(title: const Text('Register'))),
+        ...?routes,
+      },
+    );
+  }
+
   group('LoginView Widget Tests', () {
     testWidgets('renders all UI components correctly', (tester) async {
-      await tester.pumpApp(const LoginView());
+      await pumpLogin(tester);
 
       expect(find.text(l10n.loginTitleOne), findsOneWidget);
       expect(find.text(l10n.loginTitleTwo), findsOneWidget);
@@ -55,7 +81,7 @@ void main() {
     testWidgets('empty submit shows validation errors and repo is not called', (
       tester,
     ) async {
-      await tester.pumpApp(const LoginView());
+      await pumpLogin(tester);
 
       final loginButton = find.widgetWithText(CustomButton, l10n.login);
       await tester.tap(loginButton);
@@ -69,7 +95,7 @@ void main() {
     testWidgets('invalid email and short password show validation messages', (
       tester,
     ) async {
-      await tester.pumpApp(const LoginView());
+      await pumpLogin(tester);
 
       final emailField = find.byType(CustomTextFormField).at(0);
       final passwordField = find.byType(CustomTextFormField).at(1);
@@ -86,26 +112,30 @@ void main() {
       expect(fakeAuthRepo.callCount, 0);
     });
 
-    // testWidgets('valid submit calls repo once with typed values', (
-    //   tester,
-    // ) async {
-    //   fakeAuthRepo.nextResult = Success(TestData.loginEntity);
-    //   await tester.pumpApp(const LoginView());
-    //
-    //   final emailField = find.byType(CustomTextFormField).at(0);
-    //   final passwordField = find.byType(CustomTextFormField).at(1);
-    //
-    //   await tester.enterText(emailField, TestData.validEmail);
-    //   await tester.enterText(passwordField, TestData.validPassword);
-    //
-    //   final loginButton = find.widgetWithText(CustomButton, l10n.login);
-    //   await tester.tap(loginButton);
-    //   await tester.pump(); // trigger loading
-    //
-    //   expect(fakeAuthRepo.callCount, 1);
-    //   expect(fakeAuthRepo.lastEmail, TestData.validEmail);
-    //   expect(fakeAuthRepo.lastPassword, TestData.validPassword);
-    // });
+    testWidgets('valid submit calls repo once with typed values', (
+      tester,
+    ) async {
+      final completer = Completer<BaseResponse<LoginEntity>>();
+      fakeAuthRepo.completer = completer;
+      await pumpLogin(tester);
+
+      final emailField = find.byType(CustomTextFormField).at(0);
+      final passwordField = find.byType(CustomTextFormField).at(1);
+
+      await tester.enterText(emailField, TestData.validEmail);
+      await tester.enterText(passwordField, TestData.validPassword);
+
+      final loginButton = find.widgetWithText(CustomButton, l10n.login);
+      await tester.tap(loginButton);
+      await tester.pump(); // trigger loading
+
+      expect(fakeAuthRepo.callCount, 1);
+      expect(fakeAuthRepo.lastEmail, TestData.validEmail);
+      expect(fakeAuthRepo.lastPassword, TestData.validPassword);
+
+      completer.complete(Success(TestData.loginEntity));
+      await tester.pumpAndSettle();
+    });
 
     testWidgets(
       'loading state prevents duplicate tap and handles failure correctly',
@@ -113,7 +143,7 @@ void main() {
         final completer = Completer<BaseResponse<LoginEntity>>();
         fakeAuthRepo.completer = completer;
 
-        await tester.pumpApp(const LoginView());
+        await pumpLogin(tester);
 
         final emailField = find.byType(CustomTextFormField).at(0);
         final passwordField = find.byType(CustomTextFormField).at(1);
@@ -147,30 +177,30 @@ void main() {
       },
     );
 
-    // testWidgets('success navigates to AppRoutes.home', (tester) async {
-    //   fakeAuthRepo.nextResult = Success(TestData.loginEntity);
-    //   await tester.pumpApp(const LoginView());
-    //
-    //   await tester.enterText(
-    //     find.byType(CustomTextFormField).at(0),
-    //     TestData.validEmail,
-    //   );
-    //   await tester.enterText(
-    //     find.byType(CustomTextFormField).at(1),
-    //     TestData.validPassword,
-    //   );
-    //
-    //   await tester.tap(find.widgetWithText(CustomButton, l10n.login));
-    //   await tester.pumpAndSettle();
-    //
-    //   expect(find.text(l10n.explore), findsOneWidget);
-    // });
+    testWidgets('success navigates to AppRoutes.home', (tester) async {
+      fakeAuthRepo.nextResult = Success(TestData.loginEntity);
+      await pumpLogin(tester);
+
+      await tester.enterText(
+        find.byType(CustomTextFormField).at(0),
+        TestData.validEmail,
+      );
+      await tester.enterText(
+        find.byType(CustomTextFormField).at(1),
+        TestData.validPassword,
+      );
+
+      await tester.tap(find.widgetWithText(CustomButton, l10n.login));
+      await tester.pumpAndSettle();
+
+      expect(find.text(l10n.explore), findsOneWidget);
+    });
 
     testWidgets(
       'failure shows SnackBar with InternetConnectionFailure message',
       (tester) async {
         fakeAuthRepo.nextResult = const Error(InternetConnectionFailure());
-        await tester.pumpApp(const LoginView());
+        await pumpLogin(tester);
 
         await tester.enterText(
           find.byType(CustomTextFormField).at(0),
@@ -199,7 +229,7 @@ void main() {
       tester,
     ) async {
       fakeAuthRepo.nextResult = const Error(UnauthorizedFailure());
-      await tester.pumpApp(const LoginView());
+      await pumpLogin(tester);
 
       await tester.enterText(
         find.byType(CustomTextFormField).at(0),
@@ -229,7 +259,7 @@ void main() {
         fakeAuthRepo.nextResult = const Error(
           BadRequestFailure(serverMessage: 'Custom server message'),
         );
-        await tester.pumpApp(const LoginView());
+        await pumpLogin(tester);
 
         await tester.enterText(
           find.byType(CustomTextFormField).at(0),
@@ -257,15 +287,7 @@ void main() {
     testWidgets('tapping forgot password and register navigates correctly', (
       tester,
     ) async {
-      await tester.pumpApp(
-        const LoginView(),
-        routes: {
-          AppRoutes.forgotPassword: (_) =>
-              Scaffold(appBar: AppBar(title: const Text('Forgot Password'))),
-          AppRoutes.register: (_) =>
-              Scaffold(appBar: AppBar(title: const Text('Register'))),
-        },
-      );
+      await pumpLogin(tester);
 
       await tester.tap(find.text(l10n.forgotPassword));
       await tester.pumpAndSettle();
@@ -283,7 +305,7 @@ void main() {
     testWidgets('password visibility toggle obscures password field only', (
       tester,
     ) async {
-      await tester.pumpApp(const LoginView());
+      await pumpLogin(tester);
 
       final emailEditableText = tester.widget<EditableText>(
         find.byType(EditableText).at(0),
@@ -328,18 +350,19 @@ void main() {
         const Size(360, 640),
         const Size(412, 915),
       ]) {
-        await tester.pumpApp(const LoginView(), size: size);
+        await pumpLogin(tester, size: size);
         expect(find.byType(LoginView), findsOneWidget);
       }
 
       // With keyboard inset
-      await tester.pumpApp(const LoginView());
+      await pumpLogin(tester);
 
       // viewInsets are in PHYSICAL pixels, so scale the 300 logical px.
       const keyboardHeight = 300.0;
       tester.view.viewInsets = FakeViewPadding(
         bottom: keyboardHeight * tester.view.devicePixelRatio,
       );
+      addTearDown(tester.view.resetViewInsets);
       await tester.pump();
 
       final loginButton = find.widgetWithText(CustomButton, l10n.login);
@@ -362,7 +385,7 @@ void main() {
         const Locale('ar'),
       );
 
-      await tester.pumpApp(const LoginView(), locale: const Locale('en'));
+      await pumpLogin(tester, locale: const Locale('en'));
 
       final logicalWidth =
           tester.view.physicalSize.width / tester.view.devicePixelRatio;
@@ -377,7 +400,7 @@ void main() {
         greaterThan(logicalWidth / 2),
       );
 
-      await tester.pumpApp(const LoginView(), locale: const Locale('ar'));
+      await pumpLogin(tester, locale: const Locale('ar'));
 
       final rtlForgotPassword = find.text(arabicL10n.forgotPassword);
       expect(rtlForgotPassword, findsOneWidget);

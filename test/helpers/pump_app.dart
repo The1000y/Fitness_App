@@ -14,7 +14,9 @@ extension PumpApp on WidgetTester {
     Map<String, WidgetBuilder>? routes,
   }) async {
     view.physicalSize = size * view.devicePixelRatio;
-    addTearDown(view.reset);
+    addTearDown(() {
+      view.resetPhysicalSize();
+    });
 
     await pumpWidget(
       ScreenUtilPlusInit(

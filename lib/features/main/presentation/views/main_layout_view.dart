@@ -1,3 +1,4 @@
+import 'package:fitness_app/config/routing/app_routes.dart';
 import 'package:fitness_app/core/constants/app_test_keys.dart';
 import 'package:fitness_app/core/shared/confirmation_dialog.dart';
 import 'package:fitness_app/features/main/presentation/views/widgets/custom_floating_navigation_bar.dart';
@@ -58,6 +59,10 @@ class _MainLayoutViewState extends State<MainLayoutView> {
           key: const Key(AppTestKeys.mainLayoutBottomNav),
           currentIndex: _currentTap,
           onTap: (index) {
+            if (index == 1) {
+              Navigator.of(context).pushNamed(AppRoutes.chatHistory);
+              return;
+            }
             setState(() => _currentTap = index);
           },
         ),

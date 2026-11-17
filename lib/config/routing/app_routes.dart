@@ -31,6 +31,7 @@ abstract final class AppRoutes {
   // static const String foodDetails = '/food-details';
 
   static const String chatHistory = '/chat-history';
+  static const String chatMessages = '/chat-messages';
 
   static const String editProfile = '/edit-profile';
   static const String editWeight = '/edit-weight';

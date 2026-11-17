@@ -4,6 +4,7 @@ import 'package:fitness_app/config/base/base_response.dart';
 import 'package:fitness_app/config/base/base_ui_event.dart';
 import 'package:fitness_app/config/errors/app_failure.dart';
 import 'package:fitness_app/config/routing/app_routes.dart';
+import 'package:fitness_app/features/app/presentation/cubit/auth/app_auth_cubit.dart';
 import 'package:fitness_app/features/auth/domain/entities/login_entity/login_entity.dart';
 import 'package:fitness_app/features/auth/domain/use_cases/login_use_case.dart';
 import 'package:fitness_app/features/auth/presentation/login/manager/login_cubit.dart';
@@ -15,16 +16,21 @@ import '../../../../../helpers/test_data.dart';
 void main() {
   late FakeAuthRepo fakeRepo;
   late LoginUseCase useCase;
+  late InMemorySecureStorage storage;
+  late AppAuthCubit appAuthCubit;
   late LoginCubit cubit;
 
   setUp(() {
+    storage = InMemorySecureStorage();
+    appAuthCubit = AppAuthCubit(storage);
     fakeRepo = FakeAuthRepo();
     useCase = LoginUseCase(fakeRepo);
-    cubit = LoginCubit(useCase);
+    cubit = LoginCubit(useCase, appAuthCubit);
   });
 
   tearDown(() async {
     await cubit.close();
+    await appAuthCubit.close();
   });
 
   group('LoginCubit', () {

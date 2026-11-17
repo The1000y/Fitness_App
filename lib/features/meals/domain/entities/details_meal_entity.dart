@@ -26,6 +26,15 @@ class DetailsMealEntity extends Equatable {
   final String? dateModified;
   final List<IngredientEntity> ingredients;
 
+  // ── Database / Chat Extended Fields (Nullable) ───────────────────────────
+  final double? kcal;
+  final double? proteinG;
+  final double? carbsG;
+  final double? fatG;
+  final bool? vegetarian;
+  final bool? vegan;
+  final int? popularity;
+
   const DetailsMealEntity({
     required this.idMeal,
     required this.strMeal,
@@ -41,6 +50,13 @@ class DetailsMealEntity extends Equatable {
     this.strCreativeCommonsConfirmed,
     this.dateModified,
     required this.ingredients,
+    this.kcal,
+    this.proteinG,
+    this.carbsG,
+    this.fatG,
+    this.vegetarian,
+    this.vegan,
+    this.popularity,
   });
 
   @override
@@ -59,5 +75,12 @@ class DetailsMealEntity extends Equatable {
     strCreativeCommonsConfirmed,
     dateModified,
     ingredients,
+    kcal,
+    proteinG,
+    carbsG,
+    fatG,
+    vegetarian,
+    vegan,
+    popularity,
   ];
 }

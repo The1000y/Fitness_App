@@ -15,22 +15,22 @@ import 'package:mocktail/mocktail.dart';
 
 class MockAppAuthCubit extends Mock implements AppAuthCubit {}
 
-class MockForgetPasswordCubit extends Mock implements ForgetPasswordCubit {}
-
 class MockAppLocaleCubit extends Mock implements AppLocaleCubit {}
+
+class MockForgetPasswordCubit extends Mock implements ForgetPasswordCubit {}
 
 void main() {
   late MockAppAuthCubit mockAppAuthCubit;
-  late MockForgetPasswordCubit mockForgetPasswordCubit;
   late MockAppLocaleCubit mockAppLocaleCubit;
+  late MockForgetPasswordCubit mockForgetPasswordCubit;
   late StreamController<AppAuthUiEvent> authUiEventController;
   late StreamController<BaseUiEvent> forgetPasswordUiEventController;
   late StreamController<ForgetPasswordState> forgetPasswordStateController;
 
   setUp(() {
     mockAppAuthCubit = MockAppAuthCubit();
-    mockForgetPasswordCubit = MockForgetPasswordCubit();
     mockAppLocaleCubit = MockAppLocaleCubit();
+    mockForgetPasswordCubit = MockForgetPasswordCubit();
     authUiEventController = StreamController<AppAuthUiEvent>.broadcast();
     forgetPasswordUiEventController = StreamController<BaseUiEvent>.broadcast();
     forgetPasswordStateController =
@@ -58,6 +58,7 @@ void main() {
     when(
       () => mockAppLocaleCubit.stream,
     ).thenAnswer((_) => const Stream.empty());
+    when(() => mockAppLocaleCubit.close()).thenAnswer((_) async {});
     when(() => mockAppLocaleCubit.load()).thenAnswer((_) async {});
 
     if (getIt.isRegistered<AppAuthCubit>()) {

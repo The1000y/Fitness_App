@@ -52,8 +52,7 @@ class ProfileMenuSection extends StatelessWidget {
           ProfileMenuItem(
             icon: AppIcons.change,
             title: l10n.changePassword,
-            onTap: () =>
-                Navigator.pushNamed(context, AppRoutes.changePassword),
+            onTap: () => Navigator.pushNamed(context, AppRoutes.changePassword),
           ),
           Divider(
             height: 1.h,

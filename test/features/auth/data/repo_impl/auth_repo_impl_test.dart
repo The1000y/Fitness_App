@@ -42,6 +42,9 @@ void main() {
 
   group('AuthRepoImpl', () {
     group('login', () {
+      setUp(() {
+        repo = AuthRepoImpl(fakeRemote);
+      });
       test(
         'builds LoginRequest and returns Success when remote succeeds',
         () async {

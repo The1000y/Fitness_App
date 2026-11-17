@@ -11,6 +11,13 @@ String appFailureMessageMapper(AppFailure failure, AppLocalizations l10n) {
       serverMessage?.isNotEmpty == true
           ? serverMessage!
           : l10n.failureBadRequest,
+    ChatRequestFailure(:final reason) => switch (reason) {
+      ChatRequestFailureReason.latestMessageMustBeUser =>
+        l10n.chatLatestMessageMustBeUser,
+      ChatRequestFailureReason.chatIdCannotBeEmpty => l10n.chatIdCannotBeEmpty,
+      ChatRequestFailureReason.emptyAssistantResponse =>
+        l10n.chatEmptyAssistantResponse,
+    },
     UnauthorizedFailure() => l10n.failureUnauthorized,
     ForbiddenFailure() => l10n.failureForbidden,
     NotFoundFailure() => l10n.failureNotFound,

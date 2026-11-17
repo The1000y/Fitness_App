@@ -370,6 +370,9 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get iamYourSmartCoach => 'I am your smart coach';
+
+  @override
   String get chatHelpPrompt => 'How can I assist you today?';
 
   @override
@@ -479,6 +482,17 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get failureUnknown => 'Something went wrong. Please try again.';
+
+  @override
+  String get chatLatestMessageMustBeUser =>
+      'The latest message must be a user message.';
+
+  @override
+  String get chatIdCannotBeEmpty => 'Chat ID cannot be empty.';
+
+  @override
+  String get chatEmptyAssistantResponse =>
+      'The assistant returned an empty response.';
 
   @override
   String get emailRequired => 'Email is required';
@@ -737,4 +751,20 @@ class AppLocalizationsEn extends AppLocalizations {
   String failedToBuildPopularTraining(String muscleName) {
     return 'Failed to build popular training for $muscleName';
   }
+
+  @override
+  String get typeYourMessage => 'Enter Your Message';
+
+  @override
+  String get hi => 'Hi';
+
+  @override
+  String get noChatYet => 'No previous conversations yet';
+
+  @override
+  String get chatLimitReached =>
+      'This conversation has reached the maximum length. Please start a new conversation.';
+
+  @override
+  String get newConversation => 'New Conversation';
 }

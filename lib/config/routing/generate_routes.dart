@@ -7,7 +7,9 @@ import 'package:fitness_app/features/auth/presentation/forget_password/view/widg
 import 'package:fitness_app/features/auth/presentation/login/view/login_view.dart';
 import 'package:fitness_app/features/auth/presentation/onboarding/views/onboarding_view.dart';
 import 'package:fitness_app/features/auth/presentation/register/view/register_view.dart';
-import 'package:fitness_app/features/chat/presentation/views/chat_view.dart';
+import 'package:fitness_app/features/chat/presentation/manager/chat_cubit.dart';
+import 'package:fitness_app/features/chat/presentation/manager/chat_event.dart';
+import 'package:fitness_app/features/chat/presentation/view/chat_view.dart';
 import 'package:fitness_app/features/exercise/domain/entities/exercise_entity.dart';
 import 'package:fitness_app/features/exercise/presentation/exercise_details/args/exercise_details_args.dart';
 import 'package:fitness_app/features/exercise/presentation/exercise_details/manager/exercise_details_cubit.dart';
@@ -15,6 +17,8 @@ import 'package:fitness_app/features/exercise/presentation/exercise_details/mana
 import 'package:fitness_app/features/exercise/presentation/exercise_details/view/exercise_details_view.dart';
 import 'package:fitness_app/features/exercise/presentation/exercise_details/view/exercise_video_player_view.dart';
 import 'package:fitness_app/features/exercise/presentation/workout_categories/view/workout_categories_view.dart';
+import 'package:fitness_app/features/chat/presentation/view/message_view.dart';
+import 'package:fitness_app/features/chat/presentation/view/widget/prefrence_borading_chat.dart';
 import 'package:fitness_app/features/home/presentation/views/home_view.dart';
 import 'package:fitness_app/features/main/presentation/views/main_layout_view.dart';
 import 'package:fitness_app/features/meals/presentation/manager/meals_cubit.dart';
@@ -95,23 +99,18 @@ abstract final class GenerateRoutes {
         return _pageRoute(const _StubScreen('Setup Activity'), settings);
 
       case AppRoutes.main:
-        final profileCubit = getIt<ProfileCubit>()
-          ..onEvent(const LoadProfile());
         return _pageRoute(
-          BlocProvider.value(
-            value: profileCubit,
-            child: MainLayoutView(
-              tabs: [
-                HomeView(),
-                ChatView(),
-                WorkoutCategoriesView(),
-                BlocProvider(
-                  create: (_) =>
-                      getIt<ProfileCubit>()..onEvent(const LoadProfile()),
-                  child: const ProfileView(),
-                ),
-              ],
-            ),
+          MainLayoutView(
+            tabs: [
+              HomeView(),
+              SizedBox(),
+              WorkoutCategoriesView(),
+              BlocProvider(
+                create: (_) =>
+                    getIt<ProfileCubit>()..onEvent(const LoadProfile()),
+                child: const ProfileView(),
+              ),
+            ],
           ),
           settings,
         );
@@ -168,7 +167,28 @@ abstract final class GenerateRoutes {
         );
 
       case AppRoutes.chatHistory:
-        return _pageRoute(const _StubScreen('Chat History'), settings);
+        var route = getIt<PrefrenceBoradingChat>().getBoardingChat;
+        return _pageRoute(
+          route == true
+              ? BlocProvider<ChatCubit>(
+                  create: (_) =>
+                      getIt<ChatCubit>()
+                        ..onEvent(const LoadPreviousChatsEvent()),
+                  child: const MessageView(),
+                )
+              : const ChatView(),
+          settings,
+        );
+
+      case AppRoutes.chatMessages:
+        return _pageRoute(
+          BlocProvider<ChatCubit>(
+            create: (_) =>
+                getIt<ChatCubit>()..onEvent(const LoadPreviousChatsEvent()),
+            child: const MessageView(),
+          ),
+          settings,
+        );
 
       case AppRoutes.editProfile:
         return _pageRoute(const _StubScreen('Edit Profile'), settings);

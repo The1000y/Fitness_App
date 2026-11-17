@@ -38,11 +38,11 @@ class ProfileRepoImpl implements ProfileRepo {
   @override
   Future<BaseResponse<void>> logout() async {
     final response = await _remoteDataSource.logout();
-     await Future.wait([
-        _storage.delete(key: StorageKeys.kUserToken),
-        _storage.delete(key: StorageKeys.kUserData),
-        _storage.delete(key: StorageKeys.kRefreshToken),
-      ]);
+    await Future.wait([
+      _storage.delete(key: StorageKeys.kUserToken),
+      _storage.delete(key: StorageKeys.kUserData),
+      _storage.delete(key: StorageKeys.kRefreshToken),
+    ]);
     return response;
   }
 }

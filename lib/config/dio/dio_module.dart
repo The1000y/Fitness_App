@@ -38,6 +38,20 @@ abstract class DioModule {
     return dio;
   }
 
+  @lazySingleton
+  @Named(ApiStrings.namedOllamaDio)
+  Dio get ollamaDio {
+    return Dio(
+      BaseOptions(
+        baseUrl: ApiStrings.ollamaBaseUrl,
+        connectTimeout: const Duration(seconds: 60),
+        sendTimeout: const Duration(seconds: 60),
+        receiveTimeout: const Duration(minutes: 5),
+        headers: {'Content-Type': 'application/json'},
+      ),
+    );
+  }
+
   void _addLogger(Dio dio) {
     if (kDebugMode) {
       dio.interceptors.add(

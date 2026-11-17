@@ -171,6 +171,7 @@
       }
     }
   },
+  "iamYourSmartCoach": "I am your smart coach",
   "chatHelpPrompt": "How can I assist you today?",
   "getStarted": "Get started",
   "previousConversations": "Previous conversations",
@@ -205,6 +206,9 @@
   "failureTooManyRequests": "Too many requests. Please wait a moment and try again.",
   "failureServerError": "Server error. Please try again later.",
   "failureUnknown": "Something went wrong. Please try again.",
+  "chatLatestMessageMustBeUser": "The latest message must be a user message.",
+  "chatIdCannotBeEmpty": "Chat ID cannot be empty.",
+  "chatEmptyAssistantResponse": "The assistant returned an empty response.",
   "emailRequired": "Email is required",
   "emailInvalid": "Please enter a valid email",
   "passwordRequired": "Password is required",
@@ -306,12 +310,17 @@
   "noCategoriesAvailable": "No categories available",
   "couldNotLoadCategories": "Could not load categories",
   "dataNotAvailable": "Data is currently unavailable.",
- "failedToBuildPopularTraining": "Failed to build popular training for {muscleName}",
+  "failedToBuildPopularTraining": "Failed to build popular training for {muscleName}",
   "@failedToBuildPopularTraining": {
     "placeholders": {
       "muscleName": {
         "type": "String"
       }
     }
-  }
+  },
+  "typeYourMessage": "Enter Your Message",
+  "hi": "Hi",
+  "noChatYet": "No previous conversations yet",
+  "chatLimitReached": "This conversation has reached the maximum length. Please start a new conversation.",
+  "newConversation": "New Conversation"
 }

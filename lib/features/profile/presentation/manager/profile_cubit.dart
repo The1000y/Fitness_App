@@ -60,13 +60,13 @@ class ProfileCubit extends BaseCubit<ProfileState, CommonUiEvent> {
   }
 
   Future<void> _logout() async {
-  if (state.isLoggingOut) return;
-  emit(state.copyWith(isLoggingOut: true));
+    if (state.isLoggingOut) return;
+    emit(state.copyWith(isLoggingOut: true));
 
-  await _logoutUseCase();
-  if (isClosed) return;
+    await _logoutUseCase();
+    if (isClosed) return;
 
-  emit(state.copyWith(isLoggingOut: false));
-  emitEvent(const NavigateAndRemoveUntil(AppRoutes.login));
-}
+    emit(state.copyWith(isLoggingOut: false));
+    emitEvent(const NavigateAndRemoveUntil(AppRoutes.login));
+  }
 }

@@ -15,6 +15,22 @@ class ExerciseEntity extends Equatable {
   final String bodyRegion;
   final String mechanics;
 
+  // ── Database / Chat Extended Fields (Nullable) ───────────────────────────
+  final String? nameAr;
+  final int? difficultyRank;
+  final String? posture;
+  final String? grip;
+  final String? laterality;
+  final String? forceType;
+  final String? singleOrDoubleArm;
+  final String? armsMode;
+  final String? legsMode;
+  final String? footElevation;
+  final String? loadPositionEnding;
+  final String? combinationExercises;
+  final String? classification;
+  final int? popularity;
+
   const ExerciseEntity({
     required this.id,
     required this.exercise,
@@ -29,6 +45,20 @@ class ExerciseEntity extends Equatable {
     this.inDepthYoutubeExplanationLink,
     required this.bodyRegion,
     required this.mechanics,
+    this.nameAr,
+    this.difficultyRank,
+    this.posture,
+    this.grip,
+    this.laterality,
+    this.forceType,
+    this.singleOrDoubleArm,
+    this.armsMode,
+    this.legsMode,
+    this.footElevation,
+    this.loadPositionEnding,
+    this.combinationExercises,
+    this.classification,
+    this.popularity,
   });
 
   @override
@@ -46,5 +76,19 @@ class ExerciseEntity extends Equatable {
     inDepthYoutubeExplanationLink,
     bodyRegion,
     mechanics,
+    nameAr,
+    difficultyRank,
+    posture,
+    grip,
+    laterality,
+    forceType,
+    singleOrDoubleArm,
+    armsMode,
+    legsMode,
+    footElevation,
+    loadPositionEnding,
+    combinationExercises,
+    classification,
+    popularity,
   ];
 }

@@ -202,6 +202,9 @@
   "failureTooManyRequests": "طلبات كثيرة جداً. انتظر قليلاً ثم حاول مرة أخرى.",
   "failureServerError": "حدث خطأ في الخادم. حاول لاحقاً.",
   "failureUnknown": "حدث خطأ ما. حاول مرة أخرى.",
+  "chatLatestMessageMustBeUser": "يجب أن تكون أحدث رسالة رسالة من المستخدم.",
+  "chatIdCannotBeEmpty": "معرّف المحادثة مطلوب.",
+  "chatEmptyAssistantResponse": "أعاد المساعد ردًا فارغًا.",
   "emailRequired": "البريد الإلكتروني مطلوب",
   "emailInvalid": "يرجى إدخال بريد إلكتروني صالح",
   "passwordRequired": "كلمة المرور مطلوبة",
@@ -305,10 +308,16 @@
   "dataNotAvailable": "البيانات غير متوفرة حالياً.",
   "failedToBuildPopularTraining": "فشل بناء التدريب الشائع لـ {muscleName}",
   "@failedToBuildPopularTraining": {
-   "placeholders": {
-         "muscleName": {
-           "type": "String"
-         }
-       }
-  }
+    "placeholders": {
+      "muscleName": {
+        "type": "String"
+      }
+    }
+  },
+  "typeYourMessage": "أكتب رسالتك",
+  "hi": "أهلاً بك",
+  "iamYourSmartCoach": "أنا مدربك الذكي",
+  "noChatYet": "لا توجد محادثات سابقة بعد",
+  "chatLimitReached": "اقتربت هذه المحادثة من الحد الأقصى. يُرجى بدء محادثة جديدة.",
+  "newConversation": "محادثة جديدة"
 }

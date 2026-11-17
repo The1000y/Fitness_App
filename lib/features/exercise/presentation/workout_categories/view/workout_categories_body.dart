@@ -141,7 +141,6 @@ class WorkoutMusclesGrid extends StatelessWidget {
                   muscleName: muscle.name,
                 ),
               ),
-
             );
           },
         );

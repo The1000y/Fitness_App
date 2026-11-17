@@ -22,4 +22,5 @@ abstract final class AppIcons {
   static const String maleGender = '$_basePath/male_gender.svg';
   static const String profile = '$_basePath/profile.svg';
   static const String securityWarning = '$_basePath/security_warning.svg';
+  static const String menu = '$_basePath/menu.svg';
 }
