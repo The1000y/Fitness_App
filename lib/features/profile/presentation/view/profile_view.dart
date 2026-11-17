@@ -9,6 +9,7 @@ import 'package:fitness_app/features/profile/presentation/view/widgets/profile_h
 import 'package:fitness_app/features/profile/presentation/view/widgets/profile_menu_section.dart';
 import 'package:fitness_app/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil_plus/flutter_screenutil_plus.dart';
 import 'package:gap/gap.dart';
 
@@ -21,6 +22,7 @@ class ProfileView extends StatelessWidget {
     final theme = Theme.of(context);
 
     return BaseUiEventListener<ProfileCubit, ProfileState, CommonUiEvent>(
+      cubit: context.read<ProfileCubit>(),
       child: CustomBackgroundImage(
         backgroundImage: AppImages.layoutBackground,
         child: Scaffold(

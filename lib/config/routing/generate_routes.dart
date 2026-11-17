@@ -105,9 +105,8 @@ abstract final class GenerateRoutes {
               HomeView(),
               SizedBox(),
               WorkoutCategoriesView(),
-              BlocProvider(
-                create: (_) =>
-                    getIt<ProfileCubit>()..onEvent(const LoadProfile()),
+              BlocProvider.value(
+                value: getIt<ProfileCubit>()..onEvent(const LoadProfile()),
                 child: const ProfileView(),
               ),
             ],
