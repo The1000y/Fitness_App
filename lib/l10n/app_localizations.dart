@@ -830,23 +830,29 @@ abstract class AppLocalizations {
   /// **'Logout'**
   String get logout;
 
-  /// No description provided for @yourWeightTapToEdit.
+  /// No description provided for @yourWeight.
   ///
   /// In en, this message translates to:
-  /// **'Your weight (tap to edit)'**
-  String get yourWeightTapToEdit;
+  /// **'Your weight'**
+  String get yourWeight;
 
-  /// No description provided for @yourGoalTapToEdit.
+  /// No description provided for @yourGoal.
   ///
   /// In en, this message translates to:
-  /// **'Your goal (tap to edit)'**
-  String get yourGoalTapToEdit;
+  /// **'Your goal'**
+  String get yourGoal;
 
-  /// No description provided for @yourActivityTapToEdit.
+  /// No description provided for @yourActivityLevel.
   ///
   /// In en, this message translates to:
-  /// **'Your activity level (tap to edit)'**
-  String get yourActivityTapToEdit;
+  /// **'Your activity level'**
+  String get yourActivityLevel;
+
+  /// No description provided for @tapToEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'(tap to edit)'**
+  String get tapToEdit;
 
   /// No description provided for @closeAppConfirm.
   ///

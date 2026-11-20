@@ -14,8 +14,10 @@ import 'package:dio/dio.dart' as _i361;
 import 'package:flutter/services.dart' as _i281;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i558;
 import 'package:get_it/get_it.dart' as _i174;
+import 'package:image_picker/image_picker.dart' as _i183;
 import 'package:injectable/injectable.dart' as _i526;
 
+import '../../core/services/image_picker_service.dart' as _i428;
 import '../../features/app/presentation/cubit/auth/app_auth_cubit.dart'
     as _i760;
 import '../../features/app/presentation/cubit/locale/app_locale_cubit.dart'
@@ -54,8 +56,14 @@ import '../../features/profile/domain/use_cases/profile_get_use_case.dart'
     as _i424;
 import '../../features/profile/domain/use_cases/profile_logout_use_case.dart'
     as _i170;
+import '../../features/profile/domain/use_cases/profile_update_use_case.dart'
+    as _i1027;
+import '../../features/profile/domain/use_cases/profile_upload_photo_use_case.dart'
+    as _i852;
 import '../../features/profile/presentation/change_password/manager/change_password_cubit.dart'
     as _i332;
+import '../../features/profile/presentation/edit_profile/manager/edit_profile_cubit.dart'
+    as _i109;
 import '../../features/profile/presentation/manager/profile_cubit.dart'
     as _i735;
 import '../dio/app_interceptor.dart' as _i264;
@@ -72,11 +80,13 @@ extension GetItInjectableX on _i174.GetIt {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final appModule = _$AppModule();
     final secureStorageModule = _$SecureStorageModule();
+    final imagePickerModule = _$ImagePickerModule();
     final dioModule = _$DioModule();
     gh.lazySingleton<_i281.AssetBundle>(() => appModule.assetBundle);
     gh.lazySingleton<_i558.FlutterSecureStorage>(
       () => secureStorageModule.secureStorage,
     );
+    gh.lazySingleton<_i183.ImagePicker>(() => imagePickerModule.imagePicker);
     gh.lazySingleton<_i760.AppAuthCubit>(() => _i760.AppAuthCubit());
     gh.lazySingleton<_i450.AppLocaleCubit>(
       () => _i450.AppLocaleCubit(gh<_i558.FlutterSecureStorage>()),
@@ -93,6 +103,9 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i558.FlutterSecureStorage>(),
         gh<_i760.AppAuthCubit>(),
       ),
+    );
+    gh.lazySingleton<_i428.ImagePickerService>(
+      () => _i428.ImagePickerServiceImpl(gh<_i183.ImagePicker>()),
     );
     gh.lazySingleton<_i361.Dio>(
       () => dioModule.fitnessDio(gh<_i264.AppInterceptors>()),
@@ -171,5 +184,7 @@ extension GetItInjectableX on _i174.GetIt {
 class _$AppModule extends _i460.AppModule {}
 
 class _$SecureStorageModule extends _i327.SecureStorageModule {}
+
+class _$ImagePickerModule extends _i428.ImagePickerModule {}
 
 class _$DioModule extends _i977.DioModule {}

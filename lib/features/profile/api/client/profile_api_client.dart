@@ -5,13 +5,16 @@ import 'package:fitness_app/features/profile/data/model/responses/profile_respon
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
 
+import '../../data/model/requests/profile_update_request.dart';
+
 part 'profile_api_client.g.dart';
 
 @singleton
 @RestApi()
 abstract class ProfileApiClient {
   @factoryMethod
-  factory ProfileApiClient(Dio dio) = _ProfileApiClient;
+  factory ProfileApiClient(@Named(ApiStrings.namedFitnessDio) Dio dio) =
+      _ProfileApiClient;
 
   @PATCH(ApiStrings.changePassword)
   Future<void> changePassword(@Body() ChangePasswordRequest request);
@@ -21,4 +24,11 @@ abstract class ProfileApiClient {
 
   @GET(ApiStrings.logout)
   Future<void> logout();
+
+  @PUT(ApiStrings.editProfile)
+  Future<ProfileResponseDto> updateProfile(@Body() ProfileUpdateRequest request);
+
+  @PUT(ApiStrings.uploadPhoto)
+  @MultiPart()
+  Future<void> uploadPhoto(@Part(name: 'photo') MultipartFile photo);
 }

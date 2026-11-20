@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:fitness_app/features/profile/api/client/profile_api_client.dart';
 import 'package:fitness_app/features/profile/data/model/requests/change_password_request.dart';
+import 'package:fitness_app/features/profile/data/model/requests/profile_update_request.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../../../helpers/fakes.dart';
@@ -107,6 +108,102 @@ void main() {
 
       await expectLater(
         client.logout(),
+        throwsA(
+          isA<DioException>().having(
+            (e) => e.response?.statusCode,
+            'statusCode',
+            500,
+          ),
+        ),
+      );
+    });
+  });
+
+  group('ProfileApiClient.updateProfile', () {
+    test('updateProfile_validRequest_sendsPutAndParsesResponse', () async {
+      adapter.statusCode = 200;
+      adapter.responseBody = testProfileJson;
+
+      const updateRequest = ProfileUpdateRequest(
+        firstName: 'Ada',
+        lastName: 'Lovelace',
+      );
+
+      final response = await client.updateProfile(updateRequest);
+
+      expect(adapter.lastRequestOptions?.method, 'PUT');
+      expect(
+        adapter.lastRequestOptions?.path,
+        contains('/auth/editProfile'),
+      );
+      expect(adapter.lastRequestOptions?.data, {
+        'firstName': 'Ada',
+        'lastName': 'Lovelace',
+      });
+      expect(response.message, 'Profile fetched successfully');
+      expect(response.user?.id, 'user-1');
+      expect(response.user?.firstName, 'Ada');
+    });
+
+    test('updateProfile_badRequest_throwsDioException', () async {
+      adapter.statusCode = 400;
+      adapter.responseBody = {'message': 'Bad Request'};
+
+      const updateRequest = ProfileUpdateRequest(firstName: 'Ada');
+
+      await expectLater(
+        client.updateProfile(updateRequest),
+        throwsA(
+          isA<DioException>().having(
+            (e) => e.response?.statusCode,
+            'statusCode',
+            400,
+          ),
+        ),
+      );
+    });
+  });
+
+  group('ProfileApiClient.uploadPhoto', () {
+    test('uploadPhoto_validMultipart_sendsPutWithFormData', () async {
+      adapter.statusCode = 200;
+      adapter.responseBody = {'message': 'success'};
+
+      final photo = MultipartFile.fromBytes(
+        [1, 2, 3],
+        filename: 'avatar.png',
+      );
+
+      await client.uploadPhoto(photo);
+
+      expect(adapter.lastRequestOptions?.method, 'PUT');
+      expect(
+        adapter.lastRequestOptions?.path,
+        contains('/auth/upload-photo'),
+      );
+      expect(
+        adapter.lastRequestOptions?.contentType,
+        startsWith('multipart/form-data'),
+      );
+
+      final data = adapter.lastRequestOptions?.data;
+      expect(data, isA<FormData>());
+      final formData = data as FormData;
+      expect(formData.files, hasLength(1));
+      expect(formData.files.first.key, 'photo');
+    });
+
+    test('uploadPhoto_serverError_throwsDioException', () async {
+      adapter.statusCode = 500;
+      adapter.responseBody = {'message': 'Server Error'};
+
+      final photo = MultipartFile.fromBytes(
+        [1, 2, 3],
+        filename: 'avatar.png',
+      );
+
+      await expectLater(
+        client.uploadPhoto(photo),
         throwsA(
           isA<DioException>().having(
             (e) => e.response?.statusCode,

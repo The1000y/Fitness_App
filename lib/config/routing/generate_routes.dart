@@ -12,6 +12,7 @@ import 'package:fitness_app/features/home/presentation/views/home_view.dart';
 import 'package:fitness_app/features/main/presentation/views/main_layout_view.dart';
 import 'package:fitness_app/features/profile/presentation/change_password/manager/change_password_cubit.dart';
 import 'package:fitness_app/features/profile/presentation/change_password/view/change_password_view.dart';
+import 'package:fitness_app/features/profile/presentation/edit_profile/view/edit_profile_view.dart';
 import 'package:fitness_app/features/profile/presentation/manager/profile_cubit.dart';
 import 'package:fitness_app/features/profile/presentation/manager/profile_event.dart';
 import 'package:fitness_app/features/profile/presentation/view/profile_view.dart';
@@ -20,6 +21,9 @@ import 'package:fitness_app/features/profile/presentation/web_view/view/profile_
 import 'package:fitness_app/features/workouts/presentation/views/workouts_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../features/profile/presentation/edit_profile/manager/edit_profile_cubit.dart';
+import '../../features/profile/presentation/edit_profile/manager/edit_profile_event.dart';
 
 abstract final class GenerateRoutes {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -119,7 +123,17 @@ abstract final class GenerateRoutes {
         return _pageRoute(const _StubScreen('Chat History'), settings);
 
       case AppRoutes.editProfile:
-        return _pageRoute(const _StubScreen('Edit Profile'), settings);
+        final profileCubit = settings.arguments as ProfileCubit;
+        final profile = profileCubit.state.profileState.data;
+        if (profile == null) return _pageRoute(const _StubScreen('404'), settings);
+        return _pageRoute(
+          BlocProvider(
+            create: (_) => getIt<EditProfileCubit>()
+              ..doEvent(InitEditProfileEvent(profile)),
+            child: const EditProfileView(),
+          ),
+          settings,
+        );
 
       case AppRoutes.editWeight:
         return _pageRoute(const _StubScreen('Edit Weight'), settings);
